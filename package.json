@@ -1,0 +1,19 @@
+{
+  "name": "semicon-db",
+  "version": "2.0.0",
+  "private": true,
+  "description": "SEMICON-DB — Global Semiconductor Equipment Intelligence Graph (static GitHub Pages app + data pipeline)",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-data.mjs",
+    "build:map": "node scripts/build-map.mjs",
+    "validate": "node scripts/validate.mjs",
+    "import": "node scripts/import.mjs",
+    "serve": "python3 -m http.server 8080"
+  },
+  "devDependencies": {
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  }
+}
