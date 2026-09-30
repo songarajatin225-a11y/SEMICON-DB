@@ -10,15 +10,15 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 
 | Entity | Records | Notes |
 |---|---:|---|
-| Companies | 318 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 (18 startups in total) |
-| Product families → models | 361 → 506 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 |
+| Companies | 326 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 · 8 in Batch 8 (18 startups in total) |
+| Product families → models | 369 → 524 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
-| Relationships | 5,513 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 855 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Relationships | 5,673 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 880 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -86,6 +86,10 @@ Same evidence rule as Batches 2–5. Candidates without a usable source were ski
 ## Batch 7 (30 Sep 2026): regions and layers
 
 Batch 7 added **7 companies and 8 sources** with company-level evidence only (no products): Keteca Singapore, MIT Semiconductor and SRM Integration / Micro Modular System (Singapore, Malaysia), and India's DeepLASE Technologies (IIT Delhi spin-out, fibre lasers; startup) and Suresh Indu Lasers. Machine-vision makers Basler and Keyence were already in the database (the duplicate guard rejected them); Teledyne Vision Solutions was added. Evidence here is mostly directory-level (SEMI member directory, InvestPenang, supplier directories) and marked LOW where the source is not the company itself.
+
+## Batch 8 (30 Sep 2026): deposition, packaging wet process, implant, metrology
+
+Batch 8 added **8 companies, 18 products and 25 sources**: ULVAC (ENTRON, SME sputtering), CANON ANELVA (EC7800, HC7100, NC7900, IC7500, NC8000 etch …), VON ARDENNE (XEA|nova L), SCHMID Group (InfinityLine C+ / H+ for panel-level packaging), Nissin Ion Equipment (implanters), Ferrotec (vacuum feedthroughs, quartz), HIWIN (linear-motor stages) and Freiberg Instruments (MDP lifetime metrology); plus UTECHZONE wafer AOI models attached to the existing Utechzone record. Same evidence rule as earlier batches.
 
 **Known gaps against the wider master-prompt scope** (not implemented; the data model is prepared for them): revenue and employee fields per company (only reported figures are stored), patent, M&A and news layers, a "discover / research queue" workflow with approve / merge buttons, and AI-assisted natural-language queries beyond the current query parser. Southeast Asia (Vietnam, Thailand, Indonesia, Philippines) and India equipment makers remain thinly covered because search returned few company-owned pages; trade-show exhibitor lists could not be read.
 

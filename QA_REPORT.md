@@ -131,3 +131,7 @@ New field `discovery_keywords` on companies: import column `discovery_keywords`,
 ## Batch 7 addendum (30 Sep 2026)
 
 7 companies, 8 sources (no products); duplicate guard rejected Basler and Keyence. Build + validate: 0 errors. Route smoke test: 122 / 122 routes render with 0 console errors; interaction suite passes.
+
+## Batch 8 addendum (30 Sep 2026)
+
+8 companies, 18 products, 25 sources; UTECHZONE models attached to the existing record (duplicate guard). Equipment categories with models 134 → 136. Build + validate: 0 errors. Route smoke test: 124 / 124 routes render with 0 console errors; interaction suite passes.

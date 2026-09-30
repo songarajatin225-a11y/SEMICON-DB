@@ -8,6 +8,7 @@
 - **Batch 4** (30 Sep 2026): 54 sources (49 Tier 1, 3 Tier 2 university facility / news pages, 2 Tier 3 directories) found by keyword search on equipment and process terms; 25 companies and 33 products. Company records carry `discovery_keywords` (the search terms that surfaced them), which are indexed for search but are not evidence.
 - **Batch 6** (30 Sep 2026): 37 sources for 11 companies and 26 products (dispensing, wire / die bonding, EFEM and load ports, wafer robots, plasma etch, particle monitoring, glass processing, TC bonders). Same `search_index` access mode; two Tier-2 news / wire releases support existing-company models (Kulicke & Soffa, SEMES).
 - **Batch 7** (30 Sep 2026): 8 sources for 7 companies (Singapore, Malaysia, India, vision); mainly SEMI member-directory, InvestPenang and supplier-directory pages (Tier 2–3) plus one startup news release.
+- **Batch 8** (30 Sep 2026): 25 sources for 8 companies and 18 products (PVD, packaging wet processing, ion implant, AOI, metrology, motion); mostly Tier 1 manufacturer pages and press releases, `search_index` access mode.
 - **2.0 migration** of Batch 1 added **no new external facts**. It restructured the Batch-1 evidence, added an editorial reference taxonomy, and derived relationships from source-backed fields. Every derived link says so.
 
 ## Source tiers (Batch-1 scheme, kept as captured)
