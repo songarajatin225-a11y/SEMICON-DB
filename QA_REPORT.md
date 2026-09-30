@@ -119,3 +119,7 @@ Pipeline changes:
 | Route smoke test | **114 / 114** routes render (adds a Batch-4 company, keyword search “wedge bonder”, Wedge Bonding category, Portugal); 0 console errors; interaction suite passes |
 
 New field `discovery_keywords` on companies: import column `discovery_keywords`, shown as “Found via keywords” on the company overview and included in the search index.
+
+## Batch 5 addendum (30 Sep 2026) — ecosystem widening
+
+15 companies, 26 products and 43 sources; models for NuFlare, 3D-Micromac and ASMPT attached to existing companies (the duplicate guard rejected NuFlare as a new company). Build + validate: 0 errors. Route smoke test: 117 / 117 routes render with 0 console errors; interaction suite passes.

@@ -4,21 +4,21 @@ A source-traced intelligence database of semiconductor equipment companies, prod
 
 **Live site:** https://songarajatin225-a11y.github.io/SEMICON-DB/ · **Legacy single-file atlas (v1):** [`legacy/`](legacy/index.html)
 
-Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages read), Batch 2 (30 Sep 2026, official titles via web search) Batch 3 (30 Sep 2026, small companies and startups) and Batch 4 (30 Sep 2026, keyword-driven discovery) — see below. This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
+Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages read), Batch 2 (30 Sep 2026, official titles via web search) Batch 3 (30 Sep 2026, small companies and startups) Batch 4 (keyword-driven discovery) and Batch 5 (ecosystem widening), both 30 Sep 2026 — see below. This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
 
 ## What's inside
 
 | Entity | Records | Notes |
 |---|---:|---|
-| Companies | 285 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 (16 startups in total) |
-| Product families → models | 329 → 454 | Company → Product family → Model; 375 with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 |
+| Companies | 300 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 (17 startups in total) |
+| Product families → models | 344 → 480 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
-| Relationships | 5,122 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 767 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Relationships | 5,303 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 810 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -60,6 +60,17 @@ Batch 4 searched the web with **equipment and process keywords**, starting with 
 - MEMS and display: memsstar (MEMS vapour etch), Kateeva (OLED inkjet).
 
 Each of these companies stores its **discovery keywords**. They appear on the company page and are indexed by search, so searching “wedge bonder” finds Hesse, West-Bond and TPT. They are a discovery aid, not a claim about the company. Equipment categories with models went from 116 to 129. Candidates with no usable page were skipped (e.g. EDA Industries, Cosmic Equipment, SemiTEq, Maruyama).
+
+## Batch 5 (30 Sep 2026): widening across the ecosystem
+
+Batch 5 followed the keyword approach into neighbouring layers: lapping / polishing, probe cards and probers, power-device test, gas delivery, mask writers, microLED transfer, and the material side (silicon wafers, CMP consumables, FOUPs). It added **15 companies, 26 products and 43 sources**, plus new models for companies already in the database (NuFlare, 3D-Micromac, ASMPT).
+- **Lapping and polishing:** Lapmaster Wolters (Peter Wolters AC microLine), Logitech (PM6, Tribo, Orbis).
+- **Probe and test:** MICRONICS JAPAN, Japan Electronic Materials, UIGREEN (probe cards, probers); TESEC (power-device testers and handlers).
+- **Gas delivery:** HORIBA STEC (mass flow controllers), Fujikin (ultra-pure valves and integrated gas systems).
+- **Masks and microLED:** IMS Nanofabrication (multi-beam mask writer), NuFlare models (EBM-9500, EBM-8000P, MBM-2000); Uniqarta (startup, laser microLED transfer; single 2018 report, LOW), 3D-Micromac microCETI, ASMPT laser mass transfer.
+- **Materials and consumables** (type “Materials/gases”, no equipment category): SUMCO, Siltronic, SK siltron (wafers); FUJIFILM (CMP materials); Entegris (FOUPs, CMP consumables).
+
+Same evidence rule as Batches 2–4: pages found by web search but not read; no specifications. Materials companies are included as supply-chain context only, with company-level evidence. Not covered yet: photoresist makers (JSR, TOK, Shin-Etsu had no usable official page in search), specialty-gas suppliers, ceramic chuck makers and most OSATs.
 
 ## Evidence rules
 
