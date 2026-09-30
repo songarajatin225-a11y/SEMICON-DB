@@ -87,3 +87,23 @@ Fixes made along the way:
 - The importer records the source access mode, the evidence age and laser type codes.
 - Two Batch-1 crystal pullers moved from Epitaxy (A09.10) to Crystal growth (K01), a category Batch 1 did not have. The change is recorded on each record.
 - Advanced-packaging processes now map to the equipment they use: DRIE and plating for TSV; plating and packaging lithography for RDL, WLP and fan-out; bonding for chiplets.
+
+## Batch 3 addendum (30 Sep 2026) — small companies and startups
+
+| Check | Result |
+|---|---|
+| Records added | 68 companies (21 countries, incl. new country Norway), 123 products, 9 startup profiles, 4 customer organisations, 13 customer links, 220 sources (189 Tier 1) |
+| Import validation | All rows accepted. 8 similar-name warnings reviewed and all distinct: they share generic words such as "Engineering", "Instruments", "SET" |
+| Build + `npm run validate` | 0 errors; 833 warnings (362 search-index-only sources, 461 undated sources, 8 inaccessible, 2 thickness-only wafer values) |
+| Duplicate candidates | 14 → 23. The 9 new ones are generic-word name matches (e.g. Toray Engineering ↔ Top Engineering, Excel Instruments ↔ MKS Instruments). They are flagged for review and not merged |
+| Coverage | Processes with equipment 58 → **59 / 61** (ingot grinding & shaping now covered). Equipment categories with models 94 → **116**. Still empty: final wafer cleaning, lead plating & finishing |
+| Route smoke test | **110 / 110** routes render (97 earlier + 13 Batch-3 pages: startup profile, customer tabs, new fab and customer, Norway, startup filter). 0 console or page errors. The SMEE SSA/800 page shows its conflict banner as designed |
+| Interaction suite | Passes: palette, facets, compare, drawer, mobile width, search timings 0.3–2.6 ms |
+| Accessibility | axe-core WCAG 2 A/AA on 16 pages × light/dark (adds a startup profile, a Batch-3 model and a customer tab): **0 violations** |
+
+Pipeline changes:
+- The importer now accepts several sources per row (a `sources[]` array), startup profiles on company rows, and two new entities: `customers` and `customer_links`. Customer links check that the supplier, customer and model exist. `UNDISCLOSED:<description>` maps to the undisclosed-customer record.
+- The build merges startups, customers and customer links from batch files. Batch statistics now include customer links and startups.
+- There is a new HQ-country basis `SUM` ("search-result summary of a cited source, page not read"). Home and Data Quality count it separately from analyst knowledge.
+- Model pages show the title-level evidence callout for any post-Batch-1 record. The startup profile panel now shows founders and maturity.
+- Before publishing, summary-derived wafer sizes were removed from ten application fields and one wafer field, because no specifications are taken from summaries. One name that was not in any source, a "PVT150" row inferred from a size range, was dropped.

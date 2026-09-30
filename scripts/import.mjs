@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 // Import pipeline: RAW (CSV / JSON / Excel-exported CSV) → VALIDATE → NORMALISE → DEDUPLICATE → stage as a batch.
 //
-//   node scripts/import.mjs <file.csv|file.json> --entity companies|models|sources [--batch NAME] [--write] [--allow-duplicates]
+//   node scripts/import.mjs <file.csv|file.json> --entity companies|models|sources|customers|customer_links [--batch NAME] [--write] [--allow-duplicates]
+//
+// JSON rows may carry several sources in a `sources` array ({url,title,type,tier,date,publisher,access,excerpt}); company rows
+// may carry a `startup` object (founders, year, funding, investors, product, trl, latest_news, maturity) that is staged as a
+// startup profile citing the company's sources. Customer links need an existing OEM and customer (import customers first);
+// "UNDISCLOSED:<description>" links to the undisclosed-customer record and keeps the description.
 //
 // Without --write it is a dry run that prints the validation / duplicate report. With --write, accepted rows are
 // appended to data/batches/<NAME>.json in the Batch-1 row format; `npm run build` then merges every batch file
@@ -19,8 +24,9 @@ const args = process.argv.slice(2);
 const file = args.find(a => !a.startsWith("--"));
 const opt = k => { const i = args.indexOf("--" + k); return i >= 0 ? (args[i + 1] && !args[i + 1].startsWith("--") ? args[i + 1] : true) : null; };
 const entity = opt("entity");
-if (!file || !["companies", "models", "sources"].includes(entity)) {
-  console.error("Usage: node scripts/import.mjs <file.csv|file.json> --entity companies|models|sources [--batch NAME] [--write] [--allow-duplicates]");
+const ENTITIES = ["companies", "models", "sources", "customers", "customer_links"];
+if (!file || !ENTITIES.includes(entity)) {
+  console.error(`Usage: node scripts/import.mjs <file.csv|file.json> --entity ${ENTITIES.join("|")} [--batch NAME] [--write] [--allow-duplicates]`);
   process.exit(2);
 }
 const batchName = String(opt("batch") || "batch-" + new Date().toISOString().slice(0, 10));
@@ -49,10 +55,12 @@ const L = JSON.parse(fs.readFileSync(path.join(ROOT, "data/legacy/legacy_snapsho
 const batchDir = path.join(ROOT, "data/batches");
 const batches = fs.existsSync(batchDir) ? fs.readdirSync(batchDir).filter(f => f.endsWith(".json")).map(f => JSON.parse(fs.readFileSync(path.join(batchDir, f), "utf8"))) : [];
 const all = k => [...L[k], ...batches.flatMap(b => b[k] || [])];
-const CO = all("co"), PR = all("pr"), SRC = all("src");
+const CO = all("co"), PR = all("pr"), SRC = all("src"), CU = all("cu"), CR = all("cr"), ST = all("st");
 // Batch-1 taxonomy plus the 2.0 extensions (K wafer manufacturing, L subfab & facilities).
-const TAX = new Set([...L.tax.map(t => t.id), ...TAXONOMY_GROUPS_EXT.map(([k]) => k), ...TAXONOMY_EXT.map(([code]) => code)]);
-const TAX_NAME = Object.fromEntries([...L.tax.map(t => [t.id, t.n]), ...TAXONOMY_EXT.map(([code, , n]) => [code, n])]);
+// Bill-of-material codes (laser source, galvo, …) are accepted where earlier records already use them.
+const BOM = PR.filter(p => /^BOM\d|^SUB-/.test(p.eqid));
+const TAX = new Set([...L.tax.map(t => t.id), ...TAXONOMY_GROUPS_EXT.map(([k]) => k), ...TAXONOMY_EXT.map(([code]) => code), ...BOM.map(p => p.eqid)]);
+const TAX_NAME = Object.fromEntries([...L.tax.map(t => [t.id, t.n]), ...TAXONOMY_EXT.map(([code, , n]) => [code, n]), ...BOM.map(p => [p.eqid, p.eq])]);
 const nextId = (list, prefix, width) => prefix + String(Math.max(0, ...list.map(x => parseInt(String(x.id).replace(/\D/g, ""), 10) || 0)) + 1).padStart(width, "0");
 const COUNTRY = new Map(COUNTRIES.map(([n]) => [n.toLowerCase(), n])); Object.entries(COUNTRY_ALIASES).forEach(([a, n]) => COUNTRY.set(a.toLowerCase(), n));
 const pick = (r, ...ks) => { for (const k of ks) if (r[k] != null && String(r[k]).trim() !== "") return String(r[k]).trim(); return ""; };
@@ -76,26 +84,33 @@ const LASER_CODE = Object.fromEntries(L.lt.map(([code, name]) => [name.toLowerCa
 const newSources = [];   // committed sources (from accepted rows only)
 let pending = [];        // sources proposed by the row currently being validated
 function resolveSources(r, errs) {
-  const ids = pick(r, "source_ids", "sources").split(/[;,\s]+/).filter(Boolean);
-  ids.forEach(id => { if (![...SRC, ...newSources].some(s => s.id === id)) errs.push(`unknown source id ${id}`); });
-  const url = pick(r, "source_url");
-  if (url) {
-    if (!isURL(url)) errs.push(`invalid source_url ${url}`);
-    const date = pick(r, "source_date", "evidence_date", "publication_date");
+  const ids = (Array.isArray(r.sources) ? pick(r, "source_ids") : pick(r, "source_ids", "sources")).split(/[;,\s]+/).filter(Boolean);
+  ids.forEach(id => { if (![...SRC, ...newSources, ...pending].some(s => s.id === id)) errs.push(`unknown source id ${id}`); });
+  // One source from the flat source_* columns, plus any in a JSON `sources` array.
+  const specs = [];
+  if (pick(r, "source_url")) specs.push({ url: pick(r, "source_url"), title: pick(r, "source_title"), publisher: pick(r, "source_publisher", "publisher"), type: pick(r, "source_type"),
+    tier: pick(r, "source_tier"), date: pick(r, "source_date", "evidence_date", "publication_date"), access: pick(r, "source_access"), excerpt: pick(r, "source_excerpt", "excerpt") });
+  (Array.isArray(r.sources) ? r.sources : []).forEach(x => specs.push(Object.fromEntries(Object.entries(x).map(([k, v]) => [k, v == null ? "" : String(v).trim()]))));
+  for (const x of specs) {
+    const url = x.url, date = x.date || "";
+    if (!isURL(url)) { errs.push(`invalid source url ${url}`); continue; }
     if (date && !isDate(date)) errs.push(`source date "${date}" is not ISO (YYYY, YYYY-MM or YYYY-MM-DD)`);
-    const existing = [...SRC, ...newSources].find(s => s.url === url);
-    if (existing) ids.push(existing.id);
-    else { const id = nextId([...SRC, ...newSources], "S", 4); pending.push({ id, url, title: pick(r, "source_title") || url, pub: NA(pick(r, "source_publisher", "publisher")), type: pick(r, "source_type") || "Official website",
-      tier: +pick(r, "source_tier") || 1, date: date || "UNKNOWN", acc: pick(r, "source_access") || "Y", exc: NA(pick(r, "source_excerpt", "excerpt")), age: ageOf(date), note: `Imported ${batchName}`, used: 1 }); ids.push(id); }
-    const acc = pick(r, "source_access"); if (acc && !ACCESS.includes(acc)) errs.push(`source_access must be one of ${ACCESS}`);
+    const acc = x.access || pick(r, "source_access") || "Y"; if (!ACCESS.includes(acc)) errs.push(`source access must be one of ${ACCESS}`);
+    const existing = [...SRC, ...newSources, ...pending].find(s => s.url === url);
+    if (existing) { ids.push(existing.id); continue; }
+    const id = nextId([...SRC, ...newSources, ...pending], "S", 4);
+    pending.push({ id, url, title: x.title || url, pub: NA(x.publisher), type: x.type || "Official website", tier: +x.tier || 1, date: date || "UNKNOWN", acc, exc: NA(x.excerpt),
+      age: ageOf(date), note: `Imported ${batchName}`, used: 1 });
+    ids.push(id);
   }
-  if (!ids.length) errs.push("no source (source_ids or source_url required — records without evidence are not accepted)");
+  if (!ids.length) errs.push("no source (source_ids, source_url or sources[] required — records without evidence are not accepted)");
   return [...new Set(ids)];
 }
 
 // ---------------------------------------------------------------- VALIDATE + NORMALISE + DEDUPLICATE
 const accepted = [], rejected = [], warnings = [];
-const staged = { co: [], pr: [], src: [] };
+const staged = { co: [], pr: [], src: [], st: [], cu: [], cr: [] };
+const STATUS = ["CONFIRMED", "PROBABLE", "UNVERIFIED"];
 input.forEach((r, i) => {
   const errs = [], warns = [], line = i + 2;
   pending = [];
@@ -123,8 +138,15 @@ input.forEach((r, i) => {
       staged.co.push({ id, n: name, c: country || "N/A", city: NA(pick(r, "city")), t: pick(r, "company_type", "type") || "Equipment OEM", lv: pick(r, "level") || "LV1", cats: cats.join(";") || "N/A",
         eq: NA(pick(r, "primary_equipment")), f: NA(pick(r, "description", "focus")), st: ver, cs: { HIGH: 90, MEDIUM: 70, LOW: 50, UNVERIFIED: 20 }[cl], cl, cc: "UNCLASSIFIED", ccb: "No ranking or revenue evidence",
         own: NA(pick(r, "ownership")), ex: NA(pick(r, "exchange")), tk: NA(pick(r, "ticker")), web: NA(web), rev: "N/A", rfy: "N/A", rorig: "N/A", emp: NA(pick(r, "employees")), fd: NA(pick(r, "founded")),
-        par: NA(pick(r, "parent")), subs: "N/A", ind: pick(r, "india_presence") || "Not documented", cn: "N/A", jp: "N/A", kr: "N/A", tw: "N/A", src: src.join(";"), cand: "N/A", why: "N/A", note: pick(r, "notes") || `Imported ${batchName}`,
-        evd: pick(r, "evidence_depth").toUpperCase() || "CONTENT", cb: country ? (pick(r, "country_basis").toUpperCase() || "SRC") : "KNOW", semi: "N/A" }); }
+        par: NA(pick(r, "parent")), subs: NA(pick(r, "subsidiaries")), ind: pick(r, "india_presence") || "Not documented", cn: "N/A", jp: "N/A", kr: "N/A", tw: "N/A", src: src.join(";"), cand: "N/A", why: "N/A", note: pick(r, "notes") || `Imported ${batchName}`,
+        evd: pick(r, "evidence_depth").toUpperCase() || "CONTENT", cb: country ? (pick(r, "country_basis").toUpperCase() || "SRC") : "KNOW", semi: "N/A" });
+      const s = r.startup;
+      if (s && typeof s === "object") {
+        const sv = k => NA(s[k] == null ? "" : String(s[k]).trim());
+        staged.st.push({ company_id: id, company: name, country: country || "N/A", technology: NA(pick(r, "primary_equipment")), founders: sv("founders"), year: sv("year"), funding: sv("funding"),
+          investors: sv("investors"), product: sv("product"), trl: sv("trl"), customers: sv("customers"), partnerships: sv("partnerships"), patents: "N/A", website: NA(web),
+          latest_funding_date: sv("latest_funding_date"), latest_news: sv("latest_news"), maturity: sv("maturity"), source_ids: src.join(";"), verification_status: ver, confidence_level: cl });
+      } }
   } else if (entity === "models") {
     const mRef = pick(r, "manufacturer", "company", "company_id");
     const co = [...CO, ...staged.co].find(c => c.id === mRef || normName(c.n) === normName(mRef));
@@ -146,9 +168,44 @@ input.forEach((r, i) => {
         ls: NA(pick(r, "laser_source")), pd: NA(pick(r, "pulse_duration")), rr: NA(pick(r, "repetition_rate")), pe: NA(pick(r, "pulse_energy")), lmat: NA(pick(r, "material")), scan: "N/A", motion: "N/A", dims: NA(pick(r, "footprint")), thk: "N/A",
         note: pick(r, "notes") || `Imported ${batchName}`, specs: [] });
       const lt = pick(r, "laser_type"); if (lt) staged.pr[staged.pr.length - 1].ltc = lt.split(/;\s*/).map(x => LASER_CODE[x.toLowerCase()]).filter(Boolean).join(";") || "N/A"; }
+  } else if (entity === "customers") {
+    const name = pick(r, "name", "customer", "customer_name");
+    if (!name) errs.push("customer name cannot be blank");
+    const cRaw = pick(r, "country"); const country = cRaw && cRaw !== "N/A" ? COUNTRY.get(cRaw.toLowerCase()) : null;
+    if (cRaw && cRaw !== "N/A" && !country) errs.push(`country "${cRaw}" does not map to the country reference`);
+    const dup = [...CU, ...staged.cu].find(c => normName(c.customer_name) === normName(name));
+    if (dup) errs.push(`duplicate of existing customer ${dup.customer_id} (${dup.customer_name})`);
+    const src = resolveSources(r, errs);
+    if (!errs.length) {
+      const id = "CU" + String(Math.max(0, ...[...CU, ...staged.cu].map(c => +c.customer_id.slice(2)).filter(n => n < 900)) + 1).padStart(3, "0");
+      staged.cu.push({ customer_id: id, customer_name: name, customer_type: pick(r, "type", "customer_type") || "N/A", country: country || "N/A", key_sites: NA(pick(r, "sites", "key_sites")),
+        source_ids: src.join(";"), relationships: 0, confirmed: 0 });
+    }
+  } else if (entity === "customer_links") {
+    const oRef = pick(r, "oem", "manufacturer", "company");
+    const co = [...CO, ...staged.co].find(c => c.id === oRef || normName(c.n) === normName(oRef));
+    if (!co) errs.push(`supplier "${oRef}" not found — import the company first`);
+    const cRef = pick(r, "customer", "customer_id");
+    const undisclosed = /^UNDISCLOSED:/i.test(cRef);
+    const cu = undisclosed ? CU.find(c => c.customer_id === "CU900") : [...CU, ...staged.cu].find(c => c.customer_id === cRef || normName(c.customer_name) === normName(cRef));
+    if (!cu) errs.push(`customer "${cRef}" not found — import it with --entity customers first`);
+    const mdl = pick(r, "model", "model_number");
+    const pr = co && mdl ? [...PR, ...staged.pr].find(p => p.co === co.id && String(p.mdl).toLowerCase() === mdl.toLowerCase()) : null;
+    if (mdl && co && !pr) errs.push(`model "${mdl}" not found for ${co.n}`);
+    const st = (pick(r, "status") || "UNVERIFIED").toUpperCase(); if (!STATUS.includes(st)) errs.push(`status must be one of ${STATUS}`);
+    const cl = pick(r, "confidence").toUpperCase() || "LOW"; if (!CONF.includes(cl)) errs.push(`confidence must be one of ${CONF}`);
+    const date = pick(r, "date"); if (date && !isDate(date)) errs.push(`date "${date}" is not ISO`);
+    const src = resolveSources(r, errs);
+    if (co && cu && [...CR, ...staged.cr].some(x => x.co === co.id && x.cu === cu.customer_id && x.pid === (pr ? pr.id : "N/A") && (!undisclosed || x.cust === cRef.slice(12).trim()))) errs.push("duplicate customer link");
+    if (!errs.length) {
+      const id = "CR" + String(Math.max(0, ...[...CR, ...staged.cr].map(x => +x.id.slice(2))) + 1).padStart(3, "0");
+      staged.cr.push({ id, co: co.id, oem: co.n, pid: pr ? pr.id : "N/A", prod: pr ? `${pr.fam} ${pr.mdl === "N/A" ? "" : pr.mdl}`.trim() : "N/A", cu: cu.customer_id,
+        cust: undisclosed ? cRef.slice(12).trim() : cu.customer_name, cc: undisclosed ? "N/A" : cu.country, loc: NA(pick(r, "location")), fab: NA(pick(r, "fab")),
+        ps: pr ? pr.ps : "N/A", app: NA(pick(r, "application") || (pr ? pr.app : "")), st, stage: pick(r, "stage") || "N/A", ev: pick(r, "evidence") || "N/A", src: src.join(";"), date: date || "N/A", cl });
+    }
   }
   if (!errs.length) newSources.push(...pending);
-  (errs.length ? rejected : accepted).push({ line, name: pick(r, "name", "company", "family", "title", "url"), errors: errs, warnings: warns });
+  (errs.length ? rejected : accepted).push({ line, name: pick(r, "name", "company", "family", "title", "url", "oem"), errors: errs, warnings: warns });
   warns.forEach(w => warnings.push(`line ${line}: ${w}`));
 });
 staged.src.push(...newSources);
@@ -159,7 +216,7 @@ warnings.forEach(w => console.log(`  WARN ${w}`));
 if (opt("write") && accepted.length) {
   fs.mkdirSync(batchDir, { recursive: true });
   const cur = fs.existsSync(BATCH_FILE) ? JSON.parse(fs.readFileSync(BATCH_FILE, "utf8")) : { batch: batchName, created: new Date().toISOString().slice(0, 10), co: [], pr: [], src: [] };
-  ["co", "pr", "src"].forEach(k => (cur[k] = [...(cur[k] || []), ...staged[k]]));
+  Object.keys(staged).forEach(k => { if (staged[k].length || cur[k]) cur[k] = [...(cur[k] || []), ...staged[k]]; });
   fs.writeFileSync(BATCH_FILE, JSON.stringify(cur, null, 1));
   console.log(`Staged into ${path.relative(ROOT, BATCH_FILE)}. Run \`npm run build\` to link, quality-check and publish.`);
 } else if (!opt("write")) console.log("Dry run — nothing written. Re-run with --write to stage accepted rows.");

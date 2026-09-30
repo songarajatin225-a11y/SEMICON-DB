@@ -10,7 +10,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## companies
 
-192 records.
+260 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -27,33 +27,33 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `is_startup` | Startup flag (Batch-1 startup register or company type). | boolean | — | `false` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `hq` | Headquarters object: country, country_id, country_basis, city, region. | object | — | `{"country":"Netherlands","country_id":"CTY-NL","country_basis":"Ana…` | Required | Record `source_ids` (Tier-4 alone never confirms) | Mapped to the country reference (ISO 3166 alpha-2); aliases (USA, Korea, UK) resolved |
 | `ownership` | Public / Private / Subsidiary / State-linked / JV. | string / null | — | `Public` | Optional | Record `source_ids` (Tier-4 alone never confirms) | null when not captured |
-| `exchange` | Stock exchange of listing. | null / string | — | `NASDAQ` | Optional (16% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `ticker` | Ticker symbol. | null / string | — | `AMAT` | Optional (19% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `exchange` | Stock exchange of listing. | null / string | — | `NASDAQ` | Optional (15% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `ticker` | Ticker symbol. | null / string | — | `AMAT` | Optional (17% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `website` | Official website URL. | string / null | — | `https://www.asml.com` | Optional | Record `source_ids` (Tier-4 alone never confirms) | Must parse as http(s) URL |
-| `founded` | Founding year as stated. | null / string | — | `2001` | Optional (5% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
-| `employees` | Employee count as stated, with date. | null / string | — | `~36,500 (26 Oct 2025)` | Optional (4% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
+| `founded` | Founding year as stated. | null / string | — | `2001` | Optional (13% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
+| `employees` | Employee count as stated, with date. | null / string | — | `~36,500 (26 Oct 2025)` | Optional (3% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
 | `ceo` | Chief executive (not captured in Batch 1). | null | — | `` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `parent_company` | Parent company where documented. | null / string | — | `Hitachi, Ltd.` | Optional (7% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `subsidiaries_brands` | Brands / subsidiaries where documented. | null / string | — | `SPTS Technologies` | Optional (5% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `description` | Business focus / definition. | string / null | — | `EUV (incl. High-NA EXE) and DUV lithography` | Optional (97% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `primary_equipment` | Equipment the source confirms the company offers. | string / null | — | `EUV; DUV` | Optional (81% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
+| `parent_company` | Parent company where documented. | null / string | — | `Hitachi, Ltd.` | Optional (8% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `subsidiaries_brands` | Brands / subsidiaries where documented. | null / string | — | `SPTS Technologies` | Optional (4% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `description` | Business focus / definition. | string / null | — | `EUV (incl. High-NA EXE) and DUV lithography` | Optional (72% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `primary_equipment` | Equipment the source confirms the company offers. | string / null | — | `EUV; DUV` | Optional (86% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
 | `equipment_ids` | Source-confirmed equipment categories (EQP ids). | array | — | `["EQP-A01.01","EQP-A01.02"]` | Optional | Derived — inherits the sources of the linked records | Only confirmed categories; analyst candidates are kept in candidate_categories |
-| `component_class_ids` | Linked record ids. | array | — | `["CMPN-000010"]` | Optional (17% populated) | Derived — inherits the sources of the linked records | — |
+| `component_class_ids` | Linked record ids. | array | — | `["CMPN-000010"]` | Optional (13% populated) | Derived — inherits the sources of the linked records | — |
 | `candidate_categories` | Analyst-knowledge categories — unverified, never used for filtering or counts. | null / string | — | `A19;A10;A21;A26` | Optional | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `candidate_basis` | Label explaining candidate categories are unverified. | null / string | — | `Analyst knowledge — unverified; not used for filtering` | Optional (17% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `candidate_basis` | Label explaining candidate categories are unverified. | null / string | — | `Analyst knowledge — unverified; not used for filtering` | Optional (13% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `market_class` | GLOBAL_LEADER / TIER_2 / REGIONAL / EMERGING / UNCLASSIFIED, assigned only from a published ranking or revenue. | string | GLOBAL_LEADER, TIER_2, UNCLASSIFIED, REGIONAL, EMERGING | `GLOBAL_LEADER` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `market_class_basis` | Evidence behind market_class (ranking source or revenue). | string | — | `Ranked: S0004 top-5 2025` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `revenue` | Reported revenue converted to USD m with fiscal year and original currency; or a derived range. | object / null | — | `{"usd_m":36870.5,"fiscal_year":"FY2025 (Jan-Dec 2025)","reported":"…` | Optional | Record `source_ids` (Tier-4 alone never confirms) | Fiscal years kept separate |
-| `semiconductor_revenue` | Semiconductor revenue as stated. | null / string | — | `USD 20,798 m (FY2025 (Oct 2024-Oct 2025), S0139)` | Optional (2% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
+| `semiconductor_revenue` | Semiconductor revenue as stated. | null / string | — | `USD 20,798 m (FY2025 (Oct 2024-Oct 2025), S0139)` | Optional (1% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
 | `india` | India presence summary and per-record facility/location/status with sources. | object | — | `{"summary":"Partnership (MoU)","has_presence":true,"records":[{"typ…` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `presence` | Presence signals in China/Japan/Korea/Taiwan from Batch-1 fields. | object | — | `{"china":null,"japan":"Customer relationship","korea":"Customer rel…` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `startup` | Startup profile (funding, investors, TRL) where captured. | null / object | — | `{"founders":null,"year":"2016","funding":"Series D up to USD 380M (…` | Optional (3% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `financials` | Financial facts per fiscal year with currency, USD conversion and source. | array | — | `[{"fiscal_year":"FY2025 (Jan-Dec 2025)","metric":"Revenue","currenc…` | Optional (21% populated) | Record `source_ids` (Tier-4 alone never confirms) | Fiscal years never mixed |
+| `startup` | Startup profile (funding, investors, TRL) where captured. | null / object | — | `{"founders":null,"year":"2016","funding":"Series D up to USD 380M (…` | Optional (5% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `financials` | Financial facts per fiscal year with currency, USD conversion and source. | array | — | `[{"fiscal_year":"FY2025 (Jan-Dec 2025)","metric":"Revenue","currenc…` | Optional (16% populated) | Record `source_ids` (Tier-4 alone never confirms) | Fiscal years never mixed |
 | `verification` | VERIFIED / PARTIALLY_VERIFIED / UNVERIFIED (Batch-1 evidence rules). | string | VERIFIED, PARTIALLY_VERIFIED, UNVERIFIED | `VERIFIED` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `confidence` | Confidence level (HIGH/MEDIUM/LOW/UNVERIFIED) and score where recorded. | object | — | `{"score":95,"level":"HIGH"}` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `evidence_depth` | How deeply the source was read (CONTENT, TITLE, TIER4, INTERNAL). | string | CONTENT, TITLE, TIER4, INTERNAL | `CONTENT` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `rationale` | Why the record was included / caveats. | null / string | — | `Title-level evidence does not name the equipment category` | Optional (21% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `notes` | Analyst notes from capture. | string / null | — | `Top-5 WFE vendor 2025 (S0004); EXE:5200B at SK hynix M16 (S0133)` | Optional (23% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `evidence_depth` | How deeply the source was read (CONTENT, TITLE, TIER4, INTERNAL). | string | CONTENT, TITLE, TIER4, INTERNAL, SEARCH_SUMMARY | `CONTENT` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `rationale` | Why the record was included / caveats. | null / string | — | `Title-level evidence does not name the equipment category` | Optional (16% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `notes` | Analyst notes from capture. | string / null | — | `Top-5 WFE vendor 2025 (S0004); EXE:5200B at SK hynix M16 (S0133)` | Optional (43% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `source_ids` | Numbered sources supporting the record (SRC ids). | array | — | `["SRC-000004","SRC-000024","SRC-000133","SRC-000142","SRC-000143","…` | Required for facts | Derived — inherits the sources of the linked records | — |
 | `freshness` | Recent / Needs Review / Stale / Unknown from the freshest supporting source. | string | Recent, Needs Review, Stale, Unknown | `Recent` | Required | System-generated | — |
 | `quality_state` | VERIFIED / PARTIALLY_VERIFIED / UNVERIFIED / CONFLICTING / OUTDATED — one state per record. | string | VERIFIED, OUTDATED, PARTIALLY_VERIFIED, CONFLICTING, UNVERIFIED | `VERIFIED` | Required | System-generated | CONFLICTING > OUTDATED > verification |
@@ -62,7 +62,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## product_families
 
-241 records.
+309 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -82,7 +82,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## models
 
-298 records.
+421 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -99,24 +99,24 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `equipment_id` | Equipment category (EQP id). | string / null | — | `EQP-C01.03` | Optional | Record `source_ids` (Tier-4 alone never confirms) | Must resolve |
 | `equipment_code` | Batch-1 taxonomy / BOM code of the record. | string | — | `C01.03` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `equipment_label` | Equipment category label as captured. | string | — | `Stealth Dicing` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `category_group` | Taxonomy group letter (A–L) or COMPONENT. | string | C, F, COMPONENT, A, D, I, B, J, K, L, G | `C` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `segment` | Front-End / Back-End / Test / Advanced Packaging / Wafer Manufacturing / Display / Automation & Facilities / Component. | string | Back-End, Front-End, Component, Advanced Packaging, Automation & Facilities, Display, Test, Wafer Manufacturing | `Back-End` | Required | System-generated | Derived from equipment code |
+| `category_group` | Taxonomy group letter (A–L) or COMPONENT. | string | C, F, COMPONENT, A, D, I, B, J, K, L, G, E | `C` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `segment` | Front-End / Back-End / Test / Advanced Packaging / Wafer Manufacturing / Display / Automation & Facilities / Component. | string | Back-End, Front-End, Component, Advanced Packaging, Automation & Facilities, Display, Test, Wafer Manufacturing, Other | `Back-End` | Required | System-generated | Derived from equipment code |
 | `market_segment` | Batch-1 market segment label. | string | Back-End/Packaging, Power Semiconductor, Component, Wafer Fab, Advanced Packaging, Display/MicroLED, Mask/Reticle, Factory Automation, N/A | `Back-End/Packaging` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `is_component` | True for component products (laser sources, galvos, stages, RF generators…). | boolean | — | `false` | Always present | System-generated | — |
-| `component_class_id` | Component class (CMPN id) for component products. | null / string | — | `CMPN-000010` | Optional (11% populated) | Record `source_ids` (Tier-4 alone never confirms) | Mapped from Batch-1 BOM code |
+| `component_class_id` | Component class (CMPN id) for component products. | null / string | — | `CMPN-000010` | Optional (8% populated) | Record `source_ids` (Tier-4 alone never confirms) | Mapped from Batch-1 BOM code |
 | `legacy_process_step` | Batch-1 value kept for traceability. | string / null | — | `PS13` | Optional (98% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `legacy_process_name` | Denormalised name for display. | string / null | — | `Dicing` | Optional (50% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `legacy_process_name` | Denormalised name for display. | string / null | — | `Dicing` | Optional (35% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `process_ids` | Processes (PRS ids). | array | — | `["PRS-032"]` | Optional | Derived — inherits the sources of the linked records | Derived: equipment category → process reference |
 | `technology_text` | Value exactly as stated by the source (verbatim). | string | — | `Stealth Dicing (internal modification) with Hamamatsu SD engine` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `technology_ids` | Technologies (TEC ids). | array | — | `["TEC-060","TEC-061","TEC-075"]` | Optional | Derived — inherits the sources of the linked records | Derived from category and source-stated laser types |
 | `technology_basis` | Technology links split by basis: from_category (derived) and from_laser_codes (source-stated). | object | — | `{"from_category":["TEC-061"],"from_laser_codes":["TEC-060","TEC-061…` | Always present | Derived — inherits the sources of the linked records | — |
-| `application_text` | Value exactly as stated by the source (verbatim). | string / null | — | `Wafer singulation (MEMS, memory, LED)` | Optional (99% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `application_text` | Value exactly as stated by the source (verbatim). | string / null | — | `Wafer singulation (MEMS, memory, LED)` | Optional (100% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `application_ids` | Applications (APP ids). | array | — | `["APP-005","APP-014","APP-016"]` | Optional | Derived — inherits the sources of the linked records | Derived: text match on source-stated application |
-| `material_text` | Value exactly as stated by the source (verbatim). | null / string | — | `SiC ingot` | Optional (8% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `material_text` | Value exactly as stated by the source (verbatim). | null / string | — | `SiC ingot` | Optional (7% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `material_ids` | Materials (MAT ids). | array | — | `["MAT-003"]` | Optional | Derived — inherits the sources of the linked records | Derived: text match on source-stated material/wafer/application |
 | `wafer` | Wafer/substrate diameter: source_value, sizes_mm, range_mm. | null / object | — | `{"source_value":"300 mm (per S0054 model list)","sizes_mm":[300],"n…` | Optional | Record `source_ids` (Tier-4 alone never confirms) | Diameter parsed from source wording; inch → mm (2→50, 3→75, 4→100, 5→125, 6→150, 8→200, 12→300, 18→450); ranges kept as range_mm; source wording kept in source_value |
 | `thickness` | Thickness / format as stated. | null / string | — | `Ingot up to 40 mm` | Optional (2% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
-| `throughput` | Throughput as stated (UPH, mm/s …). | null / string | — | `Dicing >=800 mm/s` | Optional (3% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim; units kept |
+| `throughput` | Throughput as stated (UPH, mm/s …). | null / string | — | `Dicing >=800 mm/s` | Optional (2% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim; units kept |
 | `accuracy` | Accuracy / repeatability as stated. | null / string | — | `0.002 mm / 210 mm (positioning)` | Optional (2% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim; units kept |
 | `footprint` | Footprint / dimensions as stated. | null / string | — | `1,640 x 1,340 x 1,800 mm` | Optional (1% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
 | `motion` | Motion system description as stated. | null / string | — | `2-axis, 300 x 300 mm (Tier 3)` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
@@ -124,10 +124,10 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `specs` | Stated specifications: parameter, value, unit, source_value, source_ids, verification, claim_type. | array | — | `[{"parameter":"Max ingot thickness","value":40,"unit":"mm","source_…` | Optional | Record `source_ids` (Tier-4 alone never confirms) | Numbers parsed; wording kept |
 | `lifecycle` | status (Announced/Development/Commercial/Active/Limited/Legacy/Discontinued/Unknown), maturity, evidence, launch_year, eol_date, replacement_id. | object | — | `{"status":"Active","legacy_status":"ACTIVE","maturity":"Commercial"…` | Required | Record `source_ids` (Tier-4 alone never confirms) | Mapped from Batch-1 status |
 | `price_public` | Publicly reported price; labelled with tier/estimate flags as captured. | null / string | — | `~KRW 600B / ~USD 450M (ESTIMATE, Tier 3 media)` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
-| `teal_portfolio` | TEAL portfolio area the record maps to (Batch-1 analysis). | string / null | — | `Laser Dicing` | Optional (26% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `notes` | Analyst notes from capture. | null / string | — | `Launch article 2018 (source VERY_STALE); current availability not r…` | Optional (49% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `reclassified` | — | null / object | — | `{"from_code":"A09.10","to_code":"K01","reason":"Crystal puller: Bat…` | Optional (1% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `batch` | — | string | Batch 1, Batch 2 | `Batch 1` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `teal_portfolio` | TEAL portfolio area the record maps to (Batch-1 analysis). | string / null | — | `Laser Dicing` | Optional (19% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `notes` | Analyst notes from capture. | null / string | — | `Launch article 2018 (source VERY_STALE); current availability not r…` | Optional (64% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `reclassified` | — | null / object | — | `{"from_code":"A09.10","to_code":"K01","reason":"Crystal puller: Bat…` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `batch` | — | string | Batch 1, Batch 2, Batch 3 | `Batch 1` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `verification` | VERIFIED / PARTIALLY_VERIFIED / UNVERIFIED (Batch-1 evidence rules). | string | VERIFIED, PARTIALLY_VERIFIED, UNVERIFIED | `VERIFIED` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `confidence` | Confidence level (HIGH/MEDIUM/LOW/UNVERIFIED) and score where recorded. | object | — | `{"level":"HIGH"}` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `source_ids` | Numbered sources supporting the record (SRC ids). | array | — | `["SRC-000054","SRC-000053"]` | Required for facts | Derived — inherits the sources of the linked records | — |
@@ -158,10 +158,10 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `technology_ids` | Technologies (TEC ids). | array | — | `["TEC-001"]` | Optional | Derived — inherits the sources of the linked records | Derived from category and source-stated laser types |
 | `typical_subsystem_ids` | Linked record ids. | array | — | `["SUB-002","SUB-003","SUB-008","SUB-011","SUB-013","SUB-014","SUB-0…` | Optional (71% populated) | Derived — inherits the sources of the linked records | — |
 | `subsystem_basis` | Label: typical subsystems are a generic reference. | string | Generic architecture reference (editorial), not a statement about any specific tool | `Generic architecture reference (editorial), not a statement about a…` | Always present | Reference / derived | — |
-| `company_ids` | Linked record ids. | array | — | `["CMP-000004","CMP-000006","CMP-000007","CMP-000067","CMP-000109"]` | Optional (35% populated) | Derived — inherits the sources of the linked records | — |
-| `model_ids` | Linked record ids. | array | — | `["MDL-000110","MDL-000121","MDL-000238","MDL-000239"]` | Optional (36% populated) | Derived — inherits the sources of the linked records | — |
-| `company_ids_incl_children` | Companies confirmed on this node or any sub-category. | array | — | `["CMP-000004","CMP-000006","CMP-000007","CMP-000067","CMP-000109","…` | Optional (39% populated) | Derived — inherits the sources of the linked records | — |
-| `model_ids_incl_children` | Models on this node or any sub-category. | array | — | `["MDL-000110","MDL-000121","MDL-000238","MDL-000239","MDL-000093","…` | Optional (41% populated) | Derived — inherits the sources of the linked records | — |
+| `company_ids` | Linked record ids. | array | — | `["CMP-000004","CMP-000006","CMP-000007","CMP-000067","CMP-000109"]` | Optional (48% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids` | Linked record ids. | array | — | `["MDL-000110","MDL-000121","MDL-000238","MDL-000239"]` | Optional (45% populated) | Derived — inherits the sources of the linked records | — |
+| `company_ids_incl_children` | Companies confirmed on this node or any sub-category. | array | — | `["CMP-000004","CMP-000006","CMP-000007","CMP-000067","CMP-000109","…` | Optional (53% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids_incl_children` | Models on this node or any sub-category. | array | — | `["MDL-000110","MDL-000121","MDL-000238","MDL-000239","MDL-000093","…` | Optional (50% populated) | Derived — inherits the sources of the linked records | — |
 | `child_ids` | Linked record ids. | array | — | `["EQP-A01","EQP-A02","EQP-A03","EQP-A04","EQP-A05","EQP-A06","EQP-A…` | Optional (6% populated) | Derived — inherits the sources of the linked records | — |
 | `see_also` | Related nodes (2.0 extension ↔ Batch-1 nodes carrying records). | array | — | `["EQP-A09.10"]` | Optional (3% populated) | Reference / derived | — |
 | `origin` | Batch-1 taxonomy or 2.0 extension. | string | Batch-1 taxonomy, 2.0 taxonomy extension | `Batch-1 taxonomy` | Always present | Reference / derived | — |
@@ -192,8 +192,8 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `equipment_ids` | Source-confirmed equipment categories (EQP ids). | array | — | `["EQP-K01"]` | Optional | Derived — inherits the sources of the linked records | Only confirmed categories; analyst candidates are kept in candidate_categories |
 | `technology_ids` | Technologies (TEC ids). | array | — | `["TEC-058","TEC-065"]` | Optional | Derived — inherits the sources of the linked records | Derived from category and source-stated laser types |
 | `material_ids` | Materials (MAT ids). | array | — | `["MAT-001","MAT-003","MAT-004","MAT-005","MAT-006","MAT-009"]` | Optional | Derived — inherits the sources of the linked records | Derived: text match on source-stated material/wafer/application |
-| `model_ids` | Linked record ids. | array | — | `["MDL-000116","MDL-000117","MDL-000273","MDL-000274","MDL-000275"]` | Optional (95% populated) | Derived — inherits the sources of the linked records | — |
-| `company_ids` | Linked record ids. | array | — | `["CMP-000202","CMP-000184","CMP-000194"]` | Optional (95% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids` | Linked record ids. | array | — | `["MDL-000116","MDL-000117","MDL-000273","MDL-000274","MDL-000275","…` | Optional (97% populated) | Derived — inherits the sources of the linked records | — |
+| `company_ids` | Linked record ids. | array | — | `["CMP-000202","CMP-000215","CMP-000239","CMP-000184","CMP-000194"]` | Optional (97% populated) | Derived — inherits the sources of the linked records | — |
 | `content_basis` | Label stating which content is editorial vs source-backed. | string | Editorial reference (generic process description; not source-traced) | `Editorial reference (generic process description; not source-traced)` | Always present | Editorial reference — labelled, no company claim | — |
 
 ## technologies
@@ -212,8 +212,8 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `description` | Business focus / definition. | string | — | `Projection lithography at 13.5 nm wavelength using reflective optic…` | Always present | Editorial reference — labelled, no company claim | — |
 | `equipment_ids` | Source-confirmed equipment categories (EQP ids). | array | — | `["EQP-A01.01"]` | Optional | Derived — inherits the sources of the linked records | Only confirmed categories; analyst candidates are kept in candidate_categories |
 | `process_ids` | Processes (PRS ids). | array | — | `["PRS-018"]` | Optional | Derived — inherits the sources of the linked records | Derived: equipment category → process reference |
-| `model_ids` | Linked record ids. | array | — | `["MDL-000093","MDL-000094","MDL-000120"]` | Optional (76% populated) | Derived — inherits the sources of the linked records | — |
-| `company_ids` | Linked record ids. | array | — | `["CMP-000001","CMP-000182","CMP-000027"]` | Optional (77% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids` | Linked record ids. | array | — | `["MDL-000093","MDL-000094","MDL-000120"]` | Optional (84% populated) | Derived — inherits the sources of the linked records | — |
+| `company_ids` | Linked record ids. | array | — | `["CMP-000001","CMP-000182","CMP-000027"]` | Optional (89% populated) | Derived — inherits the sources of the linked records | — |
 | `content_basis` | Label stating which content is editorial vs source-backed. | string | Editorial reference; company/model links derived from source-backed categories and laser codes | `Editorial reference; company/model links derived from source-backed…` | Always present | Editorial reference — labelled, no company claim | — |
 
 ## materials
@@ -229,8 +229,8 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `material_class` | Material class. | string | Substrate, Gas, Chemical, Deposition material, CMP consumable, Packaging material | `Substrate` | Always present | Reference / derived | — |
 | `description` | Business focus / definition. | string | — | `Mainstream single-crystal semiconductor substrate.` | Always present | Editorial reference — labelled, no company claim | — |
 | `process_ids` | Processes (PRS ids). | array | — | `["PRS-001","PRS-002","PRS-003","PRS-004","PRS-005","PRS-006","PRS-0…` | Optional | Derived — inherits the sources of the linked records | Derived: equipment category → process reference |
-| `model_ids` | Linked record ids. | array | — | `["MDL-000027","MDL-000044","MDL-000064","MDL-000090","MDL-000116","…` | Optional (17% populated) | Derived — inherits the sources of the linked records | — |
-| `company_ids` | Linked record ids. | array | — | `["CMP-000141","CMP-000119","CMP-000177","CMP-000040","CMP-000184","…` | Optional (17% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids` | Linked record ids. | array | — | `["MDL-000027","MDL-000044","MDL-000064","MDL-000090","MDL-000116","…` | Optional (19% populated) | Derived — inherits the sources of the linked records | — |
+| `company_ids` | Linked record ids. | array | — | `["CMP-000141","CMP-000119","CMP-000177","CMP-000040","CMP-000184","…` | Optional (19% populated) | Derived — inherits the sources of the linked records | — |
 | `supplier_company_ids` | Linked record ids. | array | — | `` | Optional (0% populated) | Derived — inherits the sources of the linked records | — |
 | `grade_purity` | Material grade/purity (not captured). | null | — | `` | Optional (0% populated) | Reference / derived | — |
 | `safety_class` | Material safety class (not captured). | null | — | `` | Optional (0% populated) | Reference / derived | — |
@@ -249,8 +249,8 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `slug` | Stable machine name of a reference record. | string | — | `logic` | Always present | System-generated | kebab-case |
 | `name` | Display name as stated by the source. | string | — | `Logic / foundry` | Required | Reference / derived | Trimmed; original capitalisation kept |
 | `group` | Application group. | string | Logic, Memory, Analog & power, RF, MEMS & sensors, Photonics & display, Packaging, End market | `Logic` | Always present | Reference / derived | — |
-| `model_ids` | Linked record ids. | array | — | `["MDL-000056","MDL-000057","MDL-000058","MDL-000082","MDL-000092","…` | Optional (90% populated) | Derived — inherits the sources of the linked records | — |
-| `company_ids` | Linked record ids. | array | — | `["CMP-000014","CMP-000002","CMP-000038","CMP-000001","CMP-000020","…` | Optional (90% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids` | Linked record ids. | array | — | `["MDL-000056","MDL-000057","MDL-000058","MDL-000082","MDL-000092","…` | Optional (95% populated) | Derived — inherits the sources of the linked records | — |
+| `company_ids` | Linked record ids. | array | — | `["CMP-000014","CMP-000002","CMP-000038","CMP-000001","CMP-000020","…` | Optional (95% populated) | Derived — inherits the sources of the linked records | — |
 | `link_basis` | How model links to this record were derived. | string | Derived: text match on source-stated application / technology fields | `Derived: text match on source-stated application / technology fields` | Always present | Reference / derived | — |
 
 ## subsystems
@@ -307,7 +307,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## suppliers
 
-192 records.
+260 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -316,14 +316,14 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `country` | Country name. | string / null | — | `Netherlands` | Optional (98% populated) | Record `source_ids` (Tier-4 alone never confirms) | Country reference |
 | `supplier_types` | Normalised supplier roles (OEM vs subsystem/component/materials/service…). | array | — | `["Equipment OEM"]` | Required | System-generated | Mapped from company_type |
 | `company_type` | Batch-1 company type. | string | — | `Equipment OEM` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `component_class_ids` | Linked record ids. | array | — | `["CMPN-000010"]` | Optional (22% populated) | Derived — inherits the sources of the linked records | — |
-| `subsystem_ids` | Linked record ids. | array | — | `["SUB-001"]` | Optional (21% populated) | Derived — inherits the sources of the linked records | — |
-| `documented_links` | Supplier-register rows documenting actual supply/distribution. | array | — | `["SR001","SR002"]` | Optional (3% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `capability_links` | Supplier-register rows documenting capability. | array | — | `["SR013"]` | Optional (20% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `component_class_ids` | Linked record ids. | array | — | `["CMPN-000010"]` | Optional (17% populated) | Derived — inherits the sources of the linked records | — |
+| `subsystem_ids` | Linked record ids. | array | — | `["SUB-001"]` | Optional (16% populated) | Derived — inherits the sources of the linked records | — |
+| `documented_links` | Supplier-register rows documenting actual supply/distribution. | array | — | `["SR001","SR002"]` | Optional (2% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `capability_links` | Supplier-register rows documenting capability. | array | — | `["SR013"]` | Optional (15% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 
 ## fabs
 
-21 records.
+22 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -334,10 +334,10 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `facility_type` | Customer / facility type (Foundry, IDM, Memory, OSAT, ATMP …). | string | Foundry, IDM (memory/foundry), IDM, Memory, Foundry + OSAT, Research foundry / consortium, Display, Glass substrate, Service foundry | `Foundry` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `country` | Country name. | string | Taiwan, South Korea, United States, China, Germany, Switzerland, Netherlands, Japan, India | `Taiwan` | Always present | Record `source_ids` (Tier-4 alone never confirms) | Country reference |
 | `country_id` | Country reference id (CTY). | string | CTY-TW, CTY-KR, CTY-US, CTY-CN, CTY-DE, CTY-CH, CTY-NL, CTY-JP, CTY-IN | `CTY-TW` | Always present | Record `source_ids` (Tier-4 alone never confirms) | Must resolve |
-| `sites` | Named sites with basis and sources. | array | — | `[{"name":"CoPoS pilot line (evaluation)","basis":"Key sites field (…` | Optional (48% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim site names |
-| `equipment_supplier_ids` | Linked record ids. | array | — | `["CMP-000082","CMP-000090","CMP-000089","CMP-000003","CMP-000005","…` | Optional (52% populated) | Derived — inherits the sources of the linked records | — |
-| `model_ids` | Linked record ids. | array | — | `["MDL-000054"]` | Optional (38% populated) | Derived — inherits the sources of the linked records | — |
-| `customer_link_ids` | Linked record ids. | array | — | `["REL-CR-027","REL-CR-028","REL-CR-029","REL-CR-037","REL-CR-038","…` | Optional (52% populated) | Derived — inherits the sources of the linked records | — |
+| `sites` | Named sites with basis and sources. | array | — | `[{"name":"CoPoS pilot line (evaluation)","basis":"Key sites field (…` | Optional (45% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim site names |
+| `equipment_supplier_ids` | Linked record ids. | array | — | `["CMP-000082","CMP-000090","CMP-000089","CMP-000003","CMP-000005","…` | Optional (59% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids` | Linked record ids. | array | — | `["MDL-000054"]` | Optional (41% populated) | Derived — inherits the sources of the linked records | — |
+| `customer_link_ids` | Linked record ids. | array | — | `["REL-CR-027","REL-CR-028","REL-CR-029","REL-CR-037","REL-CR-038","…` | Optional (59% populated) | Derived — inherits the sources of the linked records | — |
 | `confirmed_links` | Number of CONFIRMED equipment-supplier links. | number | — | `2` | Always present | Derived — inherits the sources of the linked records | — |
 | `capacity` | Facility capacity (not captured unless stated in a site). | null | — | `` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `process_node` | Facility process node (not captured unless stated). | null | — | `` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
@@ -362,9 +362,9 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `country` | Country name. | string | — | `Taiwan` | Always present | Record `source_ids` (Tier-4 alone never confirms) | Country reference |
 | `country_id` | Country reference id (CTY). | string | — | `CTY-TW` | Always present | Record `source_ids` (Tier-4 alone never confirms) | Must resolve |
 | `sites` | Named sites with basis and sources. | array | — | `[{"name":"Taiwan","basis":"Customer link CR025","source_ids":["SRC-…` | Optional (67% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim site names |
-| `equipment_supplier_ids` | Linked record ids. | array | — | `["CMP-000080","CMP-000081"]` | Optional (33% populated) | Derived — inherits the sources of the linked records | — |
-| `model_ids` | Linked record ids. | array | — | `` | Optional (0% populated) | Derived — inherits the sources of the linked records | — |
-| `customer_link_ids` | Linked record ids. | array | — | `["REL-CR-025","REL-CR-026"]` | Optional (33% populated) | Derived — inherits the sources of the linked records | — |
+| `equipment_supplier_ids` | Linked record ids. | array | — | `["CMP-000080","CMP-000081"]` | Optional (44% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids` | Linked record ids. | array | — | `["MDL-000329"]` | Optional (11% populated) | Derived — inherits the sources of the linked records | — |
+| `customer_link_ids` | Linked record ids. | array | — | `["REL-CR-025","REL-CR-026"]` | Optional (44% populated) | Derived — inherits the sources of the linked records | — |
 | `confirmed_links` | Number of CONFIRMED equipment-supplier links. | number | — | `0` | Always present | Derived — inherits the sources of the linked records | — |
 | `capacity` | Facility capacity (not captured unless stated in a site). | null | — | `` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `process_node` | Facility process node (not captured unless stated). | null | — | `` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
@@ -377,7 +377,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## customers
 
-3 records.
+6 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -386,12 +386,12 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `entity_type` | Entity kind. | string | — | `customer` | Required | System-generated | — |
 | `name` | Display name as stated by the source. | string | — | `Apple` | Required | Record `source_ids` (Tier-4 alone never confirms) | Trimmed; original capitalisation kept |
 | `facility_type` | Customer / facility type (Foundry, IDM, Memory, OSAT, ATMP …). | string | — | `Systems` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `country` | Country name. | string / null | — | `United States` | Optional (67% populated) | Record `source_ids` (Tier-4 alone never confirms) | Country reference |
-| `country_id` | Country reference id (CTY). | string / null | — | `CTY-US` | Optional (67% populated) | Record `source_ids` (Tier-4 alone never confirms) | Must resolve |
-| `sites` | Named sites with basis and sources. | array | — | `[{"name":"China","basis":"Customer link CR021","source_ids":["SRC-0…` | Optional (33% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim site names |
-| `equipment_supplier_ids` | Linked record ids. | array | — | `["CMP-000143"]` | Optional (67% populated) | Derived — inherits the sources of the linked records | — |
-| `model_ids` | Linked record ids. | array | — | `["MDL-000056","MDL-000112","MDL-000082","MDL-000027","MDL-000050","…` | Optional (33% populated) | Derived — inherits the sources of the linked records | — |
-| `customer_link_ids` | Linked record ids. | array | — | `["REL-CR-019"]` | Optional (67% populated) | Derived — inherits the sources of the linked records | — |
+| `country` | Country name. | string / null | — | `United States` | Optional (50% populated) | Record `source_ids` (Tier-4 alone never confirms) | Country reference |
+| `country_id` | Country reference id (CTY). | string / null | — | `CTY-US` | Optional (50% populated) | Record `source_ids` (Tier-4 alone never confirms) | Must resolve |
+| `sites` | Named sites with basis and sources. | array | — | `[{"name":"China","basis":"Customer link CR021","source_ids":["SRC-0…` | Optional (17% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim site names |
+| `equipment_supplier_ids` | Linked record ids. | array | — | `["CMP-000143"]` | Optional (83% populated) | Derived — inherits the sources of the linked records | — |
+| `model_ids` | Linked record ids. | array | — | `["MDL-000056","MDL-000112","MDL-000082","MDL-000027","MDL-000050","…` | Optional (67% populated) | Derived — inherits the sources of the linked records | — |
+| `customer_link_ids` | Linked record ids. | array | — | `["REL-CR-019"]` | Optional (83% populated) | Derived — inherits the sources of the linked records | — |
 | `confirmed_links` | Number of CONFIRMED equipment-supplier links. | number | — | `0` | Always present | Derived — inherits the sources of the linked records | — |
 | `capacity` | Facility capacity (not captured unless stated in a site). | null | — | `` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `process_node` | Facility process node (not captured unless stated). | null | — | `` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
@@ -404,7 +404,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## countries
 
-35 records.
+36 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -416,17 +416,17 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `lat` | Approximate centroid latitude (map clustering only). | number | — | `39.8` | Always present | Reference / derived | — |
 | `lon` | Approximate centroid longitude (map clustering only). | number | — | `-98.6` | Always present | Reference / derived | — |
 | `centroid_note` | Label: centroid is approximate. | string | Approximate country centroid for map clustering only | `Approximate country centroid for map clustering only` | Always present | Reference / derived | — |
-| `company_ids` | Linked record ids. | array | — | `["CMP-000002","CMP-000003","CMP-000005","CMP-000009","CMP-000014","…` | Optional (63% populated) | Derived — inherits the sources of the linked records | — |
-| `equipment_oem_ids` | Linked record ids. | array | — | `["CMP-000002","CMP-000003","CMP-000005","CMP-000009","CMP-000014","…` | Optional (54% populated) | Derived — inherits the sources of the linked records | — |
-| `subsystem_supplier_ids` | Linked record ids. | array | — | `["CMP-000170","CMP-000172","CMP-000173"]` | Optional (20% populated) | Derived — inherits the sources of the linked records | — |
-| `component_supplier_ids` | Linked record ids. | array | — | `["CMP-000145","CMP-000146","CMP-000148","CMP-000151","CMP-000158","…` | Optional (31% populated) | Derived — inherits the sources of the linked records | — |
+| `company_ids` | Linked record ids. | array | — | `["CMP-000002","CMP-000003","CMP-000005","CMP-000009","CMP-000014","…` | Optional (69% populated) | Derived — inherits the sources of the linked records | — |
+| `equipment_oem_ids` | Linked record ids. | array | — | `["CMP-000002","CMP-000003","CMP-000005","CMP-000009","CMP-000014","…` | Optional (69% populated) | Derived — inherits the sources of the linked records | — |
+| `subsystem_supplier_ids` | Linked record ids. | array | — | `["CMP-000170","CMP-000172","CMP-000173"]` | Optional (19% populated) | Derived — inherits the sources of the linked records | — |
+| `component_supplier_ids` | Linked record ids. | array | — | `["CMP-000145","CMP-000146","CMP-000148","CMP-000151","CMP-000158","…` | Optional (33% populated) | Derived — inherits the sources of the linked records | — |
 | `materials_supplier_ids` | Linked record ids. | array | — | `["CMP-000199"]` | Optional (3% populated) | Derived — inherits the sources of the linked records | — |
-| `fab_ids` | Linked record ids. | array | — | `["FAB-000003","FAB-000004","FAB-000007","FAB-000009","FAB-000024","…` | Optional (26% populated) | Derived — inherits the sources of the linked records | — |
+| `fab_ids` | Linked record ids. | array | — | `["FAB-000003","FAB-000004","FAB-000007","FAB-000009","FAB-000024","…` | Optional (25% populated) | Derived — inherits the sources of the linked records | — |
 | `osat_ids` | Linked record ids. | array | — | `["OSAT-000016"]` | Optional (11% populated) | Derived — inherits the sources of the linked records | — |
 | `india_partnership_company_ids` | Linked record ids. | array | — | `["CMP-000002","CMP-000003","CMP-000005","CMP-000009"]` | Optional (11% populated) | Derived — inherits the sources of the linked records | — |
 | `verified_company_count` | Companies in the country with VERIFIED status. | number | — | `26` | Always present | Reference / derived | — |
-| `batch1_search_status` | How thoroughly Batch 1 searched the country. | string | TARGETED, NOT_SEARCHED, INCIDENTAL | `TARGETED` | Always present | Reference / derived | — |
-| `legacy_notes` | Batch-1 value kept for traceability. | string | — | `OEM majors, subsystems, laser/optics, motion, test` | Always present | Reference / derived | — |
+| `batch1_search_status` | How thoroughly Batch 1 searched the country. | string | TARGETED, NOT_SEARCHED, INCIDENTAL, NOT_IN_BRIEF | `TARGETED` | Always present | Reference / derived | — |
+| `legacy_notes` | Batch-1 value kept for traceability. | string / null | — | `OEM majors, subsystems, laser/optics, motion, test` | Optional (97% populated) | Reference / derived | — |
 | `listed_in_brief` | Country listed in the original brief. | boolean | — | `true` | Always present | Reference / derived | — |
 | `technology_strengths` | Not assessed in Batch 1. | null | — | `` | Optional (0% populated) | Reference / derived | — |
 | `export_dependencies` | Not assessed in Batch 1. | null | — | `` | Optional (0% populated) | Reference / derived | — |
@@ -455,7 +455,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## relationships
 
-3,672 records.
+4,810 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -466,16 +466,16 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `basis` | source | derived | reference | analyst — how the relationship is known. | string | source, derived, analyst, reference | `source` | Required | `source_ids` when basis = source | — |
 | `source_ids` | Numbered sources supporting the record (SRC ids). | array | — | `["SRC-000054","SRC-000053"]` | Required for facts | Derived — inherits the sources of the linked records | — |
 | `confidence` | Confidence level (HIGH/MEDIUM/LOW/UNVERIFIED) and score where recorded. | string | — | `HIGH` | Required | `source_ids` when basis = source | — |
-| `via` | How a derived relationship was computed. | string | — | `equipment category → process reference` | Optional (22% populated) | `source_ids` when basis = source | — |
+| `via` | How a derived relationship was computed. | string | — | `equipment category → process reference` | Optional (24% populated) | `source_ids` when basis = source | — |
 | `note` | Free-text note from capture. | string | — | `Analyst knowledge — not source-traced` | Optional (5% populated) | `source_ids` when basis = source | — |
-| `detail` | Relationship detail (customer, product, stage, site, evidence …). | object | — | `{"type":"Partnership (MoU)","facility":"Tata Electronics Dholera fa…` | Optional (5% populated) | `source_ids` when basis = source | Verbatim |
+| `detail` | Relationship detail (customer, product, stage, site, evidence …). | object | — | `{"type":"Partnership (MoU)","facility":"Tata Electronics Dholera fa…` | Optional (4% populated) | `source_ids` when basis = source | Verbatim |
 | `legacy_id` | Batch-1 identifier (C0001, P00001, S0001, CU001). Old deep links resolve to the 2.0 record. | string | — | `SR001` | Optional | System-generated | — |
 | `status` | Relationship status (CONFIRMED, PROBABLE, UNVERIFIED, DOCUMENTED_SUPPLY, CAPABLE_SUPPLIER …). | string | — | `DOCUMENTED_SUPPLY` | Optional | `source_ids` when basis = source | — |
 | `date` | Event / relationship date. | string / null | — | `2025-09-03` | Optional (2% populated) | `source_ids` when basis = source | ISO where parseable |
 
 ## sources
 
-493 records.
+713 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -490,15 +490,15 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `tier` | Batch-1 source tier (1 official … 4 blog/market list; BRIEF/INT internal). | string / number | — | `BRIEF` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `tier_label` | Human-readable tier definition. | string | Internal brief, Internal note, Tier 2 · Industry publication / association, Tier 3 · Directory, distributor, aggregator, Tier 4 · Blog, wiki, market list (unverified), Tier 1 · Official (company, filing, government, datasheet) | `Internal brief` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `publication_date` | Publication / evidence date. | string / null | — | `2026-09-29` | Optional | Record `source_ids` (Tier-4 alone never confirms) | ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD |
-| `evidence_date` | Date the evidence refers to. | string / null | — | `2026-09-29` | Optional (46% populated) | Record `source_ids` (Tier-4 alone never confirms) | ISO |
+| `evidence_date` | Date the evidence refers to. | string / null | — | `2026-09-29` | Optional (35% populated) | Record `source_ids` (Tier-4 alone never confirms) | ISO |
 | `accessed_date` | Date the source was accessed. | string | 2026-09-29, 2026-09-30 | `2026-09-29` | Always present | Record `source_ids` (Tier-4 alone never confirms) | ISO date |
 | `accessible` | False when access was blocked at capture (never bypassed). | boolean | — | `true` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `access_mode` | — | string | read, not_accessible, search_index | `read` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `access_note` | Why a source could not be read (never bypassed). | null / string | — | `Access blocked or not accessible at capture; not bypassed` | Optional (30% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `access_note` | Why a source could not be read (never bypassed). | null / string | — | `Access blocked or not accessible at capture; not bypassed` | Optional (52% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `age_class` | Batch-1 source age class. | string | CURRENT, STALE, AGING, UNDATED, VERY_STALE | `CURRENT` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `freshness` | Recent / Needs Review / Stale / Unknown from the freshest supporting source. | string | Recent, Stale, Needs Review, Unknown | `Recent` | Required | System-generated | — |
-| `excerpt` | Short excerpt/paraphrase for traceability (document not republished). | string / null | — | `Build a comprehensive GLOBAL SEMICONDUCTOR EQUIPMENT COMPANY DATABASE.` | Optional (71% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `notes` | Analyst notes from capture. | string / null | — | `Defines taxonomy structure, fields, rules` | Optional (88% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `excerpt` | Short excerpt/paraphrase for traceability (document not republished). | string / null | — | `Build a comprehensive GLOBAL SEMICONDUCTOR EQUIPMENT COMPANY DATABASE.` | Optional (49% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `notes` | Analyst notes from capture. | string / null | — | `Defines taxonomy structure, fields, rules` | Optional (92% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `used_by` | Number of Batch-1 records citing the source. | number | — | `5` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `verification_status` | Source capture status (captured / not_accessible / unverified_source). | string | captured, unverified_source, not_accessible, title_via_search_index | `captured` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 

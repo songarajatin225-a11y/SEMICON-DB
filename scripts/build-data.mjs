@@ -24,7 +24,8 @@ const L = JSON.parse(fs.readFileSync(path.join(OUT, "legacy/legacy_snapshot.json
 // Later batches staged by scripts/import.mjs (data/batches/*.json, Batch-1 row format) flow through the same pipeline.
 const BATCH_DIR = path.join(OUT, "batches");
 const BATCHES = fs.existsSync(BATCH_DIR) ? fs.readdirSync(BATCH_DIR).filter(f => f.endsWith(".json")).sort().map(f => JSON.parse(fs.readFileSync(path.join(BATCH_DIR, f), "utf8"))) : [];
-BATCHES.forEach(b => { L.co.push(...(b.co || [])); L.pr.push(...(b.pr || [])); L.src.push(...(b.src || [])); });
+BATCHES.forEach(b => { ["co", "pr", "src", "st", "cu", "cr"].forEach(k => L[k].push(...(b[k] || []))); });
+const sumB = k => BATCHES.reduce((a, b) => a + (b[k] || []).length, 0);
 const BATCH_OF_SOURCE = new Map(BATCHES.flatMap(b => (b.src || []).map(x => [x.id, b.created])));
 
 // ---------------------------------------------------------------- helpers
@@ -117,7 +118,7 @@ const SUPPLIER_TYPE = {
   Motion: ["Motion Supplier", "Component Supplier"], "RF power": ["RF Supplier", "Subsystem Supplier"], "Gas/chemical delivery": ["Gas Supplier", "Subsystem Supplier"],
   Startup: ["Equipment OEM"], "Engineering services": ["Service Provider"], "Materials/gases": ["Materials Supplier", "Gas Supplier"],
 };
-const COUNTRY_BASIS = { SRC: "Source-stated", KNOW: "Analyst knowledge — not source-traced", LIST: "From a directory / list source", NAME: "Inferred from the company name" };
+const COUNTRY_BASIS = { SRC: "Source-stated", SUM: "Search-result summary of a cited source (page not read)", KNOW: "Analyst knowledge — not source-traced", LIST: "From a directory / list source", NAME: "Inferred from the company name" };
 const GEO = Object.fromEntries(COUNTRIES.map(([n, iso, region, lat, lon]) => [n, { name: n, iso, region, lat, lon }]));
 const ctryId = name => (GEO[name] ? `CTY-${GEO[name].iso}` : null);
 const startup = Object.fromEntries(L.st.map(s => [s.company_id, s]));
@@ -146,7 +147,7 @@ const companies = L.co.map(c => {
   const ind = indiaByCo[c.id] || [];
   const s = startup[c.id];
   const missing = [];
-  if (c.cb !== "SRC") missing.push("Headquarters country (source)");
+  if (c.cb !== "SRC" && c.cb !== "SUM") missing.push("Headquarters country (source)");
   if (NA(c.city)) missing.push("City"); if (NA(c.web)) missing.push("Website"); if (NA(c.fd)) missing.push("Founded year");
   if (NA(c.emp)) missing.push("Employees"); if (!eqCodes.length) missing.push("Confirmed equipment category"); if (!src.length) missing.push("Sources");
   return {
@@ -168,7 +169,7 @@ const companies = L.co.map(c => {
     semiconductor_revenue: nv(c.semi),
     india: { summary: nv(c.ind), has_presence: !NA(c.ind), records: ind.map(r => ({ type: r.typ, facility: nv(r.fac), location: nv(r.loc), scope: nv(r.scope), technology: nv(r.tech), opportunity: nv(r.opp), status: nv(r.st), confidence: r.cl, source_ids: srcIds(r.src) })) },
     presence: { china: presence(c.cn), japan: presence(c.jp), korea: presence(c.kr), taiwan: presence(c.tw) },
-    startup: s ? { founders: nv(s.founders), year: nv(s.year), funding: nv(s.funding), investors: nv(s.investors), product: nv(s.product), trl: nv(s.trl), latest_news: nv(s.latest_news), maturity: nv(s.maturity), source_ids: srcIds(s.source_ids), verification: s.verification_status } : null,
+    startup: s ? { founders: nv(s.founders), year: nv(s.year), funding: nv(s.funding), investors: nv(s.investors), product: nv(s.product), trl: nv(s.trl), latest_news: nv(s.latest_news), maturity: nv(s.maturity), source_ids: srcIds(s.source_ids), verification: s.verification_status, confidence: nv(s.confidence_level) } : null,
     financials: L.fin.filter(f => f.co === c.id).map(f => ({ fiscal_year: f.fy, metric: f.m, currency: f.ccy, value: f.v, usd_m: typeof f.usd === "number" ? f.usd : null, value_type: f.vt, source_ids: srcIds(f.src), note: nv(f.note) })),
     verification: c.st, confidence: { score: c.cs, level: c.cl }, evidence_depth: c.evd,
     rationale: nv(c.why), notes: nv(c.note), source_ids: src,
@@ -230,7 +231,7 @@ const models = L.pr.map(p => {
     specs, lifecycle: { status: LIFECYCLE[p.st] || "Unknown", legacy_status: p.st, maturity: nv(p.mat), maturity_evidence: nv(p.mev), launch_year: null, eol_date: null, replacement_id: null },
     price_public: nv(p.price), teal_portfolio: nv(p.teal), notes: nv(p.note),
     reclassified: p._reclassified_from ? { from_code: p._reclassified_from, to_code: p.eqid, reason: p._reclass_reason } : null,
-    batch: p.note && /^Batch 2/.test(p.note) ? "Batch 2" : "Batch 1",
+    batch: (p.note && /^Batch \d+/.exec(p.note)?.[0]) || "Batch 1",
     verification: p.ver, confidence: { level: p.cl }, source_ids: src, source_age: p.age,
     freshness: fresh, quality_state: qualityState(p.ver, fresh, CONFLICTED.has(id)), missing_key_fields: missing, dates: dates(p.ver, src),
   };
@@ -480,8 +481,8 @@ quality.validation = report;
 const counts = Object.fromEntries(Object.entries(entities).map(([k, v]) => [k, v.length]));
 const LATEST = [AS_OF, ...BATCHES.map(b => b.created).filter(Boolean)].sort().pop();
 const meta = { name: "SEMICON-DB", title: "SEMICON-DB — Global Semiconductor Equipment Intelligence Graph", schema_version: SCHEMA_VERSION, evidence_as_of: LATEST, batch1_as_of: AS_OF, built: BUILD_DATE,
-  batches: [{ batch: "Batch 1", date: AS_OF, companies: L.co.length - BATCHES.reduce((a, b) => a + (b.co || []).length, 0), products: L.pr.length - BATCHES.reduce((a, b) => a + (b.pr || []).length, 0), sources: L.src.length - BATCHES.reduce((a, b) => a + (b.src || []).length, 0), customer_links: L.cr.length, note: "Legacy public edition (single-file atlas)" },
-    ...BATCHES.map(b => ({ batch: b.batch, date: b.created, companies: (b.co || []).length, products: (b.pr || []).length, sources: (b.src || []).length, note: b.method || "Imported batch (scripts/import.mjs)" })),
+  batches: [{ batch: "Batch 1", date: AS_OF, companies: L.co.length - sumB("co"), products: L.pr.length - sumB("pr"), sources: L.src.length - sumB("src"), customer_links: L.cr.length - sumB("cr"), startups: L.st.length - sumB("st"), note: "Legacy public edition (single-file atlas)" },
+    ...BATCHES.map(b => ({ batch: b.batch, date: b.created, companies: (b.co || []).length, products: (b.pr || []).length, sources: (b.src || []).length, customer_links: (b.cr || []).length, startups: (b.st || []).length, note: b.method || "Imported batch (scripts/import.mjs)" })),
     { batch: "2.0 migration", date: BUILD_DATE, note: "Totals after 2.0 normalisation (schema, reference taxonomy, derived relationships) over Batch 1" + (BATCHES.length ? " plus " + BATCHES.map(b => b.batch).join(", ") : "; no new external facts added"), ...counts }],
   counts, id_prefixes: { company: "CMP", product_family: "PRD", model: "MDL", equipment: "EQP", process: "PRS", technology: "TEC", material: "MAT", application: "APP", subsystem: "SUB", component: "CMPN", fab: "FAB", osat: "OSAT", customer: "CUS", country: "CTY", deal: "DEAL", relationship: "REL", source: "SRC", conflict: "CNF", duplicate: "DUP" } };
 

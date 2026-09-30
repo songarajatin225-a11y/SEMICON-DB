@@ -4,6 +4,7 @@
 
 - **Batch 1** (29 Sep 2026): 351 numbered sources — 192 Tier 1, 97 Tier 2, 30 Tier 3, 30 Tier 4, plus 2 internal (the user brief and an internal note). 140 sources are undated; 8 were not accessible at capture and were not bypassed.
 - **Batch 2** (30 Sep 2026): 142 sources, all Tier 1 official (manufacturer pages, press releases, brochures, one SEC 10-K), supporting 144 products and 6 companies. Access mode `search_index`: the official URL and title were confirmed via web search, but the page itself could not be opened (capture-environment egress policy), so records are PARTIALLY_VERIFIED / MEDIUM and no specifications were taken from search summaries (one summary contradicted itself on an implanter's energy range). Re-reading each page can promote records to VERIFIED and add specifications.
+- **Batch 3** (30 Sep 2026): 220 sources — 189 Tier 1 (manufacturer pages, company press releases incl. wire releases, brochures, investor documents), 25 Tier 2 (SEMI member directory, Invest Korea / InvestPenang, industry media, university facility pages, investor announcements), 5 Tier 3 (campus and startup directories), 1 Tier 4 (tech blog, corroborating a funding figure also in Tier-2 titles). Supports 68 small companies and startups, 123 products, 9 startup profiles and 13 customer links. Same `search_index` access mode as Batch 2. Company profile facts (city, founding year, funding, founders) taken from the search-result summary of a cited source are marked `evidence_depth: SEARCH_SUMMARY`, and the HQ basis is `SUM` (“search-result summary of a cited source, page not read”).
 - **2.0 migration** of Batch 1 added **no new external facts**. It restructured the Batch-1 evidence, added an editorial reference taxonomy, and derived relationships from source-backed fields. Every derived link says so.
 
 ## Source tiers (Batch-1 scheme, kept as captured)
@@ -22,7 +23,7 @@
 | `access_mode` | Meaning | Effect |
 |---|---|---|
 | `read` | Page or document read at capture | Can support VERIFIED records and specifications |
-| `search_index` | Official URL + title confirmed via web search; content not read | Supports existence, maker and category only → PARTIALLY_VERIFIED, no specs |
+| `search_index` | Official URL + title confirmed via web search; content not read | Supports existence, maker and category only → PARTIALLY_VERIFIED, no specs. Batch 3 also records clearly attributed profile facts from the search summary (labelled `SEARCH_SUMMARY`) |
 | `not_accessible` | Access blocked; not bypassed | Cannot support a claim on its own |
 
 ## Source record
@@ -50,7 +51,7 @@ Respect robots rules, access controls and copyright: store metadata, short excer
 
 | Situation | Shown as |
 |---|---|
-| Not captured in the evidence | “Not found in Batch-1 sources” / “Not published” |
+| Not captured in the evidence | “Not found in captured sources” / “Not published” / “Not captured — source page not read” (Batch 2–3) |
 | Company does not disclose | “Not publicly disclosed” |
 | No source could be verified | Unverified badge |
 | Sources disagree | ⚠ Conflicting sources — both claims listed |
@@ -62,7 +63,8 @@ Respect robots rules, access controls and copyright: store metadata, short excer
 - Specifications (wafer size, throughput, accuracy) are published for a minority of models.
 - Employees, founding year and executives are mostly missing.
 - Tool vendors for most Indian OSAT lines are not publicly named.
-- MEMS (category H) has no records; wafer manufacturing (K) and subfab (L) are partly covered after Batch 2 (ingot grinding, final wafer cleaning and lead plating still empty).
-- Batch-2 records need a direct read of their official pages to be promoted to VERIFIED and to add specifications.
-- 157 companies' HQ country is analyst knowledge rather than a cited source (labelled on every profile).
+- MEMS (category H) has no records; wafer manufacturing (K) and subfab (L) are partly covered (final wafer cleaning and lead plating still empty; ingot grinding & shaping filled in Batch 3).
+- Batch-2 and Batch-3 records need a direct read of their pages to be promoted to VERIFIED and to add specifications; Batch-3 startup funding figures are as reported and not re-checked against filings.
+- Most companies' HQ country is analyst knowledge rather than a cited source (labelled on every profile); Batch-3 HQ cities mostly come from search summaries (labelled).
+- Small-company coverage is a sample, not a census: Chinese, Japanese and Korean second-tier suppliers and Indian lab-equipment makers are only partly captured.
 - Materials and gas suppliers are not itemised per material.

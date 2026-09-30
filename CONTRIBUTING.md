@@ -16,14 +16,19 @@
 #    companies: name,country,city,company_type,equipment_categories,website,description,ownership,verification,confidence,source_url,source_title,source_publisher,source_type,source_tier,source_date
 #    models:    manufacturer,family,model_number,equipment_code,technology,application,wafer,throughput,accuracy,material,lifecycle,verification,confidence,source_url,…
 #    sources:   url,title,publisher,type,tier,date,excerpt
-node scripts/import.mjs my-batch.csv --entity companies --batch batch-2      # dry run: validation + duplicate report
-node scripts/import.mjs my-batch.csv --entity companies --batch batch-2 --write
+#    customers: name,type,country,sites + a source
+#    customer_links: oem,model,customer (name, CU id or "UNDISCLOSED:<description>"),status,stage,evidence,date,confidence + a source
+#    JSON rows may list several sources in `sources: [{url,title,type,tier,date,publisher,access}]` (access: Y | SEARCH_INDEX | DATA_NOT_ACCESSIBLE)
+#    and company rows may carry `startup: {founders,year,funding,investors,product,trl,latest_news,maturity}`.
+node scripts/import.mjs my-batch.csv --entity companies --batch batch-4      # dry run: validation + duplicate report
+node scripts/import.mjs my-batch.csv --entity companies --batch batch-4 --write
+# order: companies → models → customers → customer_links (each needs the previous ones)
 npm run build          # normalise, link, quality-check, publish data/*.json + bundle.json
 npm run validate
 node scripts/gen-dictionary.mjs
 ```
 
-Validation rejects: blank names, unknown countries, unknown equipment codes, invalid URLs, non-ISO dates, models whose manufacturer is unknown, rows without sources, and exact duplicates (use `--allow-duplicates` only for genuinely distinct entities). Similar names are reported as warnings.
+Validation rejects: blank names, unknown countries, unknown equipment codes, invalid URLs, non-ISO dates, models whose manufacturer is unknown, customer links whose supplier, customer or model is unknown, rows without sources, and exact duplicates (use `--allow-duplicates` only for genuinely distinct entities). Similar names are reported as warnings.
 
 `verification`: `VERIFIED` (official source read), `PARTIALLY_VERIFIED`, `UNVERIFIED`. `confidence`: `HIGH` (official) · `MEDIUM` (two independent industry sources) · `LOW` (single industry/distributor source) · `UNVERIFIED` (blog/market list only).
 

@@ -63,7 +63,7 @@ export function home() {
       ${stackBar("Equipment models by segment", sortedEntries(seg).map(([l, v]) => ({ l, v, c: segColors[l] || "var(--s4)", href: `#/products?segment=${encodeURIComponent(l)}` })))}
       ${stackBar("India vs global companies", [{ l: "HQ in India", v: C.filter(c => c.hq.country === "India").length, c: PALETTE[0], href: "#/india" }, { l: "Global with documented India presence", v: C.filter(c => c.hq.country !== "India" && c.india.has_presence).length, c: PALETTE[1], href: "#/companies?india=presence" }, { l: "No India presence documented", v: C.filter(c => c.hq.country !== "India" && !c.india.has_presence).length, c: "var(--s4)" }])}
       <h3 style="margin-top:14px">Regional distribution (headquarters)</h3>${bars(byRegion, { lw: 130 })}
-      <p class="note">HQ country for ${C.filter(c => c.hq.country_basis_code !== "SRC").length} companies is analyst knowledge rather than a cited source; it is labelled as such on every profile.</p></div>
+      <p class="note">HQ country for ${C.filter(c => c.hq.country_basis_code === "KNOW").length} companies is analyst knowledge rather than a cited source${C.some(c => c.hq.country_basis_code === "SUM") ? ` and for ${C.filter(c => c.hq.country_basis_code === "SUM").length} it comes from a search-result summary of a cited source` : ""}; the basis is labelled on every profile.</p></div>
   </div>
 
   <div class="grid g3 sec">

@@ -107,7 +107,8 @@ export function modelView({ path, params }) {
   const supplyIn = inn(m.company_id, ["supplies", "distributes"]).concat(out(m.company_id, "integrates"));
   const T = [["overview", "Overview"], ["specs", "Technical specifications", m.specs.length], ["process", "Process & technology"], ["applications", "Applications & materials"], ["subsystems", "Subsystems & components"],
     ["alternatives", "Alternatives", alts.length], ["customers", "Fab / OSAT use", cust.length], ["relationships", "Relationships"], ["sources", "Sources", m.source_ids.length], ["history", "History"]];
-  const NP = m.batch === "Batch 2" ? "Not captured — source page not read" : "Not published";
+  const titleLevel = m.batch && m.batch !== "Batch 1";
+  const NP = titleLevel ? "Not captured — source page not read" : "Not published";
   const head = `<div class="ehead"><div class="eyebrow">${esc(m.id)} · ${esc(m.segment)} · ${esc(m.equipment_code)}</div>
     <div class="kv" style="margin-top:0"><dl><dt>Manufacturer</dt><dd>${link(m.company_id)}</dd></dl><dl><dt>Product family</dt><dd>${link(m.family_id)}</dd></dl><dl><dt>Model</dt><dd>${m.model_number ? `<span class="mono">${esc(m.model_number)}</span>` : `<span class="na">No model number published (family-level record)</span>`}</dd></dl></div>
     <h1 class="pt" style="margin-top:8px">${esc(m.name)}</h1>
@@ -115,7 +116,7 @@ export function modelView({ path, params }) {
     ${quickActions(m.id, { compare: "model", extra: [`<a class="btn sm" href="${href("/products", { eq: m.equipment_id })}">Related equipment</a>`, m.process_ids[0] ? `<a class="btn sm" href="${hrefOf(m.process_ids[0])}">View process</a>` : "", `<a class="btn sm" href="${href("/suppliers", { eq: m.equipment_id })}">View suppliers</a>`, `<a class="btn sm" href="${hrefOf(m.company_id)}">View company</a>`].filter(Boolean) })}</div>`;
   const spec = [
     ["Equipment category", eq ? `${link(eq.id)} <span class="mono xs muted">${esc(eq.code)}</span>` : esc(m.equipment_label)],
-    ["Technology (as stated)", val(m.technology_text)], ["Wafer / substrate", m.wafer ? `${esc(waferText(m.wafer) || "—")}` : val(null, { reason: m.batch === "Batch 2" ? NP : "Not published by the manufacturer in Batch-1 sources" }), m.wafer ? `Source wording: “${esc(m.wafer.source_value)}” · normalised to mm` : ""],
+    ["Technology (as stated)", val(m.technology_text)], ["Wafer / substrate", m.wafer ? `${esc(waferText(m.wafer) || "—")}` : val(null, { reason: titleLevel ? NP : "Not published by the manufacturer in Batch-1 sources" }), m.wafer ? `Source wording: “${esc(m.wafer.source_value)}” · normalised to mm` : ""],
     ["Thickness / format", val(m.thickness, { reason: NP })], ["Throughput", val(m.throughput, { reason: NP })], ["Accuracy", val(m.accuracy, { reason: NP })],
     ["Motion", val(m.motion, { reason: NP })], ["Footprint", val(m.footprint, { reason: NP })], ["Price (public)", val(m.price_public, { reason: "Not publicly disclosed" })],
   ];
@@ -124,7 +125,7 @@ export function modelView({ path, params }) {
     ["Scan / process speed", val(m.laser.scan_speed, { reason: NP })], ["Material", val(m.laser.material, { reason: "Not stated" })]] : null;
   let body = "";
   if (tab === "overview") {
-    body = `${conflictsFor(m.id)}${m.batch === "Batch 2" ? `<div class="callout"><b>Batch 2 record — title-level evidence.</b> The maker, product name and category come from the title of the manufacturer's own page, press release, brochure or filing (linked below), located by web search. The page itself was not read, so specifications are not captured yet.</div>` : ""}${m.reclassified ? `<div class="callout"><b>Category updated in 2.0:</b> moved from ${esc(m.reclassified.from_code)} to ${esc(m.reclassified.to_code)}. ${esc(m.reclassified.reason)}.</div>` : ""}<div class="grid g2"><div class="panel"><h2>Overview</h2>${specTable([["Manufacturer", `${link(m.company_id)} <span class="muted xs">${esc(c?.hq.country || "")}</span>`], ["Product family", link(m.family_id)],
+    body = `${conflictsFor(m.id)}${titleLevel ? `<div class="callout"><b>${esc(m.batch)} record — title-level evidence.</b> The maker, product name and category come from the title of the manufacturer's own page, press release, brochure or filing (linked below), located by web search. The page itself was not read, so specifications are not captured yet.${/search-result summary/.test(m.notes || "") ? " The model name was taken from the search-result summary of that page, not its title." : ""}</div>` : ""}${m.reclassified ? `<div class="callout"><b>Category updated in 2.0:</b> moved from ${esc(m.reclassified.from_code)} to ${esc(m.reclassified.to_code)}. ${esc(m.reclassified.reason)}.</div>` : ""}<div class="grid g2"><div class="panel"><h2>Overview</h2>${specTable([["Manufacturer", `${link(m.company_id)} <span class="muted xs">${esc(c?.hq.country || "")}</span>`], ["Product family", link(m.family_id)],
       ["Equipment category", eq ? link(eq.id) : esc(m.equipment_label)], ["Segment", esc(m.segment)], ["Application", val(m.application_text)], ["Lifecycle", `${esc(m.lifecycle.status)}${m.lifecycle.maturity_evidence ? `<span class="sub">${esc(m.lifecycle.maturity_evidence)}</span>` : ""}`],
       ["Notes", val(m.notes, { reason: "—" })]])}</div>
       <div class="panel"><h2>Key specifications</h2>${specTable(spec.slice(1, 6))}<p class="note"><a href="${base}?tab=specs">All technical specifications →</a></p></div></div>

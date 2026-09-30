@@ -34,7 +34,7 @@ export function quality({ params }) {
       <li>${DB.countries.filter(c => !c.company_ids.length).length} listed countries have no captured company (e.g. ${esc(DB.countries.filter(c => !c.company_ids.length).slice(0, 6).map(c => c.name).join(", "))}).</li>
       <li>${DB.components.filter(c => !c.capable_supplier_ids.length).length} of ${DB.components.length} component classes have no documented supplier.</li>
       <li>Facility capacity, process node and investment are not captured for fabs and OSATs.</li><li>Technical specifications (wafer size, throughput, accuracy) are published for a minority of models.</li>
-      <li>${DB.companies.filter(c => c.hq.country_basis_code !== "SRC").length} companies' HQ country is analyst knowledge rather than a cited source.</li></ul></div></div>`;
+      <li>${DB.companies.filter(c => c.hq.country_basis_code === "KNOW").length} companies' HQ country is analyst knowledge rather than a cited source; ${DB.companies.filter(c => c.hq.country_basis_code === "SUM").length} rely on a search-result summary of a cited source (page not read).</li></ul></div></div>`;
   } else if (tab === "review") {
     body = dataTable({ id: "dq-review", rows: review, title: "Records requiring review", exportName: "review-queue", sort: { k: "state", d: 1 }, columns: [
       { k: "name", label: "Record", pin: true, get: r => r.name, html: r => `<a class="rowlink" href="${hrefOf(r.id)}">${esc(r.name)}</a><span class="sub">${esc(r.entity_type === "model" ? r.manufacturer : r.company_type)}</span>` },
