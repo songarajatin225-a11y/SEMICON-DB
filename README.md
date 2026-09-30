@@ -4,21 +4,21 @@ A source-traced intelligence database of semiconductor equipment companies, prod
 
 **Live site:** https://songarajatin225-a11y.github.io/SEMICON-DB/ · **Legacy single-file atlas (v1):** [`legacy/`](legacy/index.html)
 
-Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages read), Batch 2 (30 Sep 2026, official titles via web search) Batch 3 (30 Sep 2026, small companies and startups) Batch 4 (keyword-driven discovery) and Batch 5 (ecosystem widening), both 30 Sep 2026 — see below. This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
+Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages read), Batch 2 (30 Sep 2026, official titles via web search) Batch 3 (30 Sep 2026, small companies and startups) Batch 4 (keyword-driven discovery) and Batch 5 (ecosystem widening) and Batch 6 (packaging, automation and process tools), all 30 Sep 2026 — see below. This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
 
 ## What's inside
 
 | Entity | Records | Notes |
 |---|---:|---|
-| Companies | 300 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 (17 startups in total) |
-| Product families → models | 344 → 480 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 |
+| Companies | 311 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 (17 startups in total) |
+| Product families → models | 361 → 506 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
-| Relationships | 5,303 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 810 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Relationships | 5,513 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 847 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -71,6 +71,17 @@ Batch 5 followed the keyword approach into neighbouring layers: lapping / polish
 - **Materials and consumables** (type “Materials/gases”, no equipment category): SUMCO, Siltronic, SK siltron (wafers); FUJIFILM (CMP materials); Entegris (FOUPs, CMP consumables).
 
 Same evidence rule as Batches 2–4: pages found by web search but not read; no specifications. Materials companies are included as supply-chain context only, with company-level evidence. Not covered yet: photoresist makers (JSR, TOK, Shin-Etsu had no usable official page in search), specialty-gas suppliers, ceramic chuck makers and most OSATs.
+
+## Batch 6 (30 Sep 2026): packaging, automation and process tools
+
+Batch 6 added **11 companies, 26 products and 37 sources**, including new models for LPKF (NEXAR LIDE glass-via systems), Kulicke & Soffa (APAMA C2W thermo-compression bonder), SEMES (HBM TC bonder) and Panasonic Connect (plasma dicer, LOW).
+- **Dispensing:** Musashi Engineering (TAD1000, FAD5700), VERMES Microdispensing (MDS 3280).
+- **Bonding:** F&K Delvotec (M17 wire bonders, G5 ball-wedge, laser bonder), HYBOND (die bonders), Brewer Science (Apogee temporary bonder).
+- **Automation:** SINFONIA TECHNOLOGY (EFEMs, load ports), Kawasaki Robotics (wafer robots).
+- **Process:** Trion Technology (plasma etch and strip), Akrion Systems / NAURA Akrion (wet stations; directory evidence, LOW).
+- **Facility monitoring:** Particle Measuring Systems, Lighthouse Worldwide Solutions (particle counters; SEMI directory evidence, LOW).
+
+Same evidence rule as Batches 2–5. Candidates without a usable source were skipped, including Micraft (a Taiwanese TCB entrant reported only in a search summary) and LG's hybrid bonder programme.
 
 ## Evidence rules
 
