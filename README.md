@@ -10,7 +10,7 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 
 | Entity | Records | Notes |
 |---|---:|---|
-| Companies | 311 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 (17 startups in total) |
+| Companies | 318 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 (18 startups in total) |
 | Product families → models | 361 → 506 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
@@ -18,7 +18,7 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
 | Relationships | 5,513 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 847 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Sources | 855 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -82,6 +82,12 @@ Batch 6 added **11 companies, 26 products and 37 sources**, including new models
 - **Facility monitoring:** Particle Measuring Systems, Lighthouse Worldwide Solutions (particle counters; SEMI directory evidence, LOW).
 
 Same evidence rule as Batches 2–5. Candidates without a usable source were skipped, including Micraft (a Taiwanese TCB entrant reported only in a search summary) and LG's hybrid bonder programme.
+
+## Batch 7 (30 Sep 2026): regions and layers
+
+Batch 7 added **7 companies and 8 sources** with company-level evidence only (no products): Keteca Singapore, MIT Semiconductor and SRM Integration / Micro Modular System (Singapore, Malaysia), and India's DeepLASE Technologies (IIT Delhi spin-out, fibre lasers; startup) and Suresh Indu Lasers. Machine-vision makers Basler and Keyence were already in the database (the duplicate guard rejected them); Teledyne Vision Solutions was added. Evidence here is mostly directory-level (SEMI member directory, InvestPenang, supplier directories) and marked LOW where the source is not the company itself.
+
+**Known gaps against the wider master-prompt scope** (not implemented; the data model is prepared for them): revenue and employee fields per company (only reported figures are stored), patent, M&A and news layers, a "discover / research queue" workflow with approve / merge buttons, and AI-assisted natural-language queries beyond the current query parser. Southeast Asia (Vietnam, Thailand, Indonesia, Philippines) and India equipment makers remain thinly covered because search returned few company-owned pages; trade-show exhibitor lists could not be read.
 
 ## Evidence rules
 

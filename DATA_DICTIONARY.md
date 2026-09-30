@@ -10,7 +10,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## companies
 
-311 records.
+318 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -27,20 +27,20 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `is_startup` | Startup flag (Batch-1 startup register or company type). | boolean | — | `false` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `hq` | Headquarters object: country, country_id, country_basis, city, region. | object | — | `{"country":"Netherlands","country_id":"CTY-NL","country_basis":"Ana…` | Required | Record `source_ids` (Tier-4 alone never confirms) | Mapped to the country reference (ISO 3166 alpha-2); aliases (USA, Korea, UK) resolved |
 | `ownership` | Public / Private / Subsidiary / State-linked / JV. | string / null | — | `Public` | Optional | Record `source_ids` (Tier-4 alone never confirms) | null when not captured |
-| `exchange` | Stock exchange of listing. | null / string | — | `NASDAQ` | Optional (14% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `ticker` | Ticker symbol. | null / string | — | `AMAT` | Optional (15% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `exchange` | Stock exchange of listing. | null / string | — | `NASDAQ` | Optional (13% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `ticker` | Ticker symbol. | null / string | — | `AMAT` | Optional (14% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `website` | Official website URL. | string / null | — | `https://www.asml.com` | Optional | Record `source_ids` (Tier-4 alone never confirms) | Must parse as http(s) URL |
 | `founded` | Founding year as stated. | null / string | — | `2001` | Optional (15% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
 | `employees` | Employee count as stated, with date. | null / string | — | `~36,500 (26 Oct 2025)` | Optional (2% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
 | `ceo` | Chief executive (not captured in Batch 1). | null | — | `` | Optional (0% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `parent_company` | Parent company where documented. | null / string | — | `Hitachi, Ltd.` | Optional (9% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `parent_company` | Parent company where documented. | null / string | — | `Hitachi, Ltd.` | Optional (8% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `subsidiaries_brands` | Brands / subsidiaries where documented. | null / string | — | `SPTS Technologies` | Optional (3% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `description` | Business focus / definition. | string / null | — | `EUV (incl. High-NA EXE) and DUV lithography` | Optional (60% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `description` | Business focus / definition. | string / null | — | `EUV (incl. High-NA EXE) and DUV lithography` | Optional (59% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `primary_equipment` | Equipment the source confirms the company offers. | string / null | — | `EUV; DUV` | Optional (88% populated) | Record `source_ids` (Tier-4 alone never confirms) | Verbatim |
 | `equipment_ids` | Source-confirmed equipment categories (EQP ids). | array | — | `["EQP-A01.01","EQP-A01.02"]` | Optional | Derived — inherits the sources of the linked records | Only confirmed categories; analyst candidates are kept in candidate_categories |
-| `component_class_ids` | Linked record ids. | array | — | `["CMPN-000010"]` | Optional (11% populated) | Derived — inherits the sources of the linked records | — |
+| `component_class_ids` | Linked record ids. | array | — | `["CMPN-000010"]` | Optional (10% populated) | Derived — inherits the sources of the linked records | — |
 | `candidate_categories` | Analyst-knowledge categories — unverified, never used for filtering or counts. | null / string | — | `A19;A10;A21;A26` | Optional | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `candidate_basis` | Label explaining candidate categories are unverified. | null / string | — | `Analyst knowledge — unverified; not used for filtering` | Optional (11% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `candidate_basis` | Label explaining candidate categories are unverified. | null / string | — | `Analyst knowledge — unverified; not used for filtering` | Optional (10% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `market_class` | GLOBAL_LEADER / TIER_2 / REGIONAL / EMERGING / UNCLASSIFIED, assigned only from a published ranking or revenue. | string | GLOBAL_LEADER, TIER_2, UNCLASSIFIED, REGIONAL, EMERGING | `GLOBAL_LEADER` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `market_class_basis` | Evidence behind market_class (ranking source or revenue). | string | — | `Ranked: S0004 top-5 2025` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `revenue` | Reported revenue converted to USD m with fiscal year and original currency; or a derived range. | object / null | — | `{"usd_m":36870.5,"fiscal_year":"FY2025 (Jan-Dec 2025)","reported":"…` | Optional | Record `source_ids` (Tier-4 alone never confirms) | Fiscal years kept separate |
@@ -53,9 +53,9 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `confidence` | Confidence level (HIGH/MEDIUM/LOW/UNVERIFIED) and score where recorded. | object | — | `{"score":95,"level":"HIGH"}` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `evidence_depth` | How deeply the source was read (CONTENT, TITLE, SEARCH_SUMMARY, TIER4, INTERNAL). | string | CONTENT, TITLE, TIER4, INTERNAL, SEARCH_SUMMARY | `CONTENT` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `rationale` | Why the record was included / caveats. | null / string | — | `Title-level evidence does not name the equipment category` | Optional (13% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `notes` | Analyst notes from capture. | string / null | — | `Top-5 WFE vendor 2025 (S0004); EXE:5200B at SK hynix M16 (S0133)` | Optional (52% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `notes` | Analyst notes from capture. | string / null | — | `Top-5 WFE vendor 2025 (S0004); EXE:5200B at SK hynix M16 (S0133)` | Optional (53% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `source_ids` | Numbered sources supporting the record (SRC ids). | array | — | `["SRC-000004","SRC-000024","SRC-000133","SRC-000142","SRC-000143","…` | Required for facts | Derived — inherits the sources of the linked records | — |
-| `discovery_keywords` | Web-search keywords that surfaced the company (Batch 4 keyword discovery). A discovery aid indexed by search — not a claim about the company. | array | — | `["wedge bonder","wire bonder manufacturer","heavy wire ultrasonic b…` | Optional (16% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `discovery_keywords` | Web-search keywords that surfaced the company (Batch 4 keyword discovery). A discovery aid indexed by search — not a claim about the company. | array | — | `["wedge bonder","wire bonder manufacturer","heavy wire ultrasonic b…` | Optional (18% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `freshness` | Recent / Needs Review / Stale / Unknown from the freshest supporting source. | string | Recent, Needs Review, Stale, Unknown | `Recent` | Required | System-generated | — |
 | `quality_state` | VERIFIED / PARTIALLY_VERIFIED / UNVERIFIED / CONFLICTING / OUTDATED — one state per record. | string | VERIFIED, OUTDATED, PARTIALLY_VERIFIED, CONFLICTING, UNVERIFIED | `VERIFIED` | Required | System-generated | CONFLICTING > OUTDATED > verification |
 | `missing_key_fields` | Key fields not captured for this record. | array | — | `["Headquarters country (source)","City","Founded year","Employees"]` | Required | System-generated | — |
@@ -159,7 +159,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `technology_ids` | Technologies (TEC ids). | array | — | `["TEC-001"]` | Optional | Derived — inherits the sources of the linked records | Derived from category and source-stated laser types |
 | `typical_subsystem_ids` | Linked record ids. | array | — | `["SUB-002","SUB-003","SUB-008","SUB-011","SUB-013","SUB-014","SUB-0…` | Optional (71% populated) | Derived — inherits the sources of the linked records | — |
 | `subsystem_basis` | Label: typical subsystems are a generic reference. | string | Generic architecture reference (editorial), not a statement about any specific tool | `Generic architecture reference (editorial), not a statement about a…` | Always present | Reference / derived | — |
-| `company_ids` | Linked record ids. | array | — | `["CMP-000004","CMP-000006","CMP-000007","CMP-000067","CMP-000109"]` | Optional (59% populated) | Derived — inherits the sources of the linked records | — |
+| `company_ids` | Linked record ids. | array | — | `["CMP-000004","CMP-000006","CMP-000007","CMP-000067","CMP-000109"]` | Optional (60% populated) | Derived — inherits the sources of the linked records | — |
 | `model_ids` | Linked record ids. | array | — | `["MDL-000110","MDL-000121","MDL-000238","MDL-000239"]` | Optional (52% populated) | Derived — inherits the sources of the linked records | — |
 | `company_ids_incl_children` | Companies confirmed on this node or any sub-category. | array | — | `["CMP-000004","CMP-000006","CMP-000007","CMP-000067","CMP-000109","…` | Optional (64% populated) | Derived — inherits the sources of the linked records | — |
 | `model_ids_incl_children` | Models on this node or any sub-category. | array | — | `["MDL-000110","MDL-000121","MDL-000238","MDL-000239","MDL-000093","…` | Optional (57% populated) | Derived — inherits the sources of the linked records | — |
@@ -308,7 +308,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## suppliers
 
-311 records.
+318 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -456,7 +456,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## relationships
 
-5,513 records.
+5,530 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -467,7 +467,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 | `basis` | source | derived | reference | analyst — how the relationship is known. | string | source, derived, analyst, reference | `source` | Required | `source_ids` when basis = source | — |
 | `source_ids` | Numbered sources supporting the record (SRC ids). | array | — | `["SRC-000054","SRC-000053"]` | Required for facts | Derived — inherits the sources of the linked records | — |
 | `confidence` | Confidence level (HIGH/MEDIUM/LOW/UNVERIFIED) and score where recorded. | string | — | `HIGH` | Required | `source_ids` when basis = source | — |
-| `via` | How a derived relationship was computed. | string | — | `equipment category → process reference` | Optional (24% populated) | `source_ids` when basis = source | — |
+| `via` | How a derived relationship was computed. | string | — | `equipment category → process reference` | Optional (23% populated) | `source_ids` when basis = source | — |
 | `note` | Free-text note from capture. | string | — | `Analyst knowledge — not source-traced` | Optional (6% populated) | `source_ids` when basis = source | — |
 | `detail` | Relationship detail (customer, product, stage, site, evidence …). | object | — | `{"type":"Partnership (MoU)","facility":"Tata Electronics Dholera fa…` | Optional (3% populated) | `source_ids` when basis = source | Verbatim |
 | `legacy_id` | Batch-1 identifier (C0001, P00001, S0001, CU001). Old deep links resolve to the 2.0 record. | string | — | `SR001` | Optional | System-generated | — |
@@ -476,7 +476,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-09-30) by `
 
 ## sources
 
-847 records.
+855 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|

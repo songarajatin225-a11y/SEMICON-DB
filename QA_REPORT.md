@@ -127,3 +127,7 @@ New field `discovery_keywords` on companies: import column `discovery_keywords`,
 ## Batch 6 addendum (30 Sep 2026)
 
 11 companies, 26 products, 37 sources; models attached to existing LPKF, Kulicke & Soffa, SEMES and Panasonic Connect (the duplicate guard rejected Panasonic as a new company). Equipment categories with models 129 → 134. Build + validate: 0 errors. Route smoke test: 120 / 120 routes render with 0 console errors; interaction suite passes.
+
+## Batch 7 addendum (30 Sep 2026)
+
+7 companies, 8 sources (no products); duplicate guard rejected Basler and Keyence. Build + validate: 0 errors. Route smoke test: 122 / 122 routes render with 0 console errors; interaction suite passes.
