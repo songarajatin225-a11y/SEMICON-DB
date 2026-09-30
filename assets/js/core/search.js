@@ -29,7 +29,7 @@ function docFor(r) {
     alias = [r.canonical_name, ...(r.aliases || []), ...(r.former_names || [])];
     sub = [r.company_type, r.hq.country].filter(Boolean).join(" · ");
     const models = DB.models.filter(m => m.company_id === r.id);
-    body = [r.description, r.primary_equipment, r.company_type, r.supplier_types.join(" "), r.hq.country, r.hq.city, eq.join(" "), r.india.summary, r.parent_company, r.subsidiaries_brands,
+    body = [r.description, r.primary_equipment, r.company_type, r.supplier_types.join(" "), r.hq.country, r.hq.city, eq.join(" "), r.india.summary, r.parent_company, r.subsidiaries_brands, (r.discovery_keywords || []).join(" "),
       models.map(m => [m.name, m.technology_text, m.application_text].join(" ")).join(" "), names(uniq(models.flatMap(m => m.technology_ids))).join(" ")];
     f = { country: r.hq.country, india: r.india.has_presence || r.hq.country === "India", materials: uniq(models.flatMap(m => m.material_ids)), wafer: uniq(models.flatMap(m => m.wafer?.sizes_mm || [])), waferRanges: models.map(m => m.wafer?.range_mm).filter(Boolean) };
   } else if (k === "model") {

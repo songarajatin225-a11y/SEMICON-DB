@@ -107,3 +107,15 @@ Pipeline changes:
 - There is a new HQ-country basis `SUM` ("search-result summary of a cited source, page not read"). Home and Data Quality count it separately from analyst knowledge.
 - Model pages show the title-level evidence callout for any post-Batch-1 record. The startup profile panel now shows founders and maturity.
 - Before publishing, summary-derived wafer sizes were removed from ten application fields and one wafer field, because no specifications are taken from summaries. One name that was not in any source, a "PVT150" row inferred from a size range, was dropped.
+
+## Batch 4 addendum (30 Sep 2026) — keyword-driven discovery
+
+| Check | Result |
+|---|---|
+| Records added | 25 companies (new country: Portugal), 33 products, 2 startup profiles, 54 sources (49 Tier 1) |
+| Import validation | All rows accepted; 1 similar-name warning (Kateeva ↔ Evatec) reviewed — distinct |
+| Build + validate | 0 errors; 940 warnings (search-index-only and undated sources dominate) |
+| Coverage | Equipment categories with models 116 → **129** (wedge/ball bonding, die sorting, transfer molding, MBE, thermal test, mask cleaning, bare-wafer geometry, MES, dry pumps, abatement, MEMS etch, OLED) |
+| Route smoke test | **114 / 114** routes render (adds a Batch-4 company, keyword search “wedge bonder”, Wedge Bonding category, Portugal); 0 console errors; interaction suite passes |
+
+New field `discovery_keywords` on companies: import column `discovery_keywords`, shown as “Found via keywords” on the company overview and included in the search index.

@@ -139,7 +139,7 @@ input.forEach((r, i) => {
         eq: NA(pick(r, "primary_equipment")), f: NA(pick(r, "description", "focus")), st: ver, cs: { HIGH: 90, MEDIUM: 70, LOW: 50, UNVERIFIED: 20 }[cl], cl, cc: "UNCLASSIFIED", ccb: "No ranking or revenue evidence",
         own: NA(pick(r, "ownership")), ex: NA(pick(r, "exchange")), tk: NA(pick(r, "ticker")), web: NA(web), rev: "N/A", rfy: "N/A", rorig: "N/A", emp: NA(pick(r, "employees")), fd: NA(pick(r, "founded")),
         par: NA(pick(r, "parent")), subs: NA(pick(r, "subsidiaries")), ind: pick(r, "india_presence") || "Not documented", cn: "N/A", jp: "N/A", kr: "N/A", tw: "N/A", src: src.join(";"), cand: "N/A", why: "N/A", note: pick(r, "notes") || `Imported ${batchName}`,
-        evd: pick(r, "evidence_depth").toUpperCase() || "CONTENT", cb: country ? (pick(r, "country_basis").toUpperCase() || "SRC") : "KNOW", semi: "N/A" });
+        evd: pick(r, "evidence_depth").toUpperCase() || "CONTENT", cb: country ? (pick(r, "country_basis").toUpperCase() || "SRC") : "KNOW", semi: "N/A", ...(pick(r, "discovery_keywords") ? { kw: pick(r, "discovery_keywords") } : {}) });
       const s = r.startup;
       if (s && typeof s === "object") {
         const sv = k => NA(s[k] == null ? "" : String(s[k]).trim());

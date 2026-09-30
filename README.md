@@ -4,21 +4,21 @@ A source-traced intelligence database of semiconductor equipment companies, prod
 
 **Live site:** https://songarajatin225-a11y.github.io/SEMICON-DB/ · **Legacy single-file atlas (v1):** [`legacy/`](legacy/index.html)
 
-Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages read), Batch 2 (30 Sep 2026, official titles via web search) and Batch 3 (30 Sep 2026, small companies and startups — see below). This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
+Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages read), Batch 2 (30 Sep 2026, official titles via web search) Batch 3 (30 Sep 2026, small companies and startups) and Batch 4 (30 Sep 2026, keyword-driven discovery) — see below. This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
 
 ## What's inside
 
 | Entity | Records | Notes |
 |---|---:|---|
-| Companies | 260 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups added in Batch 3 (14 startups in total) |
-| Product families → models | 309 → 421 | Company → Product family → Model; 342 with a model number · 144 added in Batch 2 · 123 added in Batch 3 |
+| Companies | 285 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 (16 startups in total) |
+| Product families → models | 329 → 454 | Company → Product family → Model; 375 with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
-| Fabs · OSAT/ATMP · countries | 22 · 9 · 36 | Named sites and documented equipment suppliers |
-| Relationships | 4,810 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 713 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
+| Relationships | 5,122 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 767 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -48,6 +48,18 @@ Batch 3 searched for small and mid-size equipment makers and startups missing fr
 - **Customer links** only where a title states them: e.g. Multibeam → SkyWater (SkyWater press release), YES → Powertech (YES press release), ficonTEC → VLC Photonics, Palomar → Bay Photonics / EPIC, plus orders from unnamed customers (Obducat, YES, AEM). NEXTIN → SK hynix is PROBABLE (single media report).
 
 Same evidence rule as Batch 2: pages were located by web search but not read, so products carry **no specifications**. Product names come from page titles (MEDIUM); 6 names that appear only in the search summary are LOW, as is one industrial laser marker whose semiconductor use is not stated. Company profile facts that come from a search-result summary (city, founding year, funding) are labelled `SEARCH_SUMMARY` and the HQ basis “search-result summary of a cited source”. Directory-only companies (KCTech, UniTest, Mi Equipment, Leadmicro, SCIL, Excel Instruments) are LOW confidence. Candidates without a usable source were skipped (e.g. Vistec, DAS Environmental, Omicron Scientific, Milman, FemtoMetrix), as were general-purpose laser machine builders without a semiconductor product (Pulsar Photonics), chip-design startups and fabs that build tools only for themselves (Atomic Semi).
+
+## Batch 4 (30 Sep 2026): keyword-driven discovery
+
+Batch 4 searched the web with **equipment and process keywords**, starting with categories that had no companies. Examples: *wedge bonder*, *die sorter*, *film assisted molding*, *molecular beam epitaxy*, *sputtering system*, *wafer flatness measurement*, *EUV pellicle*, *photomask repair*, *semiconductor MES*, *dry vacuum pump*, *abatement scrubber*, *process chiller*, *MEMS release etch* and *OLED inkjet*. It added **25 companies, 33 products and 54 sources** (49 Tier 1), for example:
+- Wire bonding: Hesse Mechatronics, West-Bond, TPT.
+- Die attach, die sorting and molding: Mühlbauer, ITEC, Boschman.
+- Test and deposition: inTEST (thermal test), Riber, SVT Associates and Dr. Eberl (MBE), AJA, Semicore and Torr (sputter / evaporation).
+- Wafer metrology and masks: Corning Tropel (bare-wafer flatness), UnitySC, Canatu and the startup aweXome Ray (CNT EUV pellicles), Bruker (mask repair / cleaning).
+- Software and subfab: Critical Manufacturing (MES, Portugal), Kashiyama and Leybold (dry pumps), Kanken Techno (abatement), Mirapro (chillers).
+- MEMS and display: memsstar (MEMS vapour etch), Kateeva (OLED inkjet).
+
+Each of these companies stores its **discovery keywords**. They appear on the company page and are indexed by search, so searching “wedge bonder” finds Hesse, West-Bond and TPT. They are a discovery aid, not a claim about the company. Equipment categories with models went from 116 to 129. Candidates with no usable page were skipped (e.g. EDA Industries, Cosmic Equipment, SemiTEq, Maruyama).
 
 ## Evidence rules
 

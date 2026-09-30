@@ -172,7 +172,7 @@ const companies = L.co.map(c => {
     startup: s ? { founders: nv(s.founders), year: nv(s.year), funding: nv(s.funding), investors: nv(s.investors), product: nv(s.product), trl: nv(s.trl), latest_news: nv(s.latest_news), maturity: nv(s.maturity), source_ids: srcIds(s.source_ids), verification: s.verification_status, confidence: nv(s.confidence_level) } : null,
     financials: L.fin.filter(f => f.co === c.id).map(f => ({ fiscal_year: f.fy, metric: f.m, currency: f.ccy, value: f.v, usd_m: typeof f.usd === "number" ? f.usd : null, value_type: f.vt, source_ids: srcIds(f.src), note: nv(f.note) })),
     verification: c.st, confidence: { score: c.cs, level: c.cl }, evidence_depth: c.evd,
-    rationale: nv(c.why), notes: nv(c.note), source_ids: src,
+    rationale: nv(c.why), notes: nv(c.note), source_ids: src, discovery_keywords: split(c.kw),
     freshness: fresh, quality_state: qualityState(c.st, fresh, CONFLICTED.has(id)), missing_key_fields: missing, ...{ dates: dates(c.st, src) },
   };
 });
