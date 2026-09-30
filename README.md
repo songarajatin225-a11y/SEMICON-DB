@@ -4,21 +4,21 @@ A source-traced intelligence database of semiconductor equipment companies, prod
 
 **Live site:** https://songarajatin225-a11y.github.io/SEMICON-DB/ · **Legacy single-file atlas (v1):** [`legacy/`](legacy/index.html)
 
-Built for TEAL's Laser & Photonics team. Evidence as of 29 Sep 2026 (Batch 1). This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
+Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages read) and Batch 2 (30 Sep 2026, official titles via web search — see below). This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
 
 ## What's inside
 
 | Entity | Records | Notes |
 |---|---:|---|
-| Companies | 186 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers |
-| Product families → models | 146 → 154 | Company → Product family → Model; 106 with a published model number |
+| Companies | 192 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 |
+| Product families → models | 241 → 298 | Company → Product family → Model; 219 with a published model number · 144 added in Batch 2 |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 21 · 9 · 35 | Named sites and documented equipment suppliers |
-| Relationships | 2,681 | Each labelled source-backed, derived, editorial reference or analyst |
-| Sources | 351 | Tiered, dated, accessibility recorded |
+| Relationships | 3,672 | Each labelled source-backed, derived, editorial reference or analyst |
+| Sources | 493 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -31,6 +31,12 @@ Built for TEAL's Laser & Photonics team. Evidence as of 29 Sep 2026 (Batch 1). T
 - **Intelligence workspace**: Equipment Finder, Supplier Finder, Supply-chain Explorer, Packaging and Fab intelligence, India/TEAL opportunity (your own criteria and weights — never auto-ranked), plus all Batch-1 analyses (TEAL view, gap analysis, partner fit, localisation, competitive landscape, customer map, deals, laser explorer, segments).
 - **Data Quality centre**: verification/quality states, freshness, missing key fields, conflicts (both claims shown), duplicate candidates (never auto-merged), validation findings, relationship basis, source hygiene, Batch-1 QC log, methodology.
 - **India ecosystem** page and country pages; saved workspace (local to the browser).
+
+## Batch 2 (30 Sep 2026): filling empty processes
+
+Batch 2 targeted every process and equipment category that had no equipment. It added 144 products from 39 manufacturers (6 new companies: PVA TePla, Okamoto, SpeedFam, Organo, Kurita, Nordson). Processes with equipment went from 33 to 58 of 61, and equipment categories with models from 53 to 94.
+
+Every Batch-2 record comes from the **manufacturer's own** product page, press release, brochure or SEC filing, found by web search. Direct page access was blocked in the capture environment, so only the official URL and title were captured. These records are therefore marked **Partially verified / Medium confidence**, carry no specifications, and each source is labelled "Title via web search · page not read". Candidates whose only evidence was a generic page title or a third-party site (Kingsemi, SMEE, Hwatsing, RORZE models) were not added. Still empty: ingot grinding, final (prime) wafer cleaning, lead plating.
 
 ## Evidence rules
 

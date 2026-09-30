@@ -62,7 +62,7 @@ export function validateAll(E, { conflicts = [] } = {}) {
     else if (!s.internal) warn("source.url", `${s.id} has no URL`, s.id);
     if (!s.publication_date) warn("source.date", `${s.id} has no publication / evidence date`, s.id);
     else if (!/^\d{4}(-\d\d){0,2}$/.test(s.publication_date)) err("source.date", `${s.id} has an invalid date ${s.publication_date}`, s.id);
-    if (!s.accessible) warn("source.access", `${s.id} was not accessible at capture`, s.id);
+    if (!s.accessible) { if (s.access_mode === "search_index") warn("source.search_index", `${s.id}: official URL/title confirmed via web search only; page not read`, s.id); else warn("source.access", `${s.id} was not accessible at capture`, s.id); }
   }
   for (const c of conflicts) { if (!has(c.entity)) err("conflict.entity", `${c.id} points to unknown ${c.entity}`, c.id); c.claims.forEach(k => { if (k.source_id && !has(k.source_id)) err("conflict.source", `${c.id} cites unknown ${k.source_id}`, c.id); }); }
   const byRule = {}; [...errors, ...warnings].forEach(x => (byRule[x.rule] = (byRule[x.rule] || 0) + 1));

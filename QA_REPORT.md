@@ -6,7 +6,7 @@ Tested against a local static server with headless Chromium (Playwright 1.56), d
 
 | Area | Result |
 |---|---|
-| Route smoke test | **99 / 99** routes render (every section, every detail tab, legacy hashes, legacy ids, 404) with **0** console or page errors |
+| Route smoke test | **97 / 97** routes render (every section, every detail tab, legacy hashes, legacy ids, 404) with **0** console or page errors |
 | Interaction test | Command palette (typo query → record), facets (URL updates, focus kept), chip removal, text filter, column presets, sort, pagination, compare toggles, source drawer (open / Esc close), “/” shortcut — all pass |
 | Data validation | `npm run build` + `npm run validate`: **0 errors**, 150 warnings (140 undated sources, 8 inaccessible sources, 2 thickness-only wafer values) |
 | Accessibility | axe-core WCAG 2 A/AA on 13 key pages × light/dark: **0 violations** (after fixing contrast, ARIA on links and SVG roles) |
@@ -63,10 +63,27 @@ No new external facts. All company, model, customer, supplier, deal and source r
 
 ### Known gaps / not implemented
 
-- **Evidence breadth**: no new companies or models were researched in this pass; the import pipeline is ready for Batch 2.
+- **Evidence depth of Batch 2**: 144 products added from official titles only (pages not read) — see the Batch 2 section below.
 - Column **resize and drag-reorder** are not implemented (pin first column, presets, show/hide are).
 - Map clusters by **country centroid**; facility coordinates are not captured.
 - Per-parameter sources: Batch 1 attached sources per record, so specifications cite record-level sources (labelled).
 - The six-tier source scheme of the brief is documented as a crosswalk, not applied (needs re-reading of sources).
 - Saved workspace is per-browser (no backend).
 - Transfer size grew (≈304 KB gzip vs 136 KB) because data is now normalised with explicit relationships; per-entity lazy loading is the next step if the dataset grows 10×.
+
+## Batch 2 addendum (30 Sep 2026) — filling empty processes
+
+| Check | Result |
+|---|---|
+| Processes with at least one model | 33 → **58 / 61** (still empty: ingot grinding & shaping, final wafer cleaning, lead plating & finishing) |
+| Equipment categories with models | 53 → **94** |
+| Records added | 144 products, 6 companies, 142 Tier-1 sources |
+| Import validation | All rows accepted after two importer fixes (see below); Ebara was caught as a duplicate and reused |
+| Build + `npm run validate` | 0 errors (warnings: 142 search-index-only sources, 261 undated sources, 8 inaccessible) |
+| Route smoke test / interactions | 97 / 97 routes, 0 console errors; interaction suite passes |
+
+Fixes made along the way:
+- The importer now knows the 2.0 taxonomy codes (K, L). It previously rejected them.
+- The importer records the source access mode, the evidence age and laser type codes.
+- Two Batch-1 crystal pullers moved from Epitaxy (A09.10) to Crystal growth (K01), a category Batch 1 did not have. The change is recorded on each record.
+- Advanced-packaging processes now map to the equipment they use: DRIE and plating for TSV; plating and packaging lithography for RDL, WLP and fan-out; bonding for chiplets.

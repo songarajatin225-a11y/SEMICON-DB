@@ -3,7 +3,8 @@
 ## Current evidence base
 
 - **Batch 1** (29 Sep 2026): 351 numbered sources — 192 Tier 1, 97 Tier 2, 30 Tier 3, 30 Tier 4, plus 2 internal (the user brief and an internal note). 140 sources are undated; 8 were not accessible at capture and were not bypassed.
-- **2.0 migration** added **no new external facts**. It restructured the Batch-1 evidence, added an editorial reference taxonomy, and derived relationships from source-backed fields. Every derived link says so.
+- **Batch 2** (30 Sep 2026): 142 sources, all Tier 1 official (manufacturer pages, press releases, brochures, one SEC 10-K), supporting 144 products and 6 companies. Access mode `search_index`: the official URL and title were confirmed via web search, but the page itself could not be opened (capture-environment egress policy), so records are PARTIALLY_VERIFIED / MEDIUM and no specifications were taken from search summaries (one summary contradicted itself on an implanter's energy range). Re-reading each page can promote records to VERIFIED and add specifications.
+- **2.0 migration** of Batch 1 added **no new external facts**. It restructured the Batch-1 evidence, added an editorial reference taxonomy, and derived relationships from source-backed fields. Every derived link says so.
 
 ## Source tiers (Batch-1 scheme, kept as captured)
 
@@ -15,6 +16,14 @@
 | 4 | Unverified | Blogs, wikis, market lists — never used alone to confirm a fact |
 
 **Crosswalk to the 2.0 brief's six tiers** (for future re-grading, not applied automatically because it requires re-reading each source): Batch-1 Tier 1 → 2.0 Tier 1 (company/official) or Tier 2 (government, regulatory filing); Batch-1 Tier 2 → 2.0 Tier 2 (SEMI), Tier 3 (conference) or Tier 4 (industry media); Batch-1 Tier 3 → 2.0 Tier 5; Batch-1 Tier 4 → 2.0 Tier 6.
+
+## Access modes
+
+| `access_mode` | Meaning | Effect |
+|---|---|---|
+| `read` | Page or document read at capture | Can support VERIFIED records and specifications |
+| `search_index` | Official URL + title confirmed via web search; content not read | Supports existence, maker and category only → PARTIALLY_VERIFIED, no specs |
+| `not_accessible` | Access blocked; not bypassed | Cannot support a claim on its own |
 
 ## Source record
 
@@ -53,6 +62,7 @@ Respect robots rules, access controls and copyright: store metadata, short excer
 - Specifications (wafer size, throughput, accuracy) are published for a minority of models.
 - Employees, founding year and executives are mostly missing.
 - Tool vendors for most Indian OSAT lines are not publicly named.
-- MEMS (category H), wafer manufacturing (K) and subfab (L) categories have few or no records.
+- MEMS (category H) has no records; wafer manufacturing (K) and subfab (L) are partly covered after Batch 2 (ingot grinding, final wafer cleaning and lead plating still empty).
+- Batch-2 records need a direct read of their official pages to be promoted to VERIFIED and to add specifications.
 - 157 companies' HQ country is analyst knowledge rather than a cited source (labelled on every profile).
 - Materials and gas suppliers are not itemised per material.

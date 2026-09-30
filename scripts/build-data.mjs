@@ -25,6 +25,7 @@ const L = JSON.parse(fs.readFileSync(path.join(OUT, "legacy/legacy_snapshot.json
 const BATCH_DIR = path.join(OUT, "batches");
 const BATCHES = fs.existsSync(BATCH_DIR) ? fs.readdirSync(BATCH_DIR).filter(f => f.endsWith(".json")).sort().map(f => JSON.parse(fs.readFileSync(path.join(BATCH_DIR, f), "utf8"))) : [];
 BATCHES.forEach(b => { L.co.push(...(b.co || [])); L.pr.push(...(b.pr || [])); L.src.push(...(b.src || [])); });
+const BATCH_OF_SOURCE = new Map(BATCHES.flatMap(b => (b.src || []).map(x => [x.id, b.created])));
 
 // ---------------------------------------------------------------- helpers
 const NA = v => v == null || v === "" || v === "N/A" || v === "-" || v === "Not documented";
@@ -50,11 +51,12 @@ const sources = L.src.map(s => ({
   title: s.title, publisher: nv(s.pub), source_type: s.type,
   source_url: /^https?:/.test(s.url) ? s.url : null, internal: !/^https?:/.test(s.url),
   tier: s.tier, tier_label: TIER_LABEL[s.tier] || String(s.tier),
-  publication_date: normDate(s.date), evidence_date: normDate(s.date), accessed_date: AS_OF,
-  accessible: s.acc === "Y", access_note: s.acc === "Y" ? null : "Access blocked or not accessible at capture; not bypassed",
+  publication_date: normDate(s.date), evidence_date: normDate(s.date), accessed_date: BATCH_OF_SOURCE.get(s.id) || AS_OF,
+  accessible: s.acc === "Y", access_mode: s.acc === "Y" ? "read" : s.acc === "SEARCH_INDEX" ? "search_index" : "not_accessible",
+  access_note: s.acc === "Y" ? null : s.acc === "SEARCH_INDEX" ? "Official URL and title confirmed via web search; page content not read directly (capture-environment egress restriction)" : "Access blocked or not accessible at capture; not bypassed",
   age_class: s.age, freshness: FRESH[s.age] || "Unknown",
   excerpt: nv(s.exc), notes: nv(s.note), used_by: s.used,
-  verification_status: s.acc !== "Y" ? "not_accessible" : (s.tier === 4 ? "unverified_source" : "captured"),
+  verification_status: s.acc === "SEARCH_INDEX" ? "title_via_search_index" : s.acc !== "Y" ? "not_accessible" : (s.tier === 4 ? "unverified_source" : "captured"),
 }));
 const SRC = Object.fromEntries(sources.map(s => [s.id, s]));
 const FRESH_RANK = { Recent: 0, "Needs Review": 1, Stale: 2, Unknown: 3 };
@@ -182,6 +184,11 @@ const FAM = Object.fromEntries(famOrder.map((k, i) => [k, `PRD-${pad(i + 1)}`]))
 const LIFECYCLE = { ACTIVE: "Active", LEGACY: "Legacy", DEVELOPMENT: "Development", NOT_DEPLOYED: "Announced", UNKNOWN: "Unknown" };
 const textOf = p => [p.lmat, p.wafer, p.app, p.tech, p.fam, p.mdl].filter(x => !NA(x)).join(" | ");
 const appText = p => [p.app, p.tech, p.fam, p.seg, p.mdl].filter(x => !NA(x)).join(" | ");
+// 2.0 taxonomy remaps: Batch 1 had no crystal-growth node, so Czochralski pullers were filed under Epitaxy (A09.10).
+// The product records are unchanged; only their category moves to the new K01 node. Recorded on each record.
+const RECLASSIFY = { P00116: { to: "K01", reason: "Crystal puller: Batch 1 filed it under Epitaxy because no crystal-growth category existed" },
+  P00117: { to: "K01", reason: "Crystal puller: Batch 1 filed it under Epitaxy because no crystal-growth category existed" } };
+L.pr.forEach(p => { const r = RECLASSIFY[p.id]; if (r) { p._reclassified_from = p.eqid; p._reclass_reason = r.reason; p.eqid = r.to; p.eq = "Crystal growth furnaces / pullers"; } });
 const models = L.pr.map(p => {
   const id = mdlId(p.id);
   const src = srcIds(p.src);
@@ -222,6 +229,8 @@ const models = L.pr.map(p => {
       pulse_energy: nv(p.pe), repetition_rate: nv(p.rr), scan_speed: nv(p.scan), material: nv(p.lmat) } : null,
     specs, lifecycle: { status: LIFECYCLE[p.st] || "Unknown", legacy_status: p.st, maturity: nv(p.mat), maturity_evidence: nv(p.mev), launch_year: null, eol_date: null, replacement_id: null },
     price_public: nv(p.price), teal_portfolio: nv(p.teal), notes: nv(p.note),
+    reclassified: p._reclassified_from ? { from_code: p._reclassified_from, to_code: p.eqid, reason: p._reclass_reason } : null,
+    batch: p.note && /^Batch 2/.test(p.note) ? "Batch 2" : "Batch 1",
     verification: p.ver, confidence: { level: p.cl }, source_ids: src, source_age: p.age,
     freshness: fresh, quality_state: qualityState(p.ver, fresh, CONFLICTED.has(id)), missing_key_fields: missing, dates: dates(p.ver, src),
   };
@@ -469,10 +478,11 @@ const quality = { conflicts: CONFLICTS, duplicate_candidates: dupes };
 const report = validateAll({ ...entities }, { conflicts: CONFLICTS });
 quality.validation = report;
 const counts = Object.fromEntries(Object.entries(entities).map(([k, v]) => [k, v.length]));
-const meta = { name: "SEMICON-DB", title: "SEMICON-DB — Global Semiconductor Equipment Intelligence Graph", schema_version: SCHEMA_VERSION, evidence_as_of: AS_OF, built: BUILD_DATE,
+const LATEST = [AS_OF, ...BATCHES.map(b => b.created).filter(Boolean)].sort().pop();
+const meta = { name: "SEMICON-DB", title: "SEMICON-DB — Global Semiconductor Equipment Intelligence Graph", schema_version: SCHEMA_VERSION, evidence_as_of: LATEST, batch1_as_of: AS_OF, built: BUILD_DATE,
   batches: [{ batch: "Batch 1", date: AS_OF, companies: L.co.length - BATCHES.reduce((a, b) => a + (b.co || []).length, 0), products: L.pr.length - BATCHES.reduce((a, b) => a + (b.pr || []).length, 0), sources: L.src.length - BATCHES.reduce((a, b) => a + (b.src || []).length, 0), customer_links: L.cr.length, note: "Legacy public edition (single-file atlas)" },
-    ...BATCHES.map(b => ({ batch: b.batch, date: b.created, companies: (b.co || []).length, products: (b.pr || []).length, sources: (b.src || []).length, note: "Imported batch (scripts/import.mjs)" })),
-    { batch: "2.0 migration", date: BUILD_DATE, note: "Normalised schema, reference taxonomy and derived relationships over the Batch-1 evidence; no new external facts added", ...counts }],
+    ...BATCHES.map(b => ({ batch: b.batch, date: b.created, companies: (b.co || []).length, products: (b.pr || []).length, sources: (b.src || []).length, note: b.method || "Imported batch (scripts/import.mjs)" })),
+    { batch: "2.0 migration", date: BUILD_DATE, note: "Totals after 2.0 normalisation (schema, reference taxonomy, derived relationships) over Batch 1" + (BATCHES.length ? " plus " + BATCHES.map(b => b.batch).join(", ") : "; no new external facts added"), ...counts }],
   counts, id_prefixes: { company: "CMP", product_family: "PRD", model: "MDL", equipment: "EQP", process: "PRS", technology: "TEC", material: "MAT", application: "APP", subsystem: "SUB", component: "CMPN", fab: "FAB", osat: "OSAT", customer: "CUS", country: "CTY", deal: "DEAL", relationship: "REL", source: "SRC", conflict: "CNF", duplicate: "DUP" } };
 
 const write = (f, obj) => fs.writeFileSync(path.join(OUT, f), JSON.stringify(obj, null, 0) + "\n");

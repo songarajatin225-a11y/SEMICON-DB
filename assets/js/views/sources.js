@@ -31,7 +31,7 @@ export function sources({ path, params }) {
     { key: "tier", label: "Tier", get: s => [String(s.tier)], label_of: v => (/^\d$/.test(v) ? "Tier " + v : v), open: true },
     { key: "type", label: "Source type", get: s => [s.source_type] },
     { key: "fresh", label: "Freshness", get: s => [s.freshness] },
-    { key: "access", label: "Access", get: s => [s.accessible ? "Read" : "Not accessible"] },
+    { key: "access", label: "Access", get: s => [s.accessible ? "Read" : s.access_mode === "search_index" ? "Title via web search" : "Not accessible"] },
   ];
   const state = readState(defs, params);
   const q = params.get("q") || "";
@@ -41,7 +41,7 @@ export function sources({ path, params }) {
     { k: "tier", label: "Tier", get: r => (typeof r.tier === "number" ? r.tier : 9), html: r => `<span class="pill">${esc(r.tier)}</span>` },
     { k: "title", label: "Title", wrap: true, get: r => r.title, html: r => `${r.source_url ? `<a href="${esc(r.source_url)}" target="_blank" rel="noopener noreferrer">${esc(r.title)} ↗</a>` : esc(r.title)}<span class="sub">${esc(r.publisher || "")}</span>` },
     { k: "type", label: "Type", get: r => r.source_type }, { k: "date", label: "Published", get: r => r.publication_date || "", html: r => `${val(r.publication_date, { reason: "Undated" })}<span class="sub">${fresh(r.freshness)}</span>` },
-    { k: "access", label: "Access", get: r => (r.accessible ? "Read" : "Not accessible"), html: r => (r.accessible ? "Read" : `<span class="chip b-outdated">Not accessible</span>`) },
+    { k: "access", label: "Access", get: r => (r.accessible ? "Read" : r.access_mode === "search_index" ? "Title via web search" : "Not accessible"), html: r => (r.accessible ? "Read" : r.access_mode === "search_index" ? `<span class="chip b-partial">Title via web search</span>` : `<span class="chip b-outdated">Not accessible</span>`) },
     { k: "excerpt", label: "Excerpt", wrap: true, get: r => r.excerpt || "", html: r => val(r.excerpt, { reason: "—" }) }, { k: "used", label: "Cited by", num: true, get: r => r.used_by }] });
   const n = Object.values(state).flat().length;
   const html = pageHead({ eyebrow: "Evidence", title: "Source register", crumb: [["Home", "#/"], ["Sources", null]], lede: "Every numbered source with its tier, date basis and accessibility. Pages that blocked access are marked and were not bypassed." })

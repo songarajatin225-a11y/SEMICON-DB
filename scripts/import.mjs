@@ -12,6 +12,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { normWafer, normName, similarity } from "./lib/normalize.mjs";
 import { COUNTRIES, COUNTRY_ALIASES } from "./reference/geo.mjs";
+import { TAXONOMY_EXT, TAXONOMY_GROUPS_EXT } from "./reference/ontology.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
@@ -49,7 +50,9 @@ const batchDir = path.join(ROOT, "data/batches");
 const batches = fs.existsSync(batchDir) ? fs.readdirSync(batchDir).filter(f => f.endsWith(".json")).map(f => JSON.parse(fs.readFileSync(path.join(batchDir, f), "utf8"))) : [];
 const all = k => [...L[k], ...batches.flatMap(b => b[k] || [])];
 const CO = all("co"), PR = all("pr"), SRC = all("src");
-const TAX = new Set(L.tax.map(t => t.id));
+// Batch-1 taxonomy plus the 2.0 extensions (K wafer manufacturing, L subfab & facilities).
+const TAX = new Set([...L.tax.map(t => t.id), ...TAXONOMY_GROUPS_EXT.map(([k]) => k), ...TAXONOMY_EXT.map(([code]) => code)]);
+const TAX_NAME = Object.fromEntries([...L.tax.map(t => [t.id, t.n]), ...TAXONOMY_EXT.map(([code, , n]) => [code, n])]);
 const nextId = (list, prefix, width) => prefix + String(Math.max(0, ...list.map(x => parseInt(String(x.id).replace(/\D/g, ""), 10) || 0)) + 1).padStart(width, "0");
 const COUNTRY = new Map(COUNTRIES.map(([n]) => [n.toLowerCase(), n])); Object.entries(COUNTRY_ALIASES).forEach(([a, n]) => COUNTRY.set(a.toLowerCase(), n));
 const pick = (r, ...ks) => { for (const k of ks) if (r[k] != null && String(r[k]).trim() !== "") return String(r[k]).trim(); return ""; };
@@ -57,6 +60,17 @@ const NA = v => (v === "" || v == null ? "N/A" : v);
 const isURL = s => { try { const u = new URL(s); return /^https?:$/.test(u.protocol); } catch { return false; } };
 const isDate = s => /^\d{4}(-\d\d){0,2}$/.test(s);
 const VER = ["VERIFIED", "PARTIALLY_VERIFIED", "UNVERIFIED"], CONF = ["HIGH", "MEDIUM", "LOW", "UNVERIFIED"];
+// Age class of a source date relative to today (same classes as Batch 1).
+const TODAY = new Date();
+function ageOf(date) {
+  if (!date || !isDate(date)) return "UNDATED";
+  const [y, m = 6] = date.split("-").map(Number);
+  const months = (TODAY.getFullYear() - y) * 12 + (TODAY.getMonth() + 1 - m);
+  return months <= 12 ? "CURRENT" : months <= 24 ? "AGING" : months <= 60 ? "STALE" : "VERY_STALE";
+}
+// How the source was accessed: Y = read directly; SEARCH_INDEX = official URL + title confirmed via web search, page not read.
+const ACCESS = ["Y", "SEARCH_INDEX", "DATA_NOT_ACCESSIBLE"];
+const LASER_CODE = Object.fromEntries(L.lt.map(([code, name]) => [name.toLowerCase(), code]));
 
 // ---------------------------------------------------------------- sources embedded in rows
 const newSources = [];   // committed sources (from accepted rows only)
@@ -72,7 +86,8 @@ function resolveSources(r, errs) {
     const existing = [...SRC, ...newSources].find(s => s.url === url);
     if (existing) ids.push(existing.id);
     else { const id = nextId([...SRC, ...newSources], "S", 4); pending.push({ id, url, title: pick(r, "source_title") || url, pub: NA(pick(r, "source_publisher", "publisher")), type: pick(r, "source_type") || "Official website",
-      tier: +pick(r, "source_tier") || 1, date: date || "UNKNOWN", acc: "Y", exc: NA(pick(r, "source_excerpt", "excerpt")), age: date ? "CURRENT" : "UNDATED", note: `Imported ${batchName}`, used: 1 }); ids.push(id); }
+      tier: +pick(r, "source_tier") || 1, date: date || "UNKNOWN", acc: pick(r, "source_access") || "Y", exc: NA(pick(r, "source_excerpt", "excerpt")), age: ageOf(date), note: `Imported ${batchName}`, used: 1 }); ids.push(id); }
+    const acc = pick(r, "source_access"); if (acc && !ACCESS.includes(acc)) errs.push(`source_access must be one of ${ACCESS}`);
   }
   if (!ids.length) errs.push("no source (source_ids or source_url required — records without evidence are not accepted)");
   return [...new Set(ids)];
@@ -108,8 +123,8 @@ input.forEach((r, i) => {
       staged.co.push({ id, n: name, c: country || "N/A", city: NA(pick(r, "city")), t: pick(r, "company_type", "type") || "Equipment OEM", lv: pick(r, "level") || "LV1", cats: cats.join(";") || "N/A",
         eq: NA(pick(r, "primary_equipment")), f: NA(pick(r, "description", "focus")), st: ver, cs: { HIGH: 90, MEDIUM: 70, LOW: 50, UNVERIFIED: 20 }[cl], cl, cc: "UNCLASSIFIED", ccb: "No ranking or revenue evidence",
         own: NA(pick(r, "ownership")), ex: NA(pick(r, "exchange")), tk: NA(pick(r, "ticker")), web: NA(web), rev: "N/A", rfy: "N/A", rorig: "N/A", emp: NA(pick(r, "employees")), fd: NA(pick(r, "founded")),
-        par: NA(pick(r, "parent")), subs: "N/A", ind: pick(r, "india_presence") || "Not documented", cn: "N/A", jp: "N/A", kr: "N/A", tw: "N/A", src: src.join(";"), cand: "N/A", why: "N/A", note: `Imported ${batchName}`,
-        evd: "CONTENT", cb: country ? (pick(r, "country_basis").toUpperCase() || "SRC") : "KNOW", semi: "N/A" }); }
+        par: NA(pick(r, "parent")), subs: "N/A", ind: pick(r, "india_presence") || "Not documented", cn: "N/A", jp: "N/A", kr: "N/A", tw: "N/A", src: src.join(";"), cand: "N/A", why: "N/A", note: pick(r, "notes") || `Imported ${batchName}`,
+        evd: pick(r, "evidence_depth").toUpperCase() || "CONTENT", cb: country ? (pick(r, "country_basis").toUpperCase() || "SRC") : "KNOW", semi: "N/A" }); }
   } else if (entity === "models") {
     const mRef = pick(r, "manufacturer", "company", "company_id");
     const co = [...CO, ...staged.co].find(c => c.id === mRef || normName(c.n) === normName(mRef));
@@ -123,13 +138,14 @@ input.forEach((r, i) => {
     const src = resolveSources(r, errs);
     const mdl = pick(r, "model_number", "model");
     if (co && mdl && PR.some(p => p.co === co.id && String(p.mdl).toLowerCase() === mdl.toLowerCase()) && !opt("allow-duplicates")) errs.push(`duplicate model ${mdl} for ${co.n}`);
-    const tax = L.tax.find(t => t.id === eqid);
+    const tax = L.tax.find(t => t.id === eqid) || (TAX_NAME[eqid] ? { n: TAX_NAME[eqid], ps: /^K/.test(eqid) ? "PS01" : "PSX4" } : null);
     if (!errs.length) { const id = nextId([...PR, ...staged.pr], "P", 5);
       staged.pr.push({ id, co: co.id, cn: co.n, cat: eqid[0], eqid, eq: tax?.n || eqid, fam, mdl: NA(mdl), tech: NA(pick(r, "technology")), ps: tax?.ps || "N/A", psn: "N/A", app: NA(pick(r, "application")),
         seg: NA(pick(r, "segment")), wafer: NA(wafer), thr: NA(pick(r, "throughput")), acc: NA(pick(r, "accuracy")), lt: NA(pick(r, "laser_type")), ltc: "N/A", wl: NA(pick(r, "wavelength")), pw: NA(pick(r, "power")),
-        st: (pick(r, "lifecycle") || "UNKNOWN").toUpperCase(), mat: NA(pick(r, "maturity")), mev: NA(pick(r, "maturity_evidence")), ver, cl, src: src.join(";"), age: "CURRENT", teal: "N/A", price: "N/A", las: !!pick(r, "laser_type"),
+        st: (pick(r, "lifecycle") || "UNKNOWN").toUpperCase(), mat: NA(pick(r, "maturity")), mev: NA(pick(r, "maturity_evidence")), ver, cl, src: src.join(";"), age: ageOf(pick(r, "source_date", "evidence_date")), teal: "N/A", price: "N/A", las: !!pick(r, "laser_type"),
         ls: NA(pick(r, "laser_source")), pd: NA(pick(r, "pulse_duration")), rr: NA(pick(r, "repetition_rate")), pe: NA(pick(r, "pulse_energy")), lmat: NA(pick(r, "material")), scan: "N/A", motion: "N/A", dims: NA(pick(r, "footprint")), thk: "N/A",
-        note: `Imported ${batchName}`, specs: [] }); }
+        note: pick(r, "notes") || `Imported ${batchName}`, specs: [] });
+      const lt = pick(r, "laser_type"); if (lt) staged.pr[staged.pr.length - 1].ltc = lt.split(/;\s*/).map(x => LASER_CODE[x.toLowerCase()]).filter(Boolean).join(";") || "N/A"; }
   }
   if (!errs.length) newSources.push(...pending);
   (errs.length ? rejected : accepted).push({ line, name: pick(r, "name", "company", "family", "title", "url"), errors: errs, warnings: warns });

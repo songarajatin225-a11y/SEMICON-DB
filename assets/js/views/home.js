@@ -82,7 +82,7 @@ export function home() {
 
   <div class="grid g2 sec">
     <div class="panel"><div class="eyebrow">Freshness</div><h2>Most recently evidenced records</h2><table class="spec"><tbody>${recent.map(r => `<tr><th>${esc(r.dates.latest_source_date)}</th><td>${link(r.id)} <span class="muted xs">${r.entity_type === "model" ? esc(r.manufacturer) : esc(r.company_type)}</span></td></tr>`).join("")}</tbody></table>
-      <p class="note">Ordered by the publication date of the newest supporting source. All records were entered in Batch 1 (${esc(DB.meta.evidence_as_of)}).</p></div>
+      <p class="note">Ordered by the publication date of the newest supporting source. Records were entered in ${esc(DB.meta.batches.filter(b => b.batch !== "2.0 migration").map(b => `${b.batch} (${b.date})`).join(" and "))}.</p></div>
     <div class="panel"><div class="eyebrow">Review queue</div><h2>Records requiring verification</h2><table class="spec"><tbody>${needs.slice(0, 9).map(r => `<tr><th>${badge(["CONFLICTING", "OUTDATED"].includes(r.quality_state) ? r.quality_state : r.verification)}</th><td>${link(r.id)}<span class="sub">${esc(r.entity_type === "model" ? r.manufacturer : r.company_type)}</span></td></tr>`).join("")}</tbody></table>
       <p class="note"><a href="#/quality">All ${needs.length} records in the Data Quality centre →</a></p></div>
   </div>

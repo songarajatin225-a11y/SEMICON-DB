@@ -27,7 +27,7 @@ export const basis = b => { const [c, l] = BASIS[b] || ["b-neutral", pretty(b)];
 
 // ---- values
 export function val(v, { reason } = {}) {
-  if (v == null || v === "" || (Array.isArray(v) && !v.length)) return `<span class="na">${esc(reason || "Not found in Batch-1 sources")}</span>`;
+  if (v == null || v === "" || (Array.isArray(v) && !v.length)) return `<span class="na">${esc(reason || "Not found in captured sources")}</span>`;
   if (v === "NOT_DISCLOSED") return `<span class="na">Not publicly disclosed</span>`;
   return Array.isArray(v) ? v.map(esc).join("; ") : esc(v);
 }
@@ -51,7 +51,7 @@ export function srcBtn(ids, { label } = {}) {
 export function srcList(ids) {
   const list = (ids || []).map(get).filter(Boolean);
   if (!list.length) return `<p class="na">No source attached to this record.</p>`;
-  return `<ul class="srclist">${list.map(s => `<li class="t${esc(s.tier)}"><div class="row"><span class="mono xs">${esc(s.id)}</span><span class="pill">${esc(typeof s.tier === "number" ? "Tier " + s.tier : s.tier)}</span><span class="xs muted">${esc(s.source_type)}</span>${fresh(s.freshness)}${s.accessible ? "" : `<span class="chip b-outdated">Not accessible</span>`}</div>
+  return `<ul class="srclist">${list.map(s => `<li class="t${esc(s.tier)}"><div class="row"><span class="mono xs">${esc(s.id)}</span><span class="pill">${esc(typeof s.tier === "number" ? "Tier " + s.tier : s.tier)}</span><span class="xs muted">${esc(s.source_type)}</span>${fresh(s.freshness)}${s.accessible ? "" : s.access_mode === "search_index" ? `<span class="chip b-partial" title="${esc(s.access_note || "")}">Title via web search · page not read</span>` : `<span class="chip b-outdated">Not accessible</span>`}</div>
     <div style="margin-top:3px">${s.source_url ? `<a href="${esc(s.source_url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>` : esc(s.title)}</div>
     <div class="xs muted">${esc(s.publisher || "")}${s.publication_date ? " · " + esc(s.publication_date) : " · undated"}${s.used_by ? ` · cited by ${s.used_by} records` : ""} · <a href="${hrefOf(s.id)}">record</a></div>
     ${s.excerpt ? `<div class="xs ink2" style="margin-top:3px">“${esc(s.excerpt)}”</div>` : ""}</li>`).join("")}</ul>`;
