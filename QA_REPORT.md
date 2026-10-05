@@ -135,3 +135,7 @@ New field `discovery_keywords` on companies: import column `discovery_keywords`,
 ## Batch 8 addendum (30 Sep 2026)
 
 8 companies, 18 products, 25 sources; UTECHZONE models attached to the existing record (duplicate guard). Equipment categories with models 134 → 136. Build + validate: 0 errors. Route smoke test: 124 / 124 routes render with 0 console errors; interaction suite passes.
+
+## Batch 9 addendum (5 Oct 2026)
+
+19 companies, 7 products, 31 sources; one similar-name warning (UNISEM ↔ UNISERS) reviewed — distinct. Build + validate: 0 errors. Route smoke test: 127 / 127 routes render with 0 console errors; interaction suite passes.

@@ -10,15 +10,15 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 
 | Entity | Records | Notes |
 |---|---:|---|
-| Companies | 326 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 · 8 in Batch 8 (18 startups in total) |
-| Product families → models | 369 → 524 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 |
+| Companies | 345 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 · 8 in Batch 8 · 19 in Batch 9 (18 startups in total) |
+| Product families → models | 374 → 531 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 · 7 in Batch 9 |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
-| Relationships | 5,673 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 880 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Relationships | 5,751 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 911 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -90,6 +90,17 @@ Batch 7 added **7 companies and 8 sources** with company-level evidence only (no
 ## Batch 8 (30 Sep 2026): deposition, packaging wet process, implant, metrology
 
 Batch 8 added **8 companies, 18 products and 25 sources**: ULVAC (ENTRON, SME sputtering), CANON ANELVA (EC7800, HC7100, NC7900, IC7500, NC8000 etch …), VON ARDENNE (XEA|nova L), SCHMID Group (InfinityLine C+ / H+ for panel-level packaging), Nissin Ion Equipment (implanters), Ferrotec (vacuum feedthroughs, quartz), HIWIN (linear-motor stages) and Freiberg Instruments (MDP lifetime metrology); plus UTECHZONE wafer AOI models attached to the existing Utechzone record. Same evidence rule as earlier batches.
+
+## Batch 9 (5 Oct 2026): materials, gases and subfab
+
+Batch 9 widened the supply-chain layer around the equipment with **19 companies, 7 products and 31 sources**, almost all from the companies' own pages:
+- **Photoresists and process chemicals:** Tokyo Ohka Kogyo (TOK), JSR (incl. its Inpria acquisition), Shin-Etsu Chemical, Dongjin Semichem, Soulbrain.
+- **CMP and packaging materials:** Fujimi (PLANERLITE slurries), Resonac.
+- **Electronic and specialty gases:** Linde, Air Liquide, Taiyo Nippon Sanso, Kanto Denka Kogyo; gas delivery from Applied Energy Systems (SEMI-GAS Centurion cabinets).
+- **Subfab:** GST and UNISEM (scrubbers, chillers), ZEUS (wet cleaning).
+- **Equipment:** Zhejiang Jingsheng (crystal growth, SiC epitaxy), Mattson Technology (RTP, millisecond anneal, dry strip), Hymson (lasers; LOW), Beijing U-Precision (wafer stages; vendor case study, LOW).
+
+Materials suppliers are recorded at company level (type “Materials/gases”); their products are materials, not equipment models, and gas-supply agreements are not entered as equipment customer links. Market-share figures that appear on some company pages were not recorded.
 
 **Known gaps against the wider master-prompt scope** (not implemented; the data model is prepared for them): revenue and employee fields per company (only reported figures are stored), patent, M&A and news layers, a "discover / research queue" workflow with approve / merge buttons, and AI-assisted natural-language queries beyond the current query parser. Southeast Asia (Vietnam, Thailand, Indonesia, Philippines) and India equipment makers remain thinly covered because search returned few company-owned pages; trade-show exhibitor lists could not be read.
 
