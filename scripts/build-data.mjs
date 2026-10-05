@@ -266,6 +266,11 @@ const families = famOrder.map(k => {
 });
 
 // ---------------------------------------------------------------- equipment
+// A source-backed equipment model is evidence that its maker supplies that category: add model categories to the maker's
+// equipment_ids (component models excluded — their makers are subsystem suppliers, not OEMs of the host tool).
+companies.forEach(c => { const declared = new Set(c.equipment_ids);
+  const fromModels = uniq(models.filter(m => m.company_id === c.id && !m.is_component && m.equipment_id && !declared.has(m.equipment_id)).map(m => m.equipment_id));
+  c.equipment_ids_from_models = fromModels; c.equipment_ids = [...c.equipment_ids, ...fromModels]; });
 const coByCode = {}; companies.forEach(c => c.equipment_ids.forEach(e => (coByCode[e] ||= []).push(c.id)));
 const mdByCode = {}; models.forEach(m => m.equipment_id && (mdByCode[m.equipment_id] ||= []).push(m.id));
 const equipment = taxRows.map(t => {

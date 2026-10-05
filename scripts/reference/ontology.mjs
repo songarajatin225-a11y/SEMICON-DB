@@ -114,4 +114,13 @@ export const TAXONOMY_EXT = [
   ["L10", "L", "Facilities monitoring"], ["L11", "L", "Electrical & power distribution"], ["L12", "L", "Facility controls"],
 ];
 // Cross-references between 2.0 extension nodes and existing Batch-1 nodes that already carry records.
-export const TAXONOMY_SEE_ALSO = { K01: ["A09.10"], K04: ["F01"], K09: ["A30"], L01: ["A42"], L02: ["A45"], L04: ["A43"], L05: ["A44"] };
+// Editorial cross-references between overlapping branches of the taxonomy (e.g. back-end "E12 Wire bonding" and
+// assembly "C12 Wire Bonding"). They point readers to where documented suppliers sit; they are not supplier claims.
+export const TAXONOMY_SEE_ALSO = { K01: ["A09.10"], K04: ["F01"], K09: ["A30"], L01: ["A42"], L02: ["A45"], L04: ["A43"], L05: ["A44"],
+  A29: ["A26", "A25"], A35: ["J07", "A36"], "C01.05": ["C01.01", "C03"], C05: ["A19", "K07"], C22: ["C20", "C21"], C27: ["C26"],
+  D01: ["D16"], D02: ["D13", "C17"], D03: ["C16", "D13"], D07: ["D19"], D08: ["D20"], D09: ["D16"], D17: ["D16"], D23: ["C17"],
+  E01: ["C10", "C11", "C12"], E02: ["C40"], E04: ["C38"], E06: ["C34"], E07: ["C08"], E08: ["C39"], E09: ["C26"], E10: ["C01"],
+  E11: ["C10"], E12: ["C12"], E13: ["C11"], E14: ["C20", "C21"],
+  F02: ["G01"], F03: ["A09.10"], F04: ["A10"], F06: ["A15"], F09: ["C18"], F10: ["C40"],
+  H01: ["H02"], H03: ["C18"], H04: ["A09"], H07: ["A21"], H08: ["A32"],
+  I03: ["I02"], I09: ["C09"], I10: ["C11"], I11: ["I04"], J05: ["J07"], J13: ["J08"], K08: ["A04"], L06: ["L02"] };

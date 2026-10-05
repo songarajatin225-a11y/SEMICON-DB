@@ -10,15 +10,15 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 
 | Entity | Records | Notes |
 |---|---:|---|
-| Companies | 345 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 · 8 in Batch 8 · 19 in Batch 9 (18 startups in total) |
-| Product families → models | 374 → 531 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 · 7 in Batch 9 |
+| Companies | 355 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 · 8 in Batch 8 · 19 in Batch 9 · 10 in Batch 10 (18 startups in total) |
+| Product families → models | 403 → 568 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 · 7 in Batch 9 · 37 in Batch 10 |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
 | Relationships | 5,751 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 911 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Sources | 959 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -103,6 +103,22 @@ Batch 9 widened the supply-chain layer around the equipment with **19 companies,
 Materials suppliers are recorded at company level (type “Materials/gases”); their products are materials, not equipment models, and gas-supply agreements are not entered as equipment customer links. Market-share figures that appear on some company pages were not recorded.
 
 **Known gaps against the wider master-prompt scope** (not implemented; the data model is prepared for them): revenue and employee fields per company (only reported figures are stored), patent, M&A and news layers, a "discover / research queue" workflow with approve / merge buttons, and AI-assisted natural-language queries beyond the current query parser. Southeast Asia (Vietnam, Thailand, Indonesia, Philippines) and India equipment makers remain thinly covered because search returned few company-owned pages; trade-show exhibitor lists could not be read.
+
+## Batch 10 (5 Oct 2026): empty categories and major-OEM portfolios
+
+- **Linkage fix:** a company now counts as a supplier of a category when it has a sourced model there, not only when its profile lists the category. This added 63 company–category links, and profiles mark which categories come from models.
+- **37 models for the big OEMs**, whose portfolios were thin:
+  - Lam Research: SPEED HDP-CVD, ALTUS metallization, Striker ALD, VECTOR PECVD, Flex, Reliant
+  - Applied Materials: Centris Sym3, Producer eHARP, SEMVision H20
+  - ASML: TWINSCAN NXT:2000i / 2100i / 2150i, HMI eScan 430 / 600 / 1000 / 1100
+  - Tokyo Electron: Episode, Tactras-UDEMAE, Certas; Kokusai Electric: TSURUGI-C2, AdvancedAce-II, TANDUO
+  - Masks: NuFlare MBM-3000, Zeiss PROVE
+  - Hybrid bonding: EVG GEMINI FB / FB XT, Besi Datacon 8800 CHAMEO ultra plus AC, SUSS XBC300 Gen2
+  - Also: K&S PIXALUX, YES VeroTherm (built in Coimbatore)
+- **10 companies for fab infrastructure and automation:** Atlas Copco (clean dry air), DAS Environmental Expert (abatement), Yaskawa (wafer robots), Cimetrix / PDF Solutions (SECS/GEM), INFICON (FabGuard fault detection), SYNUS Tech (AMHS / OHT), V Technology and Charm Engineering (display repair), Omron (fab mobile robots), Merck / EMD Electronics (CHEMGUARD chemical delivery).
+- **Editorial cross-references** connect overlapping taxonomy branches, such as back-end "E12 Wire bonding" and assembly "C12 Wire Bonding". The concentration page now separates real research gaps from categories whose suppliers sit under an equivalent node. A cross-reference is never counted as a supplier.
+
+Result: categories with no documented supplier fell from 91 to 70. Of those, 45 have suppliers under an equivalent category and 25 are real gaps, 10 of which are device types rather than tools. As before, all sources were located by web search and the pages were not read, so models carry no specifications.
 
 ## Supply-chain intelligence (5 Oct 2026)
 

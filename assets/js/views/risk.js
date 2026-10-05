@@ -41,6 +41,7 @@ export function categoryRisk() {
 
 function riskView() {
   const all = categoryRisk(), rows = all.filter(r => r.n), none = all.filter(r => !r.n);
+  const aliased = none.filter(r => (get(r.id).see_also || []).some(x => (get(x).company_ids_incl_children || []).length)), gaps = none.filter(r => !aliased.includes(r));
   const bands = Object.fromEntries(countBy(rows, r => r.band));
   const single = rows.filter(r => r.n === 1);
   // supplier centrality: categories covered, sole-supplier categories, customer links, models
@@ -66,7 +67,10 @@ function riskView() {
     <div class="sec">${table}</div>
     <div class="grid g2 sec"><div class="panel"><h2>Critical supplier nodes</h2><p class="small ink2">Companies that are the only documented supplier for one or more categories, then by breadth of categories covered.</p>
       <table class="spec"><tbody>${central.slice(0, 20).map(x => `<tr><th>${link(x.id)}<span class="sub">${esc(x.c.hq.country || "Country not captured")}</span></th><td>${x.sole ? `<b>Sole documented supplier in ${x.sole}</b> · ` : ""}${x.cats} categories · ${x.models} models · ${x.cust} customer links</td></tr>`).join("")}</tbody></table></div>
-      <div class="panel"><h2>Categories with no documented supplier (${none.length})</h2>${tags(none.map(r => r.id), { max: 80 })}<p class="note">Research targets: the taxonomy has these nodes but no company is linked to them yet.</p></div></div>
+      <div class="panel"><h2>Categories with no documented supplier (${none.length})</h2>
+        <h3 style="margin-top:4px">Research gaps (${gaps.length})</h3>${tags(gaps.map(r => r.id), { max: 80 })}
+        <h3>Suppliers recorded under an equivalent category (${aliased.length})</h3><table class="spec"><tbody>${aliased.map(r => `<tr><th>${link(r.id)}</th><td>see ${get(r.id).see_also.map(x => `${link(x)} (${(get(x).company_ids_incl_children || []).length})`).join(", ")}</td></tr>`).join("")}</tbody></table>
+        <p class="note">Research gaps: the taxonomy has these nodes but no company is linked to them yet. The second group are overlapping branches of the taxonomy (e.g. back-end “Wire bonding” and assembly “Wire Bonding”); the editorial cross-reference points to where suppliers are recorded and is not itself a supplier claim.</p></div></div>
     <div class="panel sec"><h2>Country × equipment group</h2>${heatmap()}<p class="note">Number of companies headquartered in each country with at least one confirmed category in the group. Darker = more companies. Only countries with 3+ companies shown.</p></div>`;
   return { title: "Supply-chain concentration", html };
 }

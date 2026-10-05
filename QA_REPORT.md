@@ -147,3 +147,7 @@ New routes `#/intelligence/risk` and `#/intelligence/timeline`; company complete
 ## Analyst addendum (5 Oct 2026)
 
 New route `#/intelligence/analyst` (question router, "Can we build this?" engine, localization index table of 137 categories). Smoke test 137 / 137 routes with 0 console errors. axe (light + dark) shows 0 violations; this also fixed a dark-mode contrast issue in the risk heatmap. Question checks: "Can we build a wire bonder?" → C12 Wire Bonding; "Who supplies wafer probing equipment?" → 8 documented suppliers; "who supplies photoresist" → no equipment category, so it falls back to 13 company text matches, with that fallback stated; "Can we build an EUV scanner?" → not found, closest category A01.01 EUV.
+
+## Batch 10 addendum (5 Oct 2026)
+
+10 companies, 37 models, 48 new sources. Importer: 0 rejected. 2 duplicate warnings (Charm Engineering vs SFA / Top Engineering, on the shared word "Engineering") were checked and are false positives. Build-rule change: model categories now count toward the maker's category list (63 links), with the basis shown on each profile. Validation: 0 errors. Smoke test: 144 / 144 routes. Interaction suite passes. axe (light + dark): 0 violations. Empty categories: 91 → 70 (25 real gaps).

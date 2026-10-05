@@ -149,7 +149,7 @@ function profile({ path, params }) {
     <div class="panel sec"><h2>Portfolio matrix</h2>${portfolioMatrix(c)}</div>`;
   } else if (tab === "portfolio") {
     body = `<div class="panel"><h2>Portfolio matrix</h2>${portfolioMatrix(c)}</div>
-    <div class="grid g2 sec"><div class="panel"><h2>Equipment categories (source-confirmed)</h2>${tags(c.equipment_ids, { empty: "None confirmed" })}</div>
+    <div class="grid g2 sec"><div class="panel"><h2>Equipment categories (source-confirmed)</h2>${tags(c.equipment_ids, { empty: "None confirmed" })}${(c.equipment_ids_from_models || []).length ? `<p class="note">${c.equipment_ids_from_models.length} of these come from the company’s sourced models rather than its profile: ${c.equipment_ids_from_models.map(x => link(x)).join(", ")}.</p>` : ""}</div>
       <div class="panel"><h2>Product families</h2>${tags(fams.map(f => f.id), { empty: "No product families captured" })}</div>
       <div class="panel"><h2>Technologies</h2>${tags(techs, { empty: "None mapped" })}<p class="note">Derived from confirmed categories and source-stated laser types.</p></div>
       <div class="panel"><h2>Processes</h2>${tags(procs, { empty: "None mapped" })}</div>
