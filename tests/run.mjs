@@ -37,6 +37,8 @@ t("facility status equals its latest dated stage", F.every(f => { const st = f.s
 t("every facility has a controlled status class", F.every(f => ["ANNOUNCED", "PLANNED", "SITE_ACQUIRED", "UNDER_CONSTRUCTION", "EQUIPMENT_INSTALLATION", "PILOT", "RAMP", "PRODUCTION", "EXPANDED", "PAUSED", "CANCELLED", "CLOSED", "UNKNOWN"].includes(f.status_class)));
 t("several investment figures always raise a conflict", F.filter(f => f.investment.length > 1).every(f => DB.quality.conflicts.some(c => c.entity === f.id)));
 t("no record is merged automatically (duplicates kept as candidates)", DB.quality.duplicate_candidates.every(d => get(d.a) && get(d.b)));
+t("every policy fact cites a source", (DB.intel.programs || []).every(p => p.facts.every(x => x.source_ids.length && x.source_ids.every(id => get(id)))));
+t("cancelled facilities are kept with their history", F.filter(f => f.status_class === "CANCELLED").every(f => f.status_history.length && f.source_ids.length));
 t("every relationship endpoint exists", DB.relationships.every(r => get(r.from) && get(r.to)));
 t("every claim cites a source or is labelled non-sourced", (DB.claims || []).every(c => c.source_ids.length || ["CALCULATED", "INFERRED", "ANALYST_ESTIMATE", "UNVERIFIED"].includes(c.claim_type)));
 t("every claim subject exists", DB.claims.every(c => get(c.subject)));

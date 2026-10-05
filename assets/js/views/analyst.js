@@ -155,9 +155,9 @@ function localizeAnswer() {
   return `<div class="panel"><h2>Highest India localization index</h2><table class="spec"><tbody>${rows.map(r => `<tr><th><a href="${href("/intelligence/analyst", { eq: r.e.id })}">${esc(r.e.name)}</a><span class="sub">${esc(r.e.code)}</span></th><td><b>${r.loc.score}</b> <span class="pill">${r.loc.band}</span> <span class="pill">${esc(r.ind.v)}</span><span class="sub">${r.ev.covered}/${r.ev.subs.length} subsystems with an Indian supplier · ${r.ev.indOem.length} Indian OEMs · ${r.ev.oems.length} OEMs</span></td></tr>`).join("")}</tbody></table><p class="note">Rule: ${esc(LOC_RULE)} “Realistic” also depends on CapEx, IP and demand, which are not scored.</p></div>`;
 }
 function facilitiesAnswer(q) {
-  const ctry = DB.countries.find(c => new RegExp(`\\b${c.name}\\b`, "i").test(q) || (c.name === "India" && /indian/i.test(q)) || (c.name === "United States" && /\\b(us|usa|american)\\b/i.test(q)) || (c.name === "Japan" && /japanese/i.test(q)));
+  const ctry = DB.countries.find(c => new RegExp(`\\b${c.name}\\b`, "i").test(q) || (c.name === "India" && /indian/i.test(q)) || (c.name === "United States" && /\b(us|usa|u\.s\.|american)\b/i.test(q)) || (c.name === "Japan" && /japanese/i.test(q)));
   const F = (DB.facilities || []).filter(f => !ctry || f.country === ctry.name);
-  const want = /construction/i.test(q) ? ["UNDER_CONSTRUCTION", "EQUIPMENT_INSTALLATION"] : /operat|production|running/i.test(q) ? ["PRODUCTION", "PILOT", "RAMP"] : /approv|planned/i.test(q) ? ["PLANNED"] : /announc/i.test(q) ? ["ANNOUNCED"] : null;
+  const want = /construction/i.test(q) ? ["UNDER_CONSTRUCTION", "EQUIPMENT_INSTALLATION"] : /operat|production|running/i.test(q) ? ["PRODUCTION", "PILOT", "RAMP"] : /approv|planned/i.test(q) ? ["PLANNED"] : /cancel|clos|paus|halt/i.test(q) ? ["CANCELLED", "CLOSED", "PAUSED"] : /announc/i.test(q) ? ["ANNOUNCED"] : null;
   const hit = want ? F.filter(f => want.includes(f.status_class)) : F;
   return `<div class="panel"><h2>${hit.length} facilit${hit.length === 1 ? "y" : "ies"}${want ? ` with status class ${want.map(w => w.replace(/_/g, " ").toLowerCase()).join(" / ")}` : ""}</h2>
     <table class="spec"><tbody>${hit.map(f => `<tr><th>${link(f.id)}<span class="sub">${esc(f.city)}, ${esc(f.state)} · ${esc(f.facility_type)}</span></th><td>${esc(STATUS_LABEL[f.status] || f.status)} · ${esc(f.status_date || "")}<span class="sub">${investText(f)}</span></td></tr>`).join("")}</tbody></table>
@@ -174,7 +174,7 @@ function answer(q) {
   if (/\blaser\b/i.test(s) && (/\d+(?:\.\d+)?\s*k?w\b|\d{3,4}\s*nm/i.test(s) || /^(?:i\s+)?(?:need|want|require|looking for|find)\b/i.test(s))) return laserMatch(s);
   if (/(highest|most|greatest)\b.*concentrat|concentrat.*(highest|most)|single[- ]source/i.test(s)) return concentrationAnswer();
   if (/locali[sz]/i.test(s) && !/^(?:can|could)\b/i.test(s)) return localizeAnswer();
-  if (/\b(facilit(y|ies)|plants?|units?|fabs?|osats?|atmps?)\b/i.test(s) && /\b(under construction|operational|in production|approved|announced|in india|indian|in the us|in japan|in germany)\b/i.test(s) && !/^(?:who|which companies) (?:supplies|makes)/i.test(s)) return facilitiesAnswer(s);
+  if (/\b(facilit(y|ies)|plants?|units?|fabs?|osats?|atmps?)\b/i.test(s) && /\b(under construction|operational|in production|approved|announced|cancelled|canceled|closed|paused|in india|indian|in the us|in japan|in germany|in korea)\b/i.test(s) && !/^(?:who|which companies) (?:supplies|makes)/i.test(s)) return facilitiesAnswer(s);
   if (/teal/i.test(s) && /partner/i.test(s)) return partnersAnswer();
   if ((m = /^(?:can|could) (?:we|india|teal|i) (?:build|make|manufacture|develop) (?:an? )?(.+?)(?: in india)?\??$/i.exec(s))) {
     const e = pickEquipment(m[1]);

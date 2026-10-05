@@ -84,7 +84,7 @@ function detail(f) {
       <div class="row" style="margin-top:8px">${srcBtn(f.source_ids)}</div>${quickActions(f.id)}</div>
     ${conflictsFor(f.id)}
     <div class="grid g2"><div class="panel"><h2>Facility profile</h2>${specTable([["Operator (as named)", esc(f.operator)], ["Partners", f.partners.length ? f.partners.map(esc).join("<br>") : `<span class="na">None named in reviewed sources</span>`],
-      ["Scheme / incentive", val(f.scheme)], ["Approval date", val(f.approval_date)], ["Investment (as reported)", investText(f)], ["Capacity", val(f.capacity)], ["Technology", val(f.technology)], ["Wafer size", val(f.wafer_size)],
+      ["Scheme / incentive", `${val(f.scheme)}${(f.program_ids || []).length ? `<span class="sub">Programme: ${f.program_ids.map(id => { const p = DB.intel.programs.find(x => x.id === id); return `<a href="#/intelligence/policy">${esc(p?.name || id)}</a>`; }).join(", ")}</span>` : ""}`], ["Approval date", val(f.approval_date)], ["Investment (as reported)", investText(f)], ["Capacity", val(f.capacity)], ["Technology", val(f.technology)], ["Wafer size", val(f.wafer_size)],
       ["Products / end markets", val(f.products)], ["Jobs", val(f.jobs)], ["Coordinates", f.coordinates ? `${f.coordinates.lat}, ${f.coordinates.lon}<span class="sub">${esc(f.coordinates.basis)}</span>` : `<span class="na">Not captured</span>`]])}</div>
       <div class="panel"><h2>Status history</h2><ol class="timeline">${f.status_history.map(h => `<li><b>${esc(h.date)}</b> · ${esc(STATUS_LABEL[h.status] || h.status)} ${srcBtn(h.source_ids)}</li>`).join("")}</ol>
         <p class="note">Each milestone cites its own source. No milestone is inferred from a later one.</p>

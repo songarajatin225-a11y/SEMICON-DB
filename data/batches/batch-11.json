@@ -275,20 +275,20 @@
  "fa": [
   {
    "id": "F001",
-   "name": "Tata Electronics–PSMC semiconductor fab, Dholera",
+   "name": "Tata Electronics\u2013PSMC semiconductor fab, Dholera",
    "type": "Fab (front-end)",
    "operator": "Tata Electronics",
    "link": [
     "FAB-000019"
    ],
    "partners": [
-    "Powerchip Semiconductor Manufacturing Corp. (PSMC), Taiwan — technology partner"
+    "Powerchip Semiconductor Manufacturing Corp. (PSMC), Taiwan \u2014 technology partner"
    ],
    "state": "Gujarat",
    "city": "Dholera",
    "lat": 22.25,
    "lon": 72.19,
-   "scheme": "India Semiconductor Mission (ISM) — fab scheme",
+   "scheme": "India Semiconductor Mission (ISM) \u2014 fab scheme",
    "approval": "2024-02-29",
    "history": [
     {
@@ -307,12 +307,12 @@
      "value": 91000,
      "currency": "INR",
      "unit": "crore",
-     "label": "over ₹91,000 crore",
+     "label": "over \u20b991,000 crore",
      "src": "S0961"
     }
    ],
    "capacity": "Not captured from a reviewed source in this batch (an earlier record lists 50,000 wafer starts per month)",
-   "technology": "Not captured in this batch (earlier record: 28–110 nm)",
+   "technology": "Not captured in this batch (earlier record: 28\u2013110 nm)",
    "wafer": null,
    "products": "Logic / mixed-signal foundry (scope per approval coverage)",
    "jobs": null,
@@ -333,7 +333,7 @@
    "city": "Jagiroad (Morigaon district)",
    "lat": 26.12,
    "lon": 92.2,
-   "scheme": "ISM — ATMP / OSAT scheme",
+   "scheme": "ISM \u2014 ATMP / OSAT scheme",
    "approval": "2024-02-29",
    "history": [
     {
@@ -352,7 +352,7 @@
      "value": 27000,
      "currency": "INR",
      "unit": "crore",
-     "label": "about ₹27,000 crore",
+     "label": "about \u20b927,000 crore",
      "src": "S0961"
     }
    ],
@@ -373,14 +373,14 @@
     "OSAT-000020"
    ],
    "partners": [
-    "Renesas Electronics (Japan) — technology partner",
-    "Stars Microelectronics (Thailand) — technology partner"
+    "Renesas Electronics (Japan) \u2014 technology partner",
+    "Stars Microelectronics (Thailand) \u2014 technology partner"
    ],
    "state": "Gujarat",
    "city": "Sanand",
    "lat": 22.99,
    "lon": 72.38,
-   "scheme": "ISM — ATMP / OSAT scheme",
+   "scheme": "ISM \u2014 ATMP / OSAT scheme",
    "approval": "2024-02-29",
    "history": [
     {
@@ -404,14 +404,14 @@
      "value": 7500,
      "currency": "INR",
      "unit": "crore",
-     "label": "about ₹7,500 crore",
+     "label": "about \u20b97,500 crore",
      "src": "S0961"
     },
     {
      "value": 7600,
      "currency": "INR",
      "unit": "crore",
-     "label": "over ₹7,600 crore over five years (G1 + G2)",
+     "label": "over \u20b97,600 crore over five years (G1 + G2)",
      "src": "S0968"
     }
    ],
@@ -481,7 +481,7 @@
    "city": "Sanand",
    "lat": 22.99,
    "lon": 72.38,
-   "scheme": "ISM — ATMP / OSAT scheme",
+   "scheme": "ISM \u2014 ATMP / OSAT scheme",
    "approval": "2024-09-02",
    "history": [
     {
@@ -495,7 +495,7 @@
      "value": 3307,
      "currency": "INR",
      "unit": "crore",
-     "label": "₹3,307 crore",
+     "label": "\u20b93,307 crore",
      "src": "S0960"
     }
    ],
@@ -509,7 +509,7 @@
   },
   {
    "id": "F006",
-   "name": "HCL–Foxconn semiconductor unit, near Jewar airport",
+   "name": "HCL\u2013Foxconn semiconductor unit, near Jewar airport",
    "type": "Semiconductor unit (display driver chips)",
    "operator": "HCL Group and Foxconn joint venture",
    "link": [],
@@ -535,7 +535,7 @@
      "value": 3706,
      "currency": "INR",
      "unit": "crore",
-     "label": "₹3,706 crore",
+     "label": "\u20b93,706 crore",
      "src": "S0965"
     }
    ],
@@ -554,7 +554,7 @@
    "operator": "SiCSem Private Limited",
    "link": [],
    "partners": [
-    "Clas-SiC Wafer Fab Ltd. (UK) — technology partner"
+    "Clas-SiC Wafer Fab Ltd. (UK) \u2014 technology partner"
    ],
    "state": "Odisha",
    "city": "Bhubaneswar (Info Valley)",
@@ -577,7 +577,7 @@
    "jobs": null,
    "src": "S0958",
    "conf": "MEDIUM",
-   "notes": "Described in the release as the first commercial compound fab in India. Per-unit investment not captured (the four units total about ₹4,600 crore)."
+   "notes": "Described in the release as the first commercial compound fab in India. Per-unit investment not captured (the four units total about \u20b94,600 crore)."
   },
   {
    "id": "F008",
@@ -648,7 +648,7 @@
    "operator": "ASIP Technologies",
    "link": [],
    "partners": [
-    "APACT (South Korea) — technology partner"
+    "APACT (South Korea) \u2014 technology partner"
    ],
    "state": "Andhra Pradesh",
    "city": "Visakhapatnam",
@@ -673,7 +673,7 @@
      "value": 460,
      "currency": "INR",
      "unit": "crore",
-     "label": "over ₹460 crore (initial phase, per coverage)",
+     "label": "over \u20b9460 crore (initial phase, per coverage)",
      "src": "S0969"
     },
     {
@@ -714,14 +714,14 @@
     }
    ],
    "invest": [],
-   "capacity": "72,000 m² per year of mini/micro-LED display panels; 24,000 sets per year of RGB GaN epitaxy wafers",
+   "capacity": "72,000 m\u00b2 per year of mini/micro-LED display panels; 24,000 sets per year of RGB GaN epitaxy wafers",
    "technology": "GaN epitaxy (6-inch), mini/micro-LED",
    "wafer": "150 mm (6-inch) GaN epitaxy",
    "products": "Mini/micro-LED display modules; GaN foundry services",
    "jobs": null,
    "src": "S0959;S0973",
    "conf": "MEDIUM",
-   "notes": "Per-unit investment not captured (combined ₹3,936 crore with Suchi Semicon)."
+   "notes": "Per-unit investment not captured (combined \u20b93,936 crore with Suchi Semicon)."
   },
   {
    "id": "F012",
@@ -748,7 +748,7 @@
      "value": 868,
      "currency": "INR",
      "unit": "crore",
-     "label": "₹868 crore",
+     "label": "\u20b9868 crore",
      "src": "S0959"
     }
    ],
@@ -801,12 +801,12 @@
  "pg": [
   {
    "id": "PG01",
-   "name": "India Semiconductor Mission (ISM) — approved manufacturing units",
+   "name": "India Semiconductor Mission (ISM) \u2014 approved manufacturing units",
    "country": "India",
    "facts": [
     {
      "label": "Approved units (Aug 2025)",
-     "value": "10 units, about ₹1.60 lakh crore cumulative, 6 states",
+     "value": "10 units, about \u20b91.60 lakh crore cumulative, 6 states",
      "src": "S0958"
     },
     {
@@ -814,7 +814,12 @@
      "value": "12 units after two further approvals",
      "src": "S0959"
     }
-   ]
+   ],
+   "jurisdiction": "India (central)",
+   "type": "INCENTIVE",
+   "announced": null,
+   "status": "IN_FORCE",
+   "match": "ISM|India Semiconductor Mission|ATMP scheme"
   },
   {
    "id": "PG02",
@@ -828,7 +833,7 @@
     },
     {
      "label": "Budget outlay",
-     "value": "₹1,27,500 crore (₹1.275 trillion)",
+     "value": "\u20b91,27,500 crore (\u20b91.275 trillion)",
      "src": "S0975;S0976"
     },
     {
@@ -836,7 +841,12 @@
      "value": "Design, machines and materials, additional fabs, advanced packaging, R&D, talent (per coverage)",
      "src": "S0975"
     }
-   ]
+   ],
+   "jurisdiction": "India (central)",
+   "type": "INCENTIVE",
+   "announced": "2026-07-15",
+   "status": "APPROVED",
+   "match": null
   }
  ]
 }

@@ -113,9 +113,27 @@ function research() {
   return { title: "Research queue", html };
 }
 
+// ----------------------------------------------------------------- policy / programme database
+const PTYPE = { INCENTIVE: "Incentive programme", TAX_CREDIT: "Tax credit", EXPORT_CONTROL: "Export control" };
+function policy({ params }) {
+  const P = DB.intel.programs || [], t = params.get("type");
+  const rows = P.filter(p => !t || p.type === t);
+  const html = head("Policy & programmes", "Government semiconductor programmes, tax credits and export controls, each fact with its source. Facilities are linked when their own record names the programme. Budgets are quoted as reported; headline figures are not equated with disbursed funds.")
+    + `<div class="kpis">${kpi({ v: P.length, l: "Programmes" })}${kpi({ v: uniq(P.map(p => p.jurisdiction)).length, l: "Jurisdictions" })}${kpi({ v: P.filter(p => p.type === "EXPORT_CONTROL").length, l: "Export-control regimes" })}${kpi({ v: uniq(P.flatMap(p => p.facility_ids)).length, l: "Facilities linked" })}</div>
+    <div class="row" style="flex-wrap:wrap;gap:6px"><a class="btn sm${!t ? " primary" : ""}" href="${href("/intelligence/policy")}">All</a>${Object.entries(PTYPE).map(([k, l]) => `<a class="btn sm${t === k ? " primary" : ""}" href="${href("/intelligence/policy", { type: k })}">${esc(l)}</a>`).join("")}</div>
+    ${rows.map(p => `<div class="panel sec"><div class="row sp"><h2>${esc(p.name)}</h2><span class="pill">${esc(PTYPE[p.type] || p.type)}</span></div>
+      <p class="small">${esc(p.jurisdiction)} · status ${esc(p.status.replace(/_/g, " ").toLowerCase())}${p.announced ? ` · ${esc(p.announced)}` : ""}</p>
+      <table class="spec"><tbody>${p.facts.map(x => `<tr><th>${esc(x.label)}</th><td>${esc(x.value)} ${srcLink(x.source_ids)}</td></tr>`).join("")}</tbody></table>
+      ${p.facility_ids.length ? `<p class="small" style="margin-top:8px"><b>Facilities naming this programme (${p.facility_ids.length}):</b> ${p.facility_ids.map(id => link(id)).join(", ")}</p><p class="note">${esc(p.facility_basis)}. A link is not a confirmation of an award amount.</p>` : ""}</div>`).join("")}
+    <p class="note">Coverage is a starting set: US, EU, Japan, Korea and India. Taiwan, China, Singapore and state-level incentives are not yet captured.</p>`;
+  return { title: "Policy & programmes", html };
+}
+const srcLink = ids => ids.map(id => `<a class="xs" href="${hrefOf(id)}">${esc(id)}</a>`).join(" ");
+
 export const RESEARCH_MODULES = [
   ["flows", "Process Flows", "Logic, DRAM, 3D NAND, SiC, GaN, MEMS, CIS, RF and advanced-packaging flows; click a step for equipment, suppliers, India-linked suppliers and concentration."],
   ["changes", "What Changed", "Records added per batch, newest first, and the latest facility milestones."],
+  ["policy", "Policy & Programmes", "Semiconductor incentive programmes, tax credits and export controls (US, EU, Japan, Korea, India) with sources and linked facilities."],
   ["research", "Research Queue", "Coverage by ingestion wave, important records with thin evidence, uncovered categories and facilities to re-check."],
 ];
-export const RESEARCH_SUB = { flows, changes, research };
+export const RESEARCH_SUB = { flows, changes, research, policy };

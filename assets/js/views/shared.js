@@ -4,7 +4,7 @@ import { esc, uniq, pretty } from "../core/util.js";
 import { ws } from "../core/workspace.js";
 import { dataTable } from "../ui/table.js";
 import { badge, conf, fresh, srcBtn, srcList, specTable, val, basis, link } from "../ui/components.js";
-import { egoGraph, graphKinds, relTable, KIND_COLOR } from "../ui/graph.js";
+import { egoGraph, graphKinds, relTable, KIND_COLOR, edgeOk } from "../ui/graph.js";
 
 export const verSort = r => ({ VERIFIED: 0, PARTIALLY_VERIFIED: 1, UNVERIFIED: 2 }[r.verification] ?? 3);
 export const waferText = w => (!w ? null : w.sizes_mm?.length ? w.sizes_mm.map(x => x + " mm").join(", ") : w.range_mm ? `${w.range_mm.min ? w.range_mm.min + "–" : "up to "}${w.range_mm.max} mm` : null);
@@ -43,11 +43,11 @@ export function modelTable(id, rows, opts = {}) {
     empty: opts.empty, sort: opts.sort });
 }
 
-export function relationsSection(id, { depth = 1, hidden = new Set(), withGraph = true } = {}) {
-  const rels = edges(id);
+export function relationsSection(id, { depth = 1, hidden = new Set(), withGraph = true, hideTypes, sourceOnly } = {}) {
+  const rels = edges(id).filter(e => edgeOk(e, { hideTypes, sourceOnly }));
   if (!rels.length) return `<div class="empty"><b>No relationships recorded for this record yet.</b></div>`;
   const kinds = graphKinds(id);
-  const g = withGraph ? egoGraph(id, { depth, hidden }) : null;
+  const g = withGraph ? egoGraph(id, { depth, hidden, hideTypes, sourceOnly }) : null;
   const rows = relTable(id, rels);
   return `${g ? `<div class="graphbox">${g.svg}</div>
     <div class="row small" style="margin:8px 0 14px">${kinds.map(k => `<span class="nowrap"><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${KIND_COLOR[k] || "var(--s4)"};vertical-align:-1px"></i> ${esc(KIND_LABEL[k] || k)}</span>`).join(" ")}

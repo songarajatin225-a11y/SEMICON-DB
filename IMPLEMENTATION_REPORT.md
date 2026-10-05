@@ -482,3 +482,42 @@ The bundle is 411 KB gzipped.
 - **§28–29 / §48 / §87–89 financial series beyond 41 companies, market share, patents beyond 3, installed base, prices, lead times.** No evidence was captured; these fields stay empty rather than estimated.
 - **§94 1M-record scaling.** Still a single bundle (411 KB gzipped). Claims are already split out; per-entity sharding is the next step past about 50k records.
 - **§51–52 job and exhibition signals, §50 policy database beyond the 2 Indian programmes.** Not yet researched.
+
+### 3.0 follow-up (5 Oct 2026): policy layer, more facilities, graph filters
+
+- **Batch 13:**
+  - **5 facilities:**
+    - Intel Magdeburg, recorded as **cancelled** (July 2025) and kept with its history;
+    - Amkor Peoria advanced-packaging campus (groundbreaking Oct 2025);
+    - Micron ID1 in Boise (under construction since Oct 2023, cited to a CNBC report and Micron's 10-Q);
+    - SK hynix Yongin Y1 (under construction);
+    - SK hynix West Lafayette HBM packaging plant (groundbreaking Apr 2026).
+  - **5 policy programmes:**
+    - US CHIPS and Science Act;
+    - European Chips Act;
+    - US BIS export controls on advanced computing and semiconductor manufacturing equipment;
+    - Japan's ¥10 trillion AI / semiconductor framework;
+    - Korea's K-Chips Act and support package.
+  - India's ISM and Semicon 2.0 records now carry jurisdiction, type and status too.
+- **Policy & programmes page** (`#/intelligence/policy`): programmes with their type, jurisdiction, status, sourced facts and linked facilities. A facility is linked only when its own record names the programme; a link is not an award confirmation.
+- **Facility profiles** show the linked programme.
+- **Relationship graph:**
+  - relationship-type toggles (`xt=`) and a **source-backed only** filter (`src=1`); the relationship table follows the same filters;
+  - **Export graph JSON** downloads the nodes and edges currently drawn, including type, basis, confidence and sources, with the active filters recorded.
+- **Analyst:** facility questions understand the country ("in the US", "in Germany") and cancelled, closed or paused status.
+
+**Counts:**
+
+| Entity | Count |
+|---|---:|
+| Facilities | 25, in India, the US, Japan, Germany and South Korea |
+| Policy programmes | 7 |
+| Sources | 1005 |
+| Relationships | 6,184 |
+| Claims | 3,608 |
+
+**Tests:**
+- `npm test`: 54 / 54 pass, with 28 / 28 search-benchmark queries.
+- Browser smoke test: 188 routes, 0 console errors. Three routes show their expected conflict banners.
+- Interaction suite passes. axe in light and dark mode: 0 violations.
+

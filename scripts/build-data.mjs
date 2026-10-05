@@ -450,7 +450,11 @@ const facilities = FAC_ROWS.map(f => {
     notes: [f.notes, `${f.batch} (${f.created}): facts from titles and search-result summaries of the cited government releases and news reports; pages not read directly. Unknown fields are left empty, not estimated.`].filter(Boolean).join(" "),
     source_ids: srcIds(f.src), batch: f.batch, dates: { first_added: f.created, last_verified: f.created } };
 });
-const programs = PROGRAM_ROWS.map(p => ({ id: p.id, name: p.name, country: p.country, facts: p.facts.map(x => ({ label: x.label, value: x.value, source_ids: srcIds(x.src) })), batch: p.batch }));
+// Policy / programme records. facility_ids are DERIVED: facilities whose own scheme field names the programme (basis shown in the UI).
+const programs = PROGRAM_ROWS.map(p => ({ id: p.id, name: p.name, country: p.country, jurisdiction: p.jurisdiction || p.country, type: p.type || "INCENTIVE", announced: p.announced || null, status: p.status || "UNKNOWN",
+  facts: p.facts.map(x => ({ label: x.label, value: x.value, source_ids: srcIds(x.src) })), source_ids: uniq(p.facts.flatMap(x => srcIds(x.src))),
+  facility_ids: p.match ? facilities.filter(f => f.scheme && new RegExp(p.match, "i").test(f.scheme)).map(f => f.id) : [], facility_basis: "Facility record names this programme in its scheme / incentive field", batch: p.batch }));
+facilities.forEach(f => (f.program_ids = programs.filter(p => p.facility_ids.includes(f.id)).map(p => p.id)));
 facilities.filter(f => f.investment_conflict).forEach(f => CONFLICTS.push({ id: `CNF-${pad(CONFLICTS.length + 1, 4)}`, entity: f.id, field: "Investment",
   claims: f.investment.map(x => ({ source_id: x.source_ids[0] || null, value: x.label })), status: "OPEN", note: "Several investment figures were reported for this site; they may cover different scopes or phases. Not reconciled." }));
 [...fabs, ...osats].forEach(o => (o.facility_ids = facilities.filter(f => f.operator_ids.includes(o.id)).map(f => f.id)));

@@ -155,6 +155,20 @@
     "FAC-000017"
    ],
    "top": 10
+  },
+  {
+   "q": "Intel Magdeburg",
+   "expect": [
+    "FAC-000021"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Amkor Peoria",
+   "expect": [
+    "FAC-000022"
+   ],
+   "top": 5
   }
  ],
  "resolve": [
