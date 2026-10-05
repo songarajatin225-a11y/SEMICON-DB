@@ -1,15 +1,16 @@
 {
   "name": "semicon-db",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "SEMICON-DB — Global Semiconductor Equipment Intelligence Graph (static GitHub Pages app + data pipeline)",
+  "description": "SEMICON-DB \u2014 Global Semiconductor Equipment Intelligence Graph (static GitHub Pages app + data pipeline)",
   "type": "module",
   "scripts": {
     "build": "node scripts/build-data.mjs",
     "build:map": "node scripts/build-map.mjs",
     "validate": "node scripts/validate.mjs",
     "import": "node scripts/import.mjs",
-    "serve": "python3 -m http.server 8080"
+    "serve": "python3 -m http.server 8080",
+    "test": "node scripts/validate.mjs && node tests/run.mjs"
   },
   "devDependencies": {
     "d3-geo": "^3.1.1",

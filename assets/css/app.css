@@ -366,3 +366,9 @@ table.tbl{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .timeline li::before{content:"";position:absolute;left:-20px;top:9px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--s2)}
 .pill.warn{border-color:var(--warn,#b45309);color:var(--warn,#b45309)}
 .tag.on{border-color:var(--s1);background:var(--ok-wash);font-weight:600}
+.warnrow{background:var(--warn-wash)}
+/* India state tile map */
+.tilemap svg{width:100%;max-width:380px;height:auto;display:block}
+.tilemap .tile-ab{font-size:11px;fill:var(--ink-2);font-weight:600}
+.tilemap .tile-n{font-size:12px;fill:var(--ink);font-weight:700}
+.tilemap a:focus rect,.tilemap a:hover rect{stroke:var(--s1);stroke-width:2}

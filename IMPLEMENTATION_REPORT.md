@@ -407,3 +407,78 @@ To add data, stage it with `node scripts/import.mjs <file> --entity companies|mo
 4. **Graph view:** edge-type and confidence filters, export, and an India map with point markers.
 5. **Backend (optional):** API, search index, graph store, authenticated private TEAL layer, alerts (funding, facility status, product launches) and a cited assistant that reuses the analyst routes as tools.
 6. **Scale:** lazy per-entity shards, a prebuilt search index and virtualized tables once the record count passes about 50k.
+
+---
+
+## SEMICON-DB 3.0 addendum (5 Oct 2026)
+
+The 3.0 brief (159 sections) was audited against the platform as it stood after the upgrade above. Most of it was already in place. This round built the gaps that can be done honestly on a static site with public-source evidence. The remaining items are listed with the reason each is not built.
+
+### Audit against the 3.0 brief
+
+| Brief area | State before this round | This round |
+|---|---|---|
+| §116 / §123 tests, search benchmark | Browser smoke, interaction and axe scripts only (outside the repo) | **`npm test`**: validation plus 50 headless tests over the real client modules, including a gold-standard search benchmark (`tests/search-benchmark.json`, 26 queries, 100 % recall) and entity-resolution cases |
+| §77 / §143 / §145 claim-level provenance and lineage | Record-level sources | **Claims layer**: 3,579 claims in `data/claims.json`, lazy-loaded (63 KB gzipped) |
+| §19 evidence policy | Verification state + evidence depth | Each claim is typed DIRECTLY_STATED (3,222), DIRECTLY_SPECIFIED (52), CALCULATED (1, formula stored), INFERRED (286, shown as "Inference / analyst assessment"; their confidence is "not source-backed") or UNVERIFIED (18) |
+| §66 data-quality score; §68 research status | Confidence and completeness only | **Data-quality score** (0–100, method published) separate from confidence and completeness, plus a research status per company (DISCOVERING · VERIFYING · COMPLETE · CONFLICT · NEEDS_REFRESH) |
+| §13 facility status vocabulary | Source milestone wording only | Each facility now has a `status_class` from the controlled list (ANNOUNCED … CLOSED, UNKNOWN). The source milestone (e.g. "foundation laid") is kept. Non-stage events (first shipment, schedule change) never set the status |
+| §12 global facilities | India only | **Batch 12:** 7 sites outside India: TSMC Arizona Fab 21, JASM Fab 1 and Fab 2, ESMC Dresden, Rapidus IIM-1, Samsung Taylor, Intel Ohio (with its 2025 schedule change). 20 facilities in 4 countries in total |
+| §61 India map | State table | **Schematic state tile map** on the Facilities and India pages; click a state to filter |
+| §140 "What can replace this?" | Same-category list | **Alternative engine** on model pages, classifying direct substitute (candidate), partial substitute, development-stage and different technology (same process, another category), with match reasons and unpublished values |
+| §55 filters | Facets on main explorers | Facilities filter by `?state=` and `?country=` |
+
+### New and modified files (3.0)
+
+- **New:**
+  - `tests/run.mjs` and `tests/search-benchmark.json`
+  - `data/batches/batch-12.json`
+  - `data/claims.json` (generated)
+- **Modified:**
+  - `scripts/build-data.mjs` — claims; generalized facilities with `status_class`; INFERRED confidence
+  - `assets/js/core/scores.js` — `dataQuality`, `researchStatus`
+  - `assets/js/core/store.js` — `loadClaims`
+  - `assets/js/views/shared.js` — claims panel
+  - `assets/js/main.js` — fills claim panels after render
+  - `assets/js/views/companies.js` — Evidence tab, data-quality column and panel
+  - `assets/js/views/facilities.js` — country support, status class, filters, tile map
+  - `assets/js/views/india.js` — tile map
+  - `assets/js/views/products.js` — alternative engine
+  - `assets/js/views/analyst.js` — facility questions by country and status class
+  - `assets/css/app.css`, `package.json` (version 3.0.0, `npm test`), and the docs
+
+### Counts after this round
+
+| Entity | Count |
+|---|---:|
+| Companies | 355 |
+| Product families → models | 403 → 568 |
+| Equipment categories | 258 |
+| Processes | 61 |
+| Materials | 47 |
+| Subsystems · component classes | 16 · 61 |
+| Facilities (site level) | 20 |
+| Fabs · OSATs | 22 · 9 |
+| Relationships | 6,174 |
+| Sources | 988 |
+| Claims | 3,579 |
+| Conflicts (open) | 9 |
+| Duplicate candidates | 33 |
+
+The bundle is 411 KB gzipped.
+
+### Verification
+
+- `npm test`: validation (0 errors) plus 50 / 50 tests, with 100 % search-benchmark recall.
+- Browser smoke test: 179 routes, 0 console errors. Three routes show their expected conflict banners.
+- Interaction suite passes.
+- axe in light and dark mode: 0 violations. This includes the tile map, where an SVG `img` role with focusable children was fixed.
+
+### Still not built (and why)
+
+- **§35–39 / §100–102 language-model assistant and research trace.** Not built: a public static site cannot hold an API key. The deterministic analyst covers grounded answers with rules and sources.
+- **§120–121 admin UI, audit log, rollback.** Mutations stay in the git-tracked CLI pipeline. Git history is the audit log and the rollback.
+- **§112 live source monitoring (HTTP status, content hashes).** Not possible from this environment: publisher sites are egress-blocked. Duplicate-URL validation was added instead.
+- **§28–29 / §48 / §87–89 financial series beyond 41 companies, market share, patents beyond 3, installed base, prices, lead times.** No evidence was captured; these fields stay empty rather than estimated.
+- **§94 1M-record scaling.** Still a single bundle (411 KB gzipped). Claims are already split out; per-entity sharding is the next step past about 50k records.
+- **§51–52 job and exhibition signals, §50 policy database beyond the 2 Indian programmes.** Not yet researched.

@@ -86,3 +86,38 @@ export function subsystemLocalization() {
     const score = cs.length ? Math.round(100 * withIn / cs.length) : 0;
     return { id: s.id, s, n: cs.length, withIn, withAny, score, band: BAND(score), oems: (s.typical_oem_ids || []).length }; });
 }
+
+// ---------------------------------------------------------------- data-quality score (separate from confidence)
+// Confidence says how sure we are of the facts; data quality says how healthy the record is.
+export const DQ_METHOD = [
+  ["Completeness", 25, "completeness score of the record"],
+  ["Freshness", 20, "days since last verification: < 30 = 100, < 90 = 80, < 180 = 60, < 365 = 30, older = 10, never = 0"],
+  ["Source validity", 20, "share of cited sources with a URL and a date that are not Tier 4"],
+  ["Consistency", 15, "100 unless the record has an open conflict"],
+  ["Duplicate risk", 10, "100 unless the record is an unreviewed duplicate candidate"],
+  ["Validation", 10, "100 minus 20 per validation warning on the record"],
+];
+const ageDays = d => (d ? (Date.now() - new Date(d).getTime()) / 864e5 : null);
+let DQ = null, WARN = null, CONF = null, DUP = null;
+export function dataQuality(r) {
+  if (!DQ) { DQ = new Map(); WARN = new Map(); (DB.quality.validation?.warnings || []).forEach(w => w.id && WARN.set(w.id, (WARN.get(w.id) || 0) + 1));
+    CONF = new Set(DB.quality.conflicts.flatMap(c => [c.entity, ...(c.also || [])]));
+    DUP = new Set(DB.quality.duplicate_candidates.filter(d => !d.decision && !d.known_relationship).flatMap(d => [d.a, d.b])); }
+  if (DQ.has(r.id)) return DQ.get(r.id);
+  const a = ageDays(r.dates?.last_verified);
+  const fresh = a == null ? 0 : a < 30 ? 100 : a < 90 ? 80 : a < 180 ? 60 : a < 365 ? 30 : 10;
+  const srcs = (r.source_ids || []).map(get).filter(Boolean);
+  const valid = srcs.length ? Math.round(100 * srcs.filter(s => s.source_url && s.publication_date && s.tier !== 4).length / srcs.length) : 0;
+  const parts = [r.completeness?.score ?? 50, fresh, valid, CONF.has(r.id) ? 0 : 100, DUP.has(r.id) ? 0 : 100, Math.max(0, 100 - 20 * (WARN.get(r.id) || 0))];
+  const score = Math.round(parts.reduce((s, v, i) => s + v * DQ_METHOD[i][1] / 100, 0));
+  const res = { score, parts: DQ_METHOD.map(([l, w], i) => ({ l, w, v: parts[i] })), status: researchStatus(r, a) };
+  DQ.set(r.id, res); return res;
+}
+// research workflow status derived from the record (§ research queue)
+export function researchStatus(r, a = ageDays(r.dates?.last_verified)) {
+  if (CONF?.has(r.id)) return "CONFLICT";
+  if (a != null && a > 180) return "NEEDS_REFRESH";
+  if (r.verification === "VERIFIED" && (r.completeness?.score ?? 0) >= 75) return "COMPLETE";
+  if (r.verification === "VERIFIED" || r.verification === "PARTIALLY_VERIFIED") return "VERIFYING";
+  return "DISCOVERING";
+}

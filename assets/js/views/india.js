@@ -3,7 +3,7 @@ import { DB, get, hrefOf, out, inn, nameOf } from "../core/store.js";
 import { esc, uniq, countBy, sortedEntries } from "../core/util.js";
 import { pageHead, kpi, link, tags, badge, srcBtn, conf, val, bars } from "../ui/components.js";
 import { dataTable } from "../ui/table.js";
-import { facilityTable, stateTable } from "./facilities.js";
+import { facilityTable, stateTable, indiaTileMap } from "./facilities.js";
 
 export function india() {
   const C = DB.companies;
@@ -28,12 +28,12 @@ export function india() {
   const html = pageHead({ eyebrow: "Region", title: "India semiconductor ecosystem", crumb: [["Home", "#/"], ["India", null]],
     lede: "Indian equipment makers and suppliers, global OEMs' documented India footprint, the fabs and OSAT/ATMP lines coming online, and a rule-based localisation view. Local sourcing and manufacturing shares are not disclosed by any company and are not estimated here." })
     + `<div class="kpis">${kpi({ v: hq.length + global.length, l: "India-relevant companies" })}${kpi({ v: hq.length, l: "Headquartered in India", href: "#/companies?india=hq" })}${kpi({ v: global.length, l: "Global companies with documented presence", href: "#/companies?india=presence" })}
-      ${kpi({ v: orgs.length, l: "Indian fabs / OSATs / ATMPs tracked" })}${kpi({ v: F.length, l: "Site-level facilities", s: `${F.filter(f => f.status === "OPERATIONAL" || f.status === "PILOT_PRODUCTION").length} operating or pilot`, href: "#/facilities" })}${kpi({ v: `${pot.get("HIGH") || 0} / ${pot.get("MEDIUM") || 0} / ${pot.get("LOW") || 0}`, l: "Localisation high / medium / low", href: "#/intelligence/india-opportunity" })}
+      ${kpi({ v: orgs.length, l: "Indian fabs / OSATs / ATMPs tracked" })}${kpi({ v: F.length, l: "Site-level facilities", s: `${F.filter(f => ["PILOT", "RAMP", "PRODUCTION"].includes(f.status_class)).length} in pilot or production`, href: "#/facilities" })}${kpi({ v: `${pot.get("HIGH") || 0} / ${pot.get("MEDIUM") || 0} / ${pot.get("LOW") || 0}`, l: "Localisation high / medium / low", href: "#/intelligence/india-opportunity" })}
       ${kpi({ v: DB.components.filter(c => c.india_supplier_ids.length).length, l: "Component classes with an Indian supplier" })}</div>
 
     ${F.length ? `<section class="sec"><div class="eyebrow">Site level</div><h2>Semiconductor facilities in India (${F.length})</h2>
       <p class="small">ISM-approved fabs, OSAT/ATMP and packaging units plus equipment plants, each with a dated status history and cited figures. <a href="#/facilities">Open the facility database →</a></p>
-      ${facilityTable(F, "india-facilities")}<div class="panel" style="margin-top:12px"><h2>State-wise</h2>${stateTable(F)}</div>
+      ${facilityTable(F, "india-facilities")}<div class="grid g2" style="margin-top:12px"><div class="panel"><h2>State map</h2>${indiaTileMap(F)}</div><div class="panel"><h2>State-wise</h2>${stateTable(F)}</div></div>
       ${(DB.intel.programs || []).map(p => `<div class="panel" style="margin-top:12px"><h2>${esc(p.name)}</h2><table class="spec"><tbody>${p.facts.map(x => `<tr><th>${esc(x.label)}</th><td>${esc(x.value)} ${srcBtn(x.source_ids)}</td></tr>`).join("")}</tbody></table></div>`).join("")}</section>` : ""}
     <div class="panel sec"><h2>Indian fabs, OSATs and ATMPs</h2><div class="cards">${orgs.map(o => { const links = orgLinks(o);
       return `<article class="card"><div class="top"><a class="ttl" href="${hrefOf(o.id)}">${esc(o.name)}</a><span class="code">${esc(o.facility_type)}</span></div>${o.also_listed_as ? `<div class="xs muted" style="position:relative;z-index:1">Also listed: ${link(o.also_listed_as, "OSAT / ATMP record")}</div>` : ""}<div class="small ink2">${esc(o.sites.map(s => s.name).join("; ") || "Sites not captured")}</div>

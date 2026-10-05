@@ -1,0 +1,218 @@
+{
+ "_about": "Gold-standard queries for search regression tests (tests/run.mjs). Each expected id must appear in the top N results; exclude ids must not. Add a row whenever a search bug is fixed.",
+ "search": [
+  {
+   "q": "ASML",
+   "expect": [
+    "CMP-000001"
+   ],
+   "top": 3
+  },
+  {
+   "q": "KLA",
+   "expect": [
+    "CMP-000005"
+   ],
+   "top": 3
+  },
+  {
+   "q": "AMAT",
+   "expect": [
+    "CMP-000002"
+   ],
+   "top": 3
+  },
+  {
+   "q": "TEL",
+   "expect": [
+    "CMP-000004"
+   ],
+   "top": 5
+  },
+  {
+   "q": "DFL7341",
+   "expect": [
+    "MDL-000001"
+   ],
+   "top": 3
+  },
+  {
+   "q": "NXT:2100i",
+   "expect": [
+    "MDL-000541"
+   ],
+   "top": 5
+  },
+  {
+   "q": "eScan 1100",
+   "expect": [
+    "MDL-000544"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Kinex",
+   "expect": [
+    "MDL-000082"
+   ],
+   "top": 5
+  },
+  {
+   "q": "laser dicing",
+   "expect": [
+    "EQP-C01.02",
+    "CMP-000010"
+   ],
+   "top": 25
+  },
+  {
+   "q": "stealth dicing",
+   "expect": [
+    "CMP-000011"
+   ],
+   "top": 25
+  },
+  {
+   "q": "hybrid bonding",
+   "expect": [
+    "EQP-C17",
+    "CMP-000051"
+   ],
+   "top": 25
+  },
+  {
+   "q": "EUV lithography",
+   "expect": [
+    "CMP-000001"
+   ],
+   "top": 15
+  },
+  {
+   "q": "wafer inspection",
+   "expect": [
+    "EQP-A21",
+    "CMP-000005"
+   ],
+   "top": 25
+  },
+  {
+   "q": "laser dicing suppliers in Japan",
+   "expect": [
+    "CMP-000010",
+    "CMP-000011"
+   ],
+   "top": 25,
+   "exclude": [
+    "CMP-000045"
+   ]
+  },
+  {
+   "q": "GaN fab in India",
+   "expect": [
+    "FAC-000011"
+   ],
+   "top": 10
+  },
+  {
+   "q": "OSAT in Gujarat",
+   "expect": [
+    "FAC-000003",
+    "FAC-000005"
+   ],
+   "top": 15
+  },
+  {
+   "q": "Micron Sanand",
+   "expect": [
+    "FAC-000004"
+   ],
+   "top": 5
+  },
+  {
+   "q": "hybrd bondng",
+   "expect": [
+    "EQP-C17"
+   ],
+   "top": 25
+  },
+  {
+   "q": "TSMC Arizona",
+   "expect": [
+    "FAC-000014"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Rapidus Chitose",
+   "expect": [
+    "FAC-000018"
+   ],
+   "top": 5
+  },
+  {
+   "q": "fabs in Germany",
+   "expect": [
+    "FAC-000017"
+   ],
+   "top": 10
+  }
+ ],
+ "resolve": [
+  [
+   "ASML Holding N.V.",
+   "CMP-000001"
+  ],
+  [
+   "ASML",
+   "CMP-000001"
+  ],
+  [
+   "Applied Materials Inc.",
+   "CMP-000002"
+  ],
+  [
+   "AMAT",
+   "CMP-000002"
+  ],
+  [
+   "TEL",
+   "CMP-000004"
+  ],
+  [
+   "Tokyo Electron Ltd.",
+   "CMP-000004"
+  ],
+  [
+   "ACCRETECH",
+   "CMP-000012"
+  ],
+  [
+   "Besi",
+   "CMP-000043"
+  ],
+  [
+   "Canon",
+   "CMP-000013"
+  ],
+  [
+   "Nikon Corp.",
+   "CMP-000020"
+  ],
+  [
+   "SLTL",
+   "CMP-000195"
+  ],
+  [
+   "Lam Research Corporation",
+   "CMP-000003"
+  ],
+  [
+   "Electronics",
+   null
+  ],
+  [
+   "Not A Real Company Ltd",
+   null
+  ]
+ ]
+}

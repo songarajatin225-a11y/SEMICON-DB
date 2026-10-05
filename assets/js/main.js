@@ -9,6 +9,7 @@ import { open as openPalette, isOpen as paletteOpen, close as closePalette } fro
 import { openDrawer, closeDrawer } from "./ui/drawer.js";
 import { srcList, empty } from "./ui/components.js";
 import { ROUTES } from "./views/index.js";
+import { fillClaims } from "./views/shared.js";
 import { ACTIONS, setRenderer, registerActions } from "./core/actions.js";
 
 const NAV = [
@@ -53,6 +54,7 @@ async function render() {
   app.innerHTML = out.html + `<footer class="foot">SEMICON-DB ${esc(DB.meta.schema_version)} · Evidence as of ${esc(DB.meta.evidence_as_of)} · Every fact carries a source and verification state; missing values are shown as missing, never estimated. <a href="#/quality">Methodology &amp; data quality</a> · <a href="legacy/">Legacy edition</a></footer>`;
   document.title = (out.title ? out.title + " · " : "") + "SEMICON-DB";
   if (out.after) try { out.after(app); } catch (e) { console.error(e); }
+  fillClaims(app).catch(e => console.error(e));
   if (!samePage) { window.scrollTo(0, 0); const h = app.querySelector("h1"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); } }
   else if (facetFocus) app.querySelector(facetFocus)?.focus();
   else if (focusKey) { const el = focusKey.startsWith("#") ? app.querySelector(focusKey) : app.querySelector(`[data-fk="${focusKey}"]`); if (el) { el.focus(); if (el.setSelectionRange && el.value) el.setSelectionRange(el.value.length, el.value.length); } }

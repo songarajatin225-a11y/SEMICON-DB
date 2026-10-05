@@ -17,9 +17,10 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
-| Facilities (site level) | 13 | India's ISM-approved fab / OSAT / packaging units and one equipment plant, with dated status history, investment as reported, capacity, technology and sources (Batch 11) |
-| Relationships | 6,160 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 978 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Facilities (site level) | 20 | India's ISM-approved units, one Indian equipment plant and 7 major fabs in the US, Japan and Germany, with dated status history and a controlled status class, investment as reported, capacity, technology and sources (Batch 11) |
+| Relationships | 6,174 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 988 |
+| Claims (lazy-loaded) | 3,579 | Claim-level provenance: value → evidence type (directly stated / specified / calculated / inferred / unverified) → source → date → confidence | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -121,6 +122,16 @@ Materials suppliers are recorded at company level (type “Materials/gases”); 
 
 Result: categories with no documented supplier fell from 91 to 70. Of those, 45 have suppliers under an equivalent category and 25 are real gaps, 10 of which are device types rather than tools. As before, all sources were located by web search and the pages were not read, so models carry no specifications.
 
+## SEMICON-DB 3.0 (5 Oct 2026)
+
+- **Claim-level provenance:** an Evidence tab on companies and an evidence panel on facilities show every value's evidence type, source, date and confidence (`data/claims.json`, loaded on demand).
+- **Data-quality score and research status:** separate from confidence and completeness.
+- **Facilities in four countries:** India plus 7 major fabs in the US, Japan and Germany. Statuses use the controlled vocabulary; India gets a state tile map.
+- **"What can replace this?":** model pages classify alternatives as direct substitute, partial substitute, development-stage or different technology.
+- **`npm test`:** validation plus 50 headless tests, including a gold-standard search benchmark (`tests/search-benchmark.json`).
+
+Details and remaining gaps: [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md#semicon-db-30-addendum-5-oct-2026).
+
 ## Global intelligence upgrade (5 Oct 2026)
 
 This upgrade follows the *Global Semiconductor Intelligence Graph* brief. The approach was audit → preserve → normalise → expand → connect, with no rewrite, no route changes and no data removed. The full audit, architecture, methods, file list and limitations are in [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md).
@@ -179,6 +190,9 @@ Not built (they need data or a backend the static site doesn't have): an LLM ass
 - Statement labels: source-backed fact · manufacturer claim · derived · editorial reference · analyst (not source-traced).
 
 ## Run locally
+
+`npm test` runs schema validation plus the headless regression suite (search benchmark, entity resolution, facility and claim integrity, score bounds).
+
 
 The site is static (no backend). Serve the folder over HTTP — browsers block `fetch` from `file://`:
 

@@ -1,0 +1,425 @@
+{
+ "batch": "Batch 12",
+ "created": "2026-10-05",
+ "method": "Site-level facilities outside India (leading-edge and mature-node fabs) from industry news located by web search; facts from titles and search-result summaries.",
+ "co": [],
+ "pr": [],
+ "src": [
+  {
+   "id": "S0977",
+   "url": "https://www.aztechcouncil.org/tsmc-arizona-fab21-already-making-4nm-chips/",
+   "title": "TSMC Arizona Fab 21 already making 4nm chips",
+   "pub": "Arizona Technology Council",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-01",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0978",
+   "url": "https://siliconangle.com/2024/12/27/tsmc-begins-mass-producing-chips-newly-opened-fab-japan/",
+   "title": "TSMC begins mass-producing chips at newly opened fab in Japan",
+   "pub": "SiliconANGLE",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-12-27",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0979",
+   "url": "https://www.silicon.co.uk/workspace/components/tsmc-to-build-second-factory-in-japan-549063/amp",
+   "title": "TSMC to build second factory in Japan",
+   "pub": "Silicon UK",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-02",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0980",
+   "url": "https://convergedigest.com/esmc-breaks-ground-on-e10-billion-semiconductor-fab-in-dresden/",
+   "title": "ESMC breaks ground on €10 billion semiconductor fab in Dresden",
+   "pub": "Converge Digest",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-08-20",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0981",
+   "url": "https://www.trendforce.com/news/2025/11/20/news-tsmc-dresden-fab-reportedly-wraps-structural-build-eyes-equipment-move-in-in-2h26/",
+   "title": "TSMC Dresden fab reportedly wraps structural build, eyes equipment move-in in 2H26",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-11-20",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0982",
+   "url": "https://www.electronicsforu.com/news/japans-rapidus-enters-elite-semiconductor-league-with-2nm-prototype",
+   "title": "Japan's Rapidus enters elite semiconductor league with 2nm prototype",
+   "pub": "EFY (electronicsforu)",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-07-18",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0983",
+   "url": "https://www.iclarified.com/97073/samsung-targets-late-2026-launch-for-advanced-texas-chip-fab-following-delays-report/amp",
+   "title": "Samsung targets late 2026 launch for advanced Texas chip fab following delays: report",
+   "pub": "iClarified",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2026-07-31",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0984",
+   "url": "https://www.koreajoongangdaily.com/business/exclusive-samsung-secures-key-operation-approval-for-37b-taylor-factory/11942522",
+   "title": "Exclusive: Samsung secures key operation approval for $37B Taylor factory",
+   "pub": "Korea JoongAng Daily",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0985",
+   "url": "https://www.datacenterdynamics.com/en/news/intel-further-delays-28bn-ohio-chip-fabs-by-half-a-decade",
+   "title": "Intel further delays $28bn Ohio chip fabs by half a decade",
+   "pub": "DatacenterDynamics",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-02-28",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0986",
+   "url": "https://spectrumnews1.com/oh/columbus/news/2025/02/28/intel-delays-ohio-s-chip-plant-to-2030--2031",
+   "title": "Intel delays Ohio's chip plant to 2030–2031",
+   "pub": "Spectrum News 1",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-02-28",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-12 (global facilities)",
+   "used": 1
+  }
+ ],
+ "fa": [
+  {
+   "id": "F014",
+   "name": "TSMC Arizona Fab 21 (phase 1), Phoenix",
+   "type": "Fab (front-end)",
+   "operator": "TSMC Arizona (TSMC)",
+   "link": [
+    "FAB-000001"
+   ],
+   "partners": [],
+   "country": "United States",
+   "state": "Arizona",
+   "city": "Phoenix",
+   "lat": 33.45,
+   "lon": -112.07,
+   "scheme": "US CHIPS and Science Act support (per coverage)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2025-01",
+     "status": "PRODUCTION",
+     "src": "S0977"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "N4 (4 nm-class) per coverage",
+   "wafer": "300 mm",
+   "products": "Logic (customers reported in coverage are not recorded as confirmed links)",
+   "jobs": null,
+   "src": "S0977",
+   "conf": "MEDIUM",
+   "notes": "Later phases (N3 and beyond) are plans in coverage and are not recorded as milestones."
+  },
+  {
+   "id": "F015",
+   "name": "JASM Fab 1 (TSMC), Kikuyo, Kumamoto",
+   "type": "Fab (front-end)",
+   "operator": "Japan Advanced Semiconductor Manufacturing (TSMC majority)",
+   "link": [
+    "FAB-000001"
+   ],
+   "partners": [
+    "Sony Semiconductor Solutions (shareholder per coverage)",
+    "Denso (shareholder per coverage)"
+   ],
+   "country": "Japan",
+   "state": "Kumamoto",
+   "city": "Kikuyo",
+   "lat": 32.86,
+   "lon": 130.79,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2024-12-27",
+     "status": "PRODUCTION",
+     "src": "S0978"
+    }
+   ],
+   "invest": [],
+   "capacity": "Planned about 55,000 wafers per month (per coverage)",
+   "technology": "12/16 nm and 22/28 nm (per coverage)",
+   "wafer": "300 mm",
+   "products": "Logic, image-sensor and automotive chips (per coverage)",
+   "jobs": null,
+   "src": "S0978",
+   "conf": "MEDIUM"
+  },
+  {
+   "id": "F016",
+   "name": "JASM Fab 2 (TSMC), Kumamoto",
+   "type": "Fab (front-end)",
+   "operator": "Japan Advanced Semiconductor Manufacturing (TSMC majority)",
+   "link": [
+    "FAB-000001"
+   ],
+   "partners": [],
+   "country": "Japan",
+   "state": "Kumamoto",
+   "city": "Kumamoto prefecture",
+   "lat": 32.86,
+   "lon": 130.79,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2024-02",
+     "status": "ANNOUNCED",
+     "src": "S0979"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "6/7 nm planned (per coverage)",
+   "wafer": "300 mm",
+   "products": null,
+   "jobs": null,
+   "src": "S0979",
+   "conf": "LOW",
+   "notes": "Construction start and production targets in coverage are plans; no later milestone is captured."
+  },
+  {
+   "id": "F017",
+   "name": "ESMC fab, Dresden",
+   "type": "Fab (front-end)",
+   "operator": "European Semiconductor Manufacturing Company (TSMC 70 %, Bosch, Infineon, NXP 10 % each, per coverage)",
+   "link": [
+    "FAB-000001"
+   ],
+   "partners": [
+    "Bosch",
+    "Infineon Technologies",
+    "NXP Semiconductors"
+   ],
+   "country": "Germany",
+   "state": "Saxony",
+   "city": "Dresden",
+   "lat": 51.05,
+   "lon": 13.74,
+   "scheme": "EU Chips Act state aid (per coverage)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2024-08-20",
+     "status": "FOUNDATION_LAID",
+     "src": "S0980"
+    },
+    {
+     "date": "2025-11-20",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S0981"
+    }
+   ],
+   "invest": [
+    {
+     "value": 10,
+     "currency": "EUR",
+     "unit": "billion",
+     "label": "€10 billion",
+     "src": "S0980"
+    }
+   ],
+   "capacity": "40,000 wafers per month (300 mm) planned (per coverage)",
+   "technology": "FinFET (28/22 nm and 16/12 nm class, per coverage)",
+   "wafer": "300 mm",
+   "products": "Automotive and industrial chips (per coverage)",
+   "jobs": null,
+   "src": "S0980;S0981",
+   "conf": "MEDIUM",
+   "notes": "Equipment move-in was expected in 2H 2026 per the Nov 2025 report; not recorded as a milestone until a source reports it."
+  },
+  {
+   "id": "F018",
+   "name": "Rapidus IIM-1, Chitose",
+   "type": "Fab (pilot line)",
+   "operator": "Rapidus",
+   "link": [
+    "FAB-000023"
+   ],
+   "partners": [
+    "IBM (2 nm GAA process partner, per coverage)"
+   ],
+   "country": "Japan",
+   "state": "Hokkaido",
+   "city": "Chitose",
+   "lat": 42.82,
+   "lon": 141.65,
+   "scheme": "Japanese government (METI/NEDO) support (per coverage)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2025-07-18",
+     "status": "PILOT_PRODUCTION",
+     "src": "S0982"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "2 nm gate-all-around",
+   "wafer": "300 mm",
+   "products": "Prototype logic",
+   "jobs": null,
+   "src": "S0982",
+   "conf": "MEDIUM",
+   "notes": "Mass production is targeted for 2027 in coverage (a plan, not a milestone)."
+  },
+  {
+   "id": "F019",
+   "name": "Samsung Taylor Fab 1, Texas",
+   "type": "Fab (front-end)",
+   "operator": "Samsung Electronics",
+   "link": [
+    "FAB-000002"
+   ],
+   "partners": [],
+   "country": "United States",
+   "state": "Texas",
+   "city": "Taylor",
+   "lat": 30.57,
+   "lon": -97.41,
+   "scheme": "US CHIPS and Science Act support (per coverage)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2026-07-31",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S0983"
+    }
+   ],
+   "invest": [
+    {
+     "value": 37,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "US$37 billion (headline, per report title)",
+     "src": "S0984"
+    }
+   ],
+   "capacity": null,
+   "technology": "2 nm-class (SF2P) reported",
+   "wafer": "300 mm",
+   "products": null,
+   "jobs": null,
+   "src": "S0983;S0984",
+   "conf": "LOW",
+   "notes": "Operational readiness is targeted for late 2026 in coverage; a temporary certificate of occupancy for part of Fab 1 was reported (undated in the captured source). The status stays under construction until production is reported."
+  },
+  {
+   "id": "F020",
+   "name": "Intel Ohio One, New Albany",
+   "type": "Fab (front-end)",
+   "operator": "Intel",
+   "link": [
+    "FAB-000003"
+   ],
+   "partners": [],
+   "country": "United States",
+   "state": "Ohio",
+   "city": "New Albany (Licking County)",
+   "lat": 40.08,
+   "lon": -82.78,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2025-02-28",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S0985;S0986"
+    },
+    {
+     "date": "2025-02-28",
+     "status": "SCHEDULE_CHANGE",
+     "src": "S0985;S0986"
+    }
+   ],
+   "invest": [
+    {
+     "value": 28,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "US$28 billion (two fabs, per report title)",
+     "src": "S0985"
+    }
+   ],
+   "capacity": null,
+   "technology": null,
+   "wafer": "300 mm",
+   "products": null,
+   "jobs": null,
+   "src": "S0985;S0986",
+   "conf": "MEDIUM",
+   "notes": "Schedule change (Feb 2025): first fab completion moved to 2030 with operations by 2031; second fab 2031/2032 (per coverage). Originally announced in 2022 for 2025."
+  }
+ ],
+ "pg": []
+}

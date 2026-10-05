@@ -428,17 +428,23 @@ const otherCustomers = L.cu.filter(c => !FAB_TYPES.test(c.customer_type) && !OSA
 // ---------------------------------------------------------------- facilities (site-level records, Batch 11+)
 // One record per physical site. Status is a dated history (ANNOUNCED → APPROVED → FOUNDATION_LAID → … → OPERATIONAL);
 // the current status is the latest dated stage, never inferred. Several investment figures for one site become a conflict.
-const STAGE_ORDER = ["ANNOUNCED", "APPROVED", "FOUNDATION_LAID", "UNDER_CONSTRUCTION", "PILOT_PRODUCTION", "OPERATIONAL"];
+// Milestones keep the wording of the source (APPROVED, FOUNDATION_LAID …); status_class maps them to the controlled vocabulary
+// ANNOUNCED · PLANNED · SITE_ACQUIRED · UNDER_CONSTRUCTION · EQUIPMENT_INSTALLATION · PILOT · RAMP · PRODUCTION · EXPANDED · PAUSED · CANCELLED · CLOSED · UNKNOWN.
+// Non-stage events (FIRST_SHIPMENT, SCHEDULE_CHANGE) are kept in the history but never set the status.
+const STAGE_ORDER = ["ANNOUNCED", "PLANNED", "APPROVED", "SITE_ACQUIRED", "FOUNDATION_LAID", "UNDER_CONSTRUCTION", "EQUIPMENT_INSTALLATION", "PILOT_PRODUCTION", "RAMP", "OPERATIONAL", "PRODUCTION", "EXPANDED", "PAUSED", "CANCELLED", "CLOSED"];
+const STATUS_CLASS = { ANNOUNCED: "ANNOUNCED", PLANNED: "PLANNED", APPROVED: "PLANNED", SITE_ACQUIRED: "SITE_ACQUIRED", FOUNDATION_LAID: "UNDER_CONSTRUCTION", UNDER_CONSTRUCTION: "UNDER_CONSTRUCTION",
+  EQUIPMENT_INSTALLATION: "EQUIPMENT_INSTALLATION", PILOT_PRODUCTION: "PILOT", RAMP: "RAMP", OPERATIONAL: "PRODUCTION", PRODUCTION: "PRODUCTION", EXPANDED: "EXPANDED", PAUSED: "PAUSED", CANCELLED: "CANCELLED", CLOSED: "CLOSED" };
 const facilities = FAC_ROWS.map(f => {
   const id = `FAC-${pad(num(f.id))}`;
   const history = f.history.map(h => ({ date: h.date, status: h.status, source_ids: srcIds(h.src) })).sort((a, b) => a.date.localeCompare(b.date));
   const stages = history.filter(h => STAGE_ORDER.includes(h.status));
-  const cur = stages[stages.length - 1] || null;
+  const cur = stages.sort((a, b) => a.date.localeCompare(b.date) || STAGE_ORDER.indexOf(a.status) - STAGE_ORDER.indexOf(b.status))[stages.length - 1] || null;
+  const country = f.country || "India";
   const investment = (f.invest || []).map(x => ({ value: x.value, currency: x.currency, unit: x.unit, label: x.label, inr_crore: x.currency === "INR" && x.unit === "crore" ? x.value : null, source_ids: srcIds(x.src) }));
   const linked = (f.link || []);
   return { id, entity_type: "facility", name: f.name, facility_type: f.type, operator: f.operator, operator_ids: linked, partners: f.partners || [],
-    country: "India", country_id: "CTY-IN", state: f.state, city: f.city, coordinates: f.lat != null ? { lat: f.lat, lon: f.lon, basis: "Approximate town centroid (not the site boundary)" } : null,
-    scheme: f.scheme || null, approval_date: f.approval || null, status: cur ? cur.status : "UNKNOWN", status_date: cur ? cur.date : null, status_history: history,
+    country, country_id: ctryId(country), region: GEO[country]?.region || null, state: f.state, city: f.city, coordinates: f.lat != null ? { lat: f.lat, lon: f.lon, basis: "Approximate town centroid (not the site boundary)" } : null,
+    scheme: f.scheme || null, approval_date: f.approval || null, status: cur ? cur.status : "UNKNOWN", status_class: cur ? STATUS_CLASS[cur.status] : "UNKNOWN", status_date: cur ? cur.date : null, status_history: history,
     investment, investment_conflict: investment.length > 1, capacity: f.capacity || null, technology: f.technology || null, wafer_size: f.wafer || null, products: f.products || null, jobs: f.jobs || null,
     verification: "PARTIALLY_VERIFIED", confidence: f.conf || "MEDIUM", evidence_depth: "SEARCH_SUMMARY",
     notes: [f.notes, `${f.batch} (${f.created}): facts from titles and search-result summaries of the cited government releases and news reports; pages not read directly. Unknown fields are left empty, not estimated.`].filter(Boolean).join(" "),
@@ -554,6 +560,44 @@ const intel = {
   legacy_process_steps: L.ps, legacy_laser_types: L.lt, teal_areas: L.teal, legacy_country_matrix: L.ctry,
 };
 
+// ---------------------------------------------------------------- claim-level provenance (lineage: value → claim → evidence type → source → date)
+// Evidence policy: DIRECTLY_STATED (the source states it) · DIRECTLY_SPECIFIED (a published specification) · CALCULATED (formula over
+// stated inputs, formula stored) · ANALYST_ESTIMATE · INFERRED (analyst knowledge or derivation, shown as such) · UNVERIFIED.
+// evidence_depth says how the source was used (CONTENT = page read; TITLE / SEARCH_SUMMARY = located by web search, page not read).
+const claims = []; const CONFLICT_IDS = new Set(CONFLICTS.flatMap(c => [c.entity, ...(c.also || [])]));
+const claim = (subject, predicate, value, o = {}) => { if (value == null || value === "" || (Array.isArray(value) && !value.length)) return;
+  claims.push({ claim_id: `CLM-${pad(claims.length + 1, 7)}`, subject, predicate, value, unit: o.unit || null, valid_from: o.valid_from || null,
+    source_ids: o.source_ids || [], claim_type: o.type || (o.source_ids?.length ? "DIRECTLY_STATED" : "UNVERIFIED"), evidence_depth: o.depth || null,
+    formula: o.formula || null, confidence: o.type === "INFERRED" ? "NOT_SOURCE_BACKED" : o.confidence || null, status: CONFLICT_IDS.has(subject) && o.conflictable ? "CONFLICTED" : "ACTIVE", last_verified: o.verified || null }); };
+const CB_TYPE = { SRC: "DIRECTLY_STATED", SUM: "DIRECTLY_STATED", KNOW: "INFERRED" };
+companies.forEach(c => {
+  const base = { source_ids: c.source_ids, depth: c.evidence_depth, confidence: c.confidence.level, verified: c.dates.last_verified };
+  claim(c.id, "headquarters_country", c.hq.country, { ...base, type: CB_TYPE[c.hq.country_basis_code] || "UNVERIFIED", source_ids: CB_TYPE[c.hq.country_basis_code] === "INFERRED" ? [] : c.source_ids, depth: c.hq.country_basis });
+  claim(c.id, "headquarters_city", c.hq.city, base);
+  claim(c.id, "website", c.website, base);
+  claim(c.id, "founded_year", c.founded, base);
+  claim(c.id, "listing", [c.exchange, c.ticker].filter(Boolean).join(" ") || null, base);
+  claim(c.id, "primary_equipment", c.primary_equipment, base);
+  c.equipment_ids.filter(e => !c.equipment_ids_from_models.includes(e)).forEach(e => claim(c.id, "offers_equipment_category", e, base));
+  c.equipment_ids_from_models.forEach(e => { const ms = models.filter(m => m.company_id === c.id && m.equipment_id === e);
+    claim(c.id, "offers_equipment_category", e, { source_ids: uniq(ms.flatMap(m => m.source_ids)), type: "DIRECTLY_STATED", depth: "Via sourced model " + ms.map(m => m.id).join(", "), confidence: ms[0]?.confidence, verified: c.dates.last_verified }); });
+  c.financials.forEach(f => claim(c.id, f.metric.toLowerCase().replace(/\s+/g, "_"), f.value, { source_ids: f.source_ids, unit: f.currency + (typeof f.value === "number" ? " m" : ""), valid_from: f.fiscal_year,
+    type: f.value_type === "REPORTED" || f.value_type === "GUIDANCE" ? "DIRECTLY_STATED" : f.value_type === "UNIT_CONFLICT" ? "UNVERIFIED" : "DIRECTLY_STATED", depth: f.value_type, confidence: c.confidence.level, conflictable: true }));
+  if (c.revenue && c.revenue.usd_m == null && c.revenue.range_usd_m) claim(c.id, "revenue_range_usd_m", c.revenue.range_usd_m, { type: "CALCULATED", formula: c.revenue.basis, source_ids: c.source_ids });
+});
+models.forEach(m => {
+  const base = { source_ids: m.source_ids, confidence: m.confidence, verified: m.dates.last_verified, depth: m.batch === "Batch 1" ? "CONTENT" : "TITLE" };
+  claim(m.id, "manufacturer", m.company_id, base); claim(m.id, "equipment_category", m.equipment_id, base); claim(m.id, "model_number", m.model_number, base);
+  m.specs.forEach(sp => claim(m.id, "spec:" + sp.parameter, sp.value, { source_ids: sp.source_ids, unit: sp.unit, type: "DIRECTLY_SPECIFIED", depth: sp.source_scope, confidence: sp.verification }));
+});
+facilities.forEach(f => {
+  const base = { source_ids: f.source_ids, depth: f.evidence_depth, confidence: f.confidence, verified: f.dates.last_verified };
+  f.status_history.forEach(h => claim(f.id, "status:" + h.status, h.date, { ...base, source_ids: h.source_ids, valid_from: h.date }));
+  f.investment.forEach(x => claim(f.id, "investment", x.value, { ...base, source_ids: x.source_ids, unit: `${x.currency} ${x.unit}`, conflictable: true }));
+  ["capacity", "technology", "products", "jobs", "wafer_size"].forEach(k => claim(f.id, k, f[k], base));
+  if (f.coordinates) claim(f.id, "coordinates", `${f.coordinates.lat}, ${f.coordinates.lon}`, { type: "INFERRED", depth: f.coordinates.basis });
+});
+
 // ---------------------------------------------------------------- publish
 const entities = { companies, product_families: families, models, equipment, processes, technologies, materials, applications, subsystems, components, suppliers, fabs, osats, customers: otherCustomers, facilities, countries, deals, relationships: rels, sources };
 const reference = { stages: STAGES, segments: SEGMENTS, equipment_groups: groups.map(([code, name]) => ({ code, name })), synonyms: SYNONYMS };
@@ -570,9 +614,11 @@ const meta = { name: "SEMICON-DB", title: "SEMICON-DB — Global Semiconductor E
 
 const write = (f, obj) => fs.writeFileSync(path.join(OUT, f), JSON.stringify(obj, null, 0) + "\n");
 Object.entries(entities).forEach(([k, v]) => write(`${k}.json`, v));
+write("claims.json", { built: BUILD_DATE, count: claims.length, policy: ["DIRECTLY_STATED", "DIRECTLY_SPECIFIED", "CALCULATED", "ANALYST_ESTIMATE", "INFERRED", "UNVERIFIED"], claims });
 write("intel.json", intel); write("quality.json", quality); write("reference.json", reference); write("meta.json", meta);
 write("bundle.json", { meta, reference, quality, intel: { ...intel, programs }, ...entities });
 const size = fs.statSync(path.join(OUT, "bundle.json")).size;
 console.log(`SEMICON-DB ${SCHEMA_VERSION} build: ${Object.entries(counts).map(([k, v]) => `${k}=${v}`).join(" ")}`);
+console.log(`claims.json ${claims.length} claims (lazy-loaded)`);
 console.log(`bundle.json ${(size / 1024).toFixed(0)} KB · validation: ${report.errors.length} errors, ${report.warnings.length} warnings · ${dupes.length} duplicate candidates · ${CONFLICTS.length} conflicts`);
 if (report.errors.length) { console.error(report.errors.slice(0, 30).map(e => "ERROR " + e.rule + ": " + e.message).join("\n")); process.exit(1); }

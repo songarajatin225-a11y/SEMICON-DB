@@ -40,3 +40,11 @@ export const out = (id, type) => (outE.get(id) || []).filter(r => !type || (Arra
 export const inn = (id, type) => (inE.get(id) || []).filter(r => !type || (Array.isArray(type) ? type.includes(r.type) : r.type === type));
 export const edges = id => [...(outE.get(id) || []), ...(inE.get(id) || [])];
 export const resolveLegacy = id => DB.legacy?.get(id) || id;
+// Claim-level provenance is published separately (data/claims.json) and fetched only when an evidence panel opens.
+let CLAIMS = null;
+export async function loadClaims() {
+  if (CLAIMS) return CLAIMS;
+  const r = await fetch("data/claims.json"); if (!r.ok) throw new Error("claims " + r.status);
+  const j = await r.json(); CLAIMS = new Map(); j.claims.forEach(c => (CLAIMS.get(c.subject) || CLAIMS.set(c.subject, []).get(c.subject)).push(c));
+  DB.claims = j.claims; return CLAIMS;
+}

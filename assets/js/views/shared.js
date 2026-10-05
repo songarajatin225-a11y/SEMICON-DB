@@ -89,3 +89,26 @@ export function conflictsFor(id) {
     <div class="xs" style="margin-top:4px">${esc(c.note || "")} Not silently resolved — both claims are kept.</div></div>`).join("");
 }
 export { ws };
+
+// ---------------------------------------------------------------- claim-level evidence ("show me the evidence")
+// Placeholder rendered synchronously; fillClaims() (called after every render) fetches data/claims.json once and fills it.
+export const CLAIM_TYPE_LABEL = { DIRECTLY_STATED: "Directly stated", DIRECTLY_SPECIFIED: "Published specification", CALCULATED: "Calculated", ANALYST_ESTIMATE: "Analyst estimate", INFERRED: "Inference / analyst assessment", UNVERIFIED: "Unverified" };
+export const claimsMount = id => `<div class="panel sec" data-claims-for="${esc(id)}"><h2>Evidence by claim</h2><p class="small muted">Loading claim-level evidence…</p></div>`;
+export async function fillClaims(root) {
+  const mounts = [...root.querySelectorAll("[data-claims-for]")]; if (!mounts.length) return;
+  const { loadClaims } = await import("../core/store.js");
+  let map; try { map = await loadClaims(); } catch { mounts.forEach(m => (m.innerHTML = `<h2>Evidence by claim</h2><p class="na">Claim file could not be loaded.</p>`)); return; }
+  mounts.forEach(m => {
+    const cs = map.get(m.dataset.claimsFor) || [];
+    const show = v => (typeof v === "string" && /^[A-Z]{2,5}-[\w.]+$/.test(v) && get(v) ? link(v) : esc(String(v)));
+    m.innerHTML = `<div class="row sp"><h2>Evidence by claim (${cs.length})</h2><span class="small muted">value → evidence type → source → date → confidence</span></div>
+      ${cs.length ? `<div style="overflow-x:auto"><table class="spec"><thead><tr><th>Claim</th><th>Value</th><th>Evidence type</th><th>Source</th><th>Valid from / verified</th><th>Confidence</th></tr></thead><tbody>${cs.map(c => `<tr${c.status === "CONFLICTED" ? ' class="warnrow"' : ""}>
+        <th>${esc(c.predicate.replace(/_/g, " ").replace(/^status:/, "status · ").replace(/^spec:/, "spec · "))}<span class="sub mono">${esc(c.claim_id)}</span></th>
+        <td>${show(c.value)}${c.unit ? ` <span class="muted">${esc(c.unit)}</span>` : ""}${c.formula ? `<span class="sub">Formula: ${esc(c.formula)}</span>` : ""}</td>
+        <td>${esc(CLAIM_TYPE_LABEL[c.claim_type] || c.claim_type)}${c.evidence_depth ? `<span class="sub">${esc(String(c.evidence_depth).replace(/_/g, " ").toLowerCase())}</span>` : ""}${c.status === "CONFLICTED" ? ` <span class="pill warn">conflict</span>` : ""}</td>
+        <td>${c.source_ids.length ? srcBtn(c.source_ids) : `<span class="na">No source — ${c.claim_type === "INFERRED" ? "analyst inference" : "unverified"}</span>`}</td>
+        <td>${esc(c.valid_from || "")}<span class="sub">${esc(c.last_verified || "")}</span></td><td>${esc(c.confidence || "—")}</td></tr>`).join("")}</tbody></table></div>`
+        : `<p class="na">No claims recorded for this record.</p>`}
+      <p class="note">Each row is one claim with its own provenance. “Directly stated” claims located by web search carry the evidence depth “title” or “search summary”: the source was found but not read in full.</p>`;
+  });
+}

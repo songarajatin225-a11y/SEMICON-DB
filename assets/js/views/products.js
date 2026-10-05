@@ -94,6 +94,21 @@ export function products(ctx) { return ctx.path[1] ? family(ctx) : list(ctx); }
 const NOT_CAPTURED = ["Number of chambers", "Chamber configuration", "RF configuration", "Vacuum architecture", "Gas architecture", "Optical system", "Robot / load-port configuration", "FOUP compatibility",
   "Software & automation interfaces (SECS/GEM)", "Utilities (power, cooling, exhaust, CDA, water)", "Weight", "Consumables & critical spares", "Service model", "Launch year", "EOL date / replacement"];
 
+// Alternative engine: same category → direct / partial substitute; same process via another category → different technology.
+const ORDER = { "Direct substitute (candidate)": 0, "Partial substitute": 1, "Development-stage alternative": 2, "Different technology": 3 };
+function classifyAlternatives(m, sameCat) {
+  const wf = x => x.wafer ? [...(x.wafer.sizes_mm || []), ...(x.wafer.range_mm ? [x.wafer.range_mm.min, x.wafer.range_mm.max].filter(v => v != null) : [])] : [];
+  const mw = wf(m), dev = x => /develop|prototype|pilot/i.test(`${x.lifecycle.status} ${x.lifecycle.maturity || ""}`);
+  const rows = sameCat.map(x => { const ok = ["same equipment category"], no = [];
+    const xw = wf(x); if (mw.length && xw.length) (mw.some(v => xw.includes(v)) ? ok : no).push(mw.some(v => xw.includes(v)) ? "overlapping wafer size" : "different wafer size"); else no.push("wafer size");
+    const tech = x.technology_ids.filter(t => m.technology_ids.includes(t)); (tech.length ? ok : no).push(tech.length ? "shared technology" : "technology overlap");
+    const cls = dev(x) ? "Development-stage alternative" : no.length ? "Partial substitute" : "Direct substitute (candidate)";
+    return { x, cls, ok, no }; });
+  const other = m.process_ids.length ? DB.models.filter(x => x.id !== m.id && !x.is_component && x.equipment_id && x.equipment_id !== m.equipment_id && x.process_ids.some(p => m.process_ids.includes(p))
+    && get(x.equipment_id)?.parent_id === get(m.equipment_id)?.parent_id).slice(0, 25).map(x => ({ x, cls: "Different technology", ok: [`same process: ${x.process_ids.filter(p => m.process_ids.includes(p)).map(p => get(p)?.name).join(", ")}`, `category: ${get(x.equipment_id)?.name}`], no: [] })) : [];
+  return [...rows, ...other].sort((a, b) => ORDER[a.cls] - ORDER[b.cls] || a.no.length - b.no.length);
+}
+
 export function modelView({ path, params }) {
   const m = get(path[1]);
   if (!m || m.entity_type !== "model") return { title: "Not found", html: empty({ title: `No model ${path[1] || ""}.`, tips: [`<a href="#/products">browse products & models</a>`] }) };
@@ -151,8 +166,10 @@ export function modelView({ path, params }) {
         return `<article class="card"><div class="top"><a class="ttl" href="${hrefOf(s.id)}">${esc(s.name)}</a><span class="code">${esc(s.id)}</span></div><div class="small ink2">${esc(s.architecture)}</div>
         <dl><dt>Components</dt><dd>${comps.length}</dd><dt>Suppliers</dt><dd>${sup.length ? `${sup.length} with documented capability` : "None captured"}</dd></dl></article>`; }).join("") || empty({ title: "No subsystem reference for this category." })}</div>`;
   } else if (tab === "alternatives") {
-    body = `<div class="callout">Other records in the same ${eq ? "equipment category" : "component class"}. Listed for comparison only — not a claim of equivalence or competition. SEMICON-DB does not score or rank equipment.</div>
-      ${alts.length ? modelTable("alts-" + m.id, alts, { title: "Same-category alternatives" }) + `<p class="sec"><a class="btn primary" href="${href("/compare", { models: [m.id, ...alts.slice(0, 5).map(a => a.id)] })}">Compare side by side</a></p>` : empty({ title: "No other record in this category yet.", kind: "not-available" })}`;
+    const cls = classifyAlternatives(m, alts);
+    body = `<div class="callout">“What can replace this?” — records classified by rule: <b>direct substitute (candidate)</b> = same category, overlapping published wafer size and technology; <b>partial substitute</b> = same category but a key value is unpublished or differs; <b>different technology</b> = same process step through another equipment category; <b>development-stage</b> = lifecycle marked development / prototype. A substitute still needs process qualification; this is not a claim of equivalence.</div>
+      ${cls.length ? `<div style="overflow-x:auto"><table class="spec"><thead><tr><th>Alternative</th><th>Class</th><th>Matches</th><th>Not published / differs</th></tr></thead><tbody>${cls.map(r => `<tr><th>${link(r.x.id)}<span class="sub">${esc(r.x.manufacturer)} · ${esc(get(r.x.company_id)?.hq.country || "")}</span></th><td><span class="pill">${esc(r.cls)}</span></td><td>${esc(r.ok.join("; ") || "—")}</td><td>${r.no.length ? `<span class="na">${esc(r.no.join("; "))}</span>` : "—"}</td></tr>`).join("")}</tbody></table></div>
+        <p class="sec"><a class="btn primary" href="${href("/compare", { models: [m.id, ...cls.slice(0, 5).map(r => r.x.id)] })}">Compare side by side</a></p>` : empty({ title: "No alternative record yet.", kind: "not-available" })}`;
   } else if (tab === "customers") {
     body = `<div class="panel"><h2>Documented fab / OSAT use of this model</h2>${cust.length ? `<table class="spec"><tbody>${cust.map(r => `<tr><th>${link(r.to, r.detail.customer)}</th><td>${esc([r.detail.stage, r.detail.site, r.detail.location, r.detail.application].filter(Boolean).join(" · "))}<span class="sub">${esc(r.detail.evidence || "")}</span></td><td>${badge(r.status)} ${srcBtn(r.source_ids)}</td></tr>`).join("")}</tbody></table>` : `<p class="na">No customer documented for this specific model.</p>`}</div>
       ${coCust.length ? `<div class="panel sec"><h2>Other customer links of ${esc(m.manufacturer)}</h2><table class="spec"><tbody>${coCust.slice(0, 20).map(r => `<tr><th>${link(r.to, r.detail.customer)}</th><td>${esc(r.detail.product || "Product not named")}<span class="sub">${esc(r.detail.stage || "")}</span></td><td>${badge(r.status)}</td></tr>`).join("")}</tbody></table></div>` : ""}`;

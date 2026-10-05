@@ -3,11 +3,11 @@ import { DB, get, hrefOf, nameOf, out, inn } from "../core/store.js";
 import { esc, uniq, fmt, pretty, plural, norm } from "../core/util.js";
 import { ws } from "../core/workspace.js";
 import { href } from "../core/router.js";
-import { intelScore, criticality, INTEL_METHOD, CRIT_METHOD } from "../core/scores.js";
+import { intelScore, criticality, INTEL_METHOD, CRIT_METHOD, dataQuality, DQ_METHOD } from "../core/scores.js";
 import { dataTable } from "../ui/table.js";
 import { readState, applyFacets, facetPanel, activeChips, listing } from "../ui/facets.js";
 import { pageHead, crumbs, badge, conf, fresh, srcBtn, tags, val, kv, specTable, tabs, quickActions, stateBadges, link, empty } from "../ui/components.js";
-import { modelTable, relationsSection, sourcesSection, historySection, conflictsFor, verSort } from "./shared.js";
+import { modelTable, relationsSection, sourcesSection, historySection, conflictsFor, verSort, claimsMount } from "./shared.js";
 
 const indiaKey = c => (c.hq.country === "India" ? "hq" : c.india.has_presence ? "presence" : "none");
 const INDIA_LABEL = { hq: "HQ in India", presence: "Documented India presence", none: "None documented" };
@@ -58,6 +58,7 @@ export const COMPANY_COLS = [
   { k: "sources", label: "Sources", num: true, get: c => c.source_ids.length, html: c => srcBtn(c.source_ids) },
   { k: "iscore", label: "Intelligence score", num: true, get: c => intelScore(c).score, html: c => `${intelScore(c).score}<span class="sub">SEMICON-DB score</span>` },
   { k: "crit", label: "Supplier criticality", num: true, get: c => criticality(c.id).score, html: c => { const k = criticality(c.id); return k.score ? `${k.score}<span class="sub">${[k.sole.length && `sole in ${k.sole.length}`, k.oems.length && `${k.oems.length} OEMs`].filter(Boolean).join(" · ")}</span>` : `<span class="muted">0</span>`; } },
+  { k: "dq", label: "Data quality", num: true, get: c => dataQuality(c).score, html: c => `${dataQuality(c).score}<span class="sub">${esc(dataQuality(c).status.replace(/_/g, " ").toLowerCase())}</span>` },
   { k: "verified", label: "Last verified", get: c => c.dates?.last_verified || "", html: c => verAge(c.dates?.last_verified) },
   { k: "complete", label: "Completeness %", num: true, get: c => c.completeness?.score ?? null, html: c => c.completeness ? `${c.completeness.score}%<span class="sub">${c.completeness.filled}/${c.completeness.total} fields</span>` : val(null) },
 ];
@@ -66,7 +67,7 @@ export const COMPANY_PRESETS = {
   commercial: ["name", "country", "revenue", "class", "own", "ticker", "employees", "founded"],
   "supply-chain": ["name", "country", "roles", "level", "components", "parent", "india", "crit", "sources"],
   technical: ["name", "equipment", "ncat", "nmodels", "roles", "sources"],
-  source: ["name", "verification", "confidence", "freshness", "depth", "verified", "sources"],
+  source: ["name", "verification", "confidence", "dq", "freshness", "depth", "verified", "sources"],
 };
 
 function card(c) {
@@ -136,7 +137,7 @@ function profile({ path, params }) {
   const techs = techsOf(c), procs = procsOf(c);
   const apps = uniq(models.flatMap(m => m.application_ids));
   const T = [["overview", "Overview"], ["portfolio", "Portfolio", c.equipment_ids.length], ["products", "Products & models", models.length], ["relationships", "Relationships"], ["geography", "Geography & India"],
-    ["financials", "Financials", c.financials.length], ["customers", "Customers & deals", custLinks.length + deals.length + supply.length], ["sources", "Sources", c.source_ids.length], ["history", "History"]];
+    ["financials", "Financials", c.financials.length], ["customers", "Customers & deals", custLinks.length + deals.length + supply.length], ["evidence", "Evidence"], ["sources", "Sources", c.source_ids.length], ["history", "History"]];
   const head = `<div class="ehead"><div class="eyebrow">${esc(c.id)} · ${esc(c.company_type)} · ${esc(c.supply_chain_level)}</div><h1 class="pt">${esc(c.name)}</h1>
     ${(c.resolution_keys || []).length ? `<div class="small muted">Also matched as: ${c.resolution_keys.map(k => `<span title="${esc(k.basis)}">${esc(k.alias)}</span>`).join(", ")} <span class="basis">· entity-resolution keys (hover for basis)</span></div>` : ""}
     <div class="row" style="margin-top:8px">${stateBadges(c)} ${conf(c.confidence.level)} <span class="pill" title="${esc(c.market_class_basis || "")}">${esc(pretty(c.market_class))}</span>${srcBtn(c.source_ids)}</div>
@@ -190,6 +191,7 @@ function profile({ path, params }) {
       ${deals.filter(d => !(d.party_a_id && d.party_b_id)).map(d => `<tr><th>${esc(d.event_type)}</th><td>${esc(d.party_a)} · ${esc(d.party_b)}<span class="sub">${esc([d.date, d.value_disclosed, d.technology].filter(Boolean).join(" · "))}</span></td><td>${esc(d.status)} ${srcBtn(d.source_ids)}</td></tr>`).join("")}</tbody></table>` : `<p class="na">None recorded.</p>`}</div>`;
   } else if (tab === "sources") body = sourcesSection(c.source_ids, [...models.flatMap(m => m.source_ids), ...custLinks.flatMap(r => r.source_ids), ...deals.flatMap(d => d.source_ids)]);
   else if (tab === "history") body = historySection(c);
+  else if (tab === "evidence") body = `${dqPanel(c)}${claimsMount(c.id)}`;
   const html = `${crumbs([["Home", "#/"], ["Companies", "#/companies"], ...(c.hq.country ? [[c.hq.country, c.hq.country_id ? hrefOf(c.hq.country_id) : null]] : []), [c.name, null]])}${head}${tabs(base, tab, T)}${body}`;
   return { title: c.name, html };
 }
@@ -215,6 +217,14 @@ function intelPanel(c) {
     ${k.score ? `<p class="small" style="margin-top:8px"><b>Supplier criticality ${k.score}:</b> ${[k.sole.length && `only documented supplier in ${k.sole.map(x => link(x)).join(", ")}`, k.duo.length && `one of two documented suppliers in ${k.duo.map(x => link(x)).join(", ")}`, k.oems.length && `documented as supplying ${k.oems.map(x => link(x)).join(", ")}`, k.sites.length && `supplies ${k.sites.map(x => link(x)).join(", ")}`].filter(Boolean).join("; ")}.</p>` : ""}
     <details class="small"><summary>Method</summary><ul>${INTEL_METHOD.map(([l, w, d]) => `<li><b>${esc(l)} (${w} %)</b>: ${esc(d)}</li>`).join("")}</ul><p>Supplier criticality: ${esc(CRIT_METHOD)}</p></details>
     <p class="note">Measures how much evidence-backed intelligence SEMICON-DB holds about this company and its documented supply-chain position. It is not an industry ranking, a quality rating or a market-share measure. Last verified: ${verAge(c.dates?.last_verified)}</p></div>`;
+}
+
+function dqPanel(c) {
+  const q = dataQuality(c);
+  return `<div class="grid g2"><div class="panel"><div class="row sp"><h2>Data quality</h2><span class="pill">${q.score} / 100</span></div><table class="spec"><tbody>${q.parts.map(p => `<tr><th>${esc(p.l)}<span class="sub">weight ${p.w} %</span></th><td><b>${p.v}</b></td></tr>`).join("")}</tbody></table>
+    <p class="note">Data quality (record health) is separate from confidence (how sure the facts are) and from completeness. Method: ${DQ_METHOD.map(([l, w, d]) => `${esc(l)} ${w} % — ${esc(d)}`).join("; ")}.</p></div>
+    <div class="panel"><h2>Research status</h2><p><span class="pill">${esc(q.status.replace(/_/g, " "))}</span></p><p class="small">Confidence: ${conf(c.confidence.level)} (${c.confidence.score}) · Verification: ${badge(c.verification)} · Evidence depth: ${esc(pretty(c.evidence_depth))} · Last verified: ${verAge(c.dates?.last_verified)}</p>
+    <p class="note">Statuses: DISCOVERING (unverified) → VERIFYING (partially verified or incomplete) → COMPLETE (verified and ≥ 75 % complete); CONFLICT when a conflict is open; NEEDS_REFRESH when the last check is older than 180 days.</p></div></div>`;
 }
 
 function completenessPanel(c) {
