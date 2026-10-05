@@ -139,3 +139,7 @@ New field `discovery_keywords` on companies: import column `discovery_keywords`,
 ## Batch 9 addendum (5 Oct 2026)
 
 19 companies, 7 products, 31 sources; one similar-name warning (UNISEM ↔ UNISERS) reviewed — distinct. Build + validate: 0 errors. Route smoke test: 127 / 127 routes render with 0 console errors; interaction suite passes.
+
+## Supply-chain intelligence addendum (5 Oct 2026)
+
+New routes `#/intelligence/risk` and `#/intelligence/timeline`; company completeness column and panel. Route smoke test: 130 / 130 routes render with 0 console errors; interaction suite passes. Validation 0 errors.

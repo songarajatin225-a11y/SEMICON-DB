@@ -60,6 +60,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 | `quality_state` | VERIFIED / PARTIALLY_VERIFIED / UNVERIFIED / CONFLICTING / OUTDATED — one state per record. | string | VERIFIED, OUTDATED, PARTIALLY_VERIFIED, CONFLICTING, UNVERIFIED | `VERIFIED` | Required | System-generated | CONFLICTING > OUTDATED > verification |
 | `missing_key_fields` | Key fields not captured for this record. | array | — | `["Headquarters country (source)","City","Founded year","Employees"]` | Required | System-generated | — |
 | `dates` | first_added, last_updated, last_verified, latest_source_date, review_due. | object | — | `{"first_added":"2026-09-29","last_updated":"2026-09-29","last_verif…` | Required | System-generated | ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD |
+| `completeness` | — | object | — | `{"score":75,"filled":12,"total":16,"groups":[{"group":"Profile","fi…` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 
 ## product_families
 

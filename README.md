@@ -104,6 +104,15 @@ Materials suppliers are recorded at company level (type “Materials/gases”); 
 
 **Known gaps against the wider master-prompt scope** (not implemented; the data model is prepared for them): revenue and employee fields per company (only reported figures are stored), patent, M&A and news layers, a "discover / research queue" workflow with approve / merge buttons, and AI-assisted natural-language queries beyond the current query parser. Southeast Asia (Vietnam, Thailand, Indonesia, Philippines) and India equipment makers remain thinly covered because search returned few company-owned pages; trade-show exhibitor lists could not be read.
 
+## Supply-chain intelligence (5 Oct 2026)
+
+From the uploaded *Global Intelligence Master Prompt*, the parts that the current evidence can support honestly were added:
+- **Supply-chain concentration** (`#/intelligence/risk`): a 0–100 index per equipment category, with the formula and inputs shown on every row: supplier scarcity 40 %, geographic concentration (HHI of HQ countries) 35 %, no India-linked supplier 15 %, evidence weakness 10 %. It also lists critical supplier nodes (companies that are the only documented supplier of a category), categories with no documented supplier (research targets), and a country × equipment-group heatmap. The index describes the documented supplier base, not the market. Factors without evidence in the database (lead time, export controls, patents, raw materials) are left out, not guessed.
+- **Events timeline** (`#/intelligence/timeline`): deal records plus dated press releases and investor announcements, by year, with sources. Undated items are excluded.
+- **Data completeness per company**: coverage of 16 key fields in five groups (profile, portfolio, commercial, evidence, geography). It appears as a column in the companies table and as a panel on each profile, with generated *Research next* search queries for the missing fields.
+
+Not built yet (they need data or a backend the static site doesn't have): AI assistants, the localisation 0–100 score (the existing India opportunity view keeps user-defined criteria), facility capacity / CapEx fields, patents, market sizing and alerts.
+
 ## Evidence rules
 
 - Confidence: official source = HIGH; two independent industry sources = MEDIUM; single industry or distributor source = LOW; blog or market list only = UNVERIFIED.

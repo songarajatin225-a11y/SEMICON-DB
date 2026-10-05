@@ -237,6 +237,24 @@ const models = L.pr.map(p => {
   };
 });
 const MD = Object.fromEntries(models.map(m => [m.id, m]));
+// Completeness: objective coverage of key fields per company (not a quality or business ranking).
+// Unknown stays unknown — a missing field lowers coverage, it is never estimated.
+{
+  const nModels = models.reduce((a, m) => ((a[m.company_id] = (a[m.company_id] || 0) + 1), a), {});
+  const tierOf = id => SRC[id]?.tier;
+  companies.forEach(c => {
+    const G = [
+      ["Profile", [["HQ country", !!c.hq.country], ["HQ country source-backed", ["SRC", "SUM"].includes(c.hq.country_basis_code)], ["City", !!c.hq.city], ["Website", !!c.website], ["Founded year", !!c.founded], ["Description", !!(c.description || c.primary_equipment)]]],
+      ["Portfolio", [["Equipment category confirmed", c.equipment_ids.length > 0 || c.component_class_ids.length > 0], ["At least one product / model", (nModels[c.id] || 0) > 0]]],
+      ["Commercial", [["Ownership / listing", !!(c.ownership || c.exchange || c.ticker)], ["Revenue (reported)", !!c.revenue], ["Employees", !!c.employees]]],
+      ["Evidence", [["At least one source", c.source_ids.length > 0], ["Two or more sources", c.source_ids.length > 1], ["Official (Tier 1) source", c.source_ids.some(id => tierOf(id) === 1)], ["Verified (page read)", c.verification === "VERIFIED"]]],
+      ["Geography", [["India presence assessed", c.india.has_presence || c.hq.country === "India"]]],
+    ];
+    const groups = G.map(([group, checks]) => ({ group, filled: checks.filter(x => x[1]).length, total: checks.length, missing: checks.filter(x => !x[1]).map(x => x[0]) }));
+    const f = groups.reduce((a, g) => a + g.filled, 0), t = groups.reduce((a, g) => a + g.total, 0);
+    c.completeness = { score: Math.round(100 * f / t), filled: f, total: t, groups, basis: "Share of 16 key fields populated from captured evidence" };
+  });
+}
 const families = famOrder.map(k => {
   const ms = models.filter(m => m.family_id === FAM[k]);
   const f = ms[0];

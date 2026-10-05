@@ -55,9 +55,10 @@ export const COMPANY_COLS = [
   { k: "freshness", label: "Freshness", get: c => c.freshness, html: c => fresh(c.freshness) },
   { k: "depth", label: "Evidence depth", get: c => c.evidence_depth, html: c => esc(pretty(c.evidence_depth)) },
   { k: "sources", label: "Sources", num: true, get: c => c.source_ids.length, html: c => srcBtn(c.source_ids) },
+  { k: "complete", label: "Completeness %", num: true, get: c => c.completeness?.score ?? null, html: c => c.completeness ? `${c.completeness.score}%<span class="sub">${c.completeness.filled}/${c.completeness.total} fields</span>` : val(null) },
 ];
 export const COMPANY_PRESETS = {
-  basic: ["name", "country", "equipment", "nmodels", "class", "india", "verification", "sources"],
+  basic: ["name", "country", "equipment", "nmodels", "class", "india", "verification", "sources", "complete"],
   commercial: ["name", "country", "revenue", "class", "own", "ticker", "employees", "founded"],
   "supply-chain": ["name", "country", "roles", "level", "components", "parent", "india", "sources"],
   technical: ["name", "equipment", "ncat", "nmodels", "roles", "sources"],
@@ -144,6 +145,7 @@ function profile({ path, params }) {
       ["Semiconductor revenue", val(c.semiconductor_revenue)], ["Market class basis", val(c.market_class_basis, { reason: "No ranking or revenue evidence — unclassified" })], ["Evidence depth", esc(pretty(c.evidence_depth))],
       ["Market share", `<span class="na">Not recorded — SEMICON-DB does not estimate market share</span>`]])}</div></div>
     ${c.startup ? `<div class="panel sec"><h2>Startup profile</h2>${kv([["Founded", val(c.startup.year)], ["Founders", val(c.startup.founders)], ["Funding", val(c.startup.funding)], ["Investors", val(c.startup.investors)], ["Product", val(c.startup.product)], ["Maturity", val(c.startup.maturity)], ["TRL", val(c.startup.trl)], ["Latest news", val(c.startup.latest_news)], ["Verification", badge(c.startup.verification)], ["Sources", srcBtn(c.startup.source_ids)]])}${c.evidence_depth === "SEARCH_SUMMARY" ? `<p class="note">Funding, founders and dates are as reported by the cited sources (search-result summaries; pages not read). SEMICON-DB does not estimate valuations.</p>` : ""}</div>` : ""}
+    ${completenessPanel(c)}
     <div class="panel sec"><h2>Portfolio matrix</h2>${portfolioMatrix(c)}</div>`;
   } else if (tab === "portfolio") {
     body = `<div class="panel"><h2>Portfolio matrix</h2>${portfolioMatrix(c)}</div>
@@ -182,3 +184,18 @@ function profile({ path, params }) {
 }
 
 export function companies(ctx) { return ctx.path[1] ? profile(ctx) : list(ctx); }
+
+// Objective field coverage + generated research queries for what is still unknown (never estimated).
+const RESEARCH_Q = { "HQ country source-backed": "headquarters", City: "headquarters address", "Founded year": "founded year history", Description: "company overview",
+  "Equipment category confirmed": "semiconductor equipment products", "At least one product / model": "semiconductor equipment product models", "Ownership / listing": "ownership stock listing",
+  "Revenue (reported)": "annual report revenue", Employees: "number of employees", "Two or more sources": "semiconductor", "Official (Tier 1) source": "official website",
+  "Verified (page read)": "product page", "India presence assessed": "India office facility", Website: "official website" };
+function completenessPanel(c) {
+  const k = c.completeness; if (!k) return "";
+  const miss = k.groups.flatMap(g => g.missing);
+  const qs = uniq(miss.map(m => RESEARCH_Q[m]).filter(Boolean)).slice(0, 8).map(q => `"${c.canonical_name || c.name}" ${q}`);
+  return `<div class="panel sec"><div class="row sp"><h2>Data completeness</h2><span class="pill">${k.score}% · ${k.filled}/${k.total} key fields</span></div>
+    <table class="spec"><tbody>${k.groups.map(g => `<tr><th>${esc(g.group)}<span class="sub">${g.filled}/${g.total}</span></th><td>${g.missing.length ? `<span class="na">Missing: ${esc(g.missing.join(", "))}</span>` : "Complete"}</td></tr>`).join("")}</tbody></table>
+    ${qs.length ? `<h3 class="small" style="margin-top:12px">Research next</h3><ul class="small">${qs.map(q => `<li><code>${esc(q)}</code></li>`).join("")}</ul>` : ""}
+    <p class="note">${esc(k.basis)}. This measures coverage of the record, not the company. Missing values stay “not captured” until a source is found.</p></div>`;
+}
