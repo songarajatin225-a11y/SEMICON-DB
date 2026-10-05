@@ -111,7 +111,11 @@ From the uploaded *Global Intelligence Master Prompt*, the parts that the curren
 - **Events timeline** (`#/intelligence/timeline`): deal records plus dated press releases and investor announcements, by year, with sources. Undated items are excluded.
 - **Data completeness per company**: coverage of 16 key fields in five groups (profile, portfolio, commercial, evidence, geography). It appears as a column in the companies table and as a panel on each profile, with generated *Research next* search queries for the missing fields.
 
-Not built yet (they need data or a backend the static site doesn't have): AI assistants, the localisation 0–100 score (the existing India opportunity view keeps user-defined criteria), facility capacity / CapEx fields, patents, market sizing and alerts.
+- **Analyst** (`#/intelligence/analyst`): a rule-based question box that answers only from SEMICON-DB records and shows the rule it used. It handles *Can we build X?*, *Who supplies X?*, *Alternatives to company* and free-form requirements such as *300 mm sputtering systems in Japan*. Free-form matches that don't publish a constrained value are labelled partial. When nothing matches it says so and suggests the closest categories. It is not an LLM.
+- **"Can we build this?" engine**: for any equipment category, lists subsystems → documented global and Indian suppliers, OEMs, reference models and the concentration index. It then gives an indication by a fixed rule: BUILD if ≥ 70 % of typical subsystems have a documented Indian supplier, HYBRID at 40–69 %, otherwise PARTNER (≥ 3 global OEMs) or BUY. It is an evidence summary, not a business recommendation.
+- **India localization index (0–100)** per equipment category, with bands LOW / MEDIUM / HIGH / VERY HIGH. Weights: Indian subsystem coverage 40 %, Indian OEM already documented 20 %, number of global alternatives 20 %, OEM India presence 20 %. The formula is printed on the page.
+
+Not built (they need data or a backend the static site doesn't have): an LLM assistant, facility capacity / CapEx, patents, market sizing, pricing, lead times and alerts. CapEx, IP, certification and talent are therefore not part of the localization index.
 
 ## Evidence rules
 

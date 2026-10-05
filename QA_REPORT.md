@@ -143,3 +143,7 @@ New field `discovery_keywords` on companies: import column `discovery_keywords`,
 ## Supply-chain intelligence addendum (5 Oct 2026)
 
 New routes `#/intelligence/risk` and `#/intelligence/timeline`; company completeness column and panel. Route smoke test: 130 / 130 routes render with 0 console errors; interaction suite passes. Validation 0 errors.
+
+## Analyst addendum (5 Oct 2026)
+
+New route `#/intelligence/analyst` (question router, "Can we build this?" engine, localization index table of 137 categories). Smoke test 137 / 137 routes with 0 console errors. axe (light + dark) shows 0 violations; this also fixed a dark-mode contrast issue in the risk heatmap. Question checks: "Can we build a wire bonder?" → C12 Wire Bonding; "Who supplies wafer probing equipment?" → 8 documented suppliers; "who supplies photoresist" → no equipment category, so it falls back to 13 company text matches, with that fallback stated; "Can we build an EUV scanner?" → not found, closest category A01.01 EUV.

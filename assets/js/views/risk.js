@@ -79,7 +79,7 @@ function heatmap() {
   cos.forEach(c => uniq(c.equipment_ids.map(id => get(id)?.group_code).filter(Boolean)).forEach(g => { const k = c.hq.country + "|" + g; cell[k] = (cell[k] || 0) + 1; max = Math.max(max, cell[k]); }));
   return `<div style="overflow-x:auto"><table class="heat"><thead><tr><th>Country</th>${groups.map(g => `<th title="${esc(g.name)}"><a href="${hrefOf(g.id)}">${esc(g.code)}</a></th>`).join("")}</tr></thead><tbody>${countries.map(ct =>
     `<tr><th><a href="#/companies?country=${encodeURIComponent(ct)}">${esc(ct)}</a></th>${groups.map(g => { const v = cell[ct + "|" + g.code] || 0;
-      return `<td title="${esc(`${ct} · ${g.name}: ${v}`)}" style="background:color-mix(in srgb, var(--s2) ${v ? Math.round(12 + 70 * v / max) : 0}%, transparent)">${v || ""}</td>`; }).join("")}</tr>`).join("")}</tbody></table></div>
+      return `<td title="${esc(`${ct} · ${g.name}: ${v}`)}" style="background:color-mix(in srgb, var(--s2) ${v ? Math.round(10 + 45 * v / max) : 0}%, transparent)">${v || ""}</td>`; }).join("")}</tr>`).join("")}</tbody></table></div>
     <p class="small ink2">${groups.map(g => `<b>${esc(g.code)}</b> ${esc(g.name)}`).join(" · ")}</p>`;
 }
 
