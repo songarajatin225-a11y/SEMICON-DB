@@ -7,7 +7,7 @@ import { go } from "../core/router.js";
 
 const COMMANDS = [
   ["Search equipment models", "/products"], ["Search companies", "/companies"], ["Search processes", "/processes"], ["Browse equipment taxonomy", "/equipment"],
-  ["Open fabs", "/fabs"], ["Open OSAT / ATMP", "/osats"], ["Open India ecosystem", "/india"], ["Open global map", "/map"], ["Compare products", "/compare"],
+  ["Open fabs", "/fabs"], ["Open OSAT / ATMP", "/osats"], ["Open facilities (site level)", "/facilities"], ["Open India ecosystem", "/india"], ["Open global map", "/map"], ["Compare products", "/compare"],
   ["Compare companies", "/compare/companies"], ["Open intelligence workspace", "/intelligence"], ["Equipment finder", "/intelligence/finder"], ["Open data quality", "/quality"],
   ["Open source register", "/sources"], ["Open saved workspace", "/saved"], ["Technologies", "/technologies"], ["Materials", "/materials"], ["Subsystems", "/subsystems"], ["Components", "/components"], ["Suppliers", "/suppliers"],
 ];

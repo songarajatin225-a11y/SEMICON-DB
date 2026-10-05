@@ -15,7 +15,7 @@ const NAV = [
   ["Overview", [["", "Home"], ["intelligence", "Intelligence"], ["quality", "Data Quality"]]],
   ["Database", [["companies", "Companies", "companies"], ["equipment", "Equipment", "equipment"], ["products", "Products & models", "models"], ["processes", "Processes", "processes"],
     ["technologies", "Technologies", "technologies"], ["materials", "Materials", "materials"], ["components", "Components", "components"], ["subsystems", "Subsystems", "subsystems"]]],
-  ["Ecosystem", [["fabs", "Fabs", "fabs"], ["osats", "OSAT / ATMP", "osats"], ["suppliers", "Suppliers"], ["india", "India"], ["countries", "Countries", "countries"], ["map", "Global map"]]],
+  ["Ecosystem", [["fabs", "Fabs", "fabs"], ["osats", "OSAT / ATMP", "osats"], ["facilities", "Facilities", "facilities"], ["suppliers", "Suppliers"], ["india", "India"], ["countries", "Countries", "countries"], ["map", "Global map"]]],
   ["Workspace", [["compare", "Compare"], ["sources", "Sources", "sources"], ["saved", "Saved"]]],
 ];
 function renderNav(section) {

@@ -48,6 +48,9 @@ export function home() {
     ${kpi({ v: nonOEM.length, l: "Suppliers (non-OEM roles)", href: "#/suppliers" })}
     ${kpi({ v: DB.fabs.length, l: "Fabs / device makers", href: "#/fabs" })}
     ${kpi({ v: DB.osats.length, l: "OSAT / ATMP", href: "#/osats" })}
+    ${kpi({ v: (DB.facilities || []).length, l: "Facilities (site level)", s: `${(DB.facilities || []).filter(f => f.country === "India").length} in India`, href: "#/facilities" })}
+    ${kpi({ v: C.filter(c => c.is_startup).length, l: "Startups", href: "#/companies?startup=yes" })}
+    ${kpi({ v: C.filter(c => c.batch && c.batch !== "Batch 1").length + M.filter(m => m.batch && m.batch !== "Batch 1").length, l: "Records added since Batch 1", s: `latest ${esc(DB.meta.evidence_as_of)}`, href: "#/intelligence/changes" })}
     ${kpi({ v: indiaCos.length, l: "India ecosystem companies", s: `${C.filter(c => c.hq.country === "India").length} HQ in India`, href: "#/india" })}
     ${kpi({ v: needs.length, l: "Records requiring verification", s: `${DB.quality.conflicts.length} conflicts`, href: "#/quality" })}
     ${kpi({ v: DB.relationships.length, l: "Relationships", s: `${relBasis.get("source") || 0} source-backed`, href: "#/quality?tab=relationships" })}

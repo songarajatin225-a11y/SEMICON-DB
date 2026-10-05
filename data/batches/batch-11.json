@@ -1,0 +1,842 @@
+{
+ "batch": "Batch 11",
+ "created": "2026-10-05",
+ "method": "Facility-level records for India from government releases (pmindia.gov.in, newsonair.gov.in) and national/industry news, located by web search; facts from titles and search-result summaries.",
+ "co": [],
+ "pr": [],
+ "src": [
+  {
+   "id": "S0958",
+   "url": "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-semiconductor-manufacturing-units-in-odisha-punjab-and-andhra-pradesh-with-an-outlay-of-rs-4600-crore",
+   "title": "Cabinet approves semiconductor manufacturing units in Odisha, Punjab and Andhra Pradesh with an outlay of Rs 4,600 crore",
+   "pub": "Prime Minister's Office (pmindia.gov.in)",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2025-08-12",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0959",
+   "url": "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-two-more-semiconductor-manufacturing-units-with-cumulative-investment-of-more-than-rs-3900-crore/",
+   "title": "Cabinet approves two more semiconductor manufacturing units with cumulative investment of more than Rs. 3,900 crore",
+   "pub": "Prime Minister's Office (pmindia.gov.in)",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2026-05-06",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0960",
+   "url": "https://www.pmindia.gov.in/en/news_updates/cabinet-approves-one-more-semiconductor-unit-under-india-semiconductor-mission-ism/",
+   "title": "Cabinet approves one more semiconductor unit under India Semiconductor Mission (ISM)",
+   "pub": "Prime Minister's Office (pmindia.gov.in)",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2024-09-02",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0961",
+   "url": "https://www.pmindia.gov.in/en/news_updates/pm-to-participate-in-indias-techade-chips-for-viksit-bharat-and-lay-the-foundation-stone-of-three-semiconductor-facilities-worth-about-rs-1-25-lakh-crore-on-13th-march/",
+   "title": "PM to participate in 'India's Techade: Chips for Viksit Bharat' and lay the foundation stone of three semiconductor facilities worth about Rs 1.25 lakh crore on 13th March",
+   "pub": "Prime Minister's Office (pmindia.gov.in)",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2024-03-12",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0962",
+   "url": "https://www.theweek.in/news/india/2024/03/13/pm-lays-stone-for-3-chip-making-units-in-gujarat-assam-cm-himanta-thanks-modi.amp.html",
+   "title": "PM lays stone for 3 chip-making units in Gujarat, Assam; CM Himanta thanks Modi",
+   "pub": "The Week",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-03-13",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0963",
+   "url": "https://www.outlookbusiness.com/amp/story/news/cabinet-approves-tatas-rs-118-lakh-crore-semiconductor-fab-and-assembly-plant-proposals",
+   "title": "Cabinet approves Tata's Rs 1.18 lakh crore semiconductor fab and assembly plant proposals",
+   "pub": "Outlook Business",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-02-29",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0964",
+   "url": "https://www.newsonair.gov.in/cabinet-approves-6th-semiconductor-unit-to-be-set-up-near-jewar-airport-in-up",
+   "title": "Cabinet approves 6th semiconductor unit to be set up near Jewar airport in UP",
+   "pub": "All India Radio (newsonair.gov.in)",
+   "type": "Government news service",
+   "tier": 1,
+   "date": "2025-05-14",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0965",
+   "url": "https://india.entrepreneur.com/news-and-trends/centre-clears-inr-3706-crore-semiconductor-plant-in-up/491665",
+   "title": "Centre Clears INR 3,706 Crore Semiconductor Plant in UP, HCL-Foxconn JV Gets the Nod",
+   "pub": "Entrepreneur India",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-05",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0966",
+   "url": "https://www.outlookbusiness.com/corporate/micron-set-to-break-ground-for-semiconductor-testing-and-assembly-plant-in-gujarat-report",
+   "title": "Micron Set To Break Ground For Semiconductor Testing And Assembly Plant In Gujarat: Report",
+   "pub": "Outlook Business",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2023",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0967",
+   "url": "https://trendforce.com/news/2026/03/04/news-inside-look-at-microns-newly-opened-sanand-plant-10-of-global-output-key-products-and-clients/",
+   "title": "Inside look at Micron's newly opened Sanand plant: 10% of global output, key products and clients",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-03-04",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0968",
+   "url": "https://ianslive.in/cg-semi-unveils-one-of-indias-first-end-to-end-osat-facilities-in-gujarat--20250828191618",
+   "title": "CG Semi unveils one of India's first end-to-end OSAT facilities in Gujarat",
+   "pub": "IANS",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-08-28",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0969",
+   "url": "https://evertiq.com/news/2026-08-04-asip-breaks-ground-on-260-million-osat-facility-in-india",
+   "title": "ASIP breaks ground on $260 million OSAT facility in India",
+   "pub": "Evertiq",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-08-04",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0970",
+   "url": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/modi-places-stone-for-south-indias-first-semiconductor-facility-in-vizag-1975838",
+   "title": "Modi Places Stone for South India's First Semiconductor Facility in Vizag",
+   "pub": "Deccan Chronicle",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0971",
+   "url": "https://www.fonearena.com/blog/461536/government-approves-rs-4600-crore-for-ism.html",
+   "title": "Government approves four new semiconductor projects under ISM with Rs. 4600 crore investment",
+   "pub": "FoneArena",
+   "type": "Consumer tech blog",
+   "tier": 4,
+   "date": "2025-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0972",
+   "url": "https://swarajyamag.com/amp/story/infrastructure/indias-cdil-semiconductors-unveils-countrys-first-silicon-carbide-device-production-to-meet-ev-and-solar-demands",
+   "title": "India's CDIL Semiconductors unveils country's first silicon carbide device production to meet EV and solar demands",
+   "pub": "Swarajya",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0973",
+   "url": "https://www.thestatesman.com/business/cabinet-greenlights-rs-3936-crore-chip-projects-india-enters-advanced-micro-led-manufacturing-1503590325.html",
+   "title": "Cabinet greenlights Rs 3,936-crore chip projects, India enters advanced micro-LED manufacturing",
+   "pub": "The Statesman",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-05",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0974",
+   "url": "https://www.silicon.co.uk/press-release/yes-pioneers-semiconductor-equipment-production-in-india",
+   "title": "YES Pioneers Semiconductor Equipment Production in India (press release)",
+   "pub": "Silicon UK (press release wire)",
+   "type": "Press release (company)",
+   "tier": 2,
+   "date": "2025-03",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0975",
+   "url": "https://www.businesstoday.in/latest/economy/story/cabinet-approves-semicon-2-with-budget-outlay-of-rs-1-27-lakh-crore-543132-2026-07-15",
+   "title": "Cabinet approves Semicon 2.0 with budget outlay of Rs 1.27 lakh crore",
+   "pub": "Business Today",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-07-15",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  },
+  {
+   "id": "S0976",
+   "url": "https://indianinfrastructure.com/2026/07/16/cabinet-approves-semicon-2-0-with-a-rs-1-275-trillion-budget-outlay/",
+   "title": "Cabinet approves Semicon 2.0 with a Rs 1.275 trillion budget outlay",
+   "pub": "Indian Infrastructure",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-07-16",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-11 (facilities)",
+   "used": 1
+  }
+ ],
+ "fa": [
+  {
+   "id": "F001",
+   "name": "Tata Electronics–PSMC semiconductor fab, Dholera",
+   "type": "Fab (front-end)",
+   "operator": "Tata Electronics",
+   "link": [
+    "FAB-000019"
+   ],
+   "partners": [
+    "Powerchip Semiconductor Manufacturing Corp. (PSMC), Taiwan — technology partner"
+   ],
+   "state": "Gujarat",
+   "city": "Dholera",
+   "lat": 22.25,
+   "lon": 72.19,
+   "scheme": "India Semiconductor Mission (ISM) — fab scheme",
+   "approval": "2024-02-29",
+   "history": [
+    {
+     "date": "2024-02-29",
+     "status": "APPROVED",
+     "src": "S0963"
+    },
+    {
+     "date": "2024-03-13",
+     "status": "FOUNDATION_LAID",
+     "src": "S0961;S0962"
+    }
+   ],
+   "invest": [
+    {
+     "value": 91000,
+     "currency": "INR",
+     "unit": "crore",
+     "label": "over ₹91,000 crore",
+     "src": "S0961"
+    }
+   ],
+   "capacity": "Not captured from a reviewed source in this batch (an earlier record lists 50,000 wafer starts per month)",
+   "technology": "Not captured in this batch (earlier record: 28–110 nm)",
+   "wafer": null,
+   "products": "Logic / mixed-signal foundry (scope per approval coverage)",
+   "jobs": null,
+   "src": "S0963;S0961;S0962",
+   "conf": "MEDIUM",
+   "notes": "India's first commercial fab per the PMO release. First-chip timing in news coverage is a target, not recorded as a milestone."
+  },
+  {
+   "id": "F002",
+   "name": "Tata Semiconductor Assembly & Test (TSAT), Jagiroad",
+   "type": "OSAT / ATMP",
+   "operator": "Tata Electronics",
+   "link": [
+    "OSAT-000019"
+   ],
+   "partners": [],
+   "state": "Assam",
+   "city": "Jagiroad (Morigaon district)",
+   "lat": 26.12,
+   "lon": 92.2,
+   "scheme": "ISM — ATMP / OSAT scheme",
+   "approval": "2024-02-29",
+   "history": [
+    {
+     "date": "2024-02-29",
+     "status": "APPROVED",
+     "src": "S0963"
+    },
+    {
+     "date": "2024-03-13",
+     "status": "FOUNDATION_LAID",
+     "src": "S0961;S0962"
+    }
+   ],
+   "invest": [
+    {
+     "value": 27000,
+     "currency": "INR",
+     "unit": "crore",
+     "label": "about ₹27,000 crore",
+     "src": "S0961"
+    }
+   ],
+   "capacity": null,
+   "technology": null,
+   "wafer": null,
+   "products": "Assembly, test, marking and packaging",
+   "jobs": null,
+   "src": "S0963;S0961;S0962",
+   "conf": "MEDIUM"
+  },
+  {
+   "id": "F003",
+   "name": "CG Semi OSAT (G1 / G2), Sanand",
+   "type": "OSAT",
+   "operator": "CG Semi (CG Power)",
+   "link": [
+    "OSAT-000020"
+   ],
+   "partners": [
+    "Renesas Electronics (Japan) — technology partner",
+    "Stars Microelectronics (Thailand) — technology partner"
+   ],
+   "state": "Gujarat",
+   "city": "Sanand",
+   "lat": 22.99,
+   "lon": 72.38,
+   "scheme": "ISM — ATMP / OSAT scheme",
+   "approval": "2024-02-29",
+   "history": [
+    {
+     "date": "2024-02-29",
+     "status": "APPROVED",
+     "src": "S0961"
+    },
+    {
+     "date": "2024-03-13",
+     "status": "FOUNDATION_LAID",
+     "src": "S0961;S0962"
+    },
+    {
+     "date": "2025-08-28",
+     "status": "PILOT_PRODUCTION",
+     "src": "S0968"
+    }
+   ],
+   "invest": [
+    {
+     "value": 7500,
+     "currency": "INR",
+     "unit": "crore",
+     "label": "about ₹7,500 crore",
+     "src": "S0961"
+    },
+    {
+     "value": 7600,
+     "currency": "INR",
+     "unit": "crore",
+     "label": "over ₹7,600 crore over five years (G1 + G2)",
+     "src": "S0968"
+    }
+   ],
+   "capacity": "G1 peak about 0.5 million units per day (per pilot-line coverage)",
+   "technology": null,
+   "wafer": null,
+   "products": "End-to-end OSAT",
+   "jobs": null,
+   "src": "S0961;S0968",
+   "conf": "MEDIUM"
+  },
+  {
+   "id": "F004",
+   "name": "Micron ATMP, Sanand",
+   "type": "ATMP (memory assembly & test)",
+   "operator": "Micron Technology",
+   "link": [
+    "OSAT-000022",
+    "FAB-000004"
+   ],
+   "partners": [],
+   "state": "Gujarat",
+   "city": "Sanand",
+   "lat": 22.99,
+   "lon": 72.38,
+   "scheme": "Modified ATMP scheme (ISM) with Gujarat state incentives",
+   "approval": "2023-06",
+   "history": [
+    {
+     "date": "2023-06-22",
+     "status": "ANNOUNCED",
+     "src": "S0966"
+    },
+    {
+     "date": "2026-02-28",
+     "status": "OPERATIONAL",
+     "src": "S0967"
+    }
+   ],
+   "invest": [
+    {
+     "value": 2.75,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "US$2.75 billion total (Micron plus central and state support)",
+     "src": "S0966"
+    }
+   ],
+   "capacity": "Phase 1: 500,000 sq ft cleanroom (per coverage)",
+   "technology": "DRAM and NAND assembly and test",
+   "wafer": null,
+   "products": "DRAM and NAND packages",
+   "jobs": "Up to 5,000 direct jobs planned (company statement per coverage)",
+   "src": "S0966;S0967",
+   "conf": "MEDIUM"
+  },
+  {
+   "id": "F005",
+   "name": "Kaynes Semicon OSAT, Sanand",
+   "type": "OSAT",
+   "operator": "Kaynes Semicon",
+   "link": [
+    "OSAT-000021"
+   ],
+   "partners": [],
+   "state": "Gujarat",
+   "city": "Sanand",
+   "lat": 22.99,
+   "lon": 72.38,
+   "scheme": "ISM — ATMP / OSAT scheme",
+   "approval": "2024-09-02",
+   "history": [
+    {
+     "date": "2024-09-02",
+     "status": "APPROVED",
+     "src": "S0960"
+    }
+   ],
+   "invest": [
+    {
+     "value": 3307,
+     "currency": "INR",
+     "unit": "crore",
+     "label": "₹3,307 crore",
+     "src": "S0960"
+    }
+   ],
+   "capacity": "About 6 million chips per day (approval coverage; an earlier record lists 6.33 million)",
+   "technology": null,
+   "wafer": null,
+   "products": "Chips for industrial, automotive, EV, consumer, telecom and mobile applications",
+   "jobs": null,
+   "src": "S0960",
+   "conf": "MEDIUM"
+  },
+  {
+   "id": "F006",
+   "name": "HCL–Foxconn semiconductor unit, near Jewar airport",
+   "type": "Semiconductor unit (display driver chips)",
+   "operator": "HCL Group and Foxconn joint venture",
+   "link": [],
+   "partners": [
+    "HCL Group (India)",
+    "Foxconn (Taiwan)"
+   ],
+   "state": "Uttar Pradesh",
+   "city": "Jewar (YEIDA area)",
+   "lat": 28.13,
+   "lon": 77.56,
+   "scheme": "India Semiconductor Mission (ISM)",
+   "approval": "2025-05-14",
+   "history": [
+    {
+     "date": "2025-05-14",
+     "status": "APPROVED",
+     "src": "S0964;S0965"
+    }
+   ],
+   "invest": [
+    {
+     "value": 3706,
+     "currency": "INR",
+     "unit": "crore",
+     "label": "₹3,706 crore",
+     "src": "S0965"
+    }
+   ],
+   "capacity": "Designed for 20,000 wafers per month; design output 36 million units per month",
+   "technology": null,
+   "wafer": null,
+   "products": "Display driver chips (mobile phones, laptops, automobiles, PCs)",
+   "jobs": "About 3,500",
+   "src": "S0964;S0965",
+   "conf": "MEDIUM"
+  },
+  {
+   "id": "F007",
+   "name": "SiCSem silicon-carbide compound fab, Info Valley Bhubaneswar",
+   "type": "Compound semiconductor fab + packaging",
+   "operator": "SiCSem Private Limited",
+   "link": [],
+   "partners": [
+    "Clas-SiC Wafer Fab Ltd. (UK) — technology partner"
+   ],
+   "state": "Odisha",
+   "city": "Bhubaneswar (Info Valley)",
+   "lat": 20.3,
+   "lon": 85.82,
+   "scheme": "India Semiconductor Mission (ISM)",
+   "approval": "2025-08-12",
+   "history": [
+    {
+     "date": "2025-08-12",
+     "status": "APPROVED",
+     "src": "S0958"
+    }
+   ],
+   "invest": [],
+   "capacity": "60,000 wafers per year; packaging 96 million units per year",
+   "technology": "Silicon carbide (SiC)",
+   "wafer": null,
+   "products": "SiC compound semiconductors",
+   "jobs": null,
+   "src": "S0958",
+   "conf": "MEDIUM",
+   "notes": "Described in the release as the first commercial compound fab in India. Per-unit investment not captured (the four units total about ₹4,600 crore)."
+  },
+  {
+   "id": "F008",
+   "name": "3D Glass Solutions advanced packaging & glass substrate unit, Info Valley Bhubaneswar",
+   "type": "Advanced packaging / glass substrate",
+   "operator": "3D Glass Solutions Inc. (3DGS)",
+   "link": [],
+   "partners": [],
+   "state": "Odisha",
+   "city": "Bhubaneswar (Info Valley)",
+   "lat": 20.3,
+   "lon": 85.82,
+   "scheme": "India Semiconductor Mission (ISM)",
+   "approval": "2025-08-12",
+   "history": [
+    {
+     "date": "2025-08-12",
+     "status": "APPROVED",
+     "src": "S0958"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "Embedded glass substrate, advanced packaging",
+   "wafer": null,
+   "products": "Advanced packaging and glass substrates",
+   "jobs": null,
+   "src": "S0958",
+   "conf": "MEDIUM",
+   "notes": "Per-unit investment not captured."
+  },
+  {
+   "id": "F009",
+   "name": "CDIL discrete power device expansion, Mohali",
+   "type": "Discrete semiconductor manufacturing",
+   "operator": "Continental Device India (CDIL)",
+   "link": [
+    "OSAT-000029"
+   ],
+   "partners": [],
+   "state": "Punjab",
+   "city": "Mohali",
+   "lat": 30.7,
+   "lon": 76.72,
+   "scheme": "India Semiconductor Mission (ISM)",
+   "approval": "2025-08-12",
+   "history": [
+    {
+     "date": "2025-08-12",
+     "status": "APPROVED",
+     "src": "S0958"
+    }
+   ],
+   "invest": [],
+   "capacity": "158.38 million units per year (per search summary of a consumer-tech report; not confirmed against the official release)",
+   "technology": "Silicon and SiC discretes",
+   "wafer": null,
+   "products": "High-power MOSFETs, IGBTs, Schottky bypass diodes, transistors",
+   "jobs": null,
+   "src": "S0958;S0971;S0972",
+   "conf": "LOW",
+   "notes": "Capacity and product list come from secondary coverage summaries; the official release confirms the approval and location."
+  },
+  {
+   "id": "F010",
+   "name": "ASIP Technologies OSAT, Visakhapatnam",
+   "type": "OSAT / advanced packaging",
+   "operator": "ASIP Technologies",
+   "link": [],
+   "partners": [
+    "APACT (South Korea) — technology partner"
+   ],
+   "state": "Andhra Pradesh",
+   "city": "Visakhapatnam",
+   "lat": 17.69,
+   "lon": 83.22,
+   "scheme": "India Semiconductor Mission (ISM)",
+   "approval": "2025-08-12",
+   "history": [
+    {
+     "date": "2025-08-12",
+     "status": "APPROVED",
+     "src": "S0958"
+    },
+    {
+     "date": "2026-08",
+     "status": "FOUNDATION_LAID",
+     "src": "S0969;S0970"
+    }
+   ],
+   "invest": [
+    {
+     "value": 460,
+     "currency": "INR",
+     "unit": "crore",
+     "label": "over ₹460 crore (initial phase, per coverage)",
+     "src": "S0969"
+    },
+    {
+     "value": 260,
+     "currency": "USD",
+     "unit": "million",
+     "label": "US$260 million (headline figure)",
+     "src": "S0969"
+    }
+   ],
+   "capacity": "About 96 million chips per year (per coverage)",
+   "technology": "Flip-chip BGA packaging (per coverage)",
+   "wafer": null,
+   "products": "Packages for AI, HPC, data-centre and communications chips (per coverage)",
+   "jobs": "More than 1,000 direct (per coverage)",
+   "src": "S0958;S0969;S0970",
+   "conf": "MEDIUM",
+   "notes": "The two investment figures likely cover different scopes (initial phase vs. overall); recorded as a conflict rather than reconciled."
+  },
+  {
+   "id": "F011",
+   "name": "Crystal Matrix compound semiconductor fab + ATMP, Dholera",
+   "type": "Compound semiconductor fab + ATMP",
+   "operator": "Crystal Matrix Limited",
+   "link": [],
+   "partners": [],
+   "state": "Gujarat",
+   "city": "Dholera",
+   "lat": 22.25,
+   "lon": 72.19,
+   "scheme": "India Semiconductor Mission (ISM)",
+   "approval": "2026-05-06",
+   "history": [
+    {
+     "date": "2026-05-06",
+     "status": "APPROVED",
+     "src": "S0959;S0973"
+    }
+   ],
+   "invest": [],
+   "capacity": "72,000 m² per year of mini/micro-LED display panels; 24,000 sets per year of RGB GaN epitaxy wafers",
+   "technology": "GaN epitaxy (6-inch), mini/micro-LED",
+   "wafer": "150 mm (6-inch) GaN epitaxy",
+   "products": "Mini/micro-LED display modules; GaN foundry services",
+   "jobs": null,
+   "src": "S0959;S0973",
+   "conf": "MEDIUM",
+   "notes": "Per-unit investment not captured (combined ₹3,936 crore with Suchi Semicon)."
+  },
+  {
+   "id": "F012",
+   "name": "Suchi Semicon OSAT, Surat",
+   "type": "OSAT (discretes)",
+   "operator": "Suchi Semicon Private Limited",
+   "link": [],
+   "partners": [],
+   "state": "Gujarat",
+   "city": "Surat",
+   "lat": 21.17,
+   "lon": 72.83,
+   "scheme": "India Semiconductor Mission (ISM)",
+   "approval": "2026-05-06",
+   "history": [
+    {
+     "date": "2026-05-06",
+     "status": "APPROVED",
+     "src": "S0959"
+    }
+   ],
+   "invest": [
+    {
+     "value": 868,
+     "currency": "INR",
+     "unit": "crore",
+     "label": "₹868 crore",
+     "src": "S0959"
+    }
+   ],
+   "capacity": "1,033.2 million chips per year",
+   "technology": null,
+   "wafer": null,
+   "products": "Discrete semiconductors for power electronics, analog ICs and industrial systems",
+   "jobs": null,
+   "src": "S0959",
+   "conf": "MEDIUM"
+  },
+  {
+   "id": "F013",
+   "name": "YES equipment manufacturing facility, Sulur (Coimbatore)",
+   "type": "Equipment manufacturing",
+   "operator": "Yield Engineering Systems (YES)",
+   "link": [
+    "CMP-000221"
+   ],
+   "partners": [],
+   "state": "Tamil Nadu",
+   "city": "Sulur, Coimbatore",
+   "lat": 11.02,
+   "lon": 77.13,
+   "scheme": "Not stated in reviewed sources",
+   "approval": null,
+   "history": [
+    {
+     "date": "2024-09",
+     "status": "OPERATIONAL",
+     "src": "S0974"
+    },
+    {
+     "date": "2025-03-27",
+     "status": "FIRST_SHIPMENT",
+     "src": "S0952"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "VertaCure, VeroTherm and VeroFlex systems for wafer- and panel-level packaging",
+   "wafer": null,
+   "products": "Semiconductor process equipment",
+   "jobs": null,
+   "src": "S0952;S0974",
+   "conf": "MEDIUM",
+   "notes": "First commercial VeroTherm formic-acid reflow tool shipped from this site to a global chipmaker (March 2025)."
+  }
+ ],
+ "pg": [
+  {
+   "id": "PG01",
+   "name": "India Semiconductor Mission (ISM) — approved manufacturing units",
+   "country": "India",
+   "facts": [
+    {
+     "label": "Approved units (Aug 2025)",
+     "value": "10 units, about ₹1.60 lakh crore cumulative, 6 states",
+     "src": "S0958"
+    },
+    {
+     "label": "Approved units (May 2026)",
+     "value": "12 units after two further approvals",
+     "src": "S0959"
+    }
+   ]
+  },
+  {
+   "id": "PG02",
+   "name": "Semicon 2.0",
+   "country": "India",
+   "facts": [
+    {
+     "label": "Approved",
+     "value": "15 July 2026 by the Union Cabinet",
+     "src": "S0975;S0976"
+    },
+    {
+     "label": "Budget outlay",
+     "value": "₹1,27,500 crore (₹1.275 trillion)",
+     "src": "S0975;S0976"
+    },
+    {
+     "label": "Scope",
+     "value": "Design, machines and materials, additional fabs, advanced packaging, R&D, talent (per coverage)",
+     "src": "S0975"
+    }
+   ]
+  }
+ ]
+}

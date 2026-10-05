@@ -9,6 +9,7 @@ import { dataTable } from "../ui/table.js";
 import { modelTable, waferText } from "./shared.js";
 import { RISK_MODULES, RISK_SUB } from "./risk.js";
 import { ANALYST_MODULES, ANALYST_SUB } from "./analyst.js";
+import { RESEARCH_MODULES, RESEARCH_SUB } from "./research.js";
 
 const MODULES = [
   ["finder", "Equipment Finder", "Guided: what are you trying to manufacture? → material, wafer, process, technology, application, location → matching equipment, companies, models, alternatives and suppliers."],
@@ -19,6 +20,7 @@ const MODULES = [
   ["/compare/companies", "Company Comparison", "Up to four companies: portfolio, technology, process, geography, India, sources."],
   ...RISK_MODULES,
   ...ANALYST_MODULES,
+  ...RESEARCH_MODULES,
   ["supply-chain", "Supply Chain Explorer", "Equipment → subsystems → components → documented suppliers → Indian suppliers."],
   ["india-opportunity", "India / TEAL Opportunity", "Evidence per equipment class with your own criteria. No automatic ranking."],
   ["fab", "Fab Intelligence", "Which equipment suppliers are documented at which fabs and OSATs."],
@@ -243,6 +245,6 @@ function hub() {
     + `<div class="cards">${MODULES.map(([p, t, d]) => `<article class="card"><a class="ttl" href="#${p.startsWith("/") ? p : "/intelligence/" + p}">${esc(t)}</a><div class="small ink2">${esc(d)}</div></article>`).join("")}</div>`;
   return { title: "Intelligence", html };
 }
-const SUB = { ...RISK_SUB, ...ANALYST_SUB, finder, "supplier-finder": supplierFinder, "supply-chain": supplyChain, packaging, fab: fabIntel, "india-opportunity": tealOpportunity, localization: tealOpportunity, lasers, customers: customersView, deals, competitive, teal: tealView, gap, partners, segments: segment };
+const SUB = { ...RISK_SUB, ...ANALYST_SUB, ...RESEARCH_SUB, finder, "supplier-finder": supplierFinder, "supply-chain": supplyChain, packaging, fab: fabIntel, "india-opportunity": tealOpportunity, localization: tealOpportunity, lasers, customers: customersView, deals, competitive, teal: tealView, gap, partners, segments: segment };
 export function intelligence(ctx) { const f = SUB[ctx.path[1]]; return f ? f(ctx) : ctx.path[1] ? { title: "Not found", html: empty({ title: "Unknown intelligence module.", tips: [`<a href="#/intelligence">open the workspace</a>`] }) } : hub(); }
 export { waferText, conf, inn, listParam, crumbs };

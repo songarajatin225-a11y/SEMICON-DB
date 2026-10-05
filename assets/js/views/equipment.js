@@ -6,6 +6,7 @@ import { pageHead, crumbs, tags, link, empty, basis, quickActions } from "../ui/
 import { modelTable, relationsSection } from "./shared.js";
 import { dataTable } from "../ui/table.js";
 import { COMPANY_COLS, COMPANY_PRESETS } from "./companies.js";
+import { playersByBloc } from "../core/scores.js";
 
 function node(e) {
   const nc = e.company_ids_incl_children.length, nm = e.model_ids_incl_children.length;
@@ -28,6 +29,16 @@ function browse({ params }) {
     }).join("");
   return { title: "Equipment taxonomy", html };
 }
+// Competitive landscape by headquarters region: every documented maker of the category (incl. sub-categories),
+// with its model count here. No leader / challenger labels: the database holds no market-share evidence.
+function landscape(makers, models) {
+  const groups = playersByBloc(makers.map(c => c.id));
+  const nm = id => models.filter(m => m.company_id === id).length;
+  return `<div class="panel sec"><h2>Players by region (${makers.length})</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px">${groups.map(g => `<div><div class="eyebrow">${esc(g.bloc)} · ${g.cos.length}</div>
+    <ul class="list">${g.cos.sort((a, b) => nm(b.id) - nm(a.id) || a.name.localeCompare(b.name)).map(c => `<li>${link(c.id)}${nm(c.id) ? ` <span class="muted xs">${nm(c.id)} model${nm(c.id) > 1 ? "s" : ""}</span>` : ""}${c.is_startup ? ` <span class="pill">startup</span>` : ""}</li>`).join("")}</ul></div>`).join("")}</div>
+    <p class="note">Grouped by headquarters (Europe includes the UK, Switzerland and Norway). Ordered by models captured here, which reflects research depth, not market position — SEMICON-DB does not rank leaders or estimate share. <a href="${href("/compare/companies", { companies: makers.slice(0, 4).map(c => c.id) })}">Compare the first four →</a></p></div>`;
+}
+
 function detail({ path, params }) {
   const e = get(path[1]);
   if (!e || e.entity_type !== "equipment") return { title: "Not found", html: empty({ title: `No equipment category ${path[1]}.`, tips: [`<a href="#/equipment">browse the taxonomy</a>`] }) };
@@ -48,6 +59,7 @@ function detail({ path, params }) {
     ${e.child_ids.length ? `<div class="panel"><h2>Sub-categories</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px">${e.child_ids.map(get).map(node).join("")}</div></div>` : ""}
     <div class="grid g3 sec"><div class="panel"><h2>Processes</h2>${tags(e.process_ids, { empty: "Not mapped" })}</div><div class="panel"><h2>Technologies</h2>${tags(e.technology_ids, { empty: "Not mapped" })}</div>
       <div class="panel"><h2>Typical subsystems</h2>${tags(e.typical_subsystem_ids, { empty: "—" })}<p class="note">${basis("reference")} generic architecture. ${suppliersForSubs.length} companies have documented capability in these subsystems' component classes.</p></div></div>
+    ${makers.length ? landscape(makers, models) : ""}
     <div class="sec">${makers.length ? dataTable({ id: "eq-co-" + e.id, rows: makers, columns: COMPANY_COLS, presets: COMPANY_PRESETS, compareKind: "company", title: "Companies", exportName: "companies-" + e.code }) : ""}</div>
     <div class="sec">${models.length ? modelTable("eq-md-" + e.id, models, { title: "Product families & models" }) : ""}</div>`}`;
   return { title: e.name, html };

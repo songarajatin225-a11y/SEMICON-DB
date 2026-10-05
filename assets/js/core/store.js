@@ -5,13 +5,13 @@ const outE = new Map(), inE = new Map();
 
 export const KIND = {
   CMP: "company", PRD: "product_family", MDL: "model", EQP: "equipment", PRS: "process", TEC: "technology", MAT: "material", APP: "application",
-  SUB: "subsystem", CMPN: "component", FAB: "fab", OSAT: "osat", CUS: "customer", CTY: "country", SRC: "source", DEAL: "deal", REL: "relationship",
+  SUB: "subsystem", CMPN: "component", FAB: "fab", OSAT: "osat", CUS: "customer", FAC: "facility", CTY: "country", SRC: "source", DEAL: "deal", REL: "relationship",
 };
 export const KIND_LABEL = { company: "Company", product_family: "Product family", model: "Model", equipment: "Equipment category", process: "Process", technology: "Technology",
-  material: "Material", application: "Application", subsystem: "Subsystem", component: "Component class", fab: "Fab / device maker", osat: "OSAT / ATMP", customer: "Customer",
+  material: "Material", application: "Application", subsystem: "Subsystem", component: "Component class", fab: "Fab / device maker", osat: "OSAT / ATMP", customer: "Customer", facility: "Facility",
   country: "Country", source: "Source", deal: "Deal / partnership" };
 const ROUTE = { company: "companies", product_family: "products", model: "models", equipment: "equipment", process: "processes", technology: "technologies", material: "materials",
-  application: "applications", subsystem: "subsystems", component: "components", fab: "fabs", osat: "osats", customer: "customers", country: "countries", source: "sources", deal: "intelligence/deals" };
+  application: "applications", subsystem: "subsystems", component: "components", fab: "fabs", osat: "osats", customer: "customers", facility: "facilities", country: "countries", source: "sources", deal: "intelligence/deals" };
 export const kindOf = id => KIND[String(id).split("-")[0]] || null;
 export const hrefOf = id => { const k = kindOf(id); return k ? `#/${ROUTE[k]}/${encodeURIComponent(id)}` : "#/"; };
 export const get = id => byId.get(id);
@@ -22,7 +22,7 @@ export async function load(url = "data/bundle.json") {
   if (!res.ok) throw new Error(`Data failed to load (${res.status} ${res.statusText})`);
   const B = await res.json();
   Object.assign(DB, B);
-  const lists = ["companies", "product_families", "models", "equipment", "processes", "technologies", "materials", "applications", "subsystems", "components", "fabs", "osats", "customers", "countries", "sources", "deals"];
+  const lists = ["companies", "product_families", "models", "equipment", "processes", "technologies", "materials", "applications", "subsystems", "components", "fabs", "osats", "customers", "facilities", "countries", "sources", "deals"];
   lists.forEach(k => (B[k] || []).forEach(r => byId.set(r.id, r)));
   (B.relationships || []).forEach(r => {
     byId.set(r.id, r);

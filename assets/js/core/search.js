@@ -9,10 +9,10 @@ const STOP = new Set("a an and the of for in on with to by from at or vs versus 
 const HINTS = {
   company: ["company", "companies", "manufacturer", "manufacturers", "maker", "makers", "oem", "oems", "vendor", "vendors", "supplier", "suppliers", "firm", "firms"],
   model: ["equipment", "tool", "tools", "machine", "machines", "system", "systems", "model", "models", "product", "products", "platform", "platforms"],
-  fab: ["fab", "fabs", "foundry", "foundries"], osat: ["osat", "osats", "atmp"],
+  fab: ["fab", "fabs", "foundry", "foundries"], osat: ["osat", "osats", "atmp"], facility: ["facility", "facilities", "plant", "plants", "site", "sites", "unit", "units"],
 };
 const HINT_OF = {}; Object.entries(HINTS).forEach(([k, ws]) => ws.forEach(w => (HINT_OF[w] = k)));
-const KIND_WEIGHT = { company: 1.05, model: 1.1, product_family: 0.9, equipment: 1, process: 0.95, technology: 1, material: 0.9, application: 0.85, subsystem: 0.9, component: 0.9, fab: 0.95, osat: 0.95, country: 0.8, customer: 0.7 };
+const KIND_WEIGHT = { company: 1.05, model: 1.1, product_family: 0.9, equipment: 1, process: 0.95, technology: 1, material: 0.9, application: 0.85, subsystem: 0.9, component: 0.9, fab: 0.95, osat: 0.95, facility: 1, country: 0.8, customer: 0.7 };
 
 export const EXAMPLES = ["300 mm plasma etch equipment", "SiC wafer dicing equipment", "laser dicing suppliers in Japan", "GaN equipment suppliers", "advanced packaging die bonders",
   "equipment companies with India presence", "200 mm SiC equipment", "equipment required for HBM packaging", "hybrid bonding", "EUV lithography", "galvo scanner suppliers"];
@@ -26,7 +26,7 @@ function docFor(r) {
   let title = r.name || r.title, sub = "", alias = [], body = [], f = {};
   if (k === "company") {
     const eq = names(r.equipment_ids);
-    alias = [r.canonical_name, ...(r.aliases || []), ...(r.former_names || [])];
+    alias = [r.canonical_name, ...(r.aliases || []), ...(r.former_names || []), ...(r.resolution_keys || []).map(k => k.alias)];
     sub = [r.company_type, r.hq.country].filter(Boolean).join(" · ");
     const models = DB.models.filter(m => m.company_id === r.id);
     body = [r.description, r.primary_equipment, r.company_type, r.supplier_types.join(" "), r.hq.country, r.hq.city, eq.join(" "), r.india.summary, r.parent_company, r.subsidiaries_brands, (r.discovery_keywords || []).join(" "),
@@ -47,14 +47,32 @@ function docFor(r) {
   else if (k === "subsystem") { sub = "Subsystem"; body = [r.architecture, (r.functions || []).join(" ")]; }
   else if (k === "component") { sub = `${r.category} component`; body = [nameOf(r.subsystem_id)]; }
   else if (k === "fab" || k === "osat" || k === "customer") { sub = [r.facility_type, r.country].filter(Boolean).join(" · "); body = [r.sites.map(s => s.name).join(" "), r.facility_type, r.country]; f = { country: r.country, india: r.country === "India" }; }
+  else if (k === "facility") { sub = [r.facility_type, r.state, r.country].filter(Boolean).join(" · "); alias = [r.operator, r.city, r.state];
+    body = [r.products, r.technology, r.capacity, r.scheme, r.partners.join(" "), r.status.replace(/_/g, " "), r.wafer_size, /fab/i.test(r.facility_type) ? "fab" : "", /OSAT|ATMP|packaging/i.test(r.facility_type) ? "osat atmp packaging" : ""];
+    // materials named in the facility's own technology / product text ("GaN epitaxy", "Silicon carbide (SiC)")
+    const txt = [r.technology, r.products, r.facility_type, r.wafer_size].filter(Boolean).join(" ");
+    const mats = DB.materials.filter(m => { const ab = /\(([A-Za-z]{2,5})\)/.exec(m.name)?.[1]; return new RegExp(`\\b${(ab || m.name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, ab ? "" : "i").test(txt); }).map(m => m.id);
+    f = { country: r.country, india: r.country === "India", materials: mats, wafer: (String(r.wafer_size || "").match(/\b(150|200|300|450)\s*mm/g) || []).map(x => parseInt(x, 10)) }; }
   else if (k === "country") { sub = r.region; alias = [r.iso2]; }
   else if (k === "product_family") { sub = r.manufacturer; body = [names(r.model_ids).join(" ")]; }
   return { id: r.id, kind: k, title, sub, t: tok(title), a: tok(alias.filter(Boolean).join(" ")), s: tok(sub), b: tok(body.filter(Boolean).join(" ")), text: norm([title, ...alias, sub, ...body].filter(Boolean).join(" ")), f };
 }
 
+// Entity resolution: map any written form of a company ("ASML Holding N.V.", "AMAT", "TEL", "Tokyo Electron Ltd.")
+// to one canonical record using the build-time resolution keys. Ambiguous keys resolve to nothing rather than a guess.
+let RES = null;
+const LEGAL_END = /\b(n v|nv|holdings?|inc|incorporated|corp|corporation|co ltd|co|ltd|limited|llc|plc|gmbh|ag|sa|bv|kk|pvt ltd|pvt|private limited)$/;
+const rkey = s => { let k = norm(s).replace(/\(.*?\)/g, " ").replace(/&/g, " and ").replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+  for (let i = 0; i < 3; i++) { const k2 = k.replace(LEGAL_END, "").trim(); if (k2 === k || !k2) break; k = k2; } return k; };
+export function resolveCompany(text) {
+  if (!RES) { RES = new Map();
+    DB.companies.forEach(c => uniq([c.name, c.canonical_name, ...(c.resolution_keys || []).map(k => k.alias)].map(rkey)).filter(k => k.length >= 2).forEach(k => RES.set(k, RES.has(k) && RES.get(k) !== c.id ? null : c.id))); }
+  const id = RES.get(rkey(text)); return id ? get(id) : null;
+}
+
 export function buildIndex() {
   const t0 = performance.now();
-  const kinds = ["companies", "models", "product_families", "equipment", "processes", "technologies", "materials", "applications", "subsystems", "components", "fabs", "osats", "customers", "countries"];
+  const kinds = ["companies", "models", "product_families", "equipment", "processes", "technologies", "materials", "applications", "subsystems", "components", "fabs", "osats", "customers", "facilities", "countries"];
   const docs = kinds.flatMap(k => DB[k].map(docFor));
   const inv = new Map();
   docs.forEach((d, i) => {
@@ -101,7 +119,7 @@ export function parse(q) {
   const rest = [];
   // Entity-type hint: company words outrank fab/OSAT words, which outrank generic equipment words
   // ("equipment companies with India presence" asks for companies).
-  const RANK = { company: 3, fab: 2, osat: 2, model: 1 };
+  const RANK = { company: 3, fab: 2, osat: 2, facility: 2, model: 1 };
   words.forEach(w => { const h = HINT_OF[w]; if (h && (!out.hint || RANK[h] > RANK[out.hint])) out.hint = h; if (h || STOP.has(w)) return; rest.push(w); });
   // multi-word synonym phrases first
   let joined = " " + rest.join(" ") + " ";
@@ -133,7 +151,7 @@ function termHits(alts) {
   return best;
 }
 
-const CONSTRAINED = new Set(["company", "model", "fab", "osat", "customer"]);
+const CONSTRAINED = new Set(["company", "model", "fab", "osat", "customer", "facility"]);
 function checkConstraints(d, P) {
   // → { ok:boolean, unknown:[labels] } ; ok=false means violated
   const unknown = [];
@@ -141,7 +159,7 @@ function checkConstraints(d, P) {
   if (P.countries.length) { if (!d.f.country) unknown.push("country"); else if (!P.countries.includes(d.f.country)) return { ok: false }; }
   if (P.india && !(d.kind === "company" || d.kind === "model" || d.f.india !== undefined)) unknown.push("India presence");
   else if (P.india && !d.f.india) return { ok: false };
-  if (P.wafer.length && (d.kind === "model" || d.kind === "company")) {
+  if (P.wafer.length && (d.kind === "model" || d.kind === "company" || d.kind === "facility")) {
     const sizes = d.f.wafer || [], ranges = d.f.waferRanges || [];
     const known = sizes.length || ranges.length;
     if (!known) unknown.push("wafer size");
@@ -166,7 +184,8 @@ export function search(q, { limit = 400 } = {}) {
   let cand;
   if (!terms.length && !P.phrases.length) {
     // pure-constraint query ("200 mm SiC equipment", "companies with India presence")
-    cand = IDX.docs.map((d, i) => i).filter(i => (P.hint ? IDX.docs[i].kind === P.hint : ["company", "model"].includes(IDX.docs[i].kind)));
+    const siteHint = ["fab", "osat"].includes(P.hint); // fab / OSAT questions also cover site-level facility records
+    cand = IDX.docs.map((d, i) => i).filter(i => (P.hint ? IDX.docs[i].kind === P.hint || (siteHint && IDX.docs[i].kind === "facility") : ["company", "model"].includes(IDX.docs[i].kind)));
     cand.forEach(i => scores.set(i, 1));
   } else {
     const need = terms.length <= 2 ? terms.length : Math.ceil(terms.length * 0.67);
@@ -185,6 +204,7 @@ export function search(q, { limit = 400 } = {}) {
     if (!c.ok) return;
     let sc = (scores.get(i) || 0) * (KIND_WEIGHT[d.kind] || 1) + (matched.get(i) || 0) * 3;
     if (P.hint && (d.kind === P.hint || (P.hint === "company" && d.kind === "company"))) sc *= 1.5;
+    else if ((P.hint === "fab" || P.hint === "osat") && d.kind === "facility") sc *= 1.4;
     const item = { id: d.id, kind: d.kind, title: d.title, sub: d.sub, score: sc, unknown: c.unknown || [] };
     const hasConstraints = P.wafer.length || P.countries.length || P.india;
     if (c.topic && hasConstraints) res.topics.push(item);

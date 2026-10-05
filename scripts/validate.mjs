@@ -7,7 +7,7 @@ import { validateAll } from "./lib/validate.mjs";
 
 const DATA = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../data");
 const read = f => JSON.parse(fs.readFileSync(path.join(DATA, f), "utf8"));
-const kinds = ["companies", "product_families", "models", "equipment", "processes", "technologies", "materials", "applications", "subsystems", "components", "suppliers", "fabs", "osats", "customers", "countries", "deals", "relationships", "sources"];
+const kinds = ["companies", "product_families", "models", "equipment", "processes", "technologies", "materials", "applications", "subsystems", "components", "suppliers", "fabs", "osats", "customers", "facilities", "countries", "deals", "relationships", "sources"];
 const E = Object.fromEntries(kinds.map(k => [k, read(k + ".json")]));
 const q = read("quality.json");
 const r = validateAll(E, { conflicts: q.conflicts });

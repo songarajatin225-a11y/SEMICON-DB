@@ -6,7 +6,7 @@ import { ws } from "../core/workspace.js";
 import { pageHead, empty, badge } from "../ui/components.js";
 import { href } from "../core/router.js";
 
-const GROUP_ORDER = ["model", "company", "product_family", "equipment", "process", "technology", "material", "application", "subsystem", "component", "fab", "osat", "customer", "country"];
+const GROUP_ORDER = ["model", "company", "product_family", "equipment", "process", "technology", "material", "application", "subsystem", "component", "fab", "osat", "facility", "customer", "country"];
 function group(items) {
   const m = new Map(); items.forEach(i => (m.get(i.kind) || m.set(i.kind, []).get(i.kind)).push(i));
   return GROUP_ORDER.filter(k => m.has(k)).map(k => [k, m.get(k)]);

@@ -2,11 +2,11 @@
 const ID_RE = {
   companies: /^CMP-\d{6}$/, product_families: /^PRD-\d{6}$/, models: /^MDL-\d{6}$/, equipment: /^EQP-[A-Z](\d\d)?(\.(\d\d|D\d\d))?$|^EQP-[A-Z]\.D\d\d$/,
   processes: /^PRS-\d{3}$/, technologies: /^TEC-\d{3}$/, materials: /^MAT-\d{3}$/, applications: /^APP-\d{3}$/, subsystems: /^SUB-\d{3}$/, components: /^CMPN-\d{6}$/,
-  fabs: /^FAB-\d{6}$/, osats: /^OSAT-\d{6}$/, customers: /^CUS-\d{6}$/, countries: /^CTY-[A-Z]{2}$/, deals: /^DEAL-\d{6}$/, sources: /^SRC-[A-Z0-9-]+$/,
+  fabs: /^FAB-\d{6}$/, osats: /^OSAT-\d{6}$/, customers: /^CUS-\d{6}$/, facilities: /^FAC-\d{6}$/, countries: /^CTY-[A-Z]{2}$/, deals: /^DEAL-\d{6}$/, sources: /^SRC-[A-Z0-9-]+$/,
 };
 const REF_FIELDS = ["company_id", "family_id", "equipment_id", "parent_id", "subsystem_id", "component_class_id", "country_id"];
 const REF_ARRAYS = ["model_ids", "equipment_ids", "process_ids", "technology_ids", "material_ids", "application_ids", "company_ids", "component_ids", "subsystem_ids",
-  "typical_subsystem_ids", "child_ids", "fab_ids", "osat_ids", "capable_supplier_ids", "product_model_ids", "potential_supplier_ids", "typical_equipment_ids", "equipment_supplier_ids"];
+  "typical_subsystem_ids", "child_ids", "fab_ids", "osat_ids", "capable_supplier_ids", "product_model_ids", "potential_supplier_ids", "typical_equipment_ids", "equipment_supplier_ids", "operator_ids", "facility_ids"];
 
 export function validateAll(E, { conflicts = [] } = {}) {
   const errors = [], warnings = [];
@@ -64,9 +64,16 @@ export function validateAll(E, { conflicts = [] } = {}) {
     else if (!/^\d{4}(-\d\d){0,2}$/.test(s.publication_date)) err("source.date", `${s.id} has an invalid date ${s.publication_date}`, s.id);
     if (!s.accessible) { if (s.access_mode === "search_index") warn("source.search_index", `${s.id}: official URL/title confirmed via web search only; page not read`, s.id); else warn("source.access", `${s.id} was not accessible at capture`, s.id); }
   }
+  for (const f of E.facilities || []) {
+    if (!f.source_ids.length) err("facility.sources", `${f.name} has no sources`, f.id);
+    f.status_history.forEach(h => { if (!/^\d{4}(-\d\d){0,2}$/.test(h.date)) err("facility.date", `${f.id}: status date ${h.date} is not ISO`, f.id); if (!h.source_ids.length) err("facility.status_source", `${f.id}: status ${h.status} has no source`, f.id); checkSources(f, h.source_ids); });
+    f.investment.forEach(x => checkSources(f, x.source_ids));
+  }
+  const byUrl = new Map(); E.sources.forEach(s => { if (s.source_url) { const k = s.source_url.replace(/\/$/, ""); byUrl.set(k, [...(byUrl.get(k) || []), s.id]); } });
+  byUrl.forEach((ids, u) => { if (ids.length > 1) warn("source.duplicate_url", `${ids.join(", ")} share the URL ${u}`, ids[0]); });
   for (const c of conflicts) { if (!has(c.entity)) err("conflict.entity", `${c.id} points to unknown ${c.entity}`, c.id); c.claims.forEach(k => { if (k.source_id && !has(k.source_id)) err("conflict.source", `${c.id} cites unknown ${k.source_id}`, c.id); }); }
   const byRule = {}; [...errors, ...warnings].forEach(x => (byRule[x.rule] = (byRule[x.rule] || 0) + 1));
   return { checked_records: index.size, errors, warnings: warnings, by_rule: byRule,
     rules: ["Company name cannot be blank", "Model cannot exist without a manufacturer", "Product family must belong to the model's company", "All referenced ids must exist (processes, technologies, materials, equipment, countries …)",
-      "Relationship endpoints must exist", "Cited sources must exist", "Source URLs must parse", "Evidence dates must be ISO (YYYY, YYYY-MM or YYYY-MM-DD)", "Company countries should map to the country reference", "Stable id formats per entity"] };
+      "Relationship endpoints must exist", "Cited sources must exist", "Source URLs must parse", "Evidence dates must be ISO (YYYY, YYYY-MM or YYYY-MM-DD)", "Company countries should map to the country reference", "Stable id formats per entity", "Facilities need sources and ISO-dated, sourced status milestones", "Duplicate source URLs are flagged"] };
 }

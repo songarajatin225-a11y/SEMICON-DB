@@ -4,7 +4,9 @@
 import { DB, get, hrefOf } from "../core/store.js";
 import { esc, uniq, norm } from "../core/util.js";
 import { href } from "../core/router.js";
-import { search } from "../core/search.js";
+import { search, resolveCompany } from "../core/search.js";
+import { playersByBloc, componentLocalization, subsystemLocalization, COMP_LOC_METHOD, intelScore, criticality } from "../core/scores.js";
+import { STATUS_LABEL, investText } from "./facilities.js";
 import { pageHead, link, tags, kpi, empty } from "../ui/components.js";
 import { dataTable } from "../ui/table.js";
 import { categoryRisk } from "./risk.js";
@@ -61,7 +63,7 @@ function buildPanel(e) {
     <div class="kpis">${kpi({ v: ev.oems.length, l: "Global OEMs documented" })}${kpi({ v: ev.indOem.length, l: "Indian OEMs" })}${kpi({ v: ev.models.length, l: "Reference models" })}${kpi({ v: `${ev.covered}/${ev.subs.length}`, l: "Subsystems with Indian supplier" })}${kpi({ v: loc ? loc.score : "—", l: "Localization index", s: loc ? loc.band : "insufficient evidence" })}${kpi({ v: ev.risk?.score ?? "—", l: "Concentration index", s: ev.risk?.band || "" })}</div>
     <h3 style="margin-top:14px">Subsystems and suppliers</h3>
     <div style="overflow-x:auto"><table class="spec"><thead><tr><th>Subsystem</th><th>Global suppliers (documented capability)</th><th>Indian suppliers</th></tr></thead><tbody>${rows || `<tr><td colspan="3" class="na">No subsystem architecture recorded.</td></tr>`}</tbody></table></div>
-    <div class="grid g2 sec"><div><h3>Competitors / reference OEMs</h3>${tags(ev.oems.map(c => c.id), { max: 30 })}</div><div><h3>Reference models</h3>${tags(ev.models.map(m => m.id), { max: 20, empty: "No models captured" })}</div></div>
+    <div class="grid g2 sec"><div><h3>Competitors / reference OEMs by region</h3>${playersByBloc(ev.oems.map(c => c.id)).map(g => `<p class="small" style="margin:4px 0"><b>${esc(g.bloc)}</b> (${g.cos.length}): ${g.cos.map(c => link(c.id)).join(", ")}</p>`).join("") || `<p class="na">None documented</p>`}</div><div><h3>Reference models</h3>${tags(ev.models.map(m => m.id), { max: 20, empty: "No models captured" })}</div></div>
     <p class="note">Rule: ${esc(BUILD_RULE)} Supplier links are documented capability (subsystem / component registers), not confirmed supply to a specific OEM. Not assessed because SEMICON-DB holds no evidence for them: CapEx, engineering effort, certification, IP barriers, pricing. This is an evidence summary, not a business recommendation.</p></div>`;
 }
 
@@ -84,10 +86,95 @@ function nearEquipment(q) {
   return DB.equipment.map(e => ({ e, hit: want.filter(w => toks(e.name).includes(w)).length })).filter(x => x.hit)
     .sort((a, b) => b.hit - a.hit || (b.e.company_ids_incl_children || []).length - (a.e.company_ids_incl_children || []).length).slice(0, 8).map(x => x.e);
 }
-function pickCompany(q) { const r = search(q, { limit: 50 }); const hit = [...r.matches, ...r.partial].find(x => x.kind === "company"); return hit ? get(hit.id) : null; }
+function pickCompany(q) {
+  const exact = resolveCompany(q); if (exact) return exact; // canonical name, alias, short form, ticker
+  const r = search(q, { limit: 50 }); const hit = [...r.matches, ...r.partial].find(x => x.kind === "company"); return hit ? get(hit.id) : null;
+}
+// ---- company comparison (resolves "ASML Holding N.V.", "AMAT", "TEL" …)
+function compareAnswer(names) {
+  const cs = names.map(n => ({ n, c: pickCompany(n) }));
+  const ok = uniq(cs.filter(x => x.c).map(x => x.c.id)).map(get);
+  const miss = cs.filter(x => !x.c).map(x => x.n);
+  if (ok.length < 2) return `<div class="panel"><p class="na">Could not resolve at least two companies${miss.length ? ` (not found: ${esc(miss.join(", "))})` : ""}.</p></div>`;
+  const nm = c => DB.models.filter(m => m.company_id === c.id && !m.is_component).length;
+  const rev = c => { const f = (c.financials || []).filter(x => /^Revenue$/i.test(x.metric)).sort((a, b) => String(b.fiscal_year).localeCompare(String(a.fiscal_year)))[0];
+    return f ? `${esc(f.currency)} ${Number(f.value).toLocaleString()} m<span class="sub">${esc(f.fiscal_year)} · ${esc(f.value_type)}</span>` : `<span class="na">Not captured</span>`; };
+  const shared = ok[0].equipment_ids.filter(e => ok.every(c => c.equipment_ids.includes(e)));
+  const rows = [
+    ["HQ", c => esc([c.hq.city, c.hq.country].filter(Boolean).join(", ") || "Not captured")], ["Type", c => esc(c.company_type)],
+    ["Equipment categories", c => `${c.equipment_ids.length}<span class="sub">${c.equipment_ids.slice(0, 6).map(e => esc(get(e)?.name || e)).join(", ")}${c.equipment_ids.length > 6 ? " …" : ""}</span>`],
+    ["Equipment models captured", c => String(nm(c))], ["Revenue (latest captured)", rev], ["India presence", c => (c.hq.country === "India" ? "HQ in India" : c.india.has_presence ? esc(c.india.summary || "Documented") : `<span class="muted">None documented</span>`)],
+    ["Supplier criticality", c => String(criticality(c.id).score)], ["SEMICON-DB Intelligence Score", c => String(intelScore(c).score)],
+    ["Verification", c => esc(c.verification.replace(/_/g, " ").toLowerCase())], ["Sources", c => String(c.source_ids.length)]];
+  return `<div class="panel"><h2>Comparison: ${ok.map(c => link(c.id)).join(" · ")}</h2>
+    <div style="overflow-x:auto"><table class="spec"><thead><tr><th></th>${ok.map(c => `<th>${link(c.id)}</th>`).join("")}</tr></thead><tbody>${rows.map(([l, f]) => `<tr><th>${esc(l)}</th>${ok.map(c => `<td>${f(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    <p class="small" style="margin-top:8px"><b>Shared categories (${shared.length}):</b> ${shared.length ? shared.map(e => link(e)).join(", ") : "none"}</p>
+    ${miss.length ? `<p class="na">Not resolved: ${esc(miss.join(", "))}</p>` : ""}
+    <p class="note">Rule: names resolved through entity-resolution keys (canonical name, aliases, short forms, tickers), then compared on captured fields only. Strengths, weaknesses, pricing and market position are not stated because SEMICON-DB holds no evidence for them. <a href="${href("/compare/companies", { companies: ok.slice(0, 4).map(c => c.id) })}">Open the full company comparison →</a></p></div>`;
+}
+// ---- requirement-based laser supplier matching ("I need a 200W pulsed laser for semiconductor marking")
+const LASER_TYPES = { pulsed: /pulsed|q-switch|mopa|nanosecond|\bns\b/i, cw: /\bcw\b|continuous/i, fiber: /fib(er|re)/i, uv: /\buv\b|ultraviolet|355|343/i, green: /green|532/i, ir: /\bir\b|infrared|1064/i,
+  ultrafast: /ultrafast|picosecond|femtosecond|\bps\b|\bfs\b/i, excimer: /excimer|308/i, co2: /co2|co₂/i };
+const APPS = ["marking", "dicing", "grooving", "drilling", "annealing", "lift-off", "welding", "cutting", "debonding", "repair", "scribing", "ablation", "trimming"];
+const numOf = s => { const m = /([\d.]+)/.exec(String(s || "")); return m ? +m[1] : null; };
+function laserMatch(q) {
+  const pw = /(\d+(?:\.\d+)?)\s*(k?)w\b/i.exec(q), wl = /(\d{3,4})\s*nm/i.exec(q);
+  const need = { power: pw ? +pw[1] * (pw[2] ? 1000 : 1) : null, wl: wl ? +wl[1] : null, types: Object.keys(LASER_TYPES).filter(k => LASER_TYPES[k].test(q)), app: APPS.find(a => q.toLowerCase().includes(a.replace("-", " ")) || q.toLowerCase().includes(a)) || null };
+  const models = DB.models.filter(m => m.laser);
+  const rows = models.map(m => {
+    const L = m.laser, txt = [L.types_text, m.application_text, m.technology_text, m.name].join(" ");
+    const met = [], unknown = [], fail = [];
+    if (need.app) (new RegExp(need.app.replace("-", "[- ]?"), "i").test(txt) ? met : fail).push(`application: ${need.app}`);
+    need.types.forEach(t => (LASER_TYPES[t].test(txt + " " + (L.pulse_duration || "") + " " + (L.wavelength || "")) ? met : unknown).push(`type: ${t}`));
+    if (need.power) { const v = numOf(L.average_power) != null ? numOf(L.average_power) * (/kw/i.test(L.average_power) ? 1000 : 1) : null; if (v == null) unknown.push("average power"); else (v >= need.power ? met : fail).push(`power ≥ ${need.power} W (stated ${L.average_power})`); }
+    if (need.wl) { const ws = String(L.wavelength || "").match(/\d{3,4}/g)?.map(Number) || []; if (!ws.length) unknown.push("wavelength"); else (ws.some(w => Math.abs(w - need.wl) <= 0.05 * need.wl) ? met : fail).push(`wavelength ${need.wl} nm (stated ${L.wavelength})`); }
+    return { m, c: get(m.company_id), met, unknown, fail, score: 3 * met.length - unknown.length };
+  }).filter(r => !r.fail.length && r.met.length).sort((a, b) => b.score - a.score || a.unknown.length - b.unknown.length).slice(0, 25);
+  // laser-source suppliers (component class "laser source" and laser-source companies), for buyers of the laser itself
+  const srcCls = DB.components.filter(k => /laser/i.test(k.name));
+  const sources = uniq([...DB.companies.filter(c => c.company_type === "Laser source").map(c => c.id), ...srcCls.flatMap(k => [...(k.capable_supplier_ids || []), ...(k.india_supplier_ids || [])])]).map(get).filter(Boolean)
+    .map(c => { const ms = DB.models.filter(m => m.company_id === c.id && m.laser); const txt = [c.primary_equipment, c.description, ...ms.map(m => [m.name, m.laser.types_text, m.application_text].join(" "))].join(" ");
+      const met = [...need.types.filter(t => LASER_TYPES[t].test(txt)), ...(need.app && new RegExp(need.app.replace("-", "[- ]?"), "i").test(txt) ? [need.app] : [])];
+      const pwr = ms.map(m => m.laser.average_power).filter(Boolean); return { c, ms, met, pwr }; })
+    .sort((a, b) => b.met.length - a.met.length || b.ms.length - a.ms.length || a.c.name.localeCompare(b.c.name));
+  return `<div class="panel"><h2>Requirement match: ${esc([need.power && `${need.power} W`, need.wl && `${need.wl} nm`, ...need.types, need.app].filter(Boolean).join(" · ") || "laser")}</h2>
+    <h3>Laser sources — documented suppliers (${sources.length})</h3>
+    <table class="spec"><thead><tr><th>#</th><th>Supplier</th><th>Stated match</th><th>Power published</th><th>HQ · India</th><th>Captured laser models</th></tr></thead><tbody>${sources.map(({ c, ms, met, pwr }, i) =>
+      `<tr><td>${i + 1}</td><th>${link(c.id)}</th><td>${met.length ? esc(met.join(", ")) : `<span class="muted">—</span>`}</td><td>${pwr.length ? esc(pwr.join("; ")) : `<span class="na">Not published</span>`}</td><td>${esc(c.hq.country || "—")} · ${c.hq.country === "India" ? "HQ" : c.india.has_presence ? "presence" : "—"}</td><td>${ms.length ? ms.map(m => link(m.id)).join(", ") : `<span class="na">No model captured</span>`}</td></tr>`).join("")}</tbody></table>
+    <h3 style="margin-top:12px">Machines and modules matching (${rows.length})</h3>
+    ${rows.length ? `<table class="spec"><thead><tr><th>#</th><th>Product</th><th>Meets</th><th>Not published</th></tr></thead><tbody>${rows.map((r, i) => `<tr><td>${i + 1}</td><th>${link(r.m.id)}<span class="sub">${esc(r.c?.name || "")} · ${esc(r.c?.hq.country || "")}</span></th><td>${esc(r.met.join("; "))}</td><td>${r.unknown.length ? `<span class="na">${esc(r.unknown.join("; "))}</span>` : "—"}</td></tr>`).join("")}</tbody></table>` : `<p class="na">No laser model in SEMICON-DB meets the stated requirements on published values.</p>`}
+    <p class="note">Rule: a product is listed when at least one stated requirement is met by a published value or its stated laser type / application, and none is contradicted. Ranking: 3 points per requirement met, minus 1 per requirement whose value is not published. Specifications are sparse in the evidence (average power is published for ${DB.models.filter(m => m.laser?.average_power).length} laser models), so most suppliers appear without spec confirmation. Price, lead time and availability are not captured.</p></div>`;
+}
+// ---- business questions answered from derived tables
+function concentrationAnswer() {
+  const rows = categoryRisk().filter(r => r.n).sort((a, b) => b.score - a.score).slice(0, 15);
+  return `<div class="panel"><h2>Most concentrated documented supplier bases</h2><table class="spec"><tbody>${rows.map(r => `<tr><th>${link(r.id)}</th><td><b>${r.score}</b> <span class="pill">${r.band}</span><span class="sub">${esc(r.why)}</span></td></tr>`).join("")}</tbody></table><p class="note">Rule: the concentration index on <a href="#/intelligence/risk">Supply-chain concentration</a>. Thin coverage can look like concentration; read as “where to look”.</p></div>`;
+}
+function localizeAnswer() {
+  const rows = CANDIDATES().map(e => { const ev = buildEvidence(e); return { e, ev, loc: localization(ev), ind: indication(ev) }; }).filter(r => r.loc).sort((a, b) => b.loc.score - a.loc.score).slice(0, 15);
+  return `<div class="panel"><h2>Highest India localization index</h2><table class="spec"><tbody>${rows.map(r => `<tr><th><a href="${href("/intelligence/analyst", { eq: r.e.id })}">${esc(r.e.name)}</a><span class="sub">${esc(r.e.code)}</span></th><td><b>${r.loc.score}</b> <span class="pill">${r.loc.band}</span> <span class="pill">${esc(r.ind.v)}</span><span class="sub">${r.ev.covered}/${r.ev.subs.length} subsystems with an Indian supplier · ${r.ev.indOem.length} Indian OEMs · ${r.ev.oems.length} OEMs</span></td></tr>`).join("")}</tbody></table><p class="note">Rule: ${esc(LOC_RULE)} “Realistic” also depends on CapEx, IP and demand, which are not scored.</p></div>`;
+}
+function facilitiesAnswer(q) {
+  const F = (DB.facilities || []).filter(f => !/india/i.test(q) || f.country === "India");
+  const want = /construction/i.test(q) ? ["UNDER_CONSTRUCTION", "FOUNDATION_LAID"] : /operat|production|running/i.test(q) ? ["OPERATIONAL", "PILOT_PRODUCTION"] : /approv/i.test(q) ? ["APPROVED"] : null;
+  const hit = want ? F.filter(f => want.includes(f.status)) : F;
+  return `<div class="panel"><h2>${hit.length} facilit${hit.length === 1 ? "y" : "ies"}${want ? ` with latest captured status ${want.map(w => STATUS_LABEL[w]).join(" / ")}` : ""}</h2>
+    <table class="spec"><tbody>${hit.map(f => `<tr><th>${link(f.id)}<span class="sub">${esc(f.city)}, ${esc(f.state)} · ${esc(f.facility_type)}</span></th><td>${esc(STATUS_LABEL[f.status] || f.status)} · ${esc(f.status_date || "")}<span class="sub">${investText(f)}</span></td></tr>`).join("")}</tbody></table>
+    <p class="note">Rule: latest dated milestone in a cited source. “Under construction” is shown via the foundation-laid milestone where no later construction update is captured — progress after the last source is not assumed. <a href="#/facilities">All facilities →</a></p></div>`;
+}
+function partnersAnswer() {
+  const P = DB.intel.partner_fit || [];
+  return `<div class="panel"><h2>Documented partner-fit candidates (${P.length})</h2><p class="small">From the TEAL partner-fit table: documented fit dimensions per candidate, no recommendation. <a href="#/intelligence/partners">Open Partner Fit →</a></p>${tags(uniq(P.map(p => p.company_id)).filter(id => get(id)), { max: 60 })}</div>`;
+}
 function answer(q) {
   const s = q.trim(); if (!s) return "";
   let m;
+  if ((m = /^compare\s+(.+?)\??$/i.exec(s)) || /\s(?:vs\.?|versus)\s/i.test(s)) return compareAnswer((m ? m[1] : s).split(/\s+(?:vs\.?|versus|against|and|with)\s+|\s*,\s*/i).map(x => x.trim()).filter(Boolean));
+  if (/\blaser\b/i.test(s) && (/\d+(?:\.\d+)?\s*k?w\b|\d{3,4}\s*nm/i.test(s) || /^(?:i\s+)?(?:need|want|require|looking for|find)\b/i.test(s))) return laserMatch(s);
+  if (/(highest|most|greatest)\b.*concentrat|concentrat.*(highest|most)|single[- ]source/i.test(s)) return concentrationAnswer();
+  if (/locali[sz]/i.test(s) && !/^(?:can|could)\b/i.test(s)) return localizeAnswer();
+  if (/\b(facilit(y|ies)|plants?|units?|fabs?|osats?|atmps?)\b/i.test(s) && /\b(under construction|operational|approved|in india|indian)\b/i.test(s) && !/^(?:who|which companies) (?:supplies|makes)/i.test(s)) return facilitiesAnswer(s);
+  if (/teal/i.test(s) && /partner/i.test(s)) return partnersAnswer();
   if ((m = /^(?:can|could) (?:we|india|teal|i) (?:build|make|manufacture|develop) (?:an? )?(.+?)(?: in india)?\??$/i.exec(s))) {
     const e = pickEquipment(m[1]);
     return e ? `<p class="small">Interpreted as: <b>build capability for ${esc(e.name)}</b> (${esc(e.code)}). <a href="${href("/intelligence/analyst", { eq: e.id })}">Open the full analysis</a></p>${buildPanel(e)}` : notFound(m[1]);
@@ -116,7 +203,7 @@ function companyMatches(t) {
 const notFound = t => { const near = nearEquipment(t);
   return `<div class="panel"><p class="na">“${esc(t)}” does not match an equipment category or company in SEMICON-DB.</p>${near.length ? `<p class="small">Closest categories: ${near.map(e => `<a href="${href("/intelligence/analyst", { eq: e.id })}">${esc(e.code)} · ${esc(e.name)}</a>`).join(" · ")}</p>` : ""}</div>`; };
 
-const EXAMPLES = ["Can we build a laser marking machine in India?", "Who supplies wafer probing equipment?", "Alternatives to Hesse Mechatronics", "Can we build a wire bonder?", "Who makes molecular beam epitaxy systems?", "300 mm sputtering systems in Japan", "laser dicing equipment India"];
+const EXAMPLES = ["Can we build a laser marking machine in India?", "Who supplies wafer probing equipment?", "Compare ASML vs Canon vs Nikon", "Compare KLA, Onto and Hitachi High-Tech", "I need a 200W pulsed laser for semiconductor marking", "Which equipment categories have the highest supplier concentration?", "Which equipment can be localized in India?", "Which Indian semiconductor facilities are under construction?", "Alternatives to Hesse Mechatronics", "300 mm sputtering systems in Japan"];
 
 function analyst({ params }) {
   const q = params.get("q") || "", eqId = params.get("eq");
@@ -139,8 +226,22 @@ function analyst({ params }) {
       { k: "cov", label: "Indian subsystem coverage", get: r => r.loc.p.coverage, html: r => `${r.ev.covered}/${r.ev.subs.length}<span class="sub">${r.loc.p.coverage}%</span>` },
       { k: "oems", label: "Global OEMs", num: true, get: r => r.ev.oems.length },
       { k: "indoem", label: "Indian OEMs", num: true, get: r => r.ev.indOem.length, html: r => r.ev.indOem.length ? r.ev.indOem.map(c => link(c.id)).join(", ") : "0" },
-      { k: "pres", label: "OEMs with India presence", get: r => r.loc.p.presence, html: r => `${r.ev.indPresence.length}<span class="sub">${r.loc.p.presence}%</span>` }] })}</div>`;
+      { k: "pres", label: "OEMs with India presence", get: r => r.loc.p.presence, html: r => `${r.ev.indPresence.length}<span class="sub">${r.loc.p.presence}%</span>` }] })}</div>
+    ${belowEquipment()}`;
   return { title: "Analyst", html };
+}
+
+// localization below equipment level: subsystems and component classes
+function belowEquipment() {
+  const subs = subsystemLocalization(), comps = componentLocalization().filter(r => r.evidence);
+  return `<div class="panel sec"><h2>Localization by subsystem and component class</h2><p class="small">Subsystem: share of its component classes with a documented Indian supplier. Component class: ${esc(COMP_LOC_METHOD)}</p>
+    <p class="note">Component-level supplier evidence is thin: ${comps.length} of ${DB.components.length} component classes have any documented supplier, so most rows read LOW for lack of evidence, not for lack of capability.</p></div>
+    <div class="grid g2"><div>${dataTable({ id: "loc-sub", rows: subs, title: "Subsystems", exportName: "semicon-db-subsystem-localization", columns: [
+      { k: "s", label: "Subsystem", pin: true, get: r => r.s.name, html: r => link(r.id) }, { k: "score", label: "Index", num: true, get: r => r.score, html: r => `<b>${r.score}</b> <span class="pill">${r.band}</span>` },
+      { k: "in", label: "Classes with Indian supplier", get: r => r.withIn, html: r => `${r.withIn}/${r.n}` }, { k: "any", label: "Classes with any supplier", get: r => r.withAny, html: r => `${r.withAny}/${r.n}` }, { k: "oems", label: "Typical OEMs", num: true, get: r => r.oems }] })}</div>
+    <div>${dataTable({ id: "loc-comp", rows: comps, title: "Component classes with supplier evidence", exportName: "semicon-db-component-localization", columns: [
+      { k: "k", label: "Component class", pin: true, get: r => r.k.name, html: r => `${link(r.id)}<span class="sub">${esc(r.sub?.name || "")}</span>` }, { k: "score", label: "Index", num: true, get: r => r.score, html: r => `<b>${r.score}</b> <span class="pill">${r.band}</span>` },
+      { k: "in", label: "Indian suppliers", num: true, get: r => r.india.length, html: r => r.india.length ? r.india.map(x => link(x)).join(", ") : "0" }, { k: "gl", label: "Global alternatives", num: true, get: r => r.global.length }, { k: "uses", label: "Used in categories", num: true, get: r => r.uses }] })}</div></div>`;
 }
 
 export const ANALYST_MODULES = [["analyst", "Analyst (ask · build · localize)", "Ask questions answered from records with the rule shown; “Can we build this?” engine; India localization index per equipment category."]];

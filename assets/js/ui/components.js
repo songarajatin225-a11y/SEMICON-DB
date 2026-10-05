@@ -91,6 +91,13 @@ export function stateBadges(r) {
   const extra = ["CONFLICTING", "OUTDATED"].includes(r.quality_state) ? " " + badge(r.quality_state) : "";
   return `${badge(r.verification)}${extra} ${r.freshness ? fresh(r.freshness) : ""}`;
 }
+// Corrections go through a pre-filled GitHub issue (the static site has no write backend and holds no credentials).
+const REPO_ISSUES = "https://github.com/songarajatin225-a11y/SEMICON-DB/issues/new";
+function correctionLink(id) {
+  const title = `Correction: ${id}`;
+  const body = `Record: ${id}\nPage: ${location.href}\n\nWhat is wrong or missing:\n\nEvidence (URL of an official or primary source):\n\nSuggested change:\n`;
+  return `<a class="btn sm" href="${REPO_ISSUES}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}" target="_blank" rel="noopener noreferrer" title="Opens a pre-filled GitHub issue">Suggest a correction ↗</a>`;
+}
 export function quickActions(id, { compare, extra = [] } = {}) {
   const saved = ws.isSaved(id);
   return `<div class="qa" role="group" aria-label="Quick actions">
@@ -100,5 +107,5 @@ export function quickActions(id, { compare, extra = [] } = {}) {
     <button class="btn sm" data-copyrecord="${esc(id)}">Copy record (JSON)</button>
     <button class="btn sm" data-print="1">Print</button>
     <a class="btn sm" href="#/graph/${encodeURIComponent(id)}">Relationship graph</a>
-    ${extra.join("")}</div>`;
+    ${extra.join("")}${correctionLink(id)}</div>`;
 }

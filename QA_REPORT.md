@@ -151,3 +151,20 @@ New route `#/intelligence/analyst` (question router, "Can we build this?" engine
 ## Batch 10 addendum (5 Oct 2026)
 
 10 companies, 37 models, 48 new sources. Importer: 0 rejected. 2 duplicate warnings (Charm Engineering vs SFA / Top Engineering, on the shared word "Engineering") were checked and are false positives. Build-rule change: model categories now count toward the maker's category list (63 links), with the basis shown on each profile. Validation: 0 errors. Smoke test: 144 / 144 routes. Interaction suite passes. axe (light + dark): 0 violations. Empty categories: 91 → 70 (25 real gaps).
+
+## Global intelligence upgrade addendum (5 Oct 2026)
+
+**What was added:**
+- Batch 11: 13 India facilities, 2 programme records, 19 sources.
+- Facility entity, with validation rules for sourced, ISO-dated milestones.
+- 181 entity-resolution keys and curated duplicate decisions (JSG ~ Zhejiang Jingsheng recorded as a probable same entity, not merged).
+- Batch dates on records.
+- New modules: flows, changes, research queue; analyst compare and laser matching.
+- Regional dependency, criticality and Intelligence Score.
+
+**Checks run:**
+- Validation: 0 errors. Duplicate source URLs: none. Conflicts: 9 (2 new facility investment conflicts).
+- Smoke test: 168 routes, 0 console errors. Three routes show their expected conflict banners: MDL-000099, FAC-000003 and FAC-000010.
+- Interaction suite passes; "200 mm SiC equipment" no longer lists a facility with an unrecorded wafer size as a full match.
+- axe (light and dark), now covering facilities, flows, research and company profiles: 0 violations.
+- Performance: boot to first heading 268 ms; first contentful paint 68 ms; route render 30–55 ms; bundle 398 KB gzipped.

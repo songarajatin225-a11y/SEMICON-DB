@@ -6,7 +6,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 
 **Missing values:** `null` (or empty array) means *not captured in the evidence*; the UI shows “Not found in Batch-1 sources”, “Not published” or “Not publicly disclosed” (`NOT_DISCLOSED`). Values are never estimated.
 
-**ID prefixes:** `CMP` company · `PRD` product_family · `MDL` model · `EQP` equipment · `PRS` process · `TEC` technology · `MAT` material · `APP` application · `SUB` subsystem · `CMPN` component · `FAB` fab · `OSAT` osat · `CUS` customer · `CTY` country · `DEAL` deal · `REL` relationship · `SRC` source · `CNF` conflict · `DUP` duplicate
+**ID prefixes:** `CMP` company · `PRD` product_family · `MDL` model · `EQP` equipment · `PRS` process · `TEC` technology · `MAT` material · `APP` application · `SUB` subsystem · `CMPN` component · `FAB` fab · `OSAT` osat · `CUS` customer · `FAC` facility · `CTY` country · `DEAL` deal · `REL` relationship · `SRC` source · `CNF` conflict · `DUP` duplicate
 
 ## companies
 
@@ -60,8 +60,10 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 | `quality_state` | VERIFIED / PARTIALLY_VERIFIED / UNVERIFIED / CONFLICTING / OUTDATED — one state per record. | string | VERIFIED, OUTDATED, PARTIALLY_VERIFIED, CONFLICTING, UNVERIFIED | `VERIFIED` | Required | System-generated | CONFLICTING > OUTDATED > verification |
 | `missing_key_fields` | Key fields not captured for this record. | array | — | `["Headquarters country (source)","City","Founded year","Employees"]` | Required | System-generated | — |
 | `dates` | first_added, last_updated, last_verified, latest_source_date, review_due. | object | — | `{"first_added":"2026-09-29","last_updated":"2026-09-29","last_verif…` | Required | System-generated | ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD |
+| `batch` | — | string | Batch 1, Batch 10, Batch 2, Batch 3, Batch 4, Batch 5, Batch 6, Batch 7, Batch 8, Batch 9 | `Batch 1` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `completeness` | — | object | — | `{"score":75,"filled":12,"total":16,"groups":[{"group":"Profile","fi…` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `equipment_ids_from_models` | — | array | — | `["EQP-A01.03","EQP-A24"]` | Optional (14% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `resolution_keys` | — | array | — | `[{"alias":"ASML","basis":"Name without legal suffix"}]` | Optional (34% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 
 ## product_families
 
@@ -166,7 +168,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 | `company_ids_incl_children` | Companies confirmed on this node or any sub-category. | array | — | `["CMP-000004","CMP-000006","CMP-000007","CMP-000067","CMP-000109","…` | Optional (73% populated) | Derived — inherits the sources of the linked records | — |
 | `model_ids_incl_children` | Models on this node or any sub-category. | array | — | `["MDL-000110","MDL-000121","MDL-000238","MDL-000239","MDL-000093","…` | Optional (62% populated) | Derived — inherits the sources of the linked records | — |
 | `child_ids` | Linked record ids. | array | — | `["EQP-A01","EQP-A02","EQP-A03","EQP-A04","EQP-A05","EQP-A06","EQP-A…` | Optional (6% populated) | Derived — inherits the sources of the linked records | — |
-| `see_also` | Related nodes (2.0 extension ↔ Batch-1 nodes carrying records). | array | — | `["EQP-A09.10"]` | Optional (3% populated) | Reference / derived | — |
+| `see_also` | Related nodes (2.0 extension ↔ Batch-1 nodes carrying records). | array | — | `["EQP-A26","EQP-A25"]` | Optional (20% populated) | Reference / derived | — |
 | `origin` | Batch-1 taxonomy or 2.0 extension. | string | Batch-1 taxonomy, 2.0 taxonomy extension | `Batch-1 taxonomy` | Always present | Reference / derived | — |
 
 ## processes
@@ -350,6 +352,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 | `field_note` | Explains which facility fields are not captured. | string | Facility capacity, node, wafer size and investment are not captured in Batch 1 unless stated in a site description. | `Facility capacity, node, wafer size and investment are not captured…` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `source_ids` | Numbered sources supporting the record (SRC ids). | array | — | `["SRC-000141","SRC-000136","SRC-000179","SRC-000178"]` | Required for facts | Derived — inherits the sources of the linked records | — |
 | `also_listed_as` | Same organisation listed in the other of fabs/OSATs. | null / string | — | `OSAT-000019` | Optional (5% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `facility_ids` | Linked record ids. | array | — | `["FAC-000004"]` | Optional (9% populated) | Derived — inherits the sources of the linked records | — |
 
 ## osats
 
@@ -377,6 +380,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 | `field_note` | Explains which facility fields are not captured. | string | — | `Facility capacity, node, wafer size and investment are not captured…` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `source_ids` | Numbered sources supporting the record (SRC ids). | array | — | `["SRC-000177"]` | Required for facts | Derived — inherits the sources of the linked records | — |
 | `also_listed_as` | Same organisation listed in the other of fabs/OSATs. | null / string | — | `FAB-000019` | Optional (11% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `facility_ids` | Linked record ids. | array | — | `["FAC-000002"]` | Optional (56% populated) | Derived — inherits the sources of the linked records | — |
 
 ## customers
 
@@ -458,7 +462,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 
 ## relationships
 
-6,139 records.
+6,160 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -478,7 +482,7 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 
 ## sources
 
-959 records.
+978 records.
 
 | Field | Definition | Data type | Allowed values | Example | Required | Source requirement | Normalisation rule |
 |---|---|---|---|---|---|---|---|
@@ -493,11 +497,11 @@ Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `
 | `tier` | Batch-1 source tier (1 official … 4 blog/market list; BRIEF/INT internal). | string / number | — | `BRIEF` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `tier_label` | Human-readable tier definition. | string | Internal brief, Internal note, Tier 2 · Industry publication / association, Tier 3 · Directory, distributor, aggregator, Tier 4 · Blog, wiki, market list (unverified), Tier 1 · Official (company, filing, government, datasheet) | `Internal brief` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `publication_date` | Publication / evidence date. | string / null | — | `2026-09-29` | Optional | Record `source_ids` (Tier-4 alone never confirms) | ISO 8601: YYYY, YYYY-MM or YYYY-MM-DD |
-| `evidence_date` | Date the evidence refers to. | string / null | — | `2026-09-29` | Optional (28% populated) | Record `source_ids` (Tier-4 alone never confirms) | ISO |
+| `evidence_date` | Date the evidence refers to. | string / null | — | `2026-09-29` | Optional (30% populated) | Record `source_ids` (Tier-4 alone never confirms) | ISO |
 | `accessed_date` | Date the source was accessed. | string | 2026-09-29, 2026-10-05, 2026-09-30 | `2026-09-29` | Always present | Record `source_ids` (Tier-4 alone never confirms) | ISO date |
 | `accessible` | False when access was blocked at capture (never bypassed). | boolean | — | `true` | Required | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `access_mode` | — | string | read, not_accessible, search_index | `read` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
-| `access_note` | Why a source could not be read (never bypassed). | null / string | — | `Access blocked or not accessible at capture; not bypassed` | Optional (64% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
+| `access_note` | Why a source could not be read (never bypassed). | null / string | — | `Access blocked or not accessible at capture; not bypassed` | Optional (65% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `age_class` | Batch-1 source age class. | string | CURRENT, STALE, AGING, UNDATED, VERY_STALE | `CURRENT` | Always present | Record `source_ids` (Tier-4 alone never confirms) | — |
 | `freshness` | Recent / Needs Review / Stale / Unknown from the freshest supporting source. | string | Recent, Stale, Needs Review, Unknown | `Recent` | Required | System-generated | — |
 | `excerpt` | Short excerpt/paraphrase for traceability (document not republished). | string / null | — | `Build a comprehensive GLOBAL SEMICONDUCTOR EQUIPMENT COMPANY DATABASE.` | Optional (36% populated) | Record `source_ids` (Tier-4 alone never confirms) | — |

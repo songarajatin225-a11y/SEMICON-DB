@@ -18,8 +18,9 @@ import { quality } from "./quality.js";
 import { sources } from "./sources.js";
 import { saved } from "./saved.js";
 import { graphView } from "./graph.js";
+import { facilities } from "./facilities.js";
 
 export const ROUTES = {
   "": home, search: searchView, companies, equipment, products, models: modelView, processes, technologies, materials, applications,
-  components, subsystems, fabs, osats, customers, suppliers, india, countries, map: mapView, compare, intelligence, quality, sources, saved, graph: graphView,
+  components, subsystems, fabs, osats, customers, facilities, suppliers, india, countries, map: mapView, compare, intelligence, quality, sources, saved, graph: graphView,
 };

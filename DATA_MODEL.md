@@ -27,6 +27,7 @@ COMPANY ─offers→ PRODUCT FAMILY ←part_of─ MODEL ─classified_as→ EQUI
 | Subsystem · Component class | `SUB-001` · `CMPN-000001` | subsystems.json · components.json | Reference + Batch-1 supplier register `sp` (BOM codes) |
 | Supplier profile | keyed by company id | suppliers.json | Companies × supplier roles × component classes × supply links |
 | Fab · OSAT · other customer | `FAB-000001` · `OSAT-000015` · `CUS-000027` (from `CU001`) | fabs.json · osats.json · customers.json | Batch-1 customers `cu` + sites from `cr` |
+| Facility (site level) | `FAC-000001` (from `F001`) | facilities.json | Batch 11+ `fa` rows (government releases and news, search-located) |
 | Country | `CTY-US` | countries.json | Batch-1 `ctry` + reference centroids |
 | Deal | `DEAL-000001` (from `PA001`) | deals.json | Batch-1 `pa` |
 | Relationship | `REL-000001`, `REL-CR-001`, `REL-SP-001`, `REL-PA-001`, `REL-RL-001` | relationships.json | Built from all of the above |
@@ -34,6 +35,33 @@ COMPANY ─offers→ PRODUCT FAMILY ←part_of─ MODEL ─classified_as→ EQUI
 | Conflict · duplicate candidate | `CNF-0001` · `DUP-0001` | quality.json | Build |
 
 Names are never primary keys. Batch-1 ids are kept as `legacy_id` and resolve in URLs.
+
+## Facility record (site level)
+
+One record per physical site. Facts are as reported by the cited sources; unknown fields are `null`.
+
+```json
+{ "id": "FAC-000003", "entity_type": "facility", "name": "CG Semi OSAT (G1 / G2), Sanand", "facility_type": "OSAT",
+  "operator": "CG Semi (CG Power)", "operator_ids": ["OSAT-000020"], "partners": ["Renesas Electronics (Japan) — technology partner"],
+  "country": "India", "country_id": "CTY-IN", "state": "Gujarat", "city": "Sanand", "coordinates": { "lat": 22.99, "lon": 72.38, "basis": "Approximate town centroid (not the site boundary)" },
+  "scheme": "ISM — ATMP / OSAT scheme", "approval_date": "2024-02-29",
+  "status": "PILOT_PRODUCTION", "status_date": "2025-08-28",
+  "status_history": [{ "date": "2024-02-29", "status": "APPROVED", "source_ids": ["SRC-000961"] }, { "date": "2025-08-28", "status": "PILOT_PRODUCTION", "source_ids": ["SRC-000968"] }],
+  "investment": [{ "value": 7500, "currency": "INR", "unit": "crore", "label": "about ₹7,500 crore", "inr_crore": 7500, "source_ids": ["SRC-000961"] }, { "value": 7600, "…": "…" }],
+  "investment_conflict": true, "capacity": "G1 peak about 0.5 million units per day", "technology": null, "wafer_size": null, "products": "End-to-end OSAT", "jobs": null,
+  "verification": "PARTIALLY_VERIFIED", "confidence": "MEDIUM", "evidence_depth": "SEARCH_SUMMARY", "source_ids": ["…"], "batch": "Batch 11" }
+```
+
+- `status` is the latest dated milestone in `status_history` (ANNOUNCED → APPROVED → FOUNDATION_LAID → UNDER_CONSTRUCTION → PILOT_PRODUCTION → OPERATIONAL). It is never advanced without a source.
+- Several investment figures for one site create a conflict (`CNF-…`); they are never averaged or summed. State totals add only sites with a single INR figure.
+- Edges: `facility located_in country` and `fab/osat/company operates facility`. Fab and OSAT records gain `facility_ids`.
+
+## Entity resolution and derived scores
+
+- `companies[].resolution_keys[]` — `{ alias, basis }`. Derived from the record only: recorded alias, former name, the short form in the name's parentheses, the name without a legal suffix, the stock ticker. Clients resolve free text with `resolveCompany()` (`assets/js/core/search.js`); an ambiguous key resolves to nothing.
+- `quality.duplicate_candidates[].decision` — curated decision from `scripts/reference/entity-decisions.mjs` (PROBABLE_SAME_ENTITY · DISTINCT_ENTITIES). Records are never merged automatically.
+- `companies[].batch`, `dates.first_added` — the batch that first added the record (temporal view).
+- Client-side derived scores (`assets/js/core/scores.js`), each with a published method: regional dependency (`blocShares`), supplier criticality (0–100), SEMICON-DB Intelligence Score (0–100), and component- and subsystem-level localization indexes.
 
 ## Relationship record
 

@@ -8,6 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { STAGES, PROCESSES } from "./reference/processes.mjs";
 import { TECHNOLOGIES } from "./reference/technologies.mjs";
+import { ENTITY_DECISIONS } from "./reference/entity-decisions.mjs";
 import { MATERIALS, APPLICATIONS, segmentOf, SEGMENTS, TAXONOMY_GROUPS_EXT, TAXONOMY_EXT, TAXONOMY_SEE_ALSO } from "./reference/ontology.mjs";
 import { SUBSYSTEMS, COMPONENTS } from "./reference/subsystems.mjs";
 import { COUNTRIES } from "./reference/geo.mjs";
@@ -26,7 +27,13 @@ const BATCH_DIR = path.join(OUT, "batches");
 const BATCHES = fs.existsSync(BATCH_DIR) ? fs.readdirSync(BATCH_DIR).filter(f => f.endsWith(".json")).sort().map(f => JSON.parse(fs.readFileSync(path.join(BATCH_DIR, f), "utf8"))) : [];
 BATCHES.forEach(b => { ["co", "pr", "src", "st", "cu", "cr"].forEach(k => L[k].push(...(b[k] || []))); });
 const sumB = k => BATCHES.reduce((a, b) => a + (b[k] || []).length, 0);
+const FAC_ROWS = BATCHES.flatMap(b => (b.fa || []).map(f => ({ ...f, batch: b.batch, created: b.created })));
+const PROGRAM_ROWS = BATCHES.flatMap(b => (b.pg || []).map(p => ({ ...p, batch: b.batch })));
 const BATCH_OF_SOURCE = new Map(BATCHES.flatMap(b => (b.src || []).map(x => [x.id, b.created])));
+// temporal fields: which batch first added a company / model row (Batch 1 = legacy snapshot)
+const BATCH_OF_CO = new Map(BATCHES.flatMap(b => (b.co || []).map(x => [x.id, b])));
+const BATCH_OF_PR = new Map(BATCHES.flatMap(b => (b.pr || []).map(x => [x.id, b])));
+const batchDates = (row, map, ver, base) => { const b = map.get(row.id); return b ? { ...base, first_added: b.created, last_updated: b.created, last_verified: ver === "UNVERIFIED" ? null : b.created } : base; };
 
 // ---------------------------------------------------------------- helpers
 const NA = v => v == null || v === "" || v === "N/A" || v === "-" || v === "Not documented";
@@ -129,7 +136,10 @@ const indiaByCo = {}; L.india.forEach(r => (indiaByCo[r.cid] ||= []).push(r));
 function aliasesFor(c) {
   const out = [], former = [];
   const m = /^(.*?)\s*\((.+)\)$/.exec(c.n);
-  if (m && !/unit|lab|group|laser equipment/i.test(m[2])) out.push(m[2].replace(/^as named in .*$/i, "").trim());
+  // a parenthetical is an alias only when it names the company (TEL, ACCRETECH, EMD Electronics), not when it qualifies a
+  // business unit ("Electronics", "Compressors", "semiconductor materials")
+  const qualifier = q => /unit|lab|group|laser equipment/i.test(q) || (!/[A-Z]{2,}/.test(q) && /^(electronics|compressors|industrial automation|semiconductor robotics|semiconductor materials|semiconductor|robotics|automation|mechatronics|materials|equipment|subsidiary)$/i.test(q.trim()));
+  if (m && !qualifier(m[2])) out.push(m[2].replace(/^as named in .*$/i, "").trim());
   (relByCo[c.id] || []).forEach(r => {
     if (r.classification === "BRAND" && r.company_a_id === c.id && NA(r.company_b_id)) out.push(r.company_b);
   });
@@ -173,7 +183,7 @@ const companies = L.co.map(c => {
     financials: L.fin.filter(f => f.co === c.id).map(f => ({ fiscal_year: f.fy, metric: f.m, currency: f.ccy, value: f.v, usd_m: typeof f.usd === "number" ? f.usd : null, value_type: f.vt, source_ids: srcIds(f.src), note: nv(f.note) })),
     verification: c.st, confidence: { score: c.cs, level: c.cl }, evidence_depth: c.evd,
     rationale: nv(c.why), notes: nv(c.note), source_ids: src, discovery_keywords: split(c.kw),
-    freshness: fresh, quality_state: qualityState(c.st, fresh, CONFLICTED.has(id)), missing_key_fields: missing, ...{ dates: dates(c.st, src) },
+    freshness: fresh, quality_state: qualityState(c.st, fresh, CONFLICTED.has(id)), missing_key_fields: missing, dates: batchDates(c, BATCH_OF_CO, c.st, dates(c.st, src)), batch: BATCH_OF_CO.get(c.id)?.batch || "Batch 1",
   };
 });
 const CO = Object.fromEntries(companies.map(c => [c.id, c]));
@@ -233,7 +243,7 @@ const models = L.pr.map(p => {
     reclassified: p._reclassified_from ? { from_code: p._reclassified_from, to_code: p.eqid, reason: p._reclass_reason } : null,
     batch: (p.note && /^Batch \d+/.exec(p.note)?.[0]) || "Batch 1",
     verification: p.ver, confidence: { level: p.cl }, source_ids: src, source_age: p.age,
-    freshness: fresh, quality_state: qualityState(p.ver, fresh, CONFLICTED.has(id)), missing_key_fields: missing, dates: dates(p.ver, src),
+    freshness: fresh, quality_state: qualityState(p.ver, fresh, CONFLICTED.has(id)), missing_key_fields: missing, dates: batchDates(p, BATCH_OF_PR, p.ver, dates(p.ver, src)),
   };
 });
 const MD = Object.fromEntries(models.map(m => [m.id, m]));
@@ -271,6 +281,24 @@ const families = famOrder.map(k => {
 companies.forEach(c => { const declared = new Set(c.equipment_ids);
   const fromModels = uniq(models.filter(m => m.company_id === c.id && !m.is_component && m.equipment_id && !declared.has(m.equipment_id)).map(m => m.equipment_id));
   c.equipment_ids_from_models = fromModels; c.equipment_ids = [...c.equipment_ids, ...fromModels]; });
+// Entity resolution keys: how the same company may be written elsewhere. Derived only from the record itself — recorded
+// aliases, former names, the short form in the name's parentheses, the name without a legal suffix, the stock ticker.
+// No legal name is invented. The client resolves "ASML Holding N.V.", "AMAT" or "TEL" to one canonical record with these.
+const LEGAL_SUFFIX = /\s*,?\s*\b(inc\.?|incorporated|corp\.?|corporation|co\.,?\s*ltd\.?|ltd\.?|limited|llc|plc|gmbh|ag|s\.a\.|n\.v\.?|b\.v\.?|k\.k\.|holdings?|pvt\.?\s*ltd\.?|private limited)\s*$/i;
+const GENERIC_QUALIFIER = /^(electronics|compressors|industrial automation|semiconductor robotics|semiconductor materials|semiconductor|robotics|automation|mechatronics|group|india|japan|china|korea|usa|europe|germany|subsidiary|ate lab|equipment|materials)$/i;
+const DUP_DECISIONS = Object.fromEntries(ENTITY_DECISIONS.map(d => [[cmpId(d.a), cmpId(d.b)].sort().join("|"), d]));
+companies.forEach(c => {
+  const keys = [];
+  const add = (alias, basis) => { alias = String(alias || "").trim(); if (alias.length >= 2 && alias.toLowerCase() !== c.name.toLowerCase() && !keys.some(k => k.alias.toLowerCase() === alias.toLowerCase())) keys.push({ alias, basis }); };
+  (c.aliases || []).filter(a => !GENERIC_QUALIFIER.test(a)).forEach(a => add(a, "Recorded alias"));
+  (c.former_names || []).forEach(a => add(a, "Former name (recorded)"));
+  const paren = /^(.*?)\s*\(([^)]+)\)\s*$/.exec(c.name);
+  if (paren) { add(paren[1], "Name without parenthetical");
+    paren[2].split(/\s*[\/;]\s*/).forEach(p => { if (/[A-Z]{2,}/.test(p) || (/^[A-Z]/.test(p) && !GENERIC_QUALIFIER.test(p))) add(p, "Short form in the name"); }); }
+  const base = (paren ? paren[1] : c.name).replace(LEGAL_SUFFIX, "").trim(); if (base !== (paren ? paren[1] : c.name).trim()) add(base, "Name without legal suffix");
+  if (c.ticker && !NA(c.ticker)) add(c.ticker, `Stock ticker${c.exchange ? " (" + c.exchange + ")" : ""}`);
+  c.resolution_keys = keys;
+});
 const coByCode = {}; companies.forEach(c => c.equipment_ids.forEach(e => (coByCode[e] ||= []).push(c.id)));
 const mdByCode = {}; models.forEach(m => m.equipment_id && (mdByCode[m.equipment_id] ||= []).push(m.id));
 const equipment = taxRows.map(t => {
@@ -397,6 +425,30 @@ const osats = L.cu.filter(c => OSAT_TYPES.test(c.customer_type)).map(c => orgRec
 fabs.forEach(f => { const o = osats.find(x => x.legacy_id === f.legacy_id); if (o) { f.also_listed_as = o.id; o.also_listed_as = f.id; } });
 const otherCustomers = L.cu.filter(c => !FAB_TYPES.test(c.customer_type) && !OSAT_TYPES.test(c.customer_type)).map(c => orgRecord(c, "CUS", "customer"));
 
+// ---------------------------------------------------------------- facilities (site-level records, Batch 11+)
+// One record per physical site. Status is a dated history (ANNOUNCED → APPROVED → FOUNDATION_LAID → … → OPERATIONAL);
+// the current status is the latest dated stage, never inferred. Several investment figures for one site become a conflict.
+const STAGE_ORDER = ["ANNOUNCED", "APPROVED", "FOUNDATION_LAID", "UNDER_CONSTRUCTION", "PILOT_PRODUCTION", "OPERATIONAL"];
+const facilities = FAC_ROWS.map(f => {
+  const id = `FAC-${pad(num(f.id))}`;
+  const history = f.history.map(h => ({ date: h.date, status: h.status, source_ids: srcIds(h.src) })).sort((a, b) => a.date.localeCompare(b.date));
+  const stages = history.filter(h => STAGE_ORDER.includes(h.status));
+  const cur = stages[stages.length - 1] || null;
+  const investment = (f.invest || []).map(x => ({ value: x.value, currency: x.currency, unit: x.unit, label: x.label, inr_crore: x.currency === "INR" && x.unit === "crore" ? x.value : null, source_ids: srcIds(x.src) }));
+  const linked = (f.link || []);
+  return { id, entity_type: "facility", name: f.name, facility_type: f.type, operator: f.operator, operator_ids: linked, partners: f.partners || [],
+    country: "India", country_id: "CTY-IN", state: f.state, city: f.city, coordinates: f.lat != null ? { lat: f.lat, lon: f.lon, basis: "Approximate town centroid (not the site boundary)" } : null,
+    scheme: f.scheme || null, approval_date: f.approval || null, status: cur ? cur.status : "UNKNOWN", status_date: cur ? cur.date : null, status_history: history,
+    investment, investment_conflict: investment.length > 1, capacity: f.capacity || null, technology: f.technology || null, wafer_size: f.wafer || null, products: f.products || null, jobs: f.jobs || null,
+    verification: "PARTIALLY_VERIFIED", confidence: f.conf || "MEDIUM", evidence_depth: "SEARCH_SUMMARY",
+    notes: [f.notes, `${f.batch} (${f.created}): facts from titles and search-result summaries of the cited government releases and news reports; pages not read directly. Unknown fields are left empty, not estimated.`].filter(Boolean).join(" "),
+    source_ids: srcIds(f.src), batch: f.batch, dates: { first_added: f.created, last_verified: f.created } };
+});
+const programs = PROGRAM_ROWS.map(p => ({ id: p.id, name: p.name, country: p.country, facts: p.facts.map(x => ({ label: x.label, value: x.value, source_ids: srcIds(x.src) })), batch: p.batch }));
+facilities.filter(f => f.investment_conflict).forEach(f => CONFLICTS.push({ id: `CNF-${pad(CONFLICTS.length + 1, 4)}`, entity: f.id, field: "Investment",
+  claims: f.investment.map(x => ({ source_id: x.source_ids[0] || null, value: x.label })), status: "OPEN", note: "Several investment figures were reported for this site; they may cover different scopes or phases. Not reconciled." }));
+[...fabs, ...osats].forEach(o => (o.facility_ids = facilities.filter(f => f.operator_ids.includes(o.id)).map(f => f.id)));
+
 // ---------------------------------------------------------------- countries
 const countries = COUNTRIES.map(([name, iso, region, lat, lon]) => {
   const legacy = L.ctry.find(x => x.country === name) || {};
@@ -459,6 +511,10 @@ subsystems.forEach(s => s.component_ids.forEach(c => E("contains", s.id, c, { ba
 // equipment → subsystem "contains" edges only for level-2 nodes that carry records (keeps the graph readable)
 equipment.filter(e => e.level > 1 && (e.company_ids.length || e.model_ids.length)).forEach(e => e.typical_subsystem_ids.forEach(s => E("contains", e.id, s, { basis: "reference" })));
 technologies.forEach(t => t.process_ids.forEach(p => E("used_in", t.id, p, { basis: "reference" })));
+facilities.forEach(f => {
+  E("located_in", f.id, f.country_id, { source_ids: f.source_ids, detail: { state: f.state, city: f.city } });
+  f.operator_ids.forEach(o => E("operates", o, f.id, { source_ids: f.source_ids, confidence: f.confidence }));
+});
 
 // ---------------------------------------------------------------- deduplication (candidates only; never auto-merged)
 const knownPairs = new Set(L.rel.map(r => [cmpId(r.company_a_id), cmpId(r.company_b_id)].sort().join("|")));
@@ -469,12 +525,15 @@ for (let i = 0; i < companies.length; i++) for (let j = i + 1; j < companies.len
   const sim = similarity(na, nb);
   const contains = na.length > 3 && nb.length > 3 && (na.includes(nb) || nb.includes(na));
   const sameWeb = a.website && b.website && a.website.replace(/https?:\/\/(www\.)?/, "").split("/")[0] === b.website.replace(/https?:\/\/(www\.)?/, "").split("/")[0];
-  if (sim >= 0.72 || contains || sameWeb) {
+  const rk = x => new Set([normName(x.name), ...x.resolution_keys.filter(k => !/ticker/i.test(k.basis)).map(k => normName(k.alias))].filter(k => k.length > 2));
+  const ka = rk(a), sharedKey = [...rk(b)].find(k => ka.has(k));
+  if (sim >= 0.72 || contains || sameWeb || sharedKey) {
     const known = knownPairs.has([a.id, b.id].sort().join("|"));
     dupes.push({ id: `DUP-${pad(dupes.length + 1, 4)}`, entity_type: "company", a: a.id, b: b.id, a_name: a.name, b_name: b.name, similarity: +sim.toFixed(2),
-      reasons: [sim >= 0.72 && `name similarity ${sim.toFixed(2)}`, contains && "one name contains the other", sameWeb && "same website domain"].filter(Boolean),
+      reasons: [sim >= 0.72 && `name similarity ${sim.toFixed(2)}`, contains && "one name contains the other", sameWeb && "same website domain", sharedKey && `shared resolution key “${sharedKey}”`].filter(Boolean),
       known_relationship: known ? L.rel.find(r => [cmpId(r.company_a_id), cmpId(r.company_b_id)].sort().join("|") === [a.id, b.id].sort().join("|")).classification : null,
-      resolution: known ? "Known relationship recorded — kept as separate entities" : "Needs review — not merged" });
+      resolution: known ? "Known relationship recorded — kept as separate entities" : DUP_DECISIONS[[a.id, b.id].sort().join("|")]?.resolution || "Needs review — not merged",
+      decision: DUP_DECISIONS[[a.id, b.id].sort().join("|")] || null });
   }
 }
 const mdKey = {}; models.filter(m => m.model_number).forEach(m => { const k = m.company_id + "|" + m.model_number.toLowerCase(); (mdKey[k] ||= []).push(m.id); });
@@ -496,7 +555,7 @@ const intel = {
 };
 
 // ---------------------------------------------------------------- publish
-const entities = { companies, product_families: families, models, equipment, processes, technologies, materials, applications, subsystems, components, suppliers, fabs, osats, customers: otherCustomers, countries, deals, relationships: rels, sources };
+const entities = { companies, product_families: families, models, equipment, processes, technologies, materials, applications, subsystems, components, suppliers, fabs, osats, customers: otherCustomers, facilities, countries, deals, relationships: rels, sources };
 const reference = { stages: STAGES, segments: SEGMENTS, equipment_groups: groups.map(([code, name]) => ({ code, name })), synonyms: SYNONYMS };
 const quality = { conflicts: CONFLICTS, duplicate_candidates: dupes };
 const report = validateAll({ ...entities }, { conflicts: CONFLICTS });
@@ -505,14 +564,14 @@ const counts = Object.fromEntries(Object.entries(entities).map(([k, v]) => [k, v
 const LATEST = [AS_OF, ...BATCHES.map(b => b.created).filter(Boolean)].sort().pop();
 const meta = { name: "SEMICON-DB", title: "SEMICON-DB — Global Semiconductor Equipment Intelligence Graph", schema_version: SCHEMA_VERSION, evidence_as_of: LATEST, batch1_as_of: AS_OF, built: BUILD_DATE,
   batches: [{ batch: "Batch 1", date: AS_OF, companies: L.co.length - sumB("co"), products: L.pr.length - sumB("pr"), sources: L.src.length - sumB("src"), customer_links: L.cr.length - sumB("cr"), startups: L.st.length - sumB("st"), note: "Legacy public edition (single-file atlas)" },
-    ...BATCHES.map(b => ({ batch: b.batch, date: b.created, companies: (b.co || []).length, products: (b.pr || []).length, sources: (b.src || []).length, customer_links: (b.cr || []).length, startups: (b.st || []).length, note: b.method || "Imported batch (scripts/import.mjs)" })),
+    ...BATCHES.map(b => ({ batch: b.batch, date: b.created, companies: (b.co || []).length, products: (b.pr || []).length, sources: (b.src || []).length, customer_links: (b.cr || []).length, startups: (b.st || []).length, facilities: (b.fa || []).length, note: b.method || "Imported batch (scripts/import.mjs)" })),
     { batch: "2.0 migration", date: BUILD_DATE, note: "Totals after 2.0 normalisation (schema, reference taxonomy, derived relationships) over Batch 1" + (BATCHES.length ? " plus " + BATCHES.map(b => b.batch).join(", ") : "; no new external facts added"), ...counts }],
-  counts, id_prefixes: { company: "CMP", product_family: "PRD", model: "MDL", equipment: "EQP", process: "PRS", technology: "TEC", material: "MAT", application: "APP", subsystem: "SUB", component: "CMPN", fab: "FAB", osat: "OSAT", customer: "CUS", country: "CTY", deal: "DEAL", relationship: "REL", source: "SRC", conflict: "CNF", duplicate: "DUP" } };
+  counts, id_prefixes: { company: "CMP", product_family: "PRD", model: "MDL", equipment: "EQP", process: "PRS", technology: "TEC", material: "MAT", application: "APP", subsystem: "SUB", component: "CMPN", fab: "FAB", osat: "OSAT", customer: "CUS", facility: "FAC", country: "CTY", deal: "DEAL", relationship: "REL", source: "SRC", conflict: "CNF", duplicate: "DUP" } };
 
 const write = (f, obj) => fs.writeFileSync(path.join(OUT, f), JSON.stringify(obj, null, 0) + "\n");
 Object.entries(entities).forEach(([k, v]) => write(`${k}.json`, v));
 write("intel.json", intel); write("quality.json", quality); write("reference.json", reference); write("meta.json", meta);
-write("bundle.json", { meta, reference, quality, intel, ...entities });
+write("bundle.json", { meta, reference, quality, intel: { ...intel, programs }, ...entities });
 const size = fs.statSync(path.join(OUT, "bundle.json")).size;
 console.log(`SEMICON-DB ${SCHEMA_VERSION} build: ${Object.entries(counts).map(([k, v]) => `${k}=${v}`).join(" ")}`);
 console.log(`bundle.json ${(size / 1024).toFixed(0)} KB · validation: ${report.errors.length} errors, ${report.warnings.length} warnings · ${dupes.length} duplicate candidates · ${CONFLICTS.length} conflicts`);

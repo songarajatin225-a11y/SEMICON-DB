@@ -17,8 +17,9 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
-| Relationships | 5,751 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 959 | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Facilities (site level) | 13 | India's ISM-approved fab / OSAT / packaging units and one equipment plant, with dated status history, investment as reported, capacity, technology and sources (Batch 11) |
+| Relationships | 6,160 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 978 | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -120,6 +121,42 @@ Materials suppliers are recorded at company level (type “Materials/gases”); 
 
 Result: categories with no documented supplier fell from 91 to 70. Of those, 45 have suppliers under an equivalent category and 25 are real gaps, 10 of which are device types rather than tools. As before, all sources were located by web search and the pages were not read, so models carry no specifications.
 
+## Global intelligence upgrade (5 Oct 2026)
+
+This upgrade follows the *Global Semiconductor Intelligence Graph* brief. The approach was audit → preserve → normalise → expand → connect, with no rewrite, no route changes and no data removed. The full audit, architecture, methods, file list and limitations are in [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md).
+
+**New features**
+- **Facility database** (`#/facilities`): site-level records. Each has:
+  - a dated status history (announced → approved → foundation laid → pilot → operational; the latest milestone is never inferred);
+  - investment as reported, with conflicting figures kept side by side as open conflicts;
+  - capacity, technology, scheme and approximate coordinates;
+  - state-wise India totals.
+
+  The first coverage is India's 12 ISM-approved units plus the YES equipment plant in Coimbatore. The data comes from PMO / All India Radio releases and national news.
+- **Entity resolution:** 181 resolution keys are derived from each record itself: recorded aliases, the short form in the name, the name without a legal suffix, and the ticker.
+  - "ASML Holding N.V.", "AMAT" and "TEL" each resolve to one canonical company; an ambiguous key resolves to nothing.
+  - Duplicate detection now also flags shared keys.
+  - Curated decisions (`scripts/reference/entity-decisions.mjs`) are shown on both company pages. One example is "JSG" vs Zhejiang Jingsheng: a probable same entity, not merged.
+- **Supply-chain intelligence:**
+  - regional dependency (US / Japan / Europe / China / Taiwan / Korea / India / Israel) for each category and each equipment group;
+  - a "players by region" competitor panel on every equipment page;
+  - a 0–100 supplier criticality score per company, so a small subsystem supplier that several OEMs depend on can rank as critical;
+  - facility milestones in the events timeline.
+- **SEMICON-DB Intelligence Score** for each company, with a published method. It weights completeness 30 %, source quality 20 %, portfolio breadth 15 %, supply-chain importance 20 % and connectivity 15 %. It measures the evidence held, not the company.
+- **Analyst** answers more questions, all from records:
+  - "Compare ASML vs Canon vs Nikon" (resolved by alias);
+  - requirement-based laser supplier matching ("I need a 200W pulsed laser for semiconductor marking"), which ranks by stated matches and lists unpublished specs separately;
+  - the most concentrated categories, the best localization candidates, Indian facilities by status, and TEAL partner-fit candidates;
+  - localization indexes at subsystem and component-class level.
+- **Process flows** (`#/intelligence/flows`): editorial reference flows for silicon wafers, logic, DRAM, 3D NAND, SiC, GaN, MEMS, CIS, RF, HBM / 3D, fan-out and back-end. Each step links to its equipment, suppliers, India-linked suppliers and concentration.
+- **What changed** (`#/intelligence/changes`) lists records by batch and date. Records now carry their real `first_added` batch date.
+- **Research queue** (`#/intelligence/research`) shows the ten ingestion waves with coverage, important-but-thin records, uncovered categories and facilities to re-check.
+- **Smaller additions:**
+  - verification-age bands (Fresh / Current / Aging / Stale / Needs verification);
+  - "Suggest a correction" on every record, which opens a pre-filled GitHub issue (there is no write backend and no credentials);
+  - duplicate-source-URL validation;
+  - facility search (e.g. "GaN fab in India").
+
 ## Supply-chain intelligence (5 Oct 2026)
 
 From the uploaded *Global Intelligence Master Prompt*, the parts that the current evidence can support honestly were added:
@@ -165,7 +202,7 @@ node scripts/gen-dictionary.mjs  # regenerate DATA_DICTIONARY.md
 
 ## Documentation
 
-[ARCHITECTURE.md](ARCHITECTURE.md) · [DATA_MODEL.md](DATA_MODEL.md) · [DATA_DICTIONARY.md](DATA_DICTIONARY.md) · [DATA_SOURCES.md](DATA_SOURCES.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [QA_REPORT.md](QA_REPORT.md)
+[ARCHITECTURE.md](ARCHITECTURE.md) · [DATA_MODEL.md](DATA_MODEL.md) · [DATA_DICTIONARY.md](DATA_DICTIONARY.md) · [DATA_SOURCES.md](DATA_SOURCES.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [QA_REPORT.md](QA_REPORT.md) · [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md)
 
 ## Deployment
 

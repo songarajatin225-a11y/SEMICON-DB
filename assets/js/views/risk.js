@@ -5,6 +5,8 @@ import { DB, get, hrefOf } from "../core/store.js";
 import { esc, uniq, countBy, sortedEntries } from "../core/util.js";
 import { pageHead, link, tags, bars, kpi, srcBtn, conf, empty } from "../ui/components.js";
 import { dataTable } from "../ui/table.js";
+import { BLOCS, blocOf, blocShares, criticality, CRIT_METHOD } from "../core/scores.js";
+import { STATUS_LABEL } from "./facilities.js";
 
 const head = (t, lede) => pageHead({ eyebrow: "Intelligence", title: t, lede, crumb: [["Home", "#/"], ["Intelligence", "#/intelligence"], [t, null]] });
 const indian = c => c.hq.country === "India" || c.india.has_presence;
@@ -34,7 +36,7 @@ export function categoryRisk() {
     const why = [`${n} documented supplier${n === 1 ? "" : "s"} (scarcity ${parts.scarcity})`,
       top ? `${top.share}% HQ in ${top.country}${hhi != null ? `, HHI ${hhi}` : ""}` : "HQ countries not captured (geo 50)",
       ind.length ? `${ind.length} India-linked` : "no India-linked supplier", `${ver}/${n} verified`].join(" · ");
-    return { id: e.id, e, n, cos, byC, hhi, top, ind, ver, parts, score, band, why };
+    return { id: e.id, e, n, cos, byC, hhi, top, ind, ver, parts, score, band, why, blocs: blocShares(cos) };
   });
   return CACHE;
 }
@@ -49,14 +51,15 @@ function riskView() {
   const catsOf = Object.fromEntries(countBy(rows.flatMap(r => r.cos.map(c => ({ c: c.id }))), x => x.c));
   const custLinks = Object.fromEntries(countBy(DB.relationships.filter(r => r.type === "supplies_equipment_to"), r => r.from));
   const nModels = Object.fromEntries(countBy(DB.models, m => m.company_id));
-  const central = Object.keys(catsOf).map(id => ({ id, c: get(id), cats: catsOf[id], sole: sole[id] || 0, cust: custLinks[id] || 0, models: nModels[id] || 0 }))
-    .sort((a, b) => b.sole - a.sole || b.cats - a.cats).slice(0, 40);
+  const central = DB.companies.map(c => ({ id: c.id, c, cats: catsOf[c.id] || 0, cust: custLinks[c.id] || 0, models: nModels[c.id] || 0, k: criticality(c.id) })).filter(x => x.k.score > 0)
+    .sort((a, b) => b.k.score - a.k.score || b.k.sole.length - a.k.sole.length || b.cats - a.cats).slice(0, 40);
   const table = dataTable({ id: "risk", rows, title: "Concentration index by equipment category", exportName: "semicon-db-concentration", columns: [
     { k: "cat", label: "Equipment category", pin: true, get: r => r.e.name, html: r => `<a class="rowlink" href="${hrefOf(r.id)}">${esc(r.e.name)}</a><span class="sub">${esc(r.e.code)} · ${esc(r.e.group_name)}</span>` },
     { k: "score", label: "Index (0–100)", num: true, get: r => r.score, html: r => `<b>${r.score}</b> <span class="pill">${r.band}</span>` },
     { k: "n", label: "Suppliers", num: true, get: r => r.n },
     { k: "top", label: "Top HQ country", get: r => r.top?.country || "", html: r => r.top ? `${esc(r.top.country)}<span class="sub">${r.top.share}% of suppliers</span>` : `<span class="na">Not captured</span>` },
     { k: "hhi", label: "HHI", num: true, get: r => r.hhi },
+    { k: "bloc", label: "Regional dependency", wrap: true, get: r => r.blocs.rows.map(b => `${b.bloc} ${b.share}%`).join("; "), html: r => r.blocs.rows.length ? r.blocs.rows.slice(0, 3).map(b => `${esc(b.bloc)} <b>${b.share}%</b>`).join(" · ") : `<span class="na">Not captured</span>` },
     { k: "india", label: "India-linked", num: true, get: r => r.ind.length },
     { k: "ver", label: "Verified", get: r => `${r.ver}/${r.n}` },
     { k: "why", label: "Explanation", wrap: true, get: r => r.why },
@@ -65,14 +68,25 @@ function riskView() {
     + `<div class="kpis">${kpi({ v: rows.length, l: "Categories with suppliers" })}${kpi({ v: bands.HIGH || 0, l: "High concentration (≥70)" })}${kpi({ v: bands.ELEVATED || 0, l: "Elevated (45–69)" })}${kpi({ v: single.length, l: "Single documented supplier" })}${kpi({ v: none.length, l: "No documented supplier" })}</div>
     <div class="panel sec"><h2>Method</h2><p class="small">${esc(RISK_METHOD)}</p><p class="note">Bands: HIGH ≥ 70 · ELEVATED 45–69 · MODERATE 25–44 · LOW &lt; 25. Not included because SEMICON-DB holds no evidence for them yet: lead times, export controls, patent dependency, raw-material exposure. They are not guessed.</p></div>
     <div class="sec">${table}</div>
-    <div class="grid g2 sec"><div class="panel"><h2>Critical supplier nodes</h2><p class="small ink2">Companies that are the only documented supplier for one or more categories, then by breadth of categories covered.</p>
-      <table class="spec"><tbody>${central.slice(0, 20).map(x => `<tr><th>${link(x.id)}<span class="sub">${esc(x.c.hq.country || "Country not captured")}</span></th><td>${x.sole ? `<b>Sole documented supplier in ${x.sole}</b> · ` : ""}${x.cats} categories · ${x.models} models · ${x.cust} customer links</td></tr>`).join("")}</tbody></table></div>
+    <div class="grid g2 sec"><div class="panel"><h2>Critical supplier nodes</h2><p class="small ink2">Supplier criticality (0–100): ${esc(CRIT_METHOD)} A small subsystem supplier that several OEMs depend on ranks alongside a large OEM.</p>
+      <table class="spec"><tbody>${central.slice(0, 20).map(x => `<tr><th>${link(x.id)}<span class="sub">${esc(x.c.hq.country || "Country not captured")} · ${esc(x.c.company_type)}</span></th><td><b>${x.k.score}</b><span class="sub">${[x.k.sole.length && `sole documented supplier in ${x.k.sole.length}`, x.k.duo.length && `one of two in ${x.k.duo.length}`, x.k.oems.length && `supplies ${x.k.oems.length} OEM${x.k.oems.length > 1 ? "s" : ""}`, x.k.sites.length && `${x.k.sites.length} fab/OSAT customer${x.k.sites.length > 1 ? "s" : ""}`].filter(Boolean).join(" · ")}</span></td></tr>`).join("")}</tbody></table></div>
       <div class="panel"><h2>Categories with no documented supplier (${none.length})</h2>
         <h3 style="margin-top:4px">Research gaps (${gaps.length})</h3>${tags(gaps.map(r => r.id), { max: 80 })}
         <h3>Suppliers recorded under an equivalent category (${aliased.length})</h3><table class="spec"><tbody>${aliased.map(r => `<tr><th>${link(r.id)}</th><td>see ${get(r.id).see_also.map(x => `${link(x)} (${(get(x).company_ids_incl_children || []).length})`).join(", ")}</td></tr>`).join("")}</tbody></table>
         <p class="note">Research gaps: the taxonomy has these nodes but no company is linked to them yet. The second group are overlapping branches of the taxonomy (e.g. back-end “Wire bonding” and assembly “Wire Bonding”); the editorial cross-reference points to where suppliers are recorded and is not itself a supplier claim.</p></div></div>
+    <div class="panel sec"><h2>Regional dependency by equipment group</h2>${blocMatrix(rows)}</div>
     <div class="panel sec"><h2>Country × equipment group</h2>${heatmap()}<p class="note">Number of companies headquartered in each country with at least one confirmed category in the group. Darker = more companies. Only countries with 3+ companies shown.</p></div>`;
   return { title: "Supply-chain concentration", html };
+}
+
+// share of documented suppliers (HQ) per bloc, per equipment group, over leaf categories with suppliers
+function blocMatrix(rows) {
+  const groups = DB.equipment.filter(e => e.level === 1).sort((a, b) => a.code.localeCompare(b.code));
+  const line = (label, cos) => { const b = blocShares(uniq(cos.map(c => c.id)).map(get)); const m = Object.fromEntries(b.rows.map(r => [r.bloc, r.share]));
+    return `<tr><th>${label}<span class="sub">${b.known} suppliers</span></th>${BLOCS.map(x => `<td style="background:color-mix(in srgb, var(--s2) ${m[x] ? Math.round(8 + 0.5 * m[x]) : 0}%, transparent)">${m[x] != null ? m[x] + "%" : ""}</td>`).join("")}</tr>`; };
+  const body = groups.map(g => { const cos = rows.filter(r => r.e.group_code === g.code).flatMap(r => r.cos); return cos.length ? line(`<a href="${hrefOf(g.id)}">${esc(g.code)} · ${esc(g.name)}</a>`, cos) : ""; }).join("");
+  return `<div style="overflow-x:auto"><table class="heat"><thead><tr><th>Equipment group</th>${BLOCS.map(b => `<th>${esc(b)}</th>`).join("")}</tr></thead><tbody>${line("<b>All categories</b>", rows.flatMap(r => r.cos))}${body}</tbody></table></div>
+    <p class="note">Share of the documented suppliers in each group by headquarters bloc (Europe includes the UK, Switzerland and Norway; China includes Hong Kong). This is dependency on the documented supplier base — not market share, which SEMICON-DB does not estimate. Companies without a captured HQ country are left out of the shares.</p>`;
 }
 
 function heatmap() {
@@ -93,7 +107,8 @@ function events() {
   [...DB.companies, ...DB.models].forEach(r => (r.source_ids || []).forEach(s => { if (!cites.has(s)) cites.set(s, new Set()); cites.get(s).add(r.company_id || r.id); }));
   const deals = DB.deals.filter(d => d.date).map(d => ({ id: d.id, date: d.date, type: d.event_type, title: `${d.party_a}${d.party_b ? " — " + d.party_b : ""}${d.technology ? ": " + d.technology : ""}`, cos: [d.party_a_id, d.party_b_id].filter(x => x && get(x)), status: d.status, confidence: d.confidence, source_ids: d.source_ids, kind: "Deal record" }));
   const prs = DB.sources.filter(s => /Press release|Investor announcement/.test(s.source_type) && s.publication_date).map(s => ({ id: s.id, date: s.publication_date, type: s.source_type.startsWith("Investor") ? "Funding" : "Press release", title: s.title, cos: [...(cites.get(s.id) || [])].filter(id => get(id)?.entity_type === "company"), status: null, confidence: null, source_ids: [s.id], kind: "Dated source" }));
-  return [...deals, ...prs].sort((a, b) => b.date.localeCompare(a.date));
+  const fac = (DB.facilities || []).flatMap(f => f.status_history.map((h, i) => ({ id: f.id + "-" + i, date: h.date, type: "Facility: " + (STATUS_LABEL[h.status] || h.status), title: `${f.name} (${f.city}, ${f.state})`, cos: [f.id, ...f.operator_ids].filter(x => get(x)), status: null, confidence: f.confidence, source_ids: h.source_ids, kind: "Facility milestone" })));
+  return [...deals, ...prs, ...fac].sort((a, b) => b.date.localeCompare(a.date));
 }
 function timelineView() {
   const rows = events();
@@ -102,12 +117,12 @@ function timelineView() {
     { k: "date", label: "Date", pin: true, get: r => r.date },
     { k: "type", label: "Type", get: r => r.type, html: r => `<span class="pill">${esc(r.type)}</span><span class="sub">${esc(r.kind)}</span>` },
     { k: "title", label: "Event", wrap: true, get: r => r.title },
-    { k: "cos", label: "Companies", wrap: true, get: r => r.cos.map(id => get(id)?.name).join("; "), html: r => r.cos.length ? r.cos.map(id => link(id)).join(", ") : `<span class="muted">—</span>` },
+    { k: "cos", label: "Companies / facilities", wrap: true, get: r => r.cos.map(id => get(id)?.name).join("; "), html: r => r.cos.length ? r.cos.map(id => link(id)).join(", ") : `<span class="muted">—</span>` },
     { k: "status", label: "Status", get: r => r.status || "", html: r => r.status ? esc(r.status) : `<span class="muted">—</span>` },
     { k: "conf", label: "Confidence", get: r => r.confidence || "", html: r => r.confidence ? conf(r.confidence) : `<span class="muted">—</span>` },
     { k: "src", label: "Source", get: r => r.source_ids.length, html: r => srcBtn(r.source_ids) }] });
   const html = head("Events timeline", "Deals, partnerships and dated company announcements captured in the evidence base, newest first. Undated sources are left out rather than guessed.")
-    + `<div class="grid g2"><div class="panel"><h2>Events by year</h2>${bars(byYear, { lw: 60 })}</div><div class="panel"><h2>What is included</h2><p class="small">${rows.filter(r => r.kind === "Deal record").length} deal / partnership records and ${rows.filter(r => r.kind === "Dated source").length} dated press releases and investor announcements. The event wording is the source title; impact is not assessed.</p></div></div>
+    + `<div class="grid g2"><div class="panel"><h2>Events by year</h2>${bars(byYear, { lw: 60 })}</div><div class="panel"><h2>What is included</h2><p class="small">${rows.filter(r => r.kind === "Deal record").length} deal / partnership records and ${rows.filter(r => r.kind === "Dated source").length} dated press releases and investor announcements, and ${rows.filter(r => r.kind === "Facility milestone").length} facility milestones (approval, foundation, pilot, operation). The event wording is the source title; impact is not assessed.</p></div></div>
     <div class="sec">${table}</div>`;
   return { title: "Events timeline", html };
 }
