@@ -12,7 +12,14 @@ export function debounce(fn, ms = 150) { let t; return (...a) => { clearTimeout(
 export const norm = s => String(s ?? "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "");
 export function toast(msg) {
   const t = document.createElement("div"); t.className = "toast"; t.setAttribute("role", "status"); t.textContent = msg;
-  document.body.appendChild(t); setTimeout(() => t.remove(), 2200);
+  document.body.appendChild(t);
+  // exit through the same edge it entered (.out), then remove; the fallback covers reduced motion and no-transition browsers
+  setTimeout(() => {
+    const done = () => t.remove();
+    t.addEventListener("transitionend", done, { once: true });
+    t.classList.add("out");
+    setTimeout(done, 600);
+  }, 2200);
 }
 export async function copyText(text, label = "Copied") {
   try { await navigator.clipboard.writeText(text); toast(label); }

@@ -186,3 +186,14 @@ Reviewed with the `review-animations` skill (Emil Kowalski's standards). Verdict
 - `npm test`: 54 / 54.
 - axe: not re-run this round. The axe-core dependency could not be installed in this session; the changes alter motion only, and the skeleton keeps the same colour tokens.
 
+## Animation opportunities addendum (21 Nov 2026)
+
+The `find-animation-opportunities` skill proposed six rows and rejected five candidates. The rejections were the command palette, route and tab swaps, tooltips, animated data, and the `<details>` accordions. Rows 1 and 2 are implemented:
+
+- **Press feedback.** `.btn` and `.iconbtn` scale to `0.97` on `:active`, with `transition: transform 160ms var(--ease-out)`. It is subtle because buttons are used tens of times a day, and it is off under reduced motion.
+- **Toast.** The toast enters through the bottom edge with `@starting-style` (`opacity: 0; translate(-50%, 100%)`) and `transition: transform 400ms ease, opacity 400ms ease`, the Sonner-style exception. It exits through the same edge (`.out`, then removed on `transitionend`, with a 600 ms fallback). Under reduced motion it fades only.
+
+**Checks:**
+- `tests/browser/motion.mjs`: 17 / 17 (7 new: press scale and release, toast enter, exit and removal, reduced-motion toast and buttons).
+- Smoke test: 98 / 98 routes. `npm test`: 54 / 54.
+

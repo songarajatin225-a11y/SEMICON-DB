@@ -34,6 +34,25 @@ const sheet = await p.$eval(".facets", e => [getComputedStyle(e).transition, e.g
 t("filter sheet: transform 280ms on the drawer curve, animates open", sheet[0] === `transform 0.28s ${DRAWER}` && sheet[1] === 1, sheet.join(" | "));
 await p.waitForTimeout(400); await p.keyboard.press("Escape");
 t("Escape closes the filter sheet instantly", (await p.evaluate(() => [document.body.classList.contains("facets-open"), document.querySelector(".facets").getAnimations().length].join())) === "false,0", "still animating");
+// press feedback (find-animation-opportunities row 1)
+await p.setViewportSize({ width: 1300, height: 900 }); await p.goto(base + "#/companies/CMP-000010"); await p.waitForSelector("main h1");
+const btn = await p.$("main .qa .btn"); const bb = await btn.boundingBox();
+t("buttons transition transform 160ms on the UI curve", (await btn.evaluate(e => getComputedStyle(e).transition)) === "transform 0.16s cubic-bezier(0.23, 1, 0.32, 1)", await btn.evaluate(e => getComputedStyle(e).transition));
+await p.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.mouse.down(); await p.waitForTimeout(260);
+const pressed = await btn.evaluate(e => getComputedStyle(e).transform);
+await p.mouse.up(); await p.mouse.move(5, 5); await p.waitForTimeout(260);
+const released = await btn.evaluate(e => getComputedStyle(e).transform);
+t("button scales to 0.97 while pressed and returns on release", pressed === "matrix(0.97, 0, 0, 0.97, 0, 0)" && (released === "none" || released === "matrix(1, 0, 0, 1, 0, 0)"), `${pressed} -> ${released}`);
+// toast enters and exits through the bottom edge (row 2)
+await p.evaluate(() => import("/assets/js/core/util.js").then(m => m.toast("Test toast")));
+await p.waitForSelector(".toast"); await p.waitForTimeout(30);
+const enter = await p.$eval(".toast", e => e.getAnimations().map(a => a.transitionProperty).sort().join(","));
+t("toast enters with opacity + transform transitions", enter === "opacity,transform", enter);
+await p.waitForTimeout(2300);
+const exit = await p.evaluate(() => { const e = document.querySelector(".toast"); return e ? [e.classList.contains("out"), e.getAnimations().map(a => a.transitionProperty).sort().join(",")].join("|") : "gone"; });
+t("toast exits through the same edge (.out, animated)", exit === "true|opacity,transform", exit);
+await p.waitForTimeout(700);
+t("toast is taken out of the DOM after its exit", (await p.$$(".toast")).length === 0, "still in DOM");
 await p.close();
 p = await b.newPage({ viewport: { width: 390, height: 800 }, reducedMotion: "reduce" });
 await p.goto(base + "#/companies"); await p.waitForSelector("main h1");
@@ -42,5 +61,11 @@ const rm = await p.$eval(".rail", e => e.getAnimations().map(a => a.transitionPr
 t("reduced motion: rail fades (opacity) and does not slide", rm === "opacity", rm);
 const sk2 = await p.evaluate(() => { const d = document.createElement("div"); d.className = "sk"; document.body.appendChild(d); const n = getComputedStyle(d, "::after").animationName; d.remove(); return n; });
 t("reduced motion: skeleton shimmer is off", sk2 === "none", sk2);
+await p.evaluate(() => import("/assets/js/core/util.js").then(m => m.toast("Reduced toast")));
+await p.waitForSelector(".toast"); await p.waitForTimeout(30);
+const rt = await p.$eval(".toast", e => e.getAnimations().map(a => a.transitionProperty).join(","));
+t("reduced motion: toast fades (opacity only)", rt === "opacity", rt);
+const rb = await p.$eval(".iconbtn, .btn", e => getComputedStyle(e).transitionDuration);
+t("reduced motion: no press-scale transition", rb === "0s", rb);
 await b.close();
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
