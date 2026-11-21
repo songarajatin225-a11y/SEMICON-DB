@@ -65,7 +65,7 @@ async function render() {
 document.addEventListener("click", e => {
   const t = e.target;
   if (handleTableEvent(e)) return;
-  const src = t.closest("[data-sources]"); if (src) { const ids = src.dataset.sources.split(","); openDrawer(`Evidence (${ids.length} source${ids.length > 1 ? "s" : ""})`, srcList(ids)); return; }
+  const src = t.closest("[data-sources]"); if (src) { const ids = src.dataset.sources.split(","); openDrawer(`Evidence (${ids.length} source${ids.length > 1 ? "s" : ""})`, srcList(ids), { instant: e.detail === 0 }); return; }
   if (t.closest("[data-drawer-close]")) { closeDrawer(); return; }
   const sv = t.closest("[data-save]"); if (sv) { const on = ws.toggleSaved(sv.dataset.save); sv.setAttribute("aria-pressed", on); sv.textContent = on ? "★ Saved" : "☆ Save"; return; }
   const ct = t.closest("button[data-cmp-toggle]"); if (ct) { const [k, id] = ct.dataset.cmpToggle.split("|"); const on = ws.toggleCmp(k, id); ct.setAttribute("aria-pressed", on); ct.textContent = on ? "✓ In compare" : "+ Compare"; return; }

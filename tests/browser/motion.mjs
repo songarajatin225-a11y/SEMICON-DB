@@ -13,6 +13,11 @@ const exe = ["/opt/pw-browsers/chromium", process.env.CHROMIUM_PATH].find(p => p
 const b = await chromium.launch(exe ? { executablePath: exe } : {});
 let pass = 0, fail = 0; const t = (name, ok, got) => { ok ? pass++ : fail++; console.log(`${ok ? "PASS" : "FAIL"}  ${name}${ok ? "" : `  — got ${got}`}`); };
 const DRAWER = "cubic-bezier(0.32, 0.72, 0, 1)";
+// a non-centre graph node whose circle centre is not covered by another node: [id, x, y]
+const clickableNode = page => page.evaluate(() => { for (const a of document.querySelectorAll(".graphbox a.gnode:not(.gcenter)")) {
+  const r = a.querySelector("circle").getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  if (y > 60 && document.elementFromPoint(x, y)?.closest("a.gnode") === a) return [a.dataset.node, x, y]; } return null; });
+
 let p = await b.newPage({ viewport: { width: 390, height: 800 } });
 await p.goto(base + "#/companies"); await p.waitForSelector("main h1");
 const sk = await p.evaluate(() => { const d = document.createElement("div"); d.className = "sk"; document.body.appendChild(d); const c = getComputedStyle(d, "::after"); const r = [c.animationName, c.animationTimingFunction, c.transform]; d.remove(); return r; });
@@ -53,6 +58,30 @@ const exit = await p.evaluate(() => { const e = document.querySelector(".toast")
 t("toast exits through the same edge (.out, animated)", exit === "true|opacity,transform", exit);
 await p.waitForTimeout(700);
 t("toast is taken out of the DOM after its exit", (await p.$$(".toast")).length === 0, "still in DOM");
+// sources drawer entrance (row 3): pointer → short entrance; keyboard → instant
+await p.goto(base + "#/companies/CMP-000010"); await p.waitForSelector("main h1");
+await p.click("main [data-sources]"); await p.waitForSelector("#drawer"); await p.waitForTimeout(20);
+const dr = await p.evaluate(() => [document.querySelector("#drawer").getAnimations().map(a => a.transitionProperty).sort().join(","), document.querySelector("#dr-scrim").getAnimations().map(a => a.transitionProperty).join(",")].join("|"));
+t("sources drawer enters (transform + opacity) and scrim fades, when clicked", dr === "opacity,transform|opacity", dr);
+await p.keyboard.press("Escape"); await p.waitForTimeout(50);
+t("Escape closes the sources drawer at once", (await p.$$("#drawer")).length === 0, "drawer still open");
+await p.focus("main [data-sources]"); await p.keyboard.press("Enter"); await p.waitForSelector("#drawer"); await p.waitForTimeout(20);
+const drk = await p.evaluate(() => [document.querySelector("#drawer").classList.contains("instant"), document.querySelector("#drawer").getAnimations().length].join("|"));
+t("sources drawer opened from the keyboard appears without motion", drk === "true|0", drk);
+await p.keyboard.press("Escape");
+// graph re-centre (row 4): clicked node travels to the centre, neighbours fade in; keyboard → no motion
+await p.goto(base + "#/graph/CMP-000010"); await p.waitForSelector(".graphbox svg");
+const [target, tx, ty] = await clickableNode(p);
+await p.mouse.click(tx, ty);
+await p.waitForFunction(id => document.querySelector(".graphbox a.gcenter")?.dataset.node === id, target); await p.waitForTimeout(40);
+const flip = await p.evaluate(() => { const c = document.querySelector(".graphbox a.gcenter"); const a = c.getAnimations(); const k = a[0]?.effect.getKeyframes()[0].transform || "";
+  const others = [...document.querySelectorAll(".graphbox a.gnode:not(.gcenter), .graphbox line.gedge")]; return [a.length, /translate\(/.test(k), a[0]?.effect.getTiming().duration, others.length > 0 && others.every(e => e.getAnimations().length === 1)].join("|"); });
+t("graph re-centre: clicked node travels to the centre (250ms) and neighbours fade in", flip === "1|true|250|true", flip);
+await p.waitForTimeout(400);
+const [next] = await clickableNode(p);
+await p.focus(`.graphbox a.gnode[data-node="${next}"]`); await p.keyboard.press("Enter");
+await p.waitForFunction(id => document.querySelector(".graphbox a.gcenter")?.dataset.node === id, next); await p.waitForTimeout(40);
+t("graph re-centre from the keyboard has no motion", (await p.$eval(".graphbox a.gcenter", e => e.getAnimations().length)) === 0, "animated");
 await p.close();
 p = await b.newPage({ viewport: { width: 390, height: 800 }, reducedMotion: "reduce" });
 await p.goto(base + "#/companies"); await p.waitForSelector("main h1");
@@ -67,5 +96,17 @@ const rt = await p.$eval(".toast", e => e.getAnimations().map(a => a.transitionP
 t("reduced motion: toast fades (opacity only)", rt === "opacity", rt);
 const rb = await p.$eval(".iconbtn, .btn", e => getComputedStyle(e).transitionDuration);
 t("reduced motion: no press-scale transition", rb === "0s", rb);
+await p.setViewportSize({ width: 1300, height: 900 });
+await p.goto(base + "#/companies/CMP-000010"); await p.waitForSelector("main h1");
+await p.click("main [data-sources]"); await p.waitForSelector("#drawer"); await p.waitForTimeout(20);
+const rdr = await p.$eval("#drawer", e => e.getAnimations().map(a => a.transitionProperty).join(","));
+t("reduced motion: sources drawer fades (opacity only)", rdr === "opacity", rdr);
+await p.keyboard.press("Escape");
+await p.goto(base + "#/graph/CMP-000010"); await p.waitForSelector(".graphbox svg");
+const [rtarget, rx, ry] = await clickableNode(p);
+await p.mouse.click(rx, ry);
+await p.waitForFunction(id => document.querySelector(".graphbox a.gcenter")?.dataset.node === id, rtarget); await p.waitForTimeout(30);
+const rg = await p.evaluate(() => [document.querySelector(".graphbox a.gcenter").getAnimations().length, document.querySelector(".graphbox svg").getAnimations().length].join("|"));
+t("reduced motion: graph re-centre is a short fade, no travel", rg === "0|1", rg);
 await b.close();
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

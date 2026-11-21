@@ -197,3 +197,19 @@ The `find-animation-opportunities` skill proposed six rows and rejected five can
 - `tests/browser/motion.mjs`: 17 / 17 (7 new: press scale and release, toast enter, exit and removal, reduced-motion toast and buttons).
 - Smoke test: 98 / 98 routes. `npm test`: 54 / 54.
 
+Rows 3 and 4 are now implemented too:
+
+- **Row 3: sources drawer.**
+  - **Entrance.** The evidence drawer enters from the edge it docks to with a short 24 px travel plus a fade, `transform` and `opacity` at 200 ms `var(--ease-drawer)`, while the scrim fades in over 200 ms. This uses `@starting-style`, so it needs no JavaScript.
+  - **Exit.** Closing stays instant.
+  - **Keyboard.** Opened from the keyboard (`click.detail === 0`), it appears without motion via the `.instant` class.
+  - **Reduced motion.** It fades only.
+- **Row 4: graph re-centring.**
+  - **Travel.** Clicking a node on the graph page makes the clicked node travel from where it was to the centre, using WAAPI `transform` at 250 ms `cubic-bezier(0.77, 0, 0.175, 1)`.
+  - **Choreography.** Neighbour nodes fade in from 100 ms over 150 ms. Edges fade in only as the node lands (from 180 ms over 120 ms), so no edge points at an empty centre. This was adjusted after the first version showed edges meeting about 30 px below the moving node.
+  - **Measured.** The node starts at the exact click point and is within 2 px of the centre when the edges appear.
+  - **Keyboard.** Keyboard activation does not animate.
+  - **Reduced motion.** A 150 ms fade, with no travel.
+
+**Checks:** `tests/browser/motion.mjs` passes 24 / 24 (7 new). Smoke test 98 / 98 routes; `npm test` 54 / 54.
+

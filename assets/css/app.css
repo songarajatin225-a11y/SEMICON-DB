@@ -287,8 +287,16 @@ table.tbl{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .pdetail{position:sticky;top:calc(var(--hdr) + 12px);max-height:calc(100vh - var(--hdr) - 24px);overflow:auto}
 
 /* ---------- drawer / dialog / palette ---------- */
-.scrim{position:fixed;inset:0;background:rgba(8,18,20,.35);z-index:40}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--surface);border-left:1px solid var(--line);box-shadow:var(--shadow);z-index:41;overflow-y:auto;padding:16px 20px 30px}
+.scrim{position:fixed;inset:0;background:rgba(8,18,20,.35);z-index:40;transition:opacity 200ms ease}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--surface);border-left:1px solid var(--line);box-shadow:var(--shadow);z-index:41;overflow-y:auto;padding:16px 20px 30px;transition:transform 200ms var(--ease-drawer),opacity 200ms var(--ease-drawer)}
+/* sources drawer: short entrance from the edge it docks to (tens/day, so 24px of travel, not a full slide);
+   exit stays instant; opened from the keyboard it appears without motion (.instant) */
+@starting-style{ .drawer{transform:translateX(24px);opacity:0} .scrim{opacity:0} }
+.drawer.instant,.scrim.instant{transition:none}
+@media (prefers-reduced-motion:reduce){
+  .drawer{transition:opacity 200ms ease}
+  @starting-style{ .drawer{transform:none} }
+}
 .drawer .dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;position:sticky;top:-16px;background:var(--surface);padding:6px 0 10px;margin-top:-6px;border-bottom:1px solid var(--line-2);z-index:1}
 .srclist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .srclist li{border-left:3px solid var(--line);padding:4px 0 4px 10px;font-size:12.5px}
