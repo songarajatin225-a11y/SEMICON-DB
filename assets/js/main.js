@@ -100,10 +100,17 @@ document.addEventListener("input", e => {
   if (t.matches("[data-fsearch]")) { const q = norm(t.value); t.parentElement.querySelectorAll("label[data-fl]").forEach(l => (l.hidden = q && !l.dataset.fl.includes(q))); return; }
   const act = t.closest("[data-input]"); if (act && ACTIONS[act.dataset.input]) ACTIONS[act.dataset.input](act, e);
 });
+// Keyboard-initiated actions never animate: drop the drawer transition for this one style change, then restore it.
+function closeInstantly(cls) {
+  const b = document.body;
+  b.classList.add("snap"); b.classList.remove(cls);
+  void b.offsetWidth; // flush styles so the close is applied with transitions off
+  b.classList.remove("snap");
+}
 document.addEventListener("keydown", e => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); paletteOpen() ? closePalette() : openPalette(); return; }
   if (e.key === "/" && !/input|textarea|select/i.test(document.activeElement.tagName) && !paletteOpen()) { e.preventDefault(); openPalette(); return; }
-  if (e.key === "Escape") { if (closeDrawer()) return; if (document.body.classList.contains("facets-open")) { document.body.classList.remove("facets-open"); return; } if (document.body.classList.contains("nav-open")) { document.body.classList.remove("nav-open"); return; } }
+  if (e.key === "Escape") { if (closeDrawer()) return; if (document.body.classList.contains("facets-open")) { closeInstantly("facets-open"); return; } if (document.body.classList.contains("nav-open")) { closeInstantly("nav-open"); $("#menubtn")?.setAttribute("aria-expanded", "false"); return; } }
 });
 // tooltips
 const tip = $("#tip");

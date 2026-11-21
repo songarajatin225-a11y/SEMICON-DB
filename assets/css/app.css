@@ -2,6 +2,8 @@
    One token set (light + dark), one component vocabulary: header, rail, page, panel, kpi, chip/badge,
    table, facet panel, tabs, drawer, palette, graph, map. Colour encodes meaning (evidence state), not decoration. */
 :root{
+  /* motion tokens: strong curves for UI (built-in CSS easings are too weak) */
+  --ease-out:cubic-bezier(0.23, 1, 0.32, 1); --ease-in-out:cubic-bezier(0.77, 0, 0.175, 1); --ease-drawer:cubic-bezier(0.32, 0.72, 0, 1);
   --bg:#F4F6F7; --surface:#FFFFFF; --sunk:#EDF1F2; --raised:#FFFFFF; --ink:#13262A; --ink-2:#465A5E; --ink-3:#5B6B6F;
   --line:#D5DEE0; --line-2:#E6ECED;
   --primary:#00696C; --primary-2:#00A3A6; --primary-wash:#E0F2F2; --accent:#00B7BA;
@@ -317,9 +319,10 @@ table.tbl{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
 .bubble-t{font-size:10px;fill:var(--ink);pointer-events:none;paint-order:stroke;stroke:var(--sunk);stroke-width:3px;font-weight:700}
 
 /* ---------- skeleton ---------- */
-.sk{background:linear-gradient(90deg,var(--line-2) 0,var(--sunk) 40%,var(--line-2) 80%);background-size:300% 100%;border-radius:6px}
-@media (prefers-reduced-motion:no-preference){ .sk{animation:sk 1.3s ease-in-out infinite} .bar .fill,.meter .trk b{transition:width .3s ease} }
-@keyframes sk{0%{background-position:100% 0}100%{background-position:0 0}}
+.sk{position:relative;overflow:hidden;background:var(--line-2);border-radius:6px}
+.sk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0,var(--sunk) 50%,transparent 100%);transform:translateX(-100%)}
+@media (prefers-reduced-motion:no-preference){ .sk::after{animation:sk 1.3s linear infinite} }
+@keyframes sk{to{transform:translateX(100%)}}
 .sk-line{height:12px;margin:8px 0} .sk-h{height:26px;width:40%;margin-bottom:14px} .sk-block{height:120px}
 
 /* ---------- responsive ---------- */
@@ -331,14 +334,18 @@ table.tbl{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
   .shell{grid-template-columns:minmax(0,1fr)}
   .rail{position:fixed;top:var(--hdr);left:0;bottom:0;width:260px;height:auto;z-index:35;transform:translateX(-102%);box-shadow:var(--shadow)}
   body.nav-open .rail{transform:none}
-  @media (prefers-reduced-motion:no-preference){ .rail{transition:transform .18s ease} }
+  @media (prefers-reduced-motion:no-preference){ .rail{transition:transform 200ms var(--ease-drawer)} }
+  @media (prefers-reduced-motion:reduce){ .rail{opacity:0;transition:opacity 200ms ease,transform 0s linear 200ms} body.nav-open .rail{opacity:1;transition:opacity 200ms ease} }
   main{padding:14px 16px 60px}
   .g2,.g3{grid-template-columns:minmax(0,1fr)}
   .listing{grid-template-columns:minmax(0,1fr)}
   .filters-toggle{display:inline-flex}
   .facets{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:78vh;z-index:45;border-radius:12px 12px 0 0;transform:translateY(105%);box-shadow:var(--shadow)}
   body.facets-open .facets{transform:none}
-  @media (prefers-reduced-motion:no-preference){ .facets{transition:transform .2s ease} }
+  @media (prefers-reduced-motion:no-preference){ .facets{transition:transform 280ms var(--ease-drawer)} }
+  @media (prefers-reduced-motion:reduce){ .facets{opacity:0;transition:opacity 200ms ease,transform 0s linear 200ms} body.facets-open .facets{opacity:1;transition:opacity 200ms ease} }
+  /* keyboard dismissal (Escape) closes without animation */
+  body.snap .rail,body.snap .facets{transition:none !important}
   .pex{grid-template-columns:minmax(0,1fr)} .ptree{position:static;max-height:none}
   .ritem{grid-template-columns:24px minmax(0,1fr)} .ritem>:nth-child(n+3){grid-column:2}
   .cols2,.cols3{columns:1}

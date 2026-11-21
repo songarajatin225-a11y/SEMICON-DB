@@ -168,3 +168,21 @@ New route `#/intelligence/analyst` (question router, "Can we build this?" engine
 - Interaction suite passes; "200 mm SiC equipment" no longer lists a facility with an unrecorded wafer size as a full match.
 - axe (light and dark), now covering facilities, flows, research and company profiles: 0 violations.
 - Performance: boot to first heading 268 ms; first contentful paint 68 ms; route render 30–55 ms; bundle 398 KB gzipped.
+
+## Motion review addendum (21 Nov 2026)
+
+Reviewed with the `review-animations` skill (Emil Kowalski's standards). Verdict: **Block**, on two criteria: the Escape key closed drawers with an animation, and the skeleton shimmer was a non-GPU animation with an easy GPU fix. All seven findings were fixed:
+
+- **Easing tokens.** Added `--ease-out`, `--ease-in-out` and `--ease-drawer` to `:root`.
+- **Bars and meters.** Deleted the `width` transition. It never fired, because views re-render, and it would have animated data through a layout property.
+- **Skeleton shimmer.** Now moves a `::after` highlight with `transform`, using `linear` easing, instead of animating `background-position` with `ease-in-out`.
+- **Nav rail.** `transform 200ms var(--ease-drawer)`, replacing `.18s ease`.
+- **Filter sheet.** `transform 280ms var(--ease-drawer)`, replacing `.2s ease`.
+- **Escape key.** Closes the rail and the filter sheet with no animation (`closeInstantly` in `main.js`) and resets `aria-expanded`. Closing by tap still animates.
+- **Reduced motion.** Both drawers fade their opacity over 200ms instead of snapping, with no transform movement.
+
+**Checks:**
+- `npm run test:browser` runs the new `tests/browser/smoke.mjs` (98 routes, 0 errors, 3 expected conflict banners) and `tests/browser/motion.mjs` (10 / 10).
+- `npm test`: 54 / 54.
+- axe: not re-run this round. The axe-core dependency could not be installed in this session; the changes alter motion only, and the skeleton keeps the same colour tokens.
+
