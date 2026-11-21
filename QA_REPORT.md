@@ -213,3 +213,13 @@ Rows 3 and 4 are now implemented too:
 
 **Checks:** `tests/browser/motion.mjs` passes 24 / 24 (7 new). Smoke test 98 / 98 routes; `npm test` 54 / 54.
 
+## Batch 14 data addendum (21 Nov 2026)
+
+- **Data:** 18 facilities and 5 policy programmes added, with 67 sources. `node scripts/build-data.mjs`: 0 errors. The 72 new warnings are all `source.search_index` (titles and summaries only) or `source.date` (undated company or official pages).
+- **Fixed during testing:**
+  - The status test now treats `OPENING_CEREMONY` as a non-stage event, like `SCHEDULE_CHANGE`.
+  - "2nm fab in Taiwan" returned nothing because the index held "2 nm". The tokenizer now joins a number and "nm" on both sides.
+- **Checks:**
+  - `npm test`: 60 / 60, with benchmark 37 / 37.
+  - Smoke: 108 / 108 routes.
+  - Motion: 24 / 24.

@@ -521,3 +521,40 @@ The bundle is 411 KB gzipped.
 - Browser smoke test: 188 routes, 0 console errors. Three routes show their expected conflict banners.
 - Interaction suite passes. axe in light and dark mode: 0 violations.
 
+### Batch 14 (21 Nov 2026): Asia facilities and more policy programmes
+
+- **18 facilities (FAC-000026 to FAC-000043):**
+  - **Taiwan:** TSMC Fab 20, Baoshan (N2 volume production, Dec 2025); TSMC Fab 22, Kaohsiung (N2 trial production, Oct 2025).
+  - **China:** SMIC Lingang, Shanghai (announced Sept 2021; later status not found and stated as such); Hua Hong Wuxi 12-inch line phase II (production from Dec 2024).
+  - **Singapore:** UMC Fab 12i P3 (tool move-in May 2024, opening ceremony Apr 2025); VSMC, Tampines (risk production from the Sept 2026 opening); Micron HBM packaging (groundbreaking Jan 2025, output moved to early 2027).
+  - **Malaysia:** Infineon Kulim 3 SiC phase 1 (opened Aug 2024); ASE Plant 5, Penang (opened Feb 2025); SPIL P1, Bandar Cassia (groundbreaking May 2024).
+  - **Vietnam:** Amkor Bac Ninh (opened Oct 2023).
+  - **Japan / Korea / Germany:** Micron Hiroshima cleanroom expansion (groundbreaking Jul 2026); Samsung Pyeongtaek P4 build-out (paused 2024, construction resumed per a Nov 2025 report; LOW confidence); Infineon Smart Power Fab, Dresden (opened Jul 2026).
+  - **United States:** TSMC Arizona second fab (tool move-in, Oct 2026); Texas Instruments SM1, Sherman (production Dec 2025); GlobalFoundries Malta expansion (CHIPS award finalised Nov 2024); Wolfspeed John Palmour centre, Siler City (first crystal furnaces Jun 2024).
+- **5 policy programmes (PG08 to PG12):** Taiwan's Statute for Industrial Innovation Article 10-2; China's Big Fund III (¥344 billion registered capital); Malaysia's National Semiconductor Strategy (RM25 billion fiscal support); Vietnam's Decision 1018/QĐ-TTg strategy; Gujarat Semiconductor Policy 2022–27. New programme types `STATE_FUND` and `STRATEGY`.
+- **67 sources (S1004 to S1070):** government releases (EDB, MIDA, MTI, NIST, NY and NC state), company releases (TSMC via coverage, UMC, NXP, Infineon, TI, ASE, Amkor, Wolfspeed) and industry news. All are search-index evidence (titles and summaries); no page was read directly.
+- **Rules applied:**
+  - Plans and targets (volume-production dates, phase 2 investments, capacity goals) stay in notes, not milestones.
+  - Where reports disagree (VSMC's 2029 capacity, Amkor's investment horizon, Micron Hiroshima's dollar figure), both readings are kept in the field text.
+  - A stage is recorded only when a source states it for that site. For example, Fab 22 stays at trial production because no reviewed source dates its volume production separately.
+- **New non-stage event `OPENING_CEREMONY`.** It is kept in the history but never sets the status, because an opening ceremony is not proof of production.
+- **Search:**
+  - "2 nm" and "2nm" now index and query as the same token, so process-node searches match either spelling.
+  - 6 new benchmark queries: "2nm fab in Taiwan", "2 nm fab in Taiwan", "OSAT in Malaysia", "SiC fab in Malaysia", "VSMC", "Amkor Vietnam".
+
+**Counts:**
+
+| Entity | Count |
+|---|---:|
+| Facilities | 43, in India, the US, Japan, Germany, South Korea, Taiwan, China, Singapore, Malaysia and Vietnam |
+| Policy programmes | 12 |
+| Sources | 1,072 |
+| Relationships | 6,217 |
+| Claims | 3,736 |
+
+**Tests:**
+- `npm test`: 60 / 60 pass, with 37 / 37 search-benchmark queries.
+- Browser smoke test: 108 routes, 0 console errors (10 new routes). Three routes show their expected conflict banners.
+- Motion suite: 24 / 24.
+
+**Still not covered:** Singapore incentive programmes, most sub-national incentives outside Gujarat, CXMT / YMTC / other Chinese memory fabs, Philippines and Thailand OSAT sites, and Intel's Penang packaging complex (reported as due to start in 2026, with no opening yet found).

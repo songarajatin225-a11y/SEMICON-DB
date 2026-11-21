@@ -17,10 +17,10 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
-| Facilities (site level) | 25 | India's ISM-approved units, one Indian equipment plant and 12 major sites in the US, Japan, Germany and South Korea (including the cancelled Intel Magdeburg project), with dated status history and a controlled status class, investment as reported, capacity, technology and sources (Batch 11) |
-| Relationships | 6,184 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 1,005 |
-| Claims (lazy-loaded) | 3,608 | Claim-level provenance: value → evidence type (directly stated / specified / calculated / inferred / unverified) → source → date → confidence | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Facilities (site level) | 43 | India's ISM-approved units, one Indian equipment plant and 30 major sites in the US, Japan, Germany, South Korea, Taiwan, China, Singapore, Malaysia and Vietnam (including the cancelled Intel Magdeburg project), with dated status history and a controlled status class, investment as reported, capacity, technology and sources (Batches 11–14) |
+| Relationships | 6,217 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 1,072 |
+| Claims (lazy-loaded) | 3,736 | Claim-level provenance: value → evidence type (directly stated / specified / calculated / inferred / unverified) → source → date → confidence | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -128,7 +128,7 @@ Result: categories with no documented supplier fell from 91 to 70. Of those, 45 
 - **Data-quality score and research status:** separate from confidence and completeness.
 - **Facilities in four countries:** India plus 7 major fabs in the US, Japan and Germany. Statuses use the controlled vocabulary; India gets a state tile map.
 - **"What can replace this?":** model pages classify alternatives as direct substitute, partial substitute, development-stage or different technology.
-- **Policy and programmes** (`#/intelligence/policy`): the US CHIPS Act, the EU Chips Act, US export controls, Japan, Korea and India, with sources and linked facilities.
+- **Policy and programmes** (`#/intelligence/policy`): 12 programmes: the US CHIPS Act, the EU Chips Act, US export controls, Japan, Korea, India, Taiwan's Article 10-2 tax credit, China's Big Fund III, Malaysia's National Semiconductor Strategy, Vietnam's semiconductor strategy and Gujarat's state policy, with sources and linked facilities.
 - **Graph filters:** relationship-type and source-backed-only filters, plus a graph JSON export.
 - **`npm test`:** validation plus 54 headless tests, including a gold-standard search benchmark (`tests/search-benchmark.json`).
 

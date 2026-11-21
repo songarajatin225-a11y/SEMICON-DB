@@ -169,6 +169,51 @@
     "FAC-000022"
    ],
    "top": 5
+  },
+  {
+   "q": "2nm fab in Taiwan",
+   "expect": [
+    "FAC-000026",
+    "FAC-000027"
+   ],
+   "top": 10
+  },
+  {
+   "q": "OSAT in Malaysia",
+   "expect": [
+    "FAC-000038",
+    "FAC-000039"
+   ],
+   "top": 10
+  },
+  {
+   "q": "SiC fab in Malaysia",
+   "expect": [
+    "FAC-000036"
+   ],
+   "top": 10
+  },
+  {
+   "q": "VSMC",
+   "expect": [
+    "FAC-000030"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Amkor Vietnam",
+   "expect": [
+    "FAC-000040"
+   ],
+   "top": 10
+  },
+  {
+   "q": "2 nm fab in Taiwan",
+   "expect": [
+    "FAC-000026",
+    "FAC-000027"
+   ],
+   "top": 10
   }
  ],
  "resolve": [

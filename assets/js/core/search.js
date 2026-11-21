@@ -18,7 +18,8 @@ export const EXAMPLES = ["300 mm plasma etch equipment", "SiC wafer dicing equip
   "equipment companies with India presence", "200 mm SiC equipment", "equipment required for HBM packaging", "hybrid bonding", "EUV lithography", "galvo scanner suppliers"];
 
 let IDX = null;
-const tok = s => norm(s).replace(/[^a-z0-9.+]+/g, " ").split(" ").map(t => t.replace(/^\.+|\.+$/g, "")).filter(t => t && t.length > 0);
+// "2 nm" and "2nm" index and query as one token, so process-node searches match either spelling
+const tok = s => norm(s).replace(/(\d)\s+nm\b/g, "$1nm").replace(/[^a-z0-9.+]+/g, " ").split(" ").map(t => t.replace(/^\.+|\.+$/g, "")).filter(t => t && t.length > 0);
 
 function docFor(r) {
   const k = r.entity_type;

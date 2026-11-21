@@ -33,7 +33,7 @@ for (const [text, id] of GOLD.resolve) { const c = resolveCompany(text); t(`reso
 // 3. data integrity and policy
 const F = DB.facilities;
 t("every facility cites sources and every milestone is sourced", F.every(f => f.source_ids.length && f.status_history.every(h => h.source_ids.length)));
-t("facility status equals its latest dated stage", F.every(f => { const st = f.status_history.filter(h => !["FIRST_SHIPMENT", "SCHEDULE_CHANGE"].includes(h.status)); return !st.length || st.some(h => h.status === f.status && h.date === f.status_date) && st.every(h => h.date <= f.status_date); }));
+t("facility status equals its latest dated stage", F.every(f => { const st = f.status_history.filter(h => !["FIRST_SHIPMENT", "SCHEDULE_CHANGE", "OPENING_CEREMONY"].includes(h.status)); return !st.length || st.some(h => h.status === f.status && h.date === f.status_date) && st.every(h => h.date <= f.status_date); }));
 t("every facility has a controlled status class", F.every(f => ["ANNOUNCED", "PLANNED", "SITE_ACQUIRED", "UNDER_CONSTRUCTION", "EQUIPMENT_INSTALLATION", "PILOT", "RAMP", "PRODUCTION", "EXPANDED", "PAUSED", "CANCELLED", "CLOSED", "UNKNOWN"].includes(f.status_class)));
 t("several investment figures always raise a conflict", F.filter(f => f.investment.length > 1).every(f => DB.quality.conflicts.some(c => c.entity === f.id)));
 t("no record is merged automatically (duplicates kept as candidates)", DB.quality.duplicate_candidates.every(d => get(d.a) && get(d.b)));
