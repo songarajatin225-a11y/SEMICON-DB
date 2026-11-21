@@ -114,7 +114,7 @@ function research() {
 }
 
 // ----------------------------------------------------------------- policy / programme database
-const PTYPE = { INCENTIVE: "Incentive programme", TAX_CREDIT: "Tax credit", STATE_FUND: "State investment fund", STRATEGY: "National strategy", EXPORT_CONTROL: "Export control" };
+const PTYPE = { INCENTIVE: "Incentive programme", TAX_CREDIT: "Tax credit", STATE_FUND: "State investment fund", STRATEGY: "Strategy / mission", RD_FUNDING: "R&D funding", EXPORT_CONTROL: "Export control" };
 function policy({ params }) {
   const P = DB.intel.programs || [], t = params.get("type");
   const rows = P.filter(p => !t || p.type === t);
@@ -125,7 +125,7 @@ function policy({ params }) {
       <p class="small">${esc(p.jurisdiction)} · status ${esc(p.status.replace(/_/g, " ").toLowerCase())}${p.announced ? ` · ${esc(p.announced)}` : ""}</p>
       <table class="spec"><tbody>${p.facts.map(x => `<tr><th>${esc(x.label)}</th><td>${esc(x.value)} ${srcLink(x.source_ids)}</td></tr>`).join("")}</tbody></table>
       ${p.facility_ids.length ? `<p class="small" style="margin-top:8px"><b>Facilities naming this programme (${p.facility_ids.length}):</b> ${p.facility_ids.map(id => link(id)).join(", ")}</p><p class="note">${esc(p.facility_basis)}. A link is not a confirmation of an award amount.</p>` : ""}</div>`).join("")}
-    <p class="note">Coverage is a starting set: ${esc(uniq(P.map(p => p.jurisdiction)).join(", "))}. Singapore programmes and most sub-national incentives are not yet captured.</p>`;
+    <p class="note">Coverage is a starting set: ${esc(uniq(P.map(p => p.jurisdiction)).join(", "))}. Sub-national incentives outside the listed states, and most EU member-state schemes, are not yet captured.</p>`;
   return { title: "Policy & programmes", html };
 }
 const srcLink = ids => ids.map(id => `<a class="xs" href="${hrefOf(id)}">${esc(id)}</a>`).join(" ");
@@ -133,7 +133,7 @@ const srcLink = ids => ids.map(id => `<a class="xs" href="${hrefOf(id)}">${esc(i
 export const RESEARCH_MODULES = [
   ["flows", "Process Flows", "Logic, DRAM, 3D NAND, SiC, GaN, MEMS, CIS, RF and advanced-packaging flows; click a step for equipment, suppliers, India-linked suppliers and concentration."],
   ["changes", "What Changed", "Records added per batch, newest first, and the latest facility milestones."],
-  ["policy", "Policy & Programmes", "Semiconductor incentive programmes, tax credits, state funds, national strategies and export controls (US, EU, Japan, Korea, India, Taiwan, China, Malaysia, Vietnam, Gujarat) with sources and linked facilities."],
+  ["policy", "Policy & Programmes", "Semiconductor incentive programmes, tax credits, state funds, national strategies and export controls (US federal and state, EU, Japan, Korea, India and five Indian states, Taiwan, China, Singapore, Malaysia, Vietnam, Thailand) with sources and linked facilities."],
   ["research", "Research Queue", "Coverage by ingestion wave, important records with thin evidence, uncovered categories and facilities to re-check."],
 ];
 export const RESEARCH_SUB = { flows, changes, research, policy };

@@ -214,6 +214,41 @@
     "FAC-000027"
    ],
    "top": 10
+  },
+  {
+   "q": "Kioxia Kitakami",
+   "expect": [
+    "FAC-000045"
+   ],
+   "top": 5
+  },
+  {
+   "q": "HBM packaging in South Korea",
+   "expect": [
+    "FAC-000047"
+   ],
+   "top": 10
+  },
+  {
+   "q": "Primo Twin-Star",
+   "expect": [
+    "MDL-000571"
+   ],
+   "top": 5
+  },
+  {
+   "q": "CM300xi",
+   "expect": [
+    "MDL-000576"
+   ],
+   "top": 5
+  },
+  {
+   "q": "optical CD metrology",
+   "expect": [
+    "MDL-000572"
+   ],
+   "top": 25
   }
  ],
  "resolve": [

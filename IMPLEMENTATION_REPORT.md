@@ -558,3 +558,42 @@ The bundle is 411 KB gzipped.
 - Motion suite: 24 / 24.
 
 **Still not covered:** Singapore incentive programmes, most sub-national incentives outside Gujarat, CXMT / YMTC / other Chinese memory fabs, Philippines and Thailand OSAT sites, and Intel's Penang packaging complex (reported as due to start in 2026, with no opening yet found).
+
+### Batch 15 (21 Nov 2026): memory fabs, packaging sites, state programmes, equipment models
+
+- **7 facilities (FAC-000044 to FAC-000050):**
+  - YMTC Wuhan Phase III (equipment installation reported Apr 2026; LOW confidence, not confirmed by YMTC);
+  - Kioxia Kitakami Fab2 / K2 (operating since 29 Sept 2025, with Sandisk);
+  - SK hynix M15X, Cheongju (opened with first equipment, Oct 2025);
+  - SK hynix P&T7 HBM packaging fab, Cheongju (announced Jan 2026);
+  - Intel Penang advanced packaging complex (under construction; reported 99% complete, no start of operations found);
+  - Infineon backend site, Samut Prakan, Thailand (opened 1 Oct 2026). Its two investment figures, US$1.4 billion and more than €100 million, are kept as an open conflict;
+  - ATEC's captive line for PANJIT, Cabuyao, Philippines (Sept 2025).
+- **7 policy programmes (PG13 to PG19):** Singapore's RIE2030 semiconductor flagship (S$800 million); the Texas CHIPS Act / Texas Semiconductor Innovation Fund; New York Green CHIPS, now linked to GlobalFoundries Malta through that record's own scheme field; the Odisha, Uttar Pradesh and Tamil Nadu state policies; and Thailand's national semiconductor strategy (Sept 2026). New programme type `RD_FUNDING`.
+- **10 equipment models via `scripts/import.mjs`:**
+  - AMEC Primo AD-RIE, Primo nanova and Primo Twin-Star (etch);
+  - Nova PRISM (optical CD), METRION (SIMS), ELIPSON (Raman) and VERAFLEX IV (XPS / XRF);
+  - FormFactor CM300xi (probe system);
+  - Kingsemi KS-FT200/300 (coater / developer);
+  - Eugene Technology BlueJay (single-wafer LPCVD).
+
+  AMEC, Nova and FormFactor had no models before. Descriptions come from product-page and release summaries; no numeric specifications are recorded unless the summary stated them.
+- **49 sources (S1071 to S1119):** all search-index evidence.
+
+**Counts:**
+
+| Entity | Count |
+|---|---:|
+| Facilities | 50, in 12 countries |
+| Policy programmes | 19 |
+| Product families → models | 410 → 578 |
+| Sources | 1,121 |
+| Relationships | 6,298 |
+| Claims | 3,813 |
+
+**Tests:**
+- `npm test`: 65 / 65, with 42 / 42 benchmark queries.
+- Smoke test: 115 / 115 routes; 4 expected conflict banners (new: FAC-000049).
+- Motion: 24 / 24.
+
+**Still not covered:** CXMT site records (reported capacity figures are secondary and undated), EU member-state schemes, more Philippine and Thai sites (only one each), and probe-card product lines such as FormFactor's HBM cards.

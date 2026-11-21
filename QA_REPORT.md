@@ -223,3 +223,11 @@ Rows 3 and 4 are now implemented too:
   - `npm test`: 60 / 60, with benchmark 37 / 37.
   - Smoke: 108 / 108 routes.
   - Motion: 24 / 24.
+
+## Batch 15 data addendum (21 Nov 2026)
+
+- **Data:** 7 facilities, 7 programmes and 10 models, with 49 sources. Build: 0 errors. The 61 new warnings are all `source.search_index` or `source.date`. One new open conflict, CNF-0010: the two Infineon Thailand investment figures.
+- **Checks:**
+  - `npm test`: 65 / 65, with benchmark 42 / 42 (5 new queries).
+  - Smoke: 115 / 115 routes.
+  - Motion: 24 / 24.
