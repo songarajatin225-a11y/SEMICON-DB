@@ -122,6 +122,16 @@ Materials suppliers are recorded at company level (type “Materials/gases”); 
 
 Result: categories with no documented supplier fell from 91 to 70. Of those, 45 have suppliers under an equivalent category and 25 are real gaps, 10 of which are device types rather than tools. As before, all sources were located by web search and the pages were not read, so models carry no specifications.
 
+## Passcode screen (22 Nov 2026)
+
+The site opens with a passcode screen, and the app and its data load only after the passcode is entered.
+- **What is stored:** the passcode is not in this repository. `assets/js/gate.js` holds only a salted PBKDF2-SHA256 verifier (600,000 iterations), checked in the browser with WebCrypto.
+- **How long it lasts:** an unlock is remembered on the device until **Lock** in the header is used.
+- **Legacy edition:** the legacy edition uses the same screen.
+- **Limits:** this is a client-side gate for a static GitHub Pages site. It keeps casual visitors out, but it is **not access control**, because the data files remain reachable at their public URLs. Anything confidential needs server-side protection.
+- **Changing the passcode:** generate a new salt and verifier, for example with Node's `crypto.pbkdf2Sync(code, salt, 600000, 32, "sha256")`, and replace `SALT` and `HASH` in `assets/js/gate.js`. Everyone then has to enter the new passcode.
+- **Tests:** `tests/browser/gate.mjs` checks the screen. Its unlock path runs only when `SEMICONDB_PASSCODE` is set in the environment, so the passcode never sits in the repository.
+
 ## Visual refresh (22 Nov 2026)
 
 - **Look and feel:** system UI typography, softer surfaces and a translucent header, plus refreshed light and dark tokens.

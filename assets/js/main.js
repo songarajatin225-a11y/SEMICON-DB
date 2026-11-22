@@ -11,6 +11,7 @@ import { srcList, empty } from "./ui/components.js";
 import { ROUTES } from "./views/index.js";
 import { fillClaims } from "./views/shared.js";
 import { ACTIONS, setRenderer, registerActions } from "./core/actions.js";
+import { lock } from "./gate.js";
 
 const NAV = [
   ["Overview", [["", "Home"], ["intelligence", "Intelligence"], ["quality", "Data Quality"]]],
@@ -82,6 +83,7 @@ document.addEventListener("click", e => {
   const scmp = t.closest("[data-savecmp]"); if (scmp) { const [k, ids] = scmp.dataset.savecmp.split("|"); ws.saveComparison(k, ids.split(",")); return; }
   const act = t.closest("[data-action]"); if (act && ACTIONS[act.dataset.action]) { ACTIONS[act.dataset.action](act, e); return; }
   if (t.closest("#gsearch")) { openPalette(); return; }
+  if (t.closest("#lockbtn")) { lock(); return; }
   if (t.closest("#themebtn")) { const cur = document.documentElement.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); const nx = cur === "dark" ? "light" : "dark"; document.documentElement.setAttribute("data-theme", nx); store.set("theme", nx); return; }
   if (t.closest("#menubtn")) { const on = document.body.classList.toggle("nav-open"); $("#menubtn").setAttribute("aria-expanded", on); return; }
 });

@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
+import { unlock } from "./unlock.mjs";
 const base = process.argv[2] || "http://localhost:8765/";
 const pw = process.env.PLAYWRIGHT_PATH || path.join(execSync("npm root -g").toString().trim(), "playwright");
 const { chromium } = createRequire(import.meta.url)(pw);
@@ -19,6 +20,7 @@ const clickableNode = page => page.evaluate(() => { for (const a of document.que
   if (y > 60 && document.elementFromPoint(x, y)?.closest("a.gnode") === a) return [a.dataset.node, x, y]; } return null; });
 
 let p = await b.newPage({ viewport: { width: 390, height: 800 } });
+await unlock(p);
 await p.goto(base + "#/companies"); await p.waitForSelector("main h1");
 const sk = await p.evaluate(() => { const d = document.createElement("div"); d.className = "sk"; document.body.appendChild(d); const c = getComputedStyle(d, "::after"); const r = [c.animationName, c.animationTimingFunction, c.transform]; d.remove(); return r; });
 t("skeleton shimmer animates a transform with linear easing", sk[0] === "sk" && sk[1] === "linear" && sk[2].startsWith("matrix"), sk.join(" "));
@@ -84,6 +86,7 @@ await p.waitForFunction(id => document.querySelector(".graphbox a.gcenter")?.dat
 t("graph re-centre from the keyboard has no motion", (await p.$eval(".graphbox a.gcenter", e => e.getAnimations().length)) === 0, "animated");
 await p.close();
 p = await b.newPage({ viewport: { width: 390, height: 800 }, reducedMotion: "reduce" });
+await unlock(p);
 await p.goto(base + "#/companies"); await p.waitForSelector("main h1");
 await p.click("#menubtn"); await p.waitForTimeout(30);
 const rm = await p.$eval(".rail", e => e.getAnimations().map(a => a.transitionProperty).join(","));
