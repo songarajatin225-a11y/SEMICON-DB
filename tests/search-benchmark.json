@@ -284,6 +284,41 @@
     "MDL-000580"
    ],
    "top": 25
+  },
+  {
+   "q": "A14 fab Taiwan",
+   "expect": [
+    "FAC-000063"
+   ],
+   "top": 10
+  },
+  {
+   "q": "CoWoS",
+   "expect": [
+    "FAC-000062"
+   ],
+   "top": 10
+  },
+  {
+   "q": "Renesas Kofu",
+   "expect": [
+    "FAC-000065"
+   ],
+   "top": 5
+  },
+  {
+   "q": "FIREBIRD TCB",
+   "expect": [
+    "MDL-000592"
+   ],
+   "top": 5
+  },
+  {
+   "q": "TC Bonder 4",
+   "expect": [
+    "MDL-000589"
+   ],
+   "top": 10
   }
  ],
  "resolve": [

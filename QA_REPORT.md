@@ -293,3 +293,12 @@ The layout, routes and features are unchanged. Changes:
 - **Existing suites:** smoke and motion now start unlocked through `tests/browser/unlock.mjs`. Smoke 124 / 124; motion 24 / 24; `npm test` 70 / 70.
 - **Screenshots:** reviewed in light, dark and at 390 px.
 
+## Batch 17 data addendum (22 Nov 2026)
+
+- **Data:** 6 facilities, 3 programmes and 7 models, with 38 sources. Build: 0 errors. The 46 new warnings are all `source.search_index` or `source.date`. No new conflicts.
+- **Checks:**
+  - `npm test`: 75 / 75, with benchmark 52 / 52 (5 new queries).
+  - Smoke: 130 / 130 routes (6 new).
+  - Motion: 24 / 24.
+  - Gate: 11 / 11.
+
