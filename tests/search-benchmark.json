@@ -249,6 +249,41 @@
     "MDL-000572"
    ],
    "top": 25
+  },
+  {
+   "q": "Akara",
+   "expect": [
+    "MDL-000579"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Magnum 7H",
+   "expect": [
+    "MDL-000582"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Leixlip",
+   "expect": [
+    "FAC-000052"
+   ],
+   "top": 5
+  },
+  {
+   "q": "SiC fab in Italy",
+   "expect": [
+    "FAC-000053"
+   ],
+   "top": 10
+  },
+  {
+   "q": "molybdenum ALD",
+   "expect": [
+    "MDL-000580"
+   ],
+   "top": 25
   }
  ],
  "resolve": [

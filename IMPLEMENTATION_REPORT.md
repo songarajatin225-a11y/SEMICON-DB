@@ -597,3 +597,46 @@ The bundle is 411 KB gzipped.
 - Motion: 24 / 24.
 
 **Still not covered:** CXMT site records (reported capacity figures are secondary and undated), EU member-state schemes, more Philippine and Thai sites (only one each), and probe-card product lines such as FormFactor's HBM cards.
+
+### Batch 16 (22 Nov 2026): US and European sites, EU programmes, more equipment models
+
+- **10 facilities (FAC-000051 to FAC-000060):**
+  - Intel Fab 52, Arizona: 18A in production since Jul 2025, opened 9 Oct 2025. The opening is recorded as an `OPENING_CEREMONY` event, not a stage.
+  - Intel Fab 34, Leixlip: Intel 4 in production since Sept 2023.
+  - STMicroelectronics SiC campus, Catania: €2 billion of Italian aid approved May 2024.
+  - Silicon Box, Novara: €1.3 billion of aid approved Dec 2024; groundbreaking not confirmed.
+  - Micron New York megafab: groundbreaking Jan 2026, foundation work from Jul 2026.
+  - GlobalWafers, Sherman: opened May 2025.
+  - TI LFAB2, Lehi: under construction since Nov 2023.
+  - Wolfspeed Mohawk Valley: operating since Apr 2022.
+  - GlobalFoundries Dresden expansion: work began Jun 2025.
+  - onsemi Rožnov SiC expansion: **cancelled** on 6 Nov 2026 and kept with its history.
+- **Policy links:** Catania, Novara and Dresden now link to the European Chips Act through their own scheme text, and GlobalWafers links to the US CHIPS Act.
+- **2 programmes:** the EU IPCEI ME/CT (up to €8.1 billion from 14 Member States, Jun 2023) and the Dutch Project Beethoven (€2.51 billion, Mar 2024). Beethoven's national/regional funding split differs between sources, and both figures are shown.
+- **10 equipment models:**
+  - Lam Akara and ALTUS Halo (Feb 2025);
+  - Applied PROVision 10 (Oct 2025);
+  - Teradyne Magnum 7H (Aug 2025);
+  - Advantest T5833 and T5503HS2;
+  - ASM Pulsar XP and EmerALD XP;
+  - NAURA Qomola HPD30 (Mar 2026);
+  - TEL Acrevia (Aug 2024).
+  
+  Lifecycle is set to Active only where a source reports production use or shipments.
+- **51 sources (S1120 to S1170):** all search-index evidence.
+
+**Counts:**
+
+| Entity | Count |
+|---|---:|
+| Facilities | 60, in 15 countries |
+| Policy programmes | 21 |
+| Product families → models | 417 → 588 |
+| Sources | 1,172 |
+| Relationships | 6,395 |
+| Claims | 3,912 |
+
+**Tests:**
+- `npm test`: 70 / 70, with 47 / 47 benchmark queries.
+- Smoke test: 124 / 124 routes.
+- Motion: 24 / 24.
