@@ -9,6 +9,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { unlock } from "./unlock.mjs";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const base = process.argv[2] || "http://localhost:8765/";
 const pw = process.env.PLAYWRIGHT_PATH || path.join(execSync("npm root -g").toString().trim(), "playwright");
@@ -17,6 +18,7 @@ const { routes } = JSON.parse(fs.readFileSync(path.join(here, "routes.json"), "u
 const exe = ["/opt/pw-browsers/chromium", process.env.CHROMIUM_PATH].find(p => p && fs.existsSync(p));
 const browser = await chromium.launch(exe ? { executablePath: exe } : {});
 const page = await browser.newPage({ viewport: { width: 1300, height: 900 } });
+await unlock(page);
 let errs = [];
 page.on("pageerror", e => errs.push(e.message));
 page.on("console", m => { if (m.type() === "error" && !/favicon|net::ERR/.test(m.text())) errs.push(m.text()); });

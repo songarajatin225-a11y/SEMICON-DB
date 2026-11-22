@@ -276,3 +276,20 @@ The layout, routes and features are unchanged. Changes:
   - Smoke: 124 / 124 routes (7 new).
   - Motion: 24 / 24.
 
+## Passcode screen (22 Nov 2026)
+
+- **What it does:**
+  - A passcode screen appears before the app module and data load.
+  - The verifier is a salted PBKDF2-SHA256 hash (600,000 iterations, WebCrypto); the plain-text passcode is not committed, which was checked with a repository-wide search.
+  - The data preload was removed, so locked visitors download no data.
+  - An unlock is remembered per device in localStorage; the new **Lock** button in the header clears it.
+  - The legacy edition uses the same screen.
+- **Limits:** this is a client-side gate, not access control. The JSON data files remain publicly reachable by URL.
+- **`tests/browser/gate.mjs`, 15 / 15 with the passcode supplied by environment variable (11 without it):**
+  - locked screen shown, app shell hidden, field focused, no data requests;
+  - wrong passcode errors and stores nothing; an empty submission prompts;
+  - the correct passcode unlocks and loads the app, survives a reload, and Lock re-locks;
+  - the legacy page is gated, with no page errors.
+- **Existing suites:** smoke and motion now start unlocked through `tests/browser/unlock.mjs`. Smoke 124 / 124; motion 24 / 24; `npm test` 70 / 70.
+- **Screenshots:** reviewed in light, dark and at 390 px.
+
