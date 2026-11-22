@@ -231,3 +231,40 @@ Rows 3 and 4 are now implemented too:
   - `npm test`: 65 / 65, with benchmark 42 / 42 (5 new queries).
   - Smoke: 115 / 115 routes.
   - Motion: 24 / 24.
+
+## Visual refresh (22 Nov 2026)
+
+The layout, routes and features are unchanged. Changes:
+
+- **Type and surfaces.**
+  - System UI font stack instead of Arial.
+  - 12 px panel radius with a soft shadow.
+  - Translucent sticky header.
+  - Rail with count pills and an accent bar on the active item.
+  - Uppercase table headers with more breathing room.
+  - SVG icons replace the ★ / ◐ glyphs.
+- **Colour tokens.** Re-stepped light and dark neutrals. All text pairings were checked at 4.5:1 or better on surface, sunk and hero backgrounds: ink-3 is 5.6:1 on white and 6.6:1 on dark.
+- **Charts (dataviz method).**
+  - Ordered states (verified / partial / unverified, source tiers, confidence) use one teal ordinal ramp, re-stepped so the lightest step clears 2:1. The validator passes in light and dark.
+  - Equipment segments use a new 7-slot categorical palette (`--c1` to `--c7`). It passes CVD and normal-vision separation on the adjacent pairlist in both modes. The stack is ordered by slot, and each segment keeps its colour.
+  - Bars have rounded data ends and no grey track.
+  - Stacked bars use rounded ends with 2 px surface gaps.
+  - Legends and hover tips are unchanged.
+- **Home.**
+  - A hero card holds the title and search.
+  - The 19-tile number wall is now three grouped stat cards (Equipment database, Ecosystem & sites, Evidence) on one shared column grid, so there is no ragged hole. Policy programmes were added.
+  - New site pipeline chart: facilities by latest status class, in stage order. Each bar opens `#/facilities?status=…`.
+  - New list of the most recent facility milestones.
+- **Facilities.**
+  - New `?status=` filter.
+  - The status chart runs in pipeline order.
+  - The coverage text is computed.
+  - The filter note is moved to the top.
+- **Fixed.** The status pill's class and date labels ran into the pill on facility pages ("Pilot production class: pilot2026-09-28"). They now stack.
+- **Checks:**
+  - `npm test`: 65 / 65.
+  - Smoke: 117 / 117 routes (2 new filter routes).
+  - Motion: 24 / 24.
+  - Screenshots reviewed in light, dark and at 390 px.
+  - axe not re-run, because the axe-core install is not permitted in this session.
+

@@ -15,6 +15,14 @@ export const statusPill = f => `<span class="pill" title="Controlled status: ${e
 export const investText = f => f.investment.length ? f.investment.map(x => esc(x.label)).join(" · ") + (f.investment_conflict ? ` <span class="pill warn" title="Several figures reported">conflict</span>` : "") : `<span class="na">Not captured</span>`;
 // Disclosed INR (crore) for one site: only when exactly one INR figure exists (conflicting figures are not summed).
 export const inrOf = f => (f.investment.length === 1 && f.investment[0].inr_crore != null ? f.investment[0].inr_crore : null);
+// Controlled status classes in pipeline order (used for the status chart and the ?status= filter).
+export const CLASS_ORDER = ["ANNOUNCED", "PLANNED", "SITE_ACQUIRED", "UNDER_CONSTRUCTION", "EQUIPMENT_INSTALLATION", "PILOT", "RAMP", "PRODUCTION", "EXPANDED", "PAUSED", "CANCELLED", "CLOSED", "UNKNOWN"];
+export const classLabel = c => c === "PILOT" ? "Pilot" : c === "UNKNOWN" ? "Not captured" : c.charAt(0) + c.slice(1).toLowerCase().replace(/_/g, " ");
+// One bar per status class that has facilities, in pipeline order; each bar opens the filtered facility list.
+export function pipelineBars(F, { lw = 170 } = {}) {
+  const by = countBy(F, f => f.status_class || "UNKNOWN");
+  return bars(CLASS_ORDER.filter(c => by.get(c)).map(c => ({ l: classLabel(c), v: by.get(c), href: href("/facilities", { status: c }), tip: `${classLabel(c)}: ${by.get(c)} facilities (latest captured milestone)` })), { lw });
+}
 export const statusOk = f => ["PILOT", "RAMP", "PRODUCTION", "EXPANDED"].includes(f.status_class);
 const crore = v => `₹${Math.round(v).toLocaleString("en-IN")} crore`;
 
@@ -60,15 +68,14 @@ export function indiaTileMap(list) {
 }
 
 function list({ params } = { params: new URLSearchParams() }) {
-  const st = params.get("state"), ct = params.get("country");
-  const F = (DB.facilities || []).filter(f => (!st || f.state === st) && (!ct || f.country === ct));
-  const byStatus = sortedEntries(countBy(F, f => (f.status_class || "UNKNOWN").replace(/_/g, " ").toLowerCase()));
+  const st = params.get("state"), ct = params.get("country"), sc = params.get("status");
+  const F = (DB.facilities || []).filter(f => (!st || f.state === st) && (!ct || f.country === ct) && (!sc || (f.status_class || "UNKNOWN") === sc));
+  const nC = uniq((DB.facilities || []).map(f => f.country)).length;
   const html = pageHead({ eyebrow: "Ecosystem", title: "Facilities", crumb: [["Home", "#/"], ["Facilities", null]],
-    lede: "Site-level records: one row per physical fab, OSAT/ATMP, packaging or equipment plant, with a dated status history, investment as reported (conflicting figures shown side by side), capacity, technology and sources. Coverage: India's ISM-approved units and equipment plant, plus major fabs in the US, Japan and Germany. Company-level fab and OSAT records remain under Fabs and OSAT / ATMP. Status uses the controlled vocabulary (announced → planned → under construction → equipment installation → pilot → ramp → production; paused, cancelled, closed) while keeping each source's own milestone wording." })
-    + `<div class="kpis">${kpi({ v: F.length, l: "Facilities (site level)" })}${kpi({ v: uniq(F.map(f => f.country)).length, l: "Countries", s: `${uniq(F.map(f => f.state)).length} states / regions` })}${kpi({ v: F.filter(statusOk).length, l: "Pilot or production" })}${kpi({ v: F.filter(f => f.investment_conflict).length, l: "Investment conflicts", href: "#/quality" })}</div>
-    <div class="grid g2 sec"><div class="panel"><h2>By status class (latest captured milestone)</h2>${bars(byStatus.map(([l, v]) => ({ l, v })), { lw: 150 })}<p class="note">Status is the latest dated milestone in a cited source. A facility approved in 2024 with no later source stays “Approved” or “Foundation laid” — progress is not assumed.</p></div>
+    lede: `Site-level records: one row per physical fab, OSAT/ATMP, packaging or equipment plant, with a dated status history, investment as reported (conflicting figures shown side by side), capacity, technology and sources. Coverage: India's ISM-approved units and equipment plant, plus major fabs, packaging and back-end sites in ${nC} countries. Company-level fab and OSAT records remain under Fabs and OSAT / ATMP. Status uses the controlled vocabulary (announced → planned → under construction → equipment installation → pilot → ramp → production; paused, cancelled, closed) while keeping each source's own milestone wording.` })
+    + `${st || ct || sc ? `<div class="callout">Filtered to <b>${esc([st, ct, sc && classLabel(sc)].filter(Boolean).join(" · "))}</b>. <a href="#/facilities">Show all facilities</a></div>` : ""}<div class="kpis">${kpi({ v: F.length, l: "Facilities (site level)" })}${kpi({ v: uniq(F.map(f => f.country)).length, l: "Countries", s: `${uniq(F.map(f => f.state)).length} states / regions` })}${kpi({ v: F.filter(statusOk).length, l: "Pilot or production" })}${kpi({ v: F.filter(f => f.investment_conflict).length, l: "Investment conflicts", href: "#/quality" })}</div>
+    <div class="grid g2 sec"><div class="panel"><h2>By status class (latest captured milestone)</h2>${pipelineBars(F, { lw: 160 })}<p class="note">Status is the latest dated milestone in a cited source. A facility approved in 2024 with no later source stays “Approved” or “Foundation laid” — progress is not assumed.</p></div>
       <div class="panel"><h2>By type</h2>${bars(sortedEntries(countBy(F, f => f.facility_type)).map(([l, v]) => ({ l, v })), { lw: 230 })}</div></div>
-    ${st || ct ? `<div class="callout">Filtered to <b>${esc(st || ct)}</b>. <a href="#/facilities">Show all facilities</a></div>` : ""}
     <div class="row" style="flex-wrap:wrap;gap:6px">${uniq((DB.facilities || []).map(f => f.country)).map(c => `<a class="btn sm${c === ct ? " primary" : ""}" href="${href("/facilities", { country: c })}">${esc(c)} <span class="k">${DB.facilities.filter(f => f.country === c).length}</span></a>`).join("")}</div>
     <section class="sec">${facilityTable(F)}</section>
     <div class="grid g2 sec"><div class="panel"><h2>India — facilities by state</h2>${indiaTileMap((DB.facilities || []).filter(f => f.country === "India"))}</div><div class="panel"><h2>India — state table</h2>${stateTable((DB.facilities || []).filter(f => f.country === "India"))}</div></div>

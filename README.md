@@ -122,6 +122,15 @@ Materials suppliers are recorded at company level (type “Materials/gases”); 
 
 Result: categories with no documented supplier fell from 91 to 70. Of those, 45 have suppliers under an equivalent category and 25 are real gaps, 10 of which are device types rather than tools. As before, all sources were located by web search and the pages were not read, so models carry no specifications.
 
+## Visual refresh (22 Nov 2026)
+
+- **Look and feel:** system UI typography, softer surfaces and a translucent header, plus refreshed light and dark tokens.
+- **Home page:** a new hero card, grouped stat cards, a facility status pipeline and the latest facility milestones.
+- **Charts:** validated colour palettes, one ordinal teal ramp for ordered states and one categorical palette for segments.
+- **Facilities:** a new `?status=` filter.
+
+Details: [QA_REPORT.md](QA_REPORT.md).
+
 ## SEMICON-DB 3.0 (5 Oct 2026)
 
 - **Claim-level provenance:** an Evidence tab on companies and an evidence panel on facilities show every value's evidence type, source, date and confidence (`data/claims.json`, loaded on demand).

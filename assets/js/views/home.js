@@ -4,6 +4,7 @@ import { esc, fmt, countBy, sortedEntries, plural } from "../core/util.js";
 import { EXAMPLES } from "../core/search.js";
 import { kpi, bars, stackBar, PALETTE, badge, link } from "../ui/components.js";
 import { href } from "../core/router.js";
+import { pipelineBars, STATUS_LABEL } from "./facilities.js";
 
 export function flowNodes(activeId) {
   const flow = DB.processes.filter(p => p.flow_position != null).sort((a, b) => a.flow_position - b.flow_position);
@@ -28,33 +29,50 @@ export function home() {
   const conf = countBy(C, c => c.confidence.level);
   const recent = [...C, ...M].filter(r => r.dates?.latest_source_date).sort((a, b) => b.dates.latest_source_date.localeCompare(a.dates.latest_source_date)).slice(0, 8);
   const mk = DB.intel.market.filter(m => m.metric === "Equipment billings" && m.region_or_segment !== "World"), world = DB.intel.market.find(m => m.region_or_segment === "World");
-  const segColors = { "Front-End": PALETTE[0], "Back-End": PALETTE[1], "Test": PALETTE[4], "Advanced Packaging": PALETTE[2], "Display": PALETTE[5], "Automation & Facilities": PALETTE[3], "Wafer Manufacturing": "#7B5EA7", Other: "var(--s4)" };
+  // segments are categorical (identity, not rank): fixed slots from the validated categorical palette
+  const segColors = { "Front-End": "var(--c1)", "Back-End": "var(--c2)", "Test": "var(--c3)", "Advanced Packaging": "var(--c4)", "Display": "var(--c5)", "Automation & Facilities": "var(--c6)", "Wafer Manufacturing": "var(--c7)", Other: "var(--s4)" };
+  const F = DB.facilities || [], P = DB.intel.programs || [];
+  const milestones = F.flatMap(f => f.status_history.map(h => ({ f, h }))).sort((a, b) => b.h.date.localeCompare(a.h.date) || a.f.name.localeCompare(b.f.name)).slice(0, 9);
+  const group = (title, note, items) => `<section class="statgroup" aria-label="${esc(title)}"><header><h2>${esc(title)}</h2><span>${note}</span></header><div class="kpis">${items.join("")}</div></section>`;
   const html = `
-  <div class="eyebrow">Command centre</div>
-  <h1 class="pt">Global Semiconductor Equipment Intelligence Graph</h1>
-  <p class="lede">A relationship-driven database linking equipment companies, product families and models to processes, technologies, materials, subsystems, components, fabs, OSATs and geography — with the source and verification state behind every fact. Evidence as of ${esc(DB.meta.evidence_as_of)}.</p>
-  <div class="panel" style="margin-bottom:14px"><button class="gsearch" data-action="palette" style="max-width:none;height:42px;width:100%" aria-label="Open search"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.6"/></svg><span>Try “200 mm SiC laser dicing equipment” or “hybrid bonding suppliers”</span><kbd>Ctrl K</kbd></button>
-    <div class="tags" style="margin-top:10px">${EXAMPLES.map(q => `<a class="tag" href="${href("/search", { q })}">${esc(q)}</a>`).join("")}</div></div>
-  <div class="kpis">
-    ${kpi({ v: C.length, l: "Equipment & supply-chain companies", s: `${cv.get("VERIFIED") || 0} verified`, href: "#/companies" })}
-    ${kpi({ v: eqNodes.length, l: "Equipment categories", s: `${DB.reference.equipment_groups.length} groups`, href: "#/equipment" })}
-    ${kpi({ v: DB.product_families.length, l: "Product families", href: "#/products?view=table" })}
-    ${kpi({ v: M.length, l: "Product & model records", s: `${M.filter(m => m.model_identified).length} with model number`, href: "#/products" })}
-    ${kpi({ v: DB.processes.length, l: "Processes", href: "#/processes" })}
-    ${kpi({ v: DB.technologies.length, l: "Technologies", href: "#/technologies" })}
-    ${kpi({ v: DB.materials.length, l: "Materials", href: "#/materials" })}
-    ${kpi({ v: DB.subsystems.length, l: "Subsystems", href: "#/subsystems" })}
-    ${kpi({ v: DB.components.length, l: "Component classes", href: "#/components" })}
-    ${kpi({ v: nonOEM.length, l: "Suppliers (non-OEM roles)", href: "#/suppliers" })}
-    ${kpi({ v: DB.fabs.length, l: "Fabs / device makers", href: "#/fabs" })}
-    ${kpi({ v: DB.osats.length, l: "OSAT / ATMP", href: "#/osats" })}
-    ${kpi({ v: (DB.facilities || []).length, l: "Facilities (site level)", s: `${(DB.facilities || []).filter(f => f.country === "India").length} in India`, href: "#/facilities" })}
-    ${kpi({ v: C.filter(c => c.is_startup).length, l: "Startups", href: "#/companies?startup=yes" })}
-    ${kpi({ v: C.filter(c => c.batch && c.batch !== "Batch 1").length + M.filter(m => m.batch && m.batch !== "Batch 1").length, l: "Records added since Batch 1", s: `latest ${esc(DB.meta.evidence_as_of)}`, href: "#/intelligence/changes" })}
-    ${kpi({ v: indiaCos.length, l: "India ecosystem companies", s: `${C.filter(c => c.hq.country === "India").length} HQ in India`, href: "#/india" })}
-    ${kpi({ v: needs.length, l: "Records requiring verification", s: `${DB.quality.conflicts.length} conflicts`, href: "#/quality" })}
-    ${kpi({ v: DB.relationships.length, l: "Relationships", s: `${relBasis.get("source") || 0} source-backed`, href: "#/quality?tab=relationships" })}
-    ${kpi({ v: DB.sources.length, l: "Numbered sources", s: `${tiers.get("1") || 0} Tier 1`, href: "#/sources" })}
+  <section class="hero">
+    <div class="eyebrow">Command centre</div>
+    <h1 class="pt">Global Semiconductor Equipment Intelligence Graph</h1>
+    <p class="lede">A relationship-driven database linking equipment companies, product families and models to processes, technologies, materials, subsystems, components, fabs, OSATs, facilities and geography — with the source and verification state behind every fact. Evidence as of ${esc(DB.meta.evidence_as_of)}.</p>
+    <button class="gsearch" data-action="palette" aria-label="Open search"><svg width="17" height="17" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.6"/></svg><span>Try “200 mm SiC laser dicing equipment” or “hybrid bonding suppliers”</span><kbd>Ctrl K</kbd></button>
+    <div class="tags">${EXAMPLES.map(q => `<a class="tag" href="${href("/search", { q })}">${esc(q)}</a>`).join("")}</div>
+  </section>
+  <div class="statgroups">
+    ${group("Equipment database", `${fmt(C.length)} companies · ${cv.get("VERIFIED") || 0} verified`, [
+      kpi({ v: C.length, l: "Companies", s: "equipment & supply chain", href: "#/companies" }),
+      kpi({ v: eqNodes.length, l: "Equipment categories", s: `${DB.reference.equipment_groups.length} groups`, href: "#/equipment" }),
+      kpi({ v: DB.product_families.length, l: "Product families", href: "#/products?view=table" }),
+      kpi({ v: M.length, l: "Models", s: `${M.filter(m => m.model_identified).length} with model number`, href: "#/products" }),
+      kpi({ v: DB.processes.length, l: "Processes", href: "#/processes" }),
+      kpi({ v: DB.technologies.length, l: "Technologies", href: "#/technologies" }),
+      kpi({ v: DB.materials.length, l: "Materials", href: "#/materials" }),
+      kpi({ v: DB.subsystems.length, l: "Subsystems", href: "#/subsystems" }),
+      kpi({ v: DB.components.length, l: "Component classes", href: "#/components" })])}
+    ${group("Ecosystem & sites", `${F.length} facilities in ${new Set(F.map(f => f.country)).size} countries`, [
+      kpi({ v: F.length, l: "Facilities", s: `${F.filter(f => f.country === "India").length} in India`, href: "#/facilities" }),
+      kpi({ v: DB.fabs.length, l: "Fabs / device makers", href: "#/fabs" }),
+      kpi({ v: DB.osats.length, l: "OSAT / ATMP", href: "#/osats" }),
+      kpi({ v: nonOEM.length, l: "Suppliers", s: "non-OEM roles", href: "#/suppliers" }),
+      kpi({ v: C.filter(c => c.is_startup).length, l: "Startups", href: "#/companies?startup=yes" }),
+      kpi({ v: indiaCos.length, l: "India ecosystem", s: `${C.filter(c => c.hq.country === "India").length} HQ in India`, href: "#/india" }),
+      kpi({ v: P.length, l: "Policy programmes", s: `${new Set(P.map(p => p.jurisdiction)).size} jurisdictions`, href: "#/intelligence/policy" })])}
+    ${group("Evidence", `${fmt(DB.sources.length)} sources · ${DB.quality.conflicts.length} open conflicts`, [
+      kpi({ v: DB.sources.length, l: "Numbered sources", s: `${tiers.get("1") || 0} Tier 1`, href: "#/sources" }),
+      kpi({ v: DB.relationships.length, l: "Relationships", s: `${relBasis.get("source") || 0} source-backed`, href: "#/quality?tab=relationships" }),
+      kpi({ v: needs.length, l: "Need verification", s: `${DB.quality.conflicts.length} conflicts`, href: "#/quality" }),
+      kpi({ v: C.filter(c => c.batch && c.batch !== "Batch 1").length + M.filter(m => m.batch && m.batch !== "Batch 1").length, l: "Records added since Batch 1", s: `latest ${esc(DB.meta.evidence_as_of)}`, href: "#/intelligence/changes" })])}
+  </div>
+
+  <div class="grid g2 sec">
+    <div class="panel"><div class="row sp"><div><div class="eyebrow">Facilities</div><h2>Site pipeline by latest captured status</h2></div><a class="btn sm" href="#/facilities">All facilities</a></div>
+      ${pipelineBars(F)}<p class="note">Each bar counts facilities whose latest dated, sourced milestone falls in that stage; select a bar for the list. Progress is never assumed from an older milestone.</p></div>
+    <div class="panel"><div class="row sp"><div><div class="eyebrow">Latest</div><h2>Most recent facility milestones</h2></div><a class="btn sm" href="#/intelligence/changes">What changed</a></div>
+      <ol class="mlist">${milestones.map(({ f, h }) => `<li><span class="d">${esc(h.date)}</span><a href="${hrefOf(f.id)}" title="${esc(f.name)}">${esc(f.name)}</a><span class="pill">${esc(STATUS_LABEL[h.status] || h.status)}</span></li>`).join("")}</ol></div>
   </div>
 
   <div class="panel sec"><div class="row sp"><div><div class="eyebrow">Process chain</div><h2>Wafer start to final test — models mapped per process</h2></div><a class="btn sm" href="#/processes">Open process explorer</a></div>${flowNodes()}
@@ -63,7 +81,7 @@ export function home() {
   <div class="grid g2 sec">
     <div class="panel"><div class="eyebrow">Coverage</div><h2>Companies by equipment group</h2>${bars(byGroup, { lw: 200 })}<p class="note">Counts only source-confirmed categories. Analyst-candidate categories are kept separately and never counted.</p></div>
     <div class="panel"><div class="eyebrow">Split</div><h2>Front-end / back-end / test</h2>
-      ${stackBar("Equipment models by segment", sortedEntries(seg).map(([l, v]) => ({ l, v, c: segColors[l] || "var(--s4)", href: `#/products?segment=${encodeURIComponent(l)}` })))}
+      ${stackBar("Equipment models by segment", [...Object.keys(segColors).filter(k => seg.get(k)), ...[...seg.keys()].filter(k => !segColors[k])].map(l => ({ l, v: seg.get(l), c: segColors[l] || "var(--s4)", href: `#/products?segment=${encodeURIComponent(l)}` })))}
       ${stackBar("India vs global companies", [{ l: "HQ in India", v: C.filter(c => c.hq.country === "India").length, c: PALETTE[0], href: "#/india" }, { l: "Global with documented India presence", v: C.filter(c => c.hq.country !== "India" && c.india.has_presence).length, c: PALETTE[1], href: "#/companies?india=presence" }, { l: "No India presence documented", v: C.filter(c => c.hq.country !== "India" && !c.india.has_presence).length, c: "var(--s4)" }])}
       <h3 style="margin-top:14px">Regional distribution (headquarters)</h3>${bars(byRegion, { lw: 130 })}
       <p class="note">HQ country for ${C.filter(c => c.hq.country_basis_code === "KNOW").length} companies is analyst knowledge rather than a cited source${C.some(c => c.hq.country_basis_code === "SUM") ? ` and for ${C.filter(c => c.hq.country_basis_code === "SUM").length} it comes from a search-result summary of a cited source` : ""}; the basis is labelled on every profile.</p></div>
