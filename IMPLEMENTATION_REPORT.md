@@ -640,3 +640,36 @@ The bundle is 411 KB gzipped.
 - `npm test`: 70 / 70, with 47 / 47 benchmark queries.
 - Smoke test: 124 / 124 routes.
 - Motion: 24 / 24.
+
+### Batch 17 (22 Nov 2026): Taiwan, Japan and Korea sites, national programmes, bonding equipment
+
+- **6 facilities (FAC-000061 to FAC-000066):**
+  - TSMC AP7, Chiayi: equipment installation 2H 2025 for WMCM, SoIC and CoPoS.
+  - TSMC AP8, Tainan: bought from Innolux in 2024; opening ceremony Apr 2025. The latest dated stage stays *site acquired* because no reviewed source confirms the start of production.
+  - TSMC Fab 25, Taichung: A14; construction began 5 Nov 2025.
+  - Sony image sensor fab, Koshi: METI subsidy of up to ¥60 billion approved Apr 2026; Sony–TSMC joint venture MoU.
+  - Renesas Kofu 300 mm power fab: restarted Apr 2024.
+  - Samsung Yongin national cluster, first fab: complex designated Dec 2024; operations moved to 2029.
+- **3 programmes:** the US §48D Advanced Manufacturing Investment Credit (35 % for property placed in service from 2026; construction must begin by end-2026), the UK National Semiconductor Strategy (up to £1 billion over ten years) and the Korea Semiconductor Special Act (passed 29 Jan 2026).
+- **7 bonding-equipment models:**
+  - Hanmi TC Bonder 4 (HBM4), Wide TC Bonder and 2.5D TC Bonder 40 / 120;
+  - ASMPT FIREBIRD TCB and LITHOBOLT;
+  - Kulicke & Soffa RAPID and ConnX ELITE. These two are marked low confidence because the source is a catalogue listing.
+- **38 sources (S1171 to S1208):** all search-index evidence.
+
+**Counts:**
+
+| Entity | Count |
+|---|---:|
+| Facilities | 66 |
+| Policy programmes | 24 |
+| Product families → models | 422 → 595 |
+| Sources | 1,210 |
+| Relationships | 6,465 |
+| Claims | 3,973 |
+
+**Tests:**
+- `npm test`: 75 / 75, with 52 / 52 benchmark queries.
+- Smoke test: 130 / 130 routes.
+- Motion: 24 / 24.
+- Passcode screen: 11 / 11 without the passcode in the environment.
