@@ -268,3 +268,11 @@ The layout, routes and features are unchanged. Changes:
   - Screenshots reviewed in light, dark and at 390 px.
   - axe not re-run, because the axe-core install is not permitted in this session.
 
+## Batch 16 data addendum (22 Nov 2026)
+
+- **Data:** 10 facilities (one cancelled), 2 programmes and 10 models, with 51 sources. Build: 0 errors. The 58 new warnings are all `source.search_index` or `source.date`. No new conflicts.
+- **Checks:**
+  - `npm test`: 70 / 70, with benchmark 47 / 47 (5 new queries).
+  - Smoke: 124 / 124 routes (7 new).
+  - Motion: 24 / 24.
+
