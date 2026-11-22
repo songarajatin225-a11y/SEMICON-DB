@@ -1,0 +1,18 @@
+{
+  "_about": "Routes rendered by tests/browser/smoke.mjs. Add a route whenever a view or route parameter is added.",
+  "routes": [
+    "#/", "#/search?q=hybrid%20bonding", "#/search?q=200%20mm%20SiC%20laser%20dicing%20equipment", "#/search?q=laser%20dicing%20suppliers%20in%20Japan", "#/search?q=hybrd%20bondng", "#/search?q=GaN%20fab%20in%20India", "#/search?q=AMAT", "#/search?q=OSAT%20in%20Gujarat", "#/search?q=photoresist",
+    "#/companies", "#/companies?startup=yes", "#/companies?type=Materials%2Fgases", "#/companies?preset=supply-chain", "#/companies?preset=source",
+    "#/companies/CMP-000010", "#/companies/C0010", "#/companies/CMP-000003", "#/companies/CMP-000003?tab=portfolio", "#/companies/CMP-000003?tab=evidence", "#/companies/CMP-000116", "#/companies/CMP-000195?tab=evidence", "#/companies/CMP-000209?tab=customers", "#/companies/CMP-000370", "#/companies/CMP-000368",
+    "#/equipment", "#/equipment/EQP-C01.02", "#/equipment/EQP-A24", "#/equipment/EQP-A09.04", "#/equipment/EQP-E12", "#/equipment/EQP-D21", "#/equipment/EQP-A33",
+    "#/products", "#/products?view=table", "#/models/MDL-000001", "#/models/MDL-000001?tab=specs", "#/models/MDL-000001?tab=alternatives", "#/models/MDL-000541?tab=alternatives", "#/models/MDL-000099", "#/models/MDL-000366", "#/models/MDL-000307?tab=sources",
+    "#/processes", "#/processes/PRS-032", "#/processes/PRS-002", "#/technologies", "#/materials", "#/applications", "#/components", "#/subsystems",
+    "#/fabs", "#/fabs/FAB-000019", "#/osats", "#/osats/OSAT-000020", "#/customers/CUS-000033", "#/suppliers",
+    "#/facilities", "#/facilities?state=Gujarat", "#/facilities?country=Japan", "#/facilities?country=United%20States", "#/facilities/FAC-000001", "#/facilities/FAC-000003", "#/facilities/FAC-000010", "#/facilities/FAC-000014", "#/facilities/FAC-000017", "#/facilities/FAC-000020", "#/facilities/FAC-000021", "#/facilities/FAC-000022", "#/facilities/FAC-000025", "#/facilities?country=Malaysia", "#/facilities?country=Taiwan", "#/facilities?country=Singapore", "#/facilities/FAC-000029", "#/facilities/FAC-000030", "#/facilities/FAC-000033", "#/facilities/FAC-000043", "#/facilities?country=Thailand", "#/facilities?status=PRODUCTION", "#/facilities?status=UNDER_CONSTRUCTION", "#/facilities/FAC-000045", "#/facilities/FAC-000049", "#/models/MDL-000571", "#/models/MDL-000576", "#/companies/CMP-000017", "#/intelligence/policy?type=RD_FUNDING", "#/intelligence/policy?type=STATE_FUND", "#/intelligence/policy?type=STRATEGY", "#/search?q=OSAT%20in%20Malaysia",
+    "#/india", "#/countries", "#/countries/CTY-NO", "#/map", "#/compare", "#/compare/companies", "#/quality", "#/sources", "#/sources/SRC-000054", "#/saved",
+    "#/graph/CMP-000010", "#/graph/CMP-000010?depth=2", "#/graph/CMP-000010?src=1", "#/graph/CMP-000002?depth=2&xt=offers_equipment",
+    "#/intelligence", "#/intelligence/finder?process=PRS-032", "#/intelligence/risk", "#/intelligence/timeline", "#/intelligence/flows", "#/intelligence/flows?flow=hbm&step=PRS-051", "#/intelligence/changes", "#/intelligence/research", "#/intelligence/policy", "#/intelligence/policy?type=EXPORT_CONTROL",
+    "#/intelligence/analyst", "#/intelligence/analyst?eq=EQP-C26", "#/intelligence/analyst?q=Can%20we%20build%20a%20wire%20bonder%3F", "#/intelligence/analyst?q=Compare%20ASML%20vs%20Canon%20vs%20Nikon", "#/intelligence/analyst?q=I%20need%20a%20200W%20pulsed%20laser%20for%20semiconductor%20marking", "#/intelligence/analyst?q=Which%20facilities%20in%20the%20US%20are%20under%20construction%3F",
+    "#/nope"
+  ]
+}

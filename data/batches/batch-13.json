@@ -1,0 +1,560 @@
+{
+ "batch": "Batch 13",
+ "created": "2026-10-05",
+ "method": "More site-level facilities (one cancelled project, US advanced packaging, memory fabs) and semiconductor policy programmes (US, EU, Japan, Korea), from government pages, filings and industry news located by web search; titles and search-result summaries.",
+ "co": [],
+ "pr": [],
+ "src": [
+  {
+   "id": "S0987",
+   "url": "https://www.capitalfm.co.ke/business/2025/07/intel-cancels-plans-for-german-chip-plant-amid-global-streamlining",
+   "title": "Intel cancels plans for German chip plant amid global streamlining",
+   "pub": "Capital FM (AFP)",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0988",
+   "url": "https://www.igorslab.de/en/off-with-the-mouse-intel-cancels-the-mega-factory-in-magdeburg-for-good/",
+   "title": "Off with the mouse: Intel cancels the mega factory in Magdeburg for good",
+   "pub": "Igor'sLAB",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2025-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0989",
+   "url": "https://www.trendforce.com/news/2025/10/14/news-amkor-breaks-ground-on-usd-7-billion-advanced-semiconductor-packaging-facility-in-arizona/",
+   "title": "Amkor breaks ground on USD 7 billion advanced semiconductor packaging facility in Arizona",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-10-14",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0990",
+   "url": "https://cleanroomtechnology.com/amkor-breaks-ground-on-7bn-semiconductor-campus-in",
+   "title": "Amkor breaks ground on $7bn semiconductor campus in Arizona",
+   "pub": "Cleanroom Technology",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-10",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0991",
+   "url": "https://www.cnbc.com/2023/10/23/micron-building-biggest-chip-fab-in-us-history-despite-china-ban.html",
+   "title": "Micron building biggest chip fab in US history despite China ban",
+   "pub": "CNBC",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2023-10-23",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0992",
+   "url": "https://www.sec.gov/Archives/edgar/data/0000723125/000072312526000015/mu-20260528.htm",
+   "title": "MICRON TECHNOLOGY INC - Form 10-Q - FY2026 (quarter ended 28 May 2026)",
+   "pub": "Micron Technology (SEC EDGAR)",
+   "type": "Regulatory filing",
+   "tier": 1,
+   "date": "2026-05-28",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0993",
+   "url": "https://evertiq.com/design/2026-02-25-sk-hynix-to-invest-15-billion-in-yongin-semiconductor-cluster",
+   "title": "SK hynix to invest $15 billion in Yongin semiconductor cluster",
+   "pub": "Evertiq",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-02-25",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0994",
+   "url": "https://www.theregister.com/2026/04/22/sk_hynix_indiana/",
+   "title": "SK hynix Indiana (HBM advanced packaging plant)",
+   "pub": "The Register",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-04-22",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0995",
+   "url": "https://www.koreajoongangdaily.com/business/sk-hynix-to-invest-4-billion-in-indiana-for-advanced-chip-packaging-facility/12298469",
+   "title": "SK hynix to invest $4 billion in Indiana for advanced chip packaging facility",
+   "pub": "Korea JoongAng Daily",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0996",
+   "url": "https://datacenterdynamics.com/en/news/president-biden-signs-280bn-chips-and-science-act-includes-52bn-in-semiconductor-funding",
+   "title": "President Biden signs $280bn CHIPS and Science Act, includes $52bn in semiconductor funding",
+   "pub": "DatacenterDynamics",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2022-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0997",
+   "url": "https://fasi.eu/articles/undefined/26328-the-european-chips-act-is-law-43-billion-euros-in-investments-are-expected.html",
+   "title": "The European Chips Act is law. 43 billion euros in investments are expected",
+   "pub": "FASI",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2023-09",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0998",
+   "url": "https://www.optionfinance.fr/info-financiere-en-continu/d/2023-09-21-semi-conducteurs-entree-en-vigueur-du-chips-act-europeen.html",
+   "title": "Semi-conducteurs : entrée en vigueur du Chips Act européen",
+   "pub": "Option Finance",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2023-09-21",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S0999",
+   "url": "https://www.sidley.com/en/insights/newsupdates/2023/10/new-export-controls-on-advanced-computing-and-semiconductor-manufacturing",
+   "title": "New Export Controls on Advanced Computing and Semiconductor Manufacturing",
+   "pub": "Sidley Austin",
+   "type": "Legal analysis",
+   "tier": 2,
+   "date": "2023-10",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1000",
+   "url": "https://www.bis.gov/press-release/bis-updated-public-information-page-export-controls-imposed-advanced-computing-semiconductor",
+   "title": "BIS updated public information page: export controls imposed on advanced computing and semiconductor manufacturing items",
+   "pub": "US Bureau of Industry and Security",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1001",
+   "url": "https://www.trendforce.com/news/2024/11/12/news-japan-to-back-chip-industry-with-65-bln-support-plan/",
+   "title": "Japan to back chip industry with $65 bln support plan",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-11-12",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1002",
+   "url": "https://view.asiae.co.kr/en/article/2025022715351457043",
+   "title": "'5%p Increase in Tax Credit for Semiconductor Companies' K-Chips Act Passed in National Assembly Plenary Session",
+   "pub": "Asia Economy",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-02-27",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1003",
+   "url": "https://www.nbcsandiego.com/news/business/money-report/south-korea-announces-over-23-billion-for-chip-sector-as-trump-tariffs-on-semiconductor-imports-loom/3804061",
+   "title": "South Korea announces over $23 billion for chip sector as Trump tariffs on semiconductor imports loom",
+   "pub": "CNBC via NBC",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-13 (facilities and policy)",
+   "used": 1
+  }
+ ],
+ "fa": [
+  {
+   "id": "F021",
+   "name": "Intel Magdeburg fab project (cancelled)",
+   "type": "Fab (front-end)",
+   "operator": "Intel",
+   "link": [
+    "FAB-000003"
+   ],
+   "partners": [],
+   "country": "Germany",
+   "state": "Saxony-Anhalt",
+   "city": "Magdeburg",
+   "lat": 52.13,
+   "lon": 11.63,
+   "scheme": "German state aid pledged (about €10 billion, per coverage)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2025-07",
+     "status": "CANCELLED",
+     "src": "S0987;S0988"
+    }
+   ],
+   "invest": [
+    {
+     "value": 30,
+     "currency": "EUR",
+     "unit": "billion",
+     "label": "€30 billion planned (per coverage)",
+     "src": "S0987"
+    }
+   ],
+   "capacity": null,
+   "technology": null,
+   "wafer": "300 mm",
+   "products": null,
+   "jobs": "About 3,000 direct jobs planned (per coverage)",
+   "src": "S0987;S0988",
+   "conf": "MEDIUM",
+   "notes": "Put on hold in Sept 2024 and cancelled in July 2025 (with a planned assembly and test site near Wrocław, Poland), per coverage. Kept as a record: cancelled projects are history, not deleted."
+  },
+  {
+   "id": "F022",
+   "name": "Amkor advanced packaging and test campus, Peoria",
+   "type": "OSAT / advanced packaging",
+   "operator": "Amkor Technology",
+   "link": [
+    "OSAT-000016"
+   ],
+   "partners": [],
+   "country": "United States",
+   "state": "Arizona",
+   "city": "Peoria",
+   "lat": 33.58,
+   "lon": -112.24,
+   "scheme": "US CHIPS and Science Act support (per coverage)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2025-10-06",
+     "status": "FOUNDATION_LAID",
+     "src": "S0989;S0990"
+    }
+   ],
+   "invest": [
+    {
+     "value": 7,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "US$7 billion (two phases, per report titles)",
+     "src": "S0989"
+    }
+   ],
+   "capacity": "Over 750,000 sq ft of cleanroom across two phases (per coverage)",
+   "technology": "Advanced packaging and test",
+   "wafer": null,
+   "products": "Advanced packages (customers named in coverage are not recorded as confirmed links)",
+   "jobs": "Up to 3,000 (per coverage)",
+   "src": "S0989;S0990",
+   "conf": "MEDIUM",
+   "notes": "First facility completion targeted mid-2027 and production early 2028 (plans, per coverage)."
+  },
+  {
+   "id": "F023",
+   "name": "Micron ID1 fab, Boise",
+   "type": "Fab (memory)",
+   "operator": "Micron Technology",
+   "link": [
+    "FAB-000004"
+   ],
+   "partners": [],
+   "country": "United States",
+   "state": "Idaho",
+   "city": "Boise",
+   "lat": 43.53,
+   "lon": -116.15,
+   "scheme": "US CHIPS and Science Act direct funding (up to $6.1 billion across Idaho and New York, per filing summary)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2023-10-23",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S0991"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "Leading-edge DRAM",
+   "wafer": "300 mm",
+   "products": "DRAM",
+   "jobs": null,
+   "src": "S0991;S0992",
+   "conf": "MEDIUM",
+   "notes": "Equipment move-in in 2026 and first wafer output in mid-calendar 2027 are company plans (per 10-Q summary), not recorded as milestones until reported."
+  },
+  {
+   "id": "F024",
+   "name": "SK hynix Yongin cluster fab 1 (Y1)",
+   "type": "Fab (memory)",
+   "operator": "SK hynix",
+   "link": [
+    "FAB-000005"
+   ],
+   "partners": [],
+   "country": "South Korea",
+   "state": "Gyeonggi",
+   "city": "Yongin",
+   "lat": 37.24,
+   "lon": 127.18,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2026-02-25",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S0993"
+    }
+   ],
+   "invest": [
+    {
+     "value": 15,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "Additional US$15 billion (KRW 21.6 trillion) announced Feb 2026",
+     "src": "S0993"
+    }
+   ],
+   "capacity": null,
+   "technology": "DRAM / HBM",
+   "wafer": "300 mm",
+   "products": "Memory",
+   "jobs": null,
+   "src": "S0993",
+   "conf": "MEDIUM",
+   "notes": "First cleanroom opening targeted for Feb 2027 (plan, per coverage). The figure above is an additional commitment, not the total cost."
+  },
+  {
+   "id": "F025",
+   "name": "SK hynix HBM advanced packaging plant, West Lafayette",
+   "type": "Advanced packaging (HBM)",
+   "operator": "SK hynix",
+   "link": [
+    "FAB-000005"
+   ],
+   "partners": [
+    "Purdue Research Park (site)"
+   ],
+   "country": "United States",
+   "state": "Indiana",
+   "city": "West Lafayette",
+   "lat": 40.43,
+   "lon": -86.91,
+   "scheme": "US CHIPS and Science Act support (per coverage)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2026-04-22",
+     "status": "FOUNDATION_LAID",
+     "src": "S0994"
+    }
+   ],
+   "invest": [
+    {
+     "value": 4,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "About US$4 billion (per report titles)",
+     "src": "S0995"
+    }
+   ],
+   "capacity": null,
+   "technology": "HBM stacking, packaging and test",
+   "wafer": null,
+   "products": "HBM",
+   "jobs": "Up to 800 by 2030 (per coverage)",
+   "src": "S0994;S0995",
+   "conf": "MEDIUM",
+   "notes": "Mass production slated for 2H 2028 (plan, per coverage)."
+  }
+ ],
+ "pg": [
+  {
+   "id": "PG03",
+   "name": "US CHIPS and Science Act",
+   "country": "United States",
+   "jurisdiction": "United States (federal)",
+   "type": "INCENTIVE",
+   "announced": "2022-08",
+   "status": "ENACTED",
+   "facts": [
+    {
+     "label": "Signed into law",
+     "value": "August 2022",
+     "src": "S0996"
+    },
+    {
+     "label": "Semiconductor funding",
+     "value": "About $52 billion within a $280 billion act (per report title)",
+     "src": "S0996"
+    }
+   ],
+   "match": "CHIPS and Science"
+  },
+  {
+   "id": "PG04",
+   "name": "European Chips Act",
+   "country": "European Union",
+   "jurisdiction": "European Union",
+   "type": "INCENTIVE",
+   "announced": "2023-09-21",
+   "status": "IN_FORCE",
+   "facts": [
+    {
+     "label": "Entered into force",
+     "value": "21 September 2023",
+     "src": "S0998"
+    },
+    {
+     "label": "Investment expected",
+     "value": "More than €43 billion of public and private investment mobilised (per coverage)",
+     "src": "S0997"
+    }
+   ],
+   "match": "EU Chips Act|European Chips Act|German state aid"
+  },
+  {
+   "id": "PG05",
+   "name": "US export controls on advanced computing and semiconductor manufacturing equipment (BIS)",
+   "country": "United States",
+   "jurisdiction": "United States (federal)",
+   "type": "EXPORT_CONTROL",
+   "announced": "2022-10-07",
+   "status": "IN_FORCE",
+   "facts": [
+    {
+     "label": "Initial interim final rule",
+     "value": "7 October 2022 (per legal analysis)",
+     "src": "S0999"
+    },
+    {
+     "label": "Expanded rules",
+     "value": "Published 25 October 2023, effective 17 November 2023: advanced computing and semiconductor manufacturing equipment (per legal analysis)",
+     "src": "S0999"
+    },
+    {
+     "label": "Official information page",
+     "value": "BIS public information page on these controls",
+     "src": "S1000"
+    }
+   ],
+   "match": null
+  },
+  {
+   "id": "PG06",
+   "name": "Japan AI and semiconductor support framework",
+   "country": "Japan",
+   "jurisdiction": "Japan",
+   "type": "INCENTIVE",
+   "announced": "2024-11",
+   "status": "ANNOUNCED",
+   "facts": [
+    {
+     "label": "Public support",
+     "value": "¥10 trillion (about $65 billion) by 2030 (per report title and summary)",
+     "src": "S1001"
+    }
+   ],
+   "match": "METI|NEDO|Japanese government"
+  },
+  {
+   "id": "PG07",
+   "name": "Korea K-Chips Act and semiconductor support package",
+   "country": "South Korea",
+   "jurisdiction": "South Korea",
+   "type": "TAX_CREDIT",
+   "announced": "2025-02-27",
+   "status": "ENACTED",
+   "facts": [
+    {
+     "label": "K-Chips Act amendment",
+     "value": "Facility-investment tax credit raised by 5 percentage points (to 20 % large / 30 % SME, per coverage); passed 27 Feb 2025",
+     "src": "S1002"
+    },
+    {
+     "label": "Support package",
+     "value": "33 trillion won (about $23 billion) (per report title)",
+     "src": "S1003"
+    }
+   ],
+   "match": null
+  }
+ ]
+}

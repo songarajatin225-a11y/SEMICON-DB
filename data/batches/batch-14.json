@@ -1,0 +1,1845 @@
+{
+ "batch": "Batch 14",
+ "created": "2026-11-21",
+ "method": "Site-level facilities in Taiwan, China, Singapore, Malaysia, Vietnam, Japan, Korea, Germany and the US (fabs, OSAT and packaging sites, one SiC materials site) and policy programmes for Taiwan, China, Malaysia, Vietnam and Gujarat, from government pages, company releases and industry news located by web search; titles and search-result summaries.",
+ "co": [],
+ "pr": [],
+ "src": [
+  {
+   "id": "S1004",
+   "url": "https://www.thejakartapost.com/business/2025/12/31/tsmc-says-started-mass-production-of-most-advanced-2nm-chips.html",
+   "title": "TSMC says started mass production of most advanced 2nm chips",
+   "pub": "The Jakarta Post (AFP)",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-12-31",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1005",
+   "url": "https://gigazine.net/gsc_news/en/20260105-tsmc-2nm/",
+   "title": "TSMC quietly begins mass production of 2nm semiconductors",
+   "pub": "GIGAZINE",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2026-01-05",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1006",
+   "url": "https://www.techpowerup.com/351117/tsmc-hits-20-000-wafers-per-month-milestone-on-2-nm-node",
+   "title": "TSMC hits 20,000 wafers per month milestone on 2 nm node",
+   "pub": "TechPowerUp",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2026-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1007",
+   "url": "https://www.techpowerup.com/341662/tsmc-etches-first-2-nm-silicon-at-fab-22-as-volume-production-nears",
+   "title": "TSMC etches first 2 nm silicon at Fab 22 as volume production nears",
+   "pub": "TechPowerUp",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2025-10-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1008",
+   "url": "https://www.trendforce.com/news/2025/10/07/news-tsmc-kaohsiung-fab-hits-2nm-trial-production-ahead-of-schedule-a14-reportedly-under-evaluation/",
+   "title": "TSMC Kaohsiung fab hits 2nm trial production ahead of schedule; A14 reportedly under evaluation",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-10-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1009",
+   "url": "https://technews.tw/2025/03/31/tsmc-expands-2nm-production-in-kaohsiung/",
+   "title": "TSMC holds 2 nm capacity expansion ceremony at the Fab 22 new construction site, Southern Taiwan Science Park (in Chinese)",
+   "pub": "TechNews (Taiwan)",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-03-31",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1010",
+   "url": "https://insidehpc.com/2025/03/tsmc-holds-2nm-capacity-expansion-ceremony-volume-production-slated-for-second-half-of-year/",
+   "title": "TSMC holds 2nm capacity expansion ceremony, volume production slated for second half of year",
+   "pub": "insideHPC",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2025-03",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1011",
+   "url": "https://www.tomshardware.com/tech-industry/semiconductors/analyzing-tsmcs-fab-expansion-roadmap-multi-fab-n2-ramp-cowos-soic-and-uncorking-bottlenecks",
+   "title": "Analyzing TSMC's fab expansion roadmap: multi-fab N2 ramp, CoWoS, SoIC, and uncorking bottlenecks",
+   "pub": "Tom's Hardware",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1012",
+   "url": "https://www.trendforce.com/news/2026/04/16/news-tsmc-n3-tightens-on-ai-demand-arizona-2nd-fab-3nm-volume-production-in-2h27-kumamoto-in-2028/",
+   "title": "TSMC N3 tightens on AI demand; Arizona 2nd fab 3nm volume production in 2H27, Kumamoto in 2028",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-04-16",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1013",
+   "url": "https://thenextweb.com/news/tsmc-q3-2026-record-profit-prudent-2027",
+   "title": "TSMC posts a sixth straight record profit but turns cautious on 2027",
+   "pub": "The Next Web",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-10-15",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1014",
+   "url": "https://azbigmedia.com/business/tsmc-arizona-accelerates-production-timeline-as-earnings-soar/",
+   "title": "TSMC Arizona accelerates production timeline as earnings soar",
+   "pub": "AZ Big Media",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2026-10",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1015",
+   "url": "https://www.businesswire.com/news/home/20220224005558/en/UMC-Announces-New-22nm-Wafer-Fab-in-Singapore",
+   "title": "UMC announces new 22nm wafer fab in Singapore",
+   "pub": "UMC via Business Wire",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2022-02-24",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1016",
+   "url": "https://www.umc.com/en/News/press_release/Content/events/20240521",
+   "title": "UMC's Singapore Fab 12i celebrates first tool move-in for new Phase 3 expansion",
+   "pub": "UMC",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2024-05-21",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1017",
+   "url": "https://taipeitimes.com/News/biz/archives/2024/05/22/2003818199",
+   "title": "UMC Singapore Fab 12i P3 first tool move-in; mass production pushed to early 2026 (Taipei Times)",
+   "pub": "Taipei Times",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-05-22",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1018",
+   "url": "https://www.mti.gov.sg/Newsroom/Speeches/2025/04/Speech-by-DPM-and-Minister-for-Trade-and-Industry-Gan-Kim-Yong-at-the-United-Microelectronics",
+   "title": "Speech by DPM and Minister for Trade and Industry Gan Kim Yong at the United Microelectronics Corporation (UMC) fab expansion opening ceremony",
+   "pub": "Singapore Ministry of Trade and Industry",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2025-04",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1019",
+   "url": "https://www.digitimes.com/news/a20250401PD231.html",
+   "title": "UMC opens Singapore Fab 12i P3 expansion; first phase production in 2026 (DIGITIMES)",
+   "pub": "DIGITIMES",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-04-01",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1020",
+   "url": "https://www.edb.gov.sg/en/news-and-insights/press-release/vsmc-celebrates-breaking-ground-on-300mm-fab-in-singapore",
+   "title": "VSMC celebrates breaking ground on 300mm fab in Singapore",
+   "pub": "Singapore Economic Development Board",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2024-12",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1021",
+   "url": "https://nxp.com/company/about-nxp/newsroom/NW-VSMC-V3",
+   "title": "VSMC breaks ground: initial production slated for 2027, expected output of 55,000 300mm wafers per month in 2029",
+   "pub": "NXP Semiconductors",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2024-12",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1022",
+   "url": "https://www.nxp.com/company/about-nxp/newsroom/NW-VSMC-V4",
+   "title": "VSMC celebrates the grand opening of its first 300mm fab in Singapore",
+   "pub": "NXP Semiconductors",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2026-09-28",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1023",
+   "url": "https://www.edb.gov.sg/en/news-and-insights/press-release/micron-breaks-ground-on-7billion-hbm-facility-in-singapore",
+   "title": "Micron breaks ground on $7 billion HBM facility in Singapore",
+   "pub": "Singapore Economic Development Board",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2025-01-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1024",
+   "url": "https://www.bloomberg.com/news/articles/2025-01-08/micron-to-spend-7-billion-building-singapore-memory-chip-plant",
+   "title": "Micron to spend $7 billion building Singapore memory chip plant",
+   "pub": "Bloomberg",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-01-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1025",
+   "url": "https://www.thestar.com.my/aseanplus/aseanplus-news/2026/11/07/micron-strengthens-singapore-footprint-with-us24bil-investment-in-ai-driven-manufacturing",
+   "title": "Micron strengthens Singapore footprint with US$24bil investment in AI-driven manufacturing",
+   "pub": "The Star",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-11-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1026",
+   "url": "https://thenextweb.com/news/micron-breaks-ground-9-billion-hiroshima-expansion",
+   "title": "Micron breaks ground on $9 billion Hiroshima expansion",
+   "pub": "The Next Web",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-07-04",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1027",
+   "url": "https://evertiq.com/design/2026-07-07-micron-breaks-ground-on-new-cleanroom-at-hiroshima-facility",
+   "title": "Micron breaks ground on new cleanroom at Hiroshima facility",
+   "pub": "Evertiq",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-07-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1028",
+   "url": "https://cleanroomtechnology.com/micron-breaks-ground-on-9-3bn-hiroshima-fab-expansion",
+   "title": "Micron breaks ground on $9.3bn Hiroshima fab expansion to boost AI memory production",
+   "pub": "Cleanroom Technology",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1029",
+   "url": "https://v.daum.net/v/20250630070241072",
+   "title": "Samsung gears up for new factory construction in Pyeongtaek, aims to lead in HBM4",
+   "pub": "Korea JoongAng Daily via Daum",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-06-30",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1030",
+   "url": "https://www.ddaily.co.kr/page/view/2025110714584155028",
+   "title": "Samsung Electronics to step up P4 DRAM investment this month; foundry line next year (in Korean)",
+   "pub": "Digital Daily",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-11-07",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1031",
+   "url": "https://www.anandtech.com/show/16931",
+   "title": "China's SMIC to build a GigaFab for $8.87B: an answer to the shortages",
+   "pub": "AnandTech",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2021-09",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "VERY_STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1032",
+   "url": "https://globaltimes.cn/page/202109/1233301.shtml",
+   "title": "SMIC unveils $8.87 billion capacity plan, eyes opportunities amid global shortage",
+   "pub": "Global Times",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2021-09",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "VERY_STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1033",
+   "url": "https://yicaiglobal.com/news/smic-to-build-usd89-billion-fab-in-shanghai-amid-global-chip-shortage-",
+   "title": "SMIC to build USD8.9 billion fab in Shanghai amid global chip shortage",
+   "pub": "Yicai Global",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2021-09",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "VERY_STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1034",
+   "url": "https://www.trendforce.com/news/2025/01/08/news-multiple-12-inch-wafer-lines-in-china-officially-commissioned/",
+   "title": "Multiple 12-inch wafer lines in China officially commissioned",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-01-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1035",
+   "url": "https://www.trendforce.com/news/2026/08/17/news-chinas-top-two-foundries-hit-capacity-crunch-whats-next-for-smic-and-hua-hongs-expansion-plans/",
+   "title": "China's top two foundries hit capacity crunch: what's next for SMIC and Hua Hong's expansion plans",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-08-17",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1036",
+   "url": "https://infineon.com/cms/cn/about-infineon/press/press-releases/2024/INFXX202408-133.html",
+   "title": "Infineon opens the world's largest and most efficient SiC power semiconductor fab in Malaysia",
+   "pub": "Infineon Technologies",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2024-08-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1037",
+   "url": "https://www.mida.gov.my/mida-news/pm-opens-first-phase-of-infineons-worlds-largest-200-mm-sic-power-semiconductor-plant/",
+   "title": "PM opens first phase of Infineon's world's largest 200 mm SiC power semiconductor plant",
+   "pub": "Malaysian Investment Development Authority",
+   "type": "Government news service",
+   "tier": 1,
+   "date": "2024-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1038",
+   "url": "https://www.aap.com.au/aapreleases/cision20260702ae97152/",
+   "title": "Infineon opens the world's largest fab for power semiconductors and analog/mixed-signal technologies in Dresden",
+   "pub": "Infineon Technologies (via AAP / Cision)",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2026-07-02",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1039",
+   "url": "https://www.electrive.com/2026/07/03/infineon-opens-new-smart-power-fab-in-dresden/",
+   "title": "Infineon opens new Smart Power Fab in Dresden",
+   "pub": "electrive",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2026-07-03",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1040",
+   "url": "https://www.electrive.com/2025/05/12/german-government-approves-funding-for-infineon-chip-plant/",
+   "title": "German government approves funding for Infineon chip plant",
+   "pub": "electrive",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-05-12",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1041",
+   "url": "https://www.mida.gov.my/mida-news/taiwans-ase-opens-fifth-plant-in-penang-will-hire-additional-1500-staff/",
+   "title": "Taiwan's ASE opens fifth plant in Penang, will hire additional 1,500 staff",
+   "pub": "Malaysian Investment Development Authority",
+   "type": "Government news service",
+   "tier": 1,
+   "date": "2025-02",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1042",
+   "url": "https://taipeitimes.com/News/biz/archives/2025/02/19/2003832097",
+   "title": "ASE opens fifth plant in Penang, Malaysia (Taipei Times)",
+   "pub": "Taipei Times",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-02-19",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1043",
+   "url": "https://www.businesswire.com/news/home/20221109006137/en",
+   "title": "ASE breaks ground on new chip assembly and testing facility in Penang, Malaysia",
+   "pub": "ASE via Business Wire",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2022-11-09",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1044",
+   "url": "https://www.mida.gov.my/mida-news/siliconware-precision-breaks-ground-on-rm6b-semiconductor-testing-and-packaging-facility-in-penang/",
+   "title": "Siliconware Precision breaks ground on RM6b semiconductor testing and packaging facility in Penang",
+   "pub": "Malaysian Investment Development Authority",
+   "type": "Government news service",
+   "tier": 1,
+   "date": "2024-05",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1045",
+   "url": "https://www.malaymail.com/news/money/2024/05/25/siliconware-precision-industries-breaks-ground-on-rm6b-semiconductor-packaging-and-testing-facility-in-penang/136474",
+   "title": "Siliconware Precision Industries breaks ground on RM6b semiconductor packaging and testing facility in Penang",
+   "pub": "Malay Mail",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-05-25",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1046",
+   "url": "https://en.vietnamplus.vn/amkor-technology-inaugurates-factory-in-bac-ninh-province-post269507.vnp",
+   "title": "Amkor Technology inaugurates factory in Bac Ninh province",
+   "pub": "VietnamPlus (Vietnam News Agency)",
+   "type": "Government news service",
+   "tier": 2,
+   "date": "2023-10-11",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1047",
+   "url": "https://amkor.com/blog/amkor-inaugurates-latest-factory-in-vietnam/",
+   "title": "Amkor inaugurates latest factory in Vietnam",
+   "pub": "Amkor Technology",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2023-10",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1048",
+   "url": "https://e.vnexpress.net/news/business/companies/south-korea-s-amkor-opens-1-6b-factory-in-vietnam-4663687.html",
+   "title": "South Korea's Amkor opens $1.6B factory in Vietnam",
+   "pub": "VnExpress International",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2023-10-11",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1049",
+   "url": "https://www.ti.com/about-ti/newsroom/company-blog/the-future-starts-with-the-first-our-newest-300mm-wafer-fab-is-in-production.html",
+   "title": "The future starts with the first: our newest 300mm wafer fab is in production",
+   "pub": "Texas Instruments",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2025-12-17",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1050",
+   "url": "https://www.ti.com/about-ti/manufacturing/sherman.html",
+   "title": "Sherman, Texas: 300mm wafer fabs",
+   "pub": "Texas Instruments",
+   "type": "Company website",
+   "tier": 1,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1051",
+   "url": "https://www.governor.ny.gov/news/governor-hochul-celebrates-globalfoundries-116-billion-investment-expand-semiconductor",
+   "title": "Governor Hochul celebrates GlobalFoundries' $11.6 billion investment to expand semiconductor manufacturing",
+   "pub": "New York State Governor's Office",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2024-02-19",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1052",
+   "url": "https://www.democrats.senate.gov/newsroom/press-releases/schumer-announces-globalfoundries-15-billion-chips-award-finalized-spurring-major-private-investment-and-creation-of-thousands-of-jobs-investment-from-schumers-bipartisan-chips_science-law-kicks-off-official-expansion-of-upstate-ny-fab-and-launches-massive-second-fab-to-strengthen-us-supply-chains-and-national-security",
+   "title": "Schumer announces GlobalFoundries $1.5 billion CHIPS award finalized, kicks off expansion of upstate NY fab and launches second fab",
+   "pub": "US Senate Democrats",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2024-11-20",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1053",
+   "url": "https://www.nist.gov/document/globalfoundries-amendment-chips-release",
+   "title": "GlobalFoundries amendment: CHIPS release",
+   "pub": "NIST (CHIPS Program Office)",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2026-10",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "CURRENT",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1054",
+   "url": "https://www.nccommerce.com/news/press-releases/2022/09/09/governor-cooper-announces-wolfspeed-selects-north-carolina-445-acre-manufacturing-campus",
+   "title": "Governor Cooper announces Wolfspeed selects North Carolina for 445-acre manufacturing campus",
+   "pub": "North Carolina Department of Commerce",
+   "type": "Government press release",
+   "tier": 1,
+   "date": "2022-09-09",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1055",
+   "url": "https://www.businesswire.com/news/home/20240326668100/en/Wolfspeed-Tops-Out-World%E2%80%99s-Largest-Most-Advanced-Silicon-Carbide-Facility-Alongside-Senator-Thom-Tillis-Key-Officials",
+   "title": "Wolfspeed tops out world's largest, most advanced silicon carbide facility alongside Senator Thom Tillis, key officials",
+   "pub": "Wolfspeed via Business Wire",
+   "type": "Press release (company)",
+   "tier": 1,
+   "date": "2024-03-26",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1056",
+   "url": "https://wolfspeed.com/company/about/chatham-county-materials-facility",
+   "title": "The John Palmour Manufacturing Center for Silicon Carbide",
+   "pub": "Wolfspeed",
+   "type": "Company website",
+   "tier": 1,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1057",
+   "url": "https://www.axios.com/local/raleigh/2025/02/05/wolfspeed-nears-completion-of-siler-city-factory-north-carolina",
+   "title": "See inside: Wolfspeed nears completion of its $5B Chatham County factory",
+   "pub": "Axios Raleigh",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2025-02-05",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "AGING",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1058",
+   "url": "https://aol.com/nc-chipmaker-wolfspeed-lands-federal-090500641.html",
+   "title": "NC chipmaker Wolfspeed lands federal CHIPS Act grant to support new Siler City factory",
+   "pub": "AOL (syndicated news)",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1059",
+   "url": "https://www.leeandli.com/EN/NewslettersDetail/7030.htm",
+   "title": "Taiwan amends Article 10-2 of the Statute for Industrial Innovation: tax incentives for key technology companies",
+   "pub": "Lee and Li, Attorneys-at-Law",
+   "type": "Legal analysis",
+   "tier": 2,
+   "date": "2023",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1060",
+   "url": "https://www.tomshardware.com/tech-industry/manufacturing/taiwanese-chips-act-equivalent-law-enacted-25-deduction-on-randd-and-a-5-deduction-on-capex",
+   "title": "Taiwanese 'CHIPS Act'-equivalent law enacted: 25% deduction on R&D and a 5% deduction on CapEx",
+   "pub": "Tom's Hardware",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2023-01",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1061",
+   "url": "https://www.trendforce.com/news/2024/05/27/news-chinas-big-fund-phase-three-commences-injecting-344-billion-rmb-into-semiconductor-industry-growth/",
+   "title": "China's Big Fund phase three commences, injecting 344 billion RMB into semiconductor industry growth",
+   "pub": "TrendForce",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-05-27",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1062",
+   "url": "https://www.business-standard.com/world-news/china-sets-up-third-fund-with-47-5-bn-to-boost-semiconductor-industry-124052700493_1.html",
+   "title": "China sets up third fund with $47.5 bn to boost semiconductor industry",
+   "pub": "Business Standard (Reuters)",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-05-27",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1063",
+   "url": "https://www.mida.gov.my/mida-news/govt-allocates-rm25bil-to-operationalise-national-semiconductor-strategy/",
+   "title": "Govt allocates RM25bil to operationalise National Semiconductor Strategy",
+   "pub": "Malaysian Investment Development Authority",
+   "type": "Government news service",
+   "tier": 1,
+   "date": "2024-05-28",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1064",
+   "url": "https://www.mida.gov.my/mida-news/pm-anwar-malaysia-to-train-upskill-60000-engineers-allocate-rm25b-in-fiscal-support-for-national-semiconductor-strategy/",
+   "title": "PM Anwar: Malaysia to train, upskill 60,000 engineers, allocate RM25b in fiscal support for National Semiconductor Strategy",
+   "pub": "Malaysian Investment Development Authority",
+   "type": "Government news service",
+   "tier": 1,
+   "date": "2024-05",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1065",
+   "url": "https://www.mida.gov.my/mida-news/malaysia-aims-to-woo-rm500-bln-investments-in-phase-1-of-nss-pm-anwar/",
+   "title": "Malaysia aims to woo RM500 bln investments in phase 1 of NSS: PM Anwar",
+   "pub": "Malaysian Investment Development Authority",
+   "type": "Government news service",
+   "tier": 1,
+   "date": "2024-05",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1066",
+   "url": "https://english.luatvietnam.vn/cong-nghiep/decision-1018-qd-ttg-2024-strategy-for-development-of-vietnams-semiconductor-industry-through-2030-366694-d1.html",
+   "title": "Decision 1018/QD-TTg 2024: Strategy for development of Vietnam's semiconductor industry through 2030",
+   "pub": "LuatVietnam (legal database)",
+   "type": "Official document (database copy)",
+   "tier": 2,
+   "date": "2024-09-21",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1067",
+   "url": "https://en.vneconomy.vn/vietnam-unveils-semiconductor-industry-development-strategy.htm",
+   "title": "Vietnam unveils semiconductor industry development strategy",
+   "pub": "VnEconomy",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2024-09-23",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1068",
+   "url": "https://gsem.gujarat.gov.in/Home/GujaratSemiconductorPolicy",
+   "title": "Gujarat Semiconductor Policy 2022-27",
+   "pub": "Gujarat State Electronics Mission (Government of Gujarat)",
+   "type": "Official website",
+   "tier": 1,
+   "date": "UNKNOWN",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "UNDATED",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1069",
+   "url": "https://india-briefing.com/news/gujarat-semiconductor-policy-2022-27-what-are-the-incentives-25590.html",
+   "title": "Gujarat Semiconductor Policy 2022-27: what are the incentives?",
+   "pub": "India Briefing (Dezan Shira & Associates)",
+   "type": "Industry news",
+   "tier": 2,
+   "date": "2022-08",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  },
+  {
+   "id": "S1070",
+   "url": "https://www.deshgujarat.com/2022/07/27/gujarat-Government-Announces-Semiconductor-and-Display-Manufacturing-Policy-2022-2027-Dholera-to-Have-Semicon-City",
+   "title": "Gujarat government announces Semiconductor policy 2022-2027; Dholera to have Semicon City",
+   "pub": "DeshGujarat",
+   "type": "Industry news",
+   "tier": 3,
+   "date": "2022-07-27",
+   "acc": "SEARCH_INDEX",
+   "exc": "N/A",
+   "age": "STALE",
+   "note": "Imported batch-14 (Asia facilities and policy)",
+   "used": 1
+  }
+ ],
+ "fa": [
+  {
+   "id": "F026",
+   "name": "TSMC Fab 20, Baoshan (Hsinchu)",
+   "type": "Fab (front-end, logic)",
+   "operator": "TSMC",
+   "link": [
+    "FAB-000001"
+   ],
+   "partners": [],
+   "country": "Taiwan",
+   "state": "Hsinchu County",
+   "city": "Baoshan",
+   "lat": 24.73,
+   "lon": 121.04,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2025-12",
+     "status": "PRODUCTION",
+     "src": "S1004;S1005"
+    }
+   ],
+   "invest": [],
+   "capacity": "N2 node output reported at about 20,000 wafers per month in July 2026 (node-wide figure per report title; not split by fab)",
+   "technology": "N2 (2 nm class)",
+   "wafer": "300 mm",
+   "products": "Leading-edge logic",
+   "jobs": null,
+   "src": "S1004;S1005;S1006",
+   "conf": "MEDIUM",
+   "notes": "TSMC's technology page states N2 entered volume production in Q4 2025 as planned (per search summary); coverage names Fab 20 and Fab 22 as the N2 sites. Ramp and yield figures in Taiwanese media vary and are not recorded."
+  },
+  {
+   "id": "F027",
+   "name": "TSMC Fab 22, Kaohsiung",
+   "type": "Fab (front-end, logic)",
+   "operator": "TSMC",
+   "link": [
+    "FAB-000001"
+   ],
+   "partners": [],
+   "country": "Taiwan",
+   "state": "Kaohsiung",
+   "city": "Nanzih (Southern Taiwan Science Park)",
+   "lat": 22.73,
+   "lon": 120.31,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2025-03-31",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S1009;S1010"
+    },
+    {
+     "date": "2025-10-07",
+     "status": "PILOT_PRODUCTION",
+     "src": "S1007;S1008"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "N2 (2 nm class); site originally planned for 7 nm and 28 nm before conversion (per report)",
+   "wafer": "300 mm",
+   "products": "Leading-edge logic",
+   "jobs": null,
+   "src": "S1009;S1010;S1007;S1008;S1004;S1011",
+   "conf": "MEDIUM",
+   "notes": "First N2 wafers and trial production reported Oct 2025. AFP coverage of TSMC's Dec 2025 mass-production statement names Fab 22 as an N2 site; a per-phase production date is not recorded here until a source states it. A Tom's Hardware roadmap lists phase 1 ramping and phases 2–3 to ramp in 2H 2026; TrendForce reported all five phases expected by Q4 2027 (plans, not milestones)."
+  },
+  {
+   "id": "F028",
+   "name": "TSMC Arizona second fab (Fab 21 phase 2), Phoenix",
+   "type": "Fab (front-end, logic)",
+   "operator": "TSMC",
+   "link": [
+    "FAB-000001"
+   ],
+   "partners": [],
+   "country": "United States",
+   "state": "Arizona",
+   "city": "Phoenix",
+   "lat": 33.75,
+   "lon": -112.13,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2026-04-16",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S1012"
+    },
+    {
+     "date": "2026-10-15",
+     "status": "EQUIPMENT_INSTALLATION",
+     "src": "S1013;S1014"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "N3 (3 nm class)",
+   "wafer": "300 mm",
+   "products": "Leading-edge logic",
+   "jobs": null,
+   "src": "S1012;S1013;S1014",
+   "conf": "MEDIUM",
+   "notes": "Apr 2026 earnings call: construction completed, 3 nm, volume production 2H 2027. Oct 2026 call: tool move-in and installation under way; volume production 3Q 2027, slightly ahead of the previous schedule (per coverage). The April item is recorded at its report date as the construction stage; completion is in the note. Phase 1 is FAC-000014."
+  },
+  {
+   "id": "F029",
+   "name": "UMC Fab 12i Phase 3, Singapore",
+   "type": "Fab (front-end, foundry)",
+   "operator": "UMC",
+   "link": [
+    "FAB-000006"
+   ],
+   "partners": [],
+   "country": "Singapore",
+   "state": "Singapore",
+   "city": "Pasir Ris (Wafer Fab Park)",
+   "lat": 1.38,
+   "lon": 103.95,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2022-02-24",
+     "status": "ANNOUNCED",
+     "src": "S1015"
+    },
+    {
+     "date": "2024-05-21",
+     "status": "EQUIPMENT_INSTALLATION",
+     "src": "S1016;S1017"
+    },
+    {
+     "date": "2024-05-22",
+     "status": "SCHEDULE_CHANGE",
+     "src": "S1017"
+    },
+    {
+     "date": "2025-04",
+     "status": "OPENING_CEREMONY",
+     "src": "S1018;S1019"
+    }
+   ],
+   "invest": [
+    {
+     "value": 5,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "US$5 billion planned (announced Feb 2022)",
+     "src": "S1015"
+    }
+   ],
+   "capacity": "Total UMC Singapore capacity to exceed 1 million wafers a year once phase 1 runs (per DIGITIMES)",
+   "technology": "22 nm / 28 nm",
+   "wafer": "300 mm",
+   "products": "Foundry (5G, automotive, IoT)",
+   "jobs": null,
+   "src": "S1015;S1016;S1017;S1018;S1019",
+   "conf": "MEDIUM",
+   "notes": "First tool move-in 21 May 2024. Mass production was moved from mid-2025 to early 2026 after customer order adjustments (per Taipei Times). Opening ceremony April 2025; first-phase production scheduled for 2026 (per DIGITIMES). Start of production not confirmed in reviewed sources."
+  },
+  {
+   "id": "F030",
+   "name": "VSMC 300 mm fab, Tampines, Singapore",
+   "type": "Fab (front-end, foundry)",
+   "operator": "VisionPower Semiconductor Manufacturing Company (VSMC)",
+   "link": [],
+   "partners": [
+    "Vanguard International Semiconductor (VIS)",
+    "NXP Semiconductors (FAB-000012)"
+   ],
+   "country": "Singapore",
+   "state": "Singapore",
+   "city": "Tampines",
+   "lat": 1.36,
+   "lon": 103.94,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2024-12",
+     "status": "FOUNDATION_LAID",
+     "src": "S1020;S1021"
+    },
+    {
+     "date": "2026-09-28",
+     "status": "PILOT_PRODUCTION",
+     "src": "S1022"
+    }
+   ],
+   "invest": [
+    {
+     "value": 7.8,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "About US$7.8 billion (joint venture announcement)",
+     "src": "S1022"
+    }
+   ],
+   "capacity": "44,000 300 mm wafers per month by 2029 stated at the Sept 2026 opening; 55,000 per month in 2029 stated at the Dec 2024 groundbreaking (figures differ)",
+   "technology": "130 nm to 40 nm: mixed-signal, power management, analog; interposers",
+   "wafer": "300 mm",
+   "products": "Foundry (mixed-signal, power management, analog)",
+   "jobs": null,
+   "src": "S1020;S1021;S1022",
+   "conf": "MEDIUM",
+   "notes": "Grand opening 28 Sept 2026 after 22 months of construction; first sample lot processed; risk production stage, recorded as pilot production; volume production scheduled for Q1 2027 (per NXP release summary). Joint venture of VIS and NXP."
+  },
+  {
+   "id": "F031",
+   "name": "Micron HBM advanced packaging facility, Singapore",
+   "type": "Advanced packaging (HBM)",
+   "operator": "Micron Technology",
+   "link": [
+    "FAB-000004"
+   ],
+   "partners": [],
+   "country": "Singapore",
+   "state": "Singapore",
+   "city": "Singapore",
+   "lat": 1.35,
+   "lon": 103.82,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2025-01-08",
+     "status": "FOUNDATION_LAID",
+     "src": "S1023;S1024"
+    },
+    {
+     "date": "2026-11-07",
+     "status": "SCHEDULE_CHANGE",
+     "src": "S1025"
+    }
+   ],
+   "invest": [
+    {
+     "value": 7,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "About US$7 billion (S$9.5 billion) through the end of the decade and beyond",
+     "src": "S1023;S1024"
+    }
+   ],
+   "capacity": null,
+   "technology": "HBM advanced packaging",
+   "wafer": null,
+   "products": "High-bandwidth memory (HBM)",
+   "jobs": "About 1,400 initially, potentially 3,000 with expansion (per EDB summary)",
+   "src": "S1023;S1024;S1025",
+   "conf": "MEDIUM",
+   "notes": "Micron's first HBM advanced packaging facility outside Taiwan. Operations were planned for 2026 at groundbreaking; a Nov 2026 Micron statement puts initial output in early calendar 2027. A separate Singapore wafer fab (groundbreaking Jan 2026, operations 2H 2028) is mentioned in coverage but not recorded here."
+  },
+  {
+   "id": "F032",
+   "name": "Micron Hiroshima cleanroom expansion",
+   "type": "Fab (memory)",
+   "operator": "Micron Technology",
+   "link": [
+    "FAB-000004"
+   ],
+   "partners": [],
+   "country": "Japan",
+   "state": "Hiroshima",
+   "city": "Higashihiroshima",
+   "lat": 34.43,
+   "lon": 132.74,
+   "scheme": "METI subsidy up to ¥536 billion (announced 12 Sept 2025, per coverage)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2026-07-04",
+     "status": "FOUNDATION_LAID",
+     "src": "S1026;S1027;S1028"
+    }
+   ],
+   "invest": [
+    {
+     "value": 1.5,
+     "currency": "JPY",
+     "unit": "trillion",
+     "label": "About ¥1.5 trillion (about US$9.3 billion; reported figures range $9.2–9.6 billion)",
+     "src": "S1026;S1028"
+    }
+   ],
+   "capacity": "Phase 1 adds about 28,000 m² of cleanroom (per coverage)",
+   "technology": "Advanced DRAM (1-gamma, EUV) and HBM",
+   "wafer": "300 mm",
+   "products": "DRAM, HBM",
+   "jobs": null,
+   "src": "S1026;S1027;S1028",
+   "conf": "MEDIUM",
+   "notes": "Largest cleanroom expansion at the site since Micron acquired Elpida in 2013 (per coverage). Equipment installation is planned from 2H 2028 (a plan, not a milestone)."
+  },
+  {
+   "id": "F033",
+   "name": "Samsung Pyeongtaek Line 4 (P4) build-out",
+   "type": "Fab (memory / foundry)",
+   "operator": "Samsung Electronics",
+   "link": [
+    "FAB-000002"
+   ],
+   "partners": [],
+   "country": "South Korea",
+   "state": "Gyeonggi",
+   "city": "Pyeongtaek",
+   "lat": 37.02,
+   "lon": 127.05,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2024",
+     "status": "PAUSED",
+     "src": "S1029"
+    },
+    {
+     "date": "2025-11",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S1030"
+    }
+   ],
+   "invest": [],
+   "capacity": null,
+   "technology": "DRAM (Phase 4 first, per Nov 2025 report); foundry line planned for 2026 (per same report)",
+   "wafer": "300 mm",
+   "products": "DRAM incl. HBM-related; foundry (planned)",
+   "jobs": null,
+   "src": "S1029;S1030",
+   "conf": "LOW",
+   "notes": "Construction of the remaining P4 phases halted in 2024 and preparations to resume reported in mid-2025 (Korea JoongAng Daily); a Nov 2025 Korean report says Phase 4 is built first, then the postponed Phase 2. Based on press reports citing industry sources; Samsung confirmation not found in reviewed sources."
+  },
+  {
+   "id": "F034",
+   "name": "SMIC Lingang 12-inch fab, Shanghai",
+   "type": "Fab (front-end, foundry)",
+   "operator": "SMIC",
+   "link": [
+    "FAB-000008"
+   ],
+   "partners": [
+    "Lingang Free Trade Zone administration (joint venture, per coverage)"
+   ],
+   "country": "China",
+   "state": "Shanghai",
+   "city": "Lingang",
+   "lat": 30.9,
+   "lon": 121.93,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2021-09",
+     "status": "ANNOUNCED",
+     "src": "S1031;S1032;S1033"
+    }
+   ],
+   "invest": [
+    {
+     "value": 8.87,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "US$8.87 billion planned",
+     "src": "S1031;S1032"
+    }
+   ],
+   "capacity": "100,000 12-inch wafers per month planned (per 2021 coverage)",
+   "technology": null,
+   "wafer": "300 mm",
+   "products": "Foundry",
+   "jobs": null,
+   "src": "S1031;S1032;S1033",
+   "conf": "LOW",
+   "notes": "Construction and production status: not found in reviewed public sources. Recorded at the announcement stage only; check SMIC filings for later milestones."
+  },
+  {
+   "id": "F035",
+   "name": "Hua Hong Wuxi 12-inch line, phase II",
+   "type": "Fab (front-end, specialty foundry)",
+   "operator": "Hua Hong Semiconductor",
+   "link": [],
+   "partners": [],
+   "country": "China",
+   "state": "Jiangsu",
+   "city": "Wuxi",
+   "lat": 31.49,
+   "lon": 120.31,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2024-12-10",
+     "status": "PRODUCTION",
+     "src": "S1034"
+    }
+   ],
+   "invest": [],
+   "capacity": "83,000 12-inch wafers per month (line design capacity, per report)",
+   "technology": "12-inch specialty processes, automotive-grade focus",
+   "wafer": "300 mm",
+   "products": "Specialty foundry (automotive)",
+   "jobs": null,
+   "src": "S1034;S1035",
+   "conf": "MEDIUM",
+   "notes": "Completed and started production 10 Dec 2024, about 100 days ahead of schedule (per report). Some coverage calls this line Fab 9; that naming is not confirmed in reviewed sources. A further project, Fab 9B (RMB 3.8 billion, 55,000 wafers per month, construction completion targeted Jan 2027), is reported separately (TrendForce, Aug 2026)."
+  },
+  {
+   "id": "F036",
+   "name": "Infineon Kulim 3 SiC fab (phase 1), Kedah",
+   "type": "Fab (front-end, power / SiC)",
+   "operator": "Infineon Technologies",
+   "link": [
+    "FAB-000010"
+   ],
+   "partners": [],
+   "country": "Malaysia",
+   "state": "Kedah",
+   "city": "Kulim",
+   "lat": 5.43,
+   "lon": 100.59,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2024-08-08",
+     "status": "OPERATIONAL",
+     "src": "S1036;S1037"
+    }
+   ],
+   "invest": [
+    {
+     "value": 2,
+     "currency": "EUR",
+     "unit": "billion",
+     "label": "€2 billion first phase (about €5 billion more planned for phase 2)",
+     "src": "S1036;S1037"
+    }
+   ],
+   "capacity": null,
+   "technology": "200 mm silicon carbide power semiconductors; GaN epitaxy",
+   "wafer": "200 mm",
+   "products": "SiC power semiconductors",
+   "jobs": "900 (phase 1) and 600 (phase 2) high-value jobs (per MIDA); other MIDA items cite different totals",
+   "src": "S1036;S1037",
+   "conf": "HIGH",
+   "notes": "First phase officially opened 8 Aug 2024 by Malaysia's Prime Minister. Phase 2 is a plan. Powered by 100% green electricity (per Infineon)."
+  },
+  {
+   "id": "F037",
+   "name": "Infineon Smart Power Fab (Module 4), Dresden",
+   "type": "Fab (front-end, power / analog)",
+   "operator": "Infineon Technologies",
+   "link": [
+    "FAB-000010"
+   ],
+   "partners": [],
+   "country": "Germany",
+   "state": "Saxony",
+   "city": "Dresden",
+   "lat": 51.12,
+   "lon": 13.71,
+   "scheme": "German government funding approved May 2025 (per coverage)",
+   "approval": "2025-05-12",
+   "history": [
+    {
+     "date": "2025-05-12",
+     "status": "APPROVED",
+     "src": "S1040"
+    },
+    {
+     "date": "2026-07-02",
+     "status": "OPERATIONAL",
+     "src": "S1038;S1039"
+    }
+   ],
+   "invest": [
+    {
+     "value": 5,
+     "currency": "EUR",
+     "unit": "billion",
+     "label": "€5 billion, Infineon's largest single investment (per coverage)",
+     "src": "S1038;S1039"
+    }
+   ],
+   "capacity": "Doubles 300 mm capacity at the Dresden site (per coverage)",
+   "technology": "Power semiconductors and analog/mixed-signal",
+   "wafer": "300 mm",
+   "products": "Power semiconductors incl. smart power stages for AI power delivery; analog/mixed-signal",
+   "jobs": "Up to 1,000 (per coverage)",
+   "src": "S1040;S1038;S1039",
+   "conf": "HIGH",
+   "notes": "Opened several months ahead of schedule in early July 2026. Ramp follows demand; ramp schedule not found in reviewed sources."
+  },
+  {
+   "id": "F038",
+   "name": "ASE Malaysia Plant 5, Penang",
+   "type": "OSAT (assembly and test)",
+   "operator": "ASE Technology Holding",
+   "link": [
+    "OSAT-000015"
+   ],
+   "partners": [],
+   "country": "Malaysia",
+   "state": "Penang",
+   "city": "Bayan Lepas",
+   "lat": 5.3,
+   "lon": 100.27,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2022-11-09",
+     "status": "FOUNDATION_LAID",
+     "src": "S1043"
+    },
+    {
+     "date": "2025-02-18",
+     "status": "OPERATIONAL",
+     "src": "S1041;S1042"
+    }
+   ],
+   "invest": [],
+   "capacity": "ASE Malaysia floor space rises from about 1 million to about 3.4 million sq ft with the expansion (per coverage)",
+   "technology": "Packaging and test incl. advanced packaging; AIoT defect detection",
+   "wafer": null,
+   "products": "Image sensors (incl. for robots), power management chips (per Taipei Times)",
+   "jobs": "About 1,500 additional staff (per MIDA)",
+   "src": "S1043;S1041;S1042",
+   "conf": "MEDIUM",
+   "notes": "Groundbreaking (Nov 2022) covered Plants 4 and 5. Plant 5 opened 18 Feb 2025. The advanced-packaging versus image-sensor product mix is not broken down in reviewed sources."
+  },
+  {
+   "id": "F039",
+   "name": "SPIL P1 plant, Bandar Cassia, Penang",
+   "type": "OSAT (assembly and test)",
+   "operator": "Siliconware Precision Industries (SPIL), part of ASE Technology Holding",
+   "link": [
+    "OSAT-000015"
+   ],
+   "partners": [],
+   "country": "Malaysia",
+   "state": "Penang",
+   "city": "Bandar Cassia (Batu Kawan)",
+   "lat": 5.23,
+   "lon": 100.45,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2024-05-24",
+     "status": "FOUNDATION_LAID",
+     "src": "S1044;S1045"
+    }
+   ],
+   "invest": [
+    {
+     "value": 6,
+     "currency": "MYR",
+     "unit": "billion",
+     "label": "RM6 billion",
+     "src": "S1044;S1045"
+    }
+   ],
+   "capacity": null,
+   "technology": "Wafer bumping, wafer-level chip-scale packaging, flip-chip packaging, test (planned)",
+   "wafer": null,
+   "products": null,
+   "jobs": "About 3,000 skilled jobs over 15 years (per coverage)",
+   "src": "S1044;S1045",
+   "conf": "MEDIUM",
+   "notes": "Eight-hectare site at Bandar Cassia Technology Park. Construction progress or opening not found in reviewed sources."
+  },
+  {
+   "id": "F040",
+   "name": "Amkor Bac Ninh factory, Vietnam",
+   "type": "OSAT (assembly and test)",
+   "operator": "Amkor Technology",
+   "link": [
+    "OSAT-000016"
+   ],
+   "partners": [],
+   "country": "Vietnam",
+   "state": "Bac Ninh",
+   "city": "Yen Phong II-C Industrial Park",
+   "lat": 21.2,
+   "lon": 105.95,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2023-10-11",
+     "status": "OPERATIONAL",
+     "src": "S1046;S1047;S1048"
+    }
+   ],
+   "invest": [
+    {
+     "value": 1.6,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "US$1.6 billion (sources differ on whether this covers the first two phases or runs to 2035)",
+     "src": "S1046;S1048"
+    }
+   ],
+   "capacity": "600 million units (about 210 tonnes) a year in phase 1 per the investment certificate; phase 2 doubles output (per coverage)",
+   "technology": "Assembly and test",
+   "wafer": null,
+   "products": null,
+   "jobs": "About 2,000 at opening; about 10,000 at full capacity (per coverage)",
+   "src": "S1046;S1047;S1048",
+   "conf": "MEDIUM",
+   "notes": "Inaugurated 11 Oct 2023 on about 23 ha."
+  },
+  {
+   "id": "F041",
+   "name": "Texas Instruments SM1, Sherman",
+   "type": "Fab (front-end, analog / embedded)",
+   "operator": "Texas Instruments",
+   "link": [
+    "FAB-000009"
+   ],
+   "partners": [],
+   "country": "United States",
+   "state": "Texas",
+   "city": "Sherman",
+   "lat": 33.64,
+   "lon": -96.61,
+   "scheme": null,
+   "approval": null,
+   "history": [
+    {
+     "date": "2022-05",
+     "status": "FOUNDATION_LAID",
+     "src": "S1049"
+    },
+    {
+     "date": "2025-12-17",
+     "status": "PRODUCTION",
+     "src": "S1049"
+    }
+   ],
+   "invest": [
+    {
+     "value": 40,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "Up to about US$40 billion for the Sherman site (up to four fabs, SM1–SM4), per TI fact sheet",
+     "src": "S1050"
+    }
+   ],
+   "capacity": "Ramps with customer demand; ultimately tens of millions of chips a day (per TI)",
+   "technology": "Analog and embedded processing",
+   "wafer": "300 mm",
+   "products": "Analog and embedded processing chips",
+   "jobs": "About 3,000 TI jobs at full build-out (per TI fact sheet)",
+   "src": "S1049;S1050",
+   "conf": "HIGH",
+   "notes": "Production started about three and a half years after the May 2022 groundbreaking (TI, 17 Dec 2025). Construction of the second fab, SM2, is complete (per TI); SM2 is not recorded separately."
+  },
+  {
+   "id": "F042",
+   "name": "GlobalFoundries Malta Fab 8 expansion and second fab, New York",
+   "type": "Fab (front-end, foundry)",
+   "operator": "GlobalFoundries",
+   "link": [
+    "FAB-000007"
+   ],
+   "partners": [],
+   "country": "United States",
+   "state": "New York",
+   "city": "Malta",
+   "lat": 42.97,
+   "lon": -73.79,
+   "scheme": "US CHIPS and Science Act award ($1.5 billion, finalised Nov 2024); New York Green CHIPS tax credit ($575 million) (per coverage)",
+   "approval": "2024-11-20",
+   "history": [
+    {
+     "date": "2024-02-19",
+     "status": "ANNOUNCED",
+     "src": "S1051"
+    },
+    {
+     "date": "2024-11-20",
+     "status": "APPROVED",
+     "src": "S1052"
+    }
+   ],
+   "invest": [
+    {
+     "value": 11.6,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "More than US$11.6 billion over 10 years (NY Governor's Office)",
+     "src": "S1051"
+    }
+   ],
+   "capacity": "Expansion plus a new fab expected to triple Malta campus capacity over 10+ years (per coverage)",
+   "technology": "Automotive process technologies already used in Germany and Singapore; silicon photonics, SiGe, advanced packaging (2026 amendment)",
+   "wafer": "300 mm",
+   "products": "Foundry (automotive, among others)",
+   "jobs": null,
+   "src": "S1051;S1052;S1053",
+   "conf": "MEDIUM",
+   "notes": "In Oct 2026 Commerce agreed to amend the award, reallocating up to $955 million toward silicon photonics, silicon-germanium and advanced packaging across Malta and Burlington, Vermont, with no increase in the total (per NIST release summary). Construction start of the second fab not found in reviewed sources."
+  },
+  {
+   "id": "F043",
+   "name": "Wolfspeed John Palmour Manufacturing Center, Siler City",
+   "type": "Materials (SiC crystal growth and substrates)",
+   "operator": "Wolfspeed",
+   "link": [],
+   "partners": [],
+   "country": "United States",
+   "state": "North Carolina",
+   "city": "Siler City (Chatham County)",
+   "lat": 35.72,
+   "lon": -79.46,
+   "scheme": "US CHIPS and Science Act grant (per report title)",
+   "approval": null,
+   "history": [
+    {
+     "date": "2022-09-09",
+     "status": "ANNOUNCED",
+     "src": "S1054"
+    },
+    {
+     "date": "2024-03-26",
+     "status": "UNDER_CONSTRUCTION",
+     "src": "S1055"
+    },
+    {
+     "date": "2024-06",
+     "status": "PILOT_PRODUCTION",
+     "src": "S1056"
+    }
+   ],
+   "invest": [
+    {
+     "value": 5,
+     "currency": "USD",
+     "unit": "billion",
+     "label": "About US$5 billion (per coverage)",
+     "src": "S1057"
+    }
+   ],
+   "capacity": "Planned to expand Wolfspeed materials capacity more than tenfold (per Wolfspeed)",
+   "technology": "200 mm silicon carbide crystal growth and substrates",
+   "wafer": "200 mm",
+   "products": "SiC substrates (feeding the Mohawk Valley fab)",
+   "jobs": null,
+   "src": "S1054;S1055;S1056;S1057;S1058",
+   "conf": "MEDIUM",
+   "notes": "Topped out 26 Mar 2024. First 200 mm crystal furnaces switched on in June 2024 (recorded as pilot production). Axios (Feb 2025) reported the site nearing completion, with wafer production to follow. A later status was not found in reviewed sources."
+  }
+ ],
+ "pg": [
+  {
+   "id": "PG08",
+   "name": "Taiwan Statute for Industrial Innovation, Article 10-2 (\"Taiwan Chips Act\")",
+   "country": "Taiwan",
+   "jurisdiction": "Taiwan",
+   "type": "TAX_CREDIT",
+   "announced": "2023-01-07",
+   "status": "IN_FORCE",
+   "facts": [
+    {
+     "label": "Passed",
+     "value": "7 January 2023; effective 1 January 2023 to 31 December 2029 (per law-firm summary)",
+     "src": "S1059"
+    },
+    {
+     "label": "Credits",
+     "value": "25 % for forward-looking innovative R&D; 5 % for equipment investment (raised from 15 % for R&D)",
+     "src": "S1059;S1060"
+    },
+    {
+     "label": "Equipment threshold",
+     "value": "Advanced-process equipment spending of at least NT$10 billion (about US$321 million) (per report)",
+     "src": "S1060"
+    },
+    {
+     "label": "Eligibility",
+     "value": "Corporate organisations only; MOEA reviews applications (per law-firm summary)",
+     "src": "S1059"
+    }
+   ],
+   "match": "Article 10-2|Statute for Industrial Innovation"
+  },
+  {
+   "id": "PG09",
+   "name": "China National Integrated Circuit Industry Investment Fund, phase III (\"Big Fund III\")",
+   "country": "China",
+   "jurisdiction": "China",
+   "type": "STATE_FUND",
+   "announced": "2024-05-24",
+   "status": "ESTABLISHED",
+   "facts": [
+    {
+     "label": "Established",
+     "value": "24 May 2024 (per coverage)",
+     "src": "S1061;S1062"
+    },
+    {
+     "label": "Registered capital",
+     "value": "344 billion yuan (about US$47.5 billion)",
+     "src": "S1061;S1062"
+    }
+   ],
+   "match": "Big Fund"
+  },
+  {
+   "id": "PG10",
+   "name": "Malaysia National Semiconductor Strategy (NSS)",
+   "country": "Malaysia",
+   "jurisdiction": "Malaysia",
+   "type": "INCENTIVE",
+   "announced": "2024-05-28",
+   "status": "ADOPTED",
+   "facts": [
+    {
+     "label": "Fiscal support",
+     "value": "At least RM25 billion (about US$5.3 billion) for incentive programmes (breakdown differs across reports)",
+     "src": "S1063;S1064"
+    },
+    {
+     "label": "Investment target",
+     "value": "At least RM500 billion in phase 1",
+     "src": "S1065"
+    },
+    {
+     "label": "Talent target",
+     "value": "Train and upskill 60,000 engineers",
+     "src": "S1064"
+    }
+   ],
+   "match": "National Semiconductor Strategy"
+  },
+  {
+   "id": "PG11",
+   "name": "Vietnam semiconductor industry development strategy to 2030, vision 2050 (Decision 1018/QĐ-TTg)",
+   "country": "Vietnam",
+   "jurisdiction": "Vietnam",
+   "type": "STRATEGY",
+   "announced": "2024-09-21",
+   "status": "ADOPTED",
+   "facts": [
+    {
+     "label": "Signed",
+     "value": "21 September 2024 (Prime Minister's Decision 1018/QĐ-TTg)",
+     "src": "S1066;S1067"
+    },
+    {
+     "label": "Approach",
+     "value": "Formula C = SET + 1 (Chip = Specialised + Electronics + Talent, plus Vietnam as a new, safe supply-chain destination)",
+     "src": "S1067"
+    },
+    {
+     "label": "Phase 1 (2024–2030)",
+     "value": "Build human-resource base and basic capabilities in research, design, production, packaging and test (per coverage); workforce targets differ between reports and are not recorded",
+     "src": "S1067"
+    }
+   ],
+   "match": null
+  },
+  {
+   "id": "PG12",
+   "name": "Gujarat Semiconductor Policy 2022–27",
+   "country": "India",
+   "jurisdiction": "Gujarat (India, state)",
+   "type": "INCENTIVE",
+   "announced": "2022-07-27",
+   "status": "IN_FORCE",
+   "facts": [
+    {
+     "label": "Announced",
+     "value": "27 July 2022; Dholera to host a 'Semicon City' (per report title)",
+     "src": "S1070"
+    },
+    {
+     "label": "Capital assistance",
+     "value": "40 % of the central (India Semiconductor Mission) capital assistance, disbursed over five years (per policy summaries)",
+     "src": "S1068;S1069"
+    },
+    {
+     "label": "Other support",
+     "value": "Stamp-duty and registration-fee refund, land subsidy and utility-tariff support (per policy summaries); DLI-scheme projects not eligible",
+     "src": "S1069"
+    }
+   ],
+   "match": "Gujarat Semiconductor Policy"
+  }
+ ]
+}

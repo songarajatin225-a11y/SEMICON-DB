@@ -1,21 +1,234 @@
-# Semiconductor Equipment Atlas
+# SEMICON-DB — Global Semiconductor Equipment Intelligence Graph
 
-Interactive, source-traced register of global semiconductor equipment OEMs, subsystem and component suppliers, and startups, built for TEAL's Laser & Photonics team (Batch 1, evidence as of 29 Sep 2026).
+A source-traced intelligence database of semiconductor equipment companies, product families and models, linked to manufacturing processes, technologies, materials, applications, subsystems, components, suppliers, fabs, OSAT/ATMP houses and geography. Every fact carries its source and a verification state; missing values are shown as missing and never estimated.
 
-**Live site:** https://songarajatin225-a11y.github.io/SEMICON-DB/
+**Live site:** https://songarajatin225-a11y.github.io/SEMICON-DB/ · **Legacy single-file atlas (v1):** [`legacy/`](legacy/index.html)
+
+Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages read), Batch 2 (30 Sep 2026, official titles via web search) Batch 3 (30 Sep 2026, small companies and startups) Batch 4 (keyword-driven discovery) and Batch 5 (ecosystem widening) and Batch 6 (packaging, automation and process tools), all 30 Sep 2026 — see below. This is the public edition: TEAL-internal context (programme specifications, internal BOMs, vendor scoping, pricing, partner-evaluation status) is withheld.
 
 ## What's inside
 
-- 187 companies (143 verified), 158 products and models (84 with laser details), 61 customer relationships, 44 deals and partnerships, 351 numbered sources
-- 25 views: landscape, coverage and QC, company / equipment / product / laser explorers, side-by-side comparison, wafer fab, packaging, advanced packaging, ATMP/OSAT, automation, India, China, Japan, Korea, Taiwan, supplier map, customer map, technology map, localization, competitive intelligence, TEAL portfolio view, gap analysis, partner fit, source register
-- Every record carries source IDs, a verification status and a confidence level; missing values are N/A, never estimated
+| Entity | Records | Notes |
+|---|---:|---|
+| Companies | 355 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 · 8 in Batch 8 · 19 in Batch 9 · 10 in Batch 10 (18 startups in total) |
+| Product families → models | 410 → 578 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 · 7 in Batch 9 · 37 in Batch 10 · 10 in Batch 15 (AMEC, Nova, FormFactor, Kingsemi, Eugene Technology) |
+| Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
+| Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
+| Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
+| Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
+| Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
+| Facilities (site level) | 50 | India's ISM-approved units, one Indian equipment plant and 37 major sites in the US, Japan, Germany, South Korea, Taiwan, China, Singapore, Malaysia, Vietnam, Thailand and the Philippines (including the cancelled Intel Magdeburg project), with dated status history and a controlled status class, investment as reported, capacity, technology and sources (Batches 11–15) |
+| Relationships | 6,298 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 1,121 |
+| Claims (lazy-loaded) | 3,813 | Claim-level provenance: value → evidence type (directly stated / specified / calculated / inferred / unverified) → source → date → confidence | Tiered, dated, access mode recorded (read directly vs title via web search) |
+
+## Features
+
+- **Command centre** with KPI cards, process-chain coverage, front-end/back-end/test split, regional and India distribution, evidence and source-tier breakdowns, review queue.
+- **Global search / command palette** (⌘K / Ctrl K, or `/`): fuzzy and typo-tolerant, synonyms (CVD ↔ chemical vapour deposition …), natural-language constraints (“200 mm SiC laser dicing equipment”, “laser dicing suppliers in Japan”, “equipment companies with India presence”). Records that don't publish a constrained value are shown as *partial* matches, never silently included or dropped. Recent and saved searches.
+- **Faceted explorers** for companies, products/models, suppliers and sources: multi-select, searchable, removable chips, bookmarkable URL state, table / grid / list views (remembered), column presets (Basic, Technical, Commercial, Supply chain, Source), show/hide columns, sorting, pagination, CSV/JSON export, copy table.
+- **Detail pages** for every entity with tabs, breadcrumbs, quick actions (save, compare, copy link, copy record JSON, print, relationship graph), sources next to the claims, conflict banners and record history.
+- **Process explorer** (tree · flow · details), **relationship graph** with progressive disclosure, **global ecosystem map** (country clustering, table fallback).
+- **Comparison** of up to 6 models or 4 companies — facts only, differences highlighted, unpublished values hatched, no scores.
+- **Intelligence workspace**: Equipment Finder, Supplier Finder, Supply-chain Explorer, Packaging and Fab intelligence, India/TEAL opportunity (your own criteria and weights — never auto-ranked), plus all Batch-1 analyses (TEAL view, gap analysis, partner fit, localisation, competitive landscape, customer map, deals, laser explorer, segments).
+- **Data Quality centre**: verification/quality states, freshness, missing key fields, conflicts (both claims shown), duplicate candidates (never auto-merged), validation findings, relationship basis, source hygiene, Batch-1 QC log, methodology.
+- **India ecosystem** page and country pages; saved workspace (local to the browser).
+
+## Batch 2 (30 Sep 2026): filling empty processes
+
+Batch 2 targeted every process and equipment category that had no equipment. It added 144 products from 39 manufacturers (6 new companies: PVA TePla, Okamoto, SpeedFam, Organo, Kurita, Nordson). Processes with equipment went from 33 to 58 of 61, and equipment categories with models from 53 to 94.
+
+Every Batch-2 record comes from the **manufacturer's own** product page, press release, brochure or SEC filing, found by web search. Direct page access was blocked in the capture environment, so only the official URL and title were captured. These records are therefore marked **Partially verified / Medium confidence**, carry no specifications, and each source is labelled "Title via web search · page not read". Candidates whose only evidence was a generic page title or a third-party site (Kingsemi, SMEE, Hwatsing, RORZE models) were not added. Still empty: ingot grinding, final (prime) wafer cleaning, lead plating.
+
+## Batch 3 (30 Sep 2026): small companies and startups
+
+Batch 3 searched for small and mid-size equipment makers and startups missing from the database, by segment (lithography, deposition, etch, thermal, wet, metrology/inspection, test, bonding and packaging, laser, crystal growth, automation) and by region (US, Europe incl. Norway, Lithuania and the Czech Republic, Japan, Korea, Taiwan, China, Malaysia, Singapore, Israel, India). It added **68 companies across 21 countries, 123 products, 9 startup profiles, 4 customer organisations and 13 customer links**, from 220 sources (189 Tier 1).
+
+- **Startups** (funding, founders and year as reported): Lace Lithography (NO, helium atom-beam lithography), Multibeam (US, multicolumn e-beam), Forge Nano (US, ALD), Halo Industries (US, laser SiC wafering), ATLANT 3D (DK, direct atomic layer processing), AlixLabs (SE, ALE pitch splitting), UNISERS (CH, contamination inspection), Inversion Semiconductor (US, accelerator light source), Xallent (US, nanoprobing).
+- **Small / mid-size equipment makers**: e.g. Raith, Heidelberg Instruments, Obducat, JEOL, Ushio, Nanoscribe, SCIL (lithography); Angstrom Engineering, Evatec, Kurt J. Lesker, Annealsys, SVCS, Tystar, centrotherm, TES, Leadmicro (deposition / thermal); Samco, SENTECH, Trymax, scia Systems, Ion Beam Services (etch, strip, implant); Siconnex, Modutek, Semsysco, KCTech (wet / CMP); AUROS, NEXTIN, Nanotronics, Sigray, XwinSys (metrology / inspection); Exicon, MIRAE, UniTest, AEM, Aemulus, Mi Equipment, ficonTEC (test and handling); Shibaura, Toray Engineering, Takatori, Finetech, SET, Palomar, YES, PINK, Amtech (bonding and packaging); Oxford Lasers, Workshop of Photonics, LightMachinery, E&R Engineering (laser); Revasum, Mitsuboshi Diamond (SiC grinding/polishing, scribe-and-break); CVD Equipment, Linton Crystal (crystal growth — fills *ingot grinding & shaping*); Kensington Labs (wafer robots).
+- **India**: Holmarc Opto-Mechatronics (spin coaters), Scantech Laser (laser machines), Excel Instruments (evaporation / sputtering systems, named on IIT facility pages).
+- **Customer links** only where a title states them: e.g. Multibeam → SkyWater (SkyWater press release), YES → Powertech (YES press release), ficonTEC → VLC Photonics, Palomar → Bay Photonics / EPIC, plus orders from unnamed customers (Obducat, YES, AEM). NEXTIN → SK hynix is PROBABLE (single media report).
+
+Same evidence rule as Batch 2: pages were located by web search but not read, so products carry **no specifications**. Product names come from page titles (MEDIUM); 6 names that appear only in the search summary are LOW, as is one industrial laser marker whose semiconductor use is not stated. Company profile facts that come from a search-result summary (city, founding year, funding) are labelled `SEARCH_SUMMARY` and the HQ basis “search-result summary of a cited source”. Directory-only companies (KCTech, UniTest, Mi Equipment, Leadmicro, SCIL, Excel Instruments) are LOW confidence. Candidates without a usable source were skipped (e.g. Vistec, DAS Environmental, Omicron Scientific, Milman, FemtoMetrix), as were general-purpose laser machine builders without a semiconductor product (Pulsar Photonics), chip-design startups and fabs that build tools only for themselves (Atomic Semi).
+
+## Batch 4 (30 Sep 2026): keyword-driven discovery
+
+Batch 4 searched the web with **equipment and process keywords**, starting with categories that had no companies. Examples: *wedge bonder*, *die sorter*, *film assisted molding*, *molecular beam epitaxy*, *sputtering system*, *wafer flatness measurement*, *EUV pellicle*, *photomask repair*, *semiconductor MES*, *dry vacuum pump*, *abatement scrubber*, *process chiller*, *MEMS release etch* and *OLED inkjet*. It added **25 companies, 33 products and 54 sources** (49 Tier 1), for example:
+- Wire bonding: Hesse Mechatronics, West-Bond, TPT.
+- Die attach, die sorting and molding: Mühlbauer, ITEC, Boschman.
+- Test and deposition: inTEST (thermal test), Riber, SVT Associates and Dr. Eberl (MBE), AJA, Semicore and Torr (sputter / evaporation).
+- Wafer metrology and masks: Corning Tropel (bare-wafer flatness), UnitySC, Canatu and the startup aweXome Ray (CNT EUV pellicles), Bruker (mask repair / cleaning).
+- Software and subfab: Critical Manufacturing (MES, Portugal), Kashiyama and Leybold (dry pumps), Kanken Techno (abatement), Mirapro (chillers).
+- MEMS and display: memsstar (MEMS vapour etch), Kateeva (OLED inkjet).
+
+Each of these companies stores its **discovery keywords**. They appear on the company page and are indexed by search, so searching “wedge bonder” finds Hesse, West-Bond and TPT. They are a discovery aid, not a claim about the company. Equipment categories with models went from 116 to 129. Candidates with no usable page were skipped (e.g. EDA Industries, Cosmic Equipment, SemiTEq, Maruyama).
+
+## Batch 5 (30 Sep 2026): widening across the ecosystem
+
+Batch 5 followed the keyword approach into neighbouring layers: lapping / polishing, probe cards and probers, power-device test, gas delivery, mask writers, microLED transfer, and the material side (silicon wafers, CMP consumables, FOUPs). It added **15 companies, 26 products and 43 sources**, plus new models for companies already in the database (NuFlare, 3D-Micromac, ASMPT).
+- **Lapping and polishing:** Lapmaster Wolters (Peter Wolters AC microLine), Logitech (PM6, Tribo, Orbis).
+- **Probe and test:** MICRONICS JAPAN, Japan Electronic Materials, UIGREEN (probe cards, probers); TESEC (power-device testers and handlers).
+- **Gas delivery:** HORIBA STEC (mass flow controllers), Fujikin (ultra-pure valves and integrated gas systems).
+- **Masks and microLED:** IMS Nanofabrication (multi-beam mask writer), NuFlare models (EBM-9500, EBM-8000P, MBM-2000); Uniqarta (startup, laser microLED transfer; single 2018 report, LOW), 3D-Micromac microCETI, ASMPT laser mass transfer.
+- **Materials and consumables** (type “Materials/gases”, no equipment category): SUMCO, Siltronic, SK siltron (wafers); FUJIFILM (CMP materials); Entegris (FOUPs, CMP consumables).
+
+Same evidence rule as Batches 2–4: pages found by web search but not read; no specifications. Materials companies are included as supply-chain context only, with company-level evidence. Not covered yet: photoresist makers (JSR, TOK, Shin-Etsu had no usable official page in search), specialty-gas suppliers, ceramic chuck makers and most OSATs.
+
+## Batch 6 (30 Sep 2026): packaging, automation and process tools
+
+Batch 6 added **11 companies, 26 products and 37 sources**, including new models for LPKF (NEXAR LIDE glass-via systems), Kulicke & Soffa (APAMA C2W thermo-compression bonder), SEMES (HBM TC bonder) and Panasonic Connect (plasma dicer, LOW).
+- **Dispensing:** Musashi Engineering (TAD1000, FAD5700), VERMES Microdispensing (MDS 3280).
+- **Bonding:** F&K Delvotec (M17 wire bonders, G5 ball-wedge, laser bonder), HYBOND (die bonders), Brewer Science (Apogee temporary bonder).
+- **Automation:** SINFONIA TECHNOLOGY (EFEMs, load ports), Kawasaki Robotics (wafer robots).
+- **Process:** Trion Technology (plasma etch and strip), Akrion Systems / NAURA Akrion (wet stations; directory evidence, LOW).
+- **Facility monitoring:** Particle Measuring Systems, Lighthouse Worldwide Solutions (particle counters; SEMI directory evidence, LOW).
+
+Same evidence rule as Batches 2–5. Candidates without a usable source were skipped, including Micraft (a Taiwanese TCB entrant reported only in a search summary) and LG's hybrid bonder programme.
+
+## Batch 7 (30 Sep 2026): regions and layers
+
+Batch 7 added **7 companies and 8 sources** with company-level evidence only (no products): Keteca Singapore, MIT Semiconductor and SRM Integration / Micro Modular System (Singapore, Malaysia), and India's DeepLASE Technologies (IIT Delhi spin-out, fibre lasers; startup) and Suresh Indu Lasers. Machine-vision makers Basler and Keyence were already in the database (the duplicate guard rejected them); Teledyne Vision Solutions was added. Evidence here is mostly directory-level (SEMI member directory, InvestPenang, supplier directories) and marked LOW where the source is not the company itself.
+
+## Batch 8 (30 Sep 2026): deposition, packaging wet process, implant, metrology
+
+Batch 8 added **8 companies, 18 products and 25 sources**: ULVAC (ENTRON, SME sputtering), CANON ANELVA (EC7800, HC7100, NC7900, IC7500, NC8000 etch …), VON ARDENNE (XEA|nova L), SCHMID Group (InfinityLine C+ / H+ for panel-level packaging), Nissin Ion Equipment (implanters), Ferrotec (vacuum feedthroughs, quartz), HIWIN (linear-motor stages) and Freiberg Instruments (MDP lifetime metrology); plus UTECHZONE wafer AOI models attached to the existing Utechzone record. Same evidence rule as earlier batches.
+
+## Batch 9 (5 Oct 2026): materials, gases and subfab
+
+Batch 9 widened the supply-chain layer around the equipment with **19 companies, 7 products and 31 sources**, almost all from the companies' own pages:
+- **Photoresists and process chemicals:** Tokyo Ohka Kogyo (TOK), JSR (incl. its Inpria acquisition), Shin-Etsu Chemical, Dongjin Semichem, Soulbrain.
+- **CMP and packaging materials:** Fujimi (PLANERLITE slurries), Resonac.
+- **Electronic and specialty gases:** Linde, Air Liquide, Taiyo Nippon Sanso, Kanto Denka Kogyo; gas delivery from Applied Energy Systems (SEMI-GAS Centurion cabinets).
+- **Subfab:** GST and UNISEM (scrubbers, chillers), ZEUS (wet cleaning).
+- **Equipment:** Zhejiang Jingsheng (crystal growth, SiC epitaxy), Mattson Technology (RTP, millisecond anneal, dry strip), Hymson (lasers; LOW), Beijing U-Precision (wafer stages; vendor case study, LOW).
+
+Materials suppliers are recorded at company level (type “Materials/gases”); their products are materials, not equipment models, and gas-supply agreements are not entered as equipment customer links. Market-share figures that appear on some company pages were not recorded.
+
+**Known gaps against the wider master-prompt scope** (not implemented; the data model is prepared for them): revenue and employee fields per company (only reported figures are stored), patent, M&A and news layers, a "discover / research queue" workflow with approve / merge buttons, and AI-assisted natural-language queries beyond the current query parser. Southeast Asia (Vietnam, Thailand, Indonesia, Philippines) and India equipment makers remain thinly covered because search returned few company-owned pages; trade-show exhibitor lists could not be read.
+
+## Batch 10 (5 Oct 2026): empty categories and major-OEM portfolios
+
+- **Linkage fix:** a company now counts as a supplier of a category when it has a sourced model there, not only when its profile lists the category. This added 63 company–category links, and profiles mark which categories come from models.
+- **37 models for the big OEMs**, whose portfolios were thin:
+  - Lam Research: SPEED HDP-CVD, ALTUS metallization, Striker ALD, VECTOR PECVD, Flex, Reliant
+  - Applied Materials: Centris Sym3, Producer eHARP, SEMVision H20
+  - ASML: TWINSCAN NXT:2000i / 2100i / 2150i, HMI eScan 430 / 600 / 1000 / 1100
+  - Tokyo Electron: Episode, Tactras-UDEMAE, Certas; Kokusai Electric: TSURUGI-C2, AdvancedAce-II, TANDUO
+  - Masks: NuFlare MBM-3000, Zeiss PROVE
+  - Hybrid bonding: EVG GEMINI FB / FB XT, Besi Datacon 8800 CHAMEO ultra plus AC, SUSS XBC300 Gen2
+  - Also: K&S PIXALUX, YES VeroTherm (built in Coimbatore)
+- **10 companies for fab infrastructure and automation:** Atlas Copco (clean dry air), DAS Environmental Expert (abatement), Yaskawa (wafer robots), Cimetrix / PDF Solutions (SECS/GEM), INFICON (FabGuard fault detection), SYNUS Tech (AMHS / OHT), V Technology and Charm Engineering (display repair), Omron (fab mobile robots), Merck / EMD Electronics (CHEMGUARD chemical delivery).
+- **Editorial cross-references** connect overlapping taxonomy branches, such as back-end "E12 Wire bonding" and assembly "C12 Wire Bonding". The concentration page now separates real research gaps from categories whose suppliers sit under an equivalent node. A cross-reference is never counted as a supplier.
+
+Result: categories with no documented supplier fell from 91 to 70. Of those, 45 have suppliers under an equivalent category and 25 are real gaps, 10 of which are device types rather than tools. As before, all sources were located by web search and the pages were not read, so models carry no specifications.
+
+## Visual refresh (22 Nov 2026)
+
+- **Look and feel:** system UI typography, softer surfaces and a translucent header, plus refreshed light and dark tokens.
+- **Home page:** a new hero card, grouped stat cards, a facility status pipeline and the latest facility milestones.
+- **Charts:** validated colour palettes, one ordinal teal ramp for ordered states and one categorical palette for segments.
+- **Facilities:** a new `?status=` filter.
+
+Details: [QA_REPORT.md](QA_REPORT.md).
+
+## SEMICON-DB 3.0 (5 Oct 2026)
+
+- **Claim-level provenance:** an Evidence tab on companies and an evidence panel on facilities show every value's evidence type, source, date and confidence (`data/claims.json`, loaded on demand).
+- **Data-quality score and research status:** separate from confidence and completeness.
+- **Facilities in four countries:** India plus 7 major fabs in the US, Japan and Germany. Statuses use the controlled vocabulary; India gets a state tile map.
+- **"What can replace this?":** model pages classify alternatives as direct substitute, partial substitute, development-stage or different technology.
+- **Policy and programmes** (`#/intelligence/policy`): 19 programmes: the US CHIPS Act, the EU Chips Act, US export controls, Japan, Korea, India, Taiwan's Article 10-2 tax credit, China's Big Fund III, Singapore's RIE2030 semiconductor flagship, Malaysia's National Semiconductor Strategy, Vietnam's and Thailand's national strategies, Texas and New York state programmes, and the Gujarat, Odisha, Uttar Pradesh and Tamil Nadu state policies, with sources and linked facilities.
+- **Graph filters:** relationship-type and source-backed-only filters, plus a graph JSON export.
+- **`npm test`:** validation plus 54 headless tests, including a gold-standard search benchmark (`tests/search-benchmark.json`).
+
+Details and remaining gaps: [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md#semicon-db-30-addendum-5-oct-2026).
+
+## Global intelligence upgrade (5 Oct 2026)
+
+This upgrade follows the *Global Semiconductor Intelligence Graph* brief. The approach was audit → preserve → normalise → expand → connect, with no rewrite, no route changes and no data removed. The full audit, architecture, methods, file list and limitations are in [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md).
+
+**New features**
+- **Facility database** (`#/facilities`): site-level records. Each has:
+  - a dated status history (announced → approved → foundation laid → pilot → operational; the latest milestone is never inferred);
+  - investment as reported, with conflicting figures kept side by side as open conflicts;
+  - capacity, technology, scheme and approximate coordinates;
+  - state-wise India totals.
+
+  The first coverage is India's 12 ISM-approved units plus the YES equipment plant in Coimbatore. The data comes from PMO / All India Radio releases and national news.
+- **Entity resolution:** 181 resolution keys are derived from each record itself: recorded aliases, the short form in the name, the name without a legal suffix, and the ticker.
+  - "ASML Holding N.V.", "AMAT" and "TEL" each resolve to one canonical company; an ambiguous key resolves to nothing.
+  - Duplicate detection now also flags shared keys.
+  - Curated decisions (`scripts/reference/entity-decisions.mjs`) are shown on both company pages. One example is "JSG" vs Zhejiang Jingsheng: a probable same entity, not merged.
+- **Supply-chain intelligence:**
+  - regional dependency (US / Japan / Europe / China / Taiwan / Korea / India / Israel) for each category and each equipment group;
+  - a "players by region" competitor panel on every equipment page;
+  - a 0–100 supplier criticality score per company, so a small subsystem supplier that several OEMs depend on can rank as critical;
+  - facility milestones in the events timeline.
+- **SEMICON-DB Intelligence Score** for each company, with a published method. It weights completeness 30 %, source quality 20 %, portfolio breadth 15 %, supply-chain importance 20 % and connectivity 15 %. It measures the evidence held, not the company.
+- **Analyst** answers more questions, all from records:
+  - "Compare ASML vs Canon vs Nikon" (resolved by alias);
+  - requirement-based laser supplier matching ("I need a 200W pulsed laser for semiconductor marking"), which ranks by stated matches and lists unpublished specs separately;
+  - the most concentrated categories, the best localization candidates, Indian facilities by status, and TEAL partner-fit candidates;
+  - localization indexes at subsystem and component-class level.
+- **Process flows** (`#/intelligence/flows`): editorial reference flows for silicon wafers, logic, DRAM, 3D NAND, SiC, GaN, MEMS, CIS, RF, HBM / 3D, fan-out and back-end. Each step links to its equipment, suppliers, India-linked suppliers and concentration.
+- **What changed** (`#/intelligence/changes`) lists records by batch and date. Records now carry their real `first_added` batch date.
+- **Research queue** (`#/intelligence/research`) shows the ten ingestion waves with coverage, important-but-thin records, uncovered categories and facilities to re-check.
+- **Smaller additions:**
+  - verification-age bands (Fresh / Current / Aging / Stale / Needs verification);
+  - "Suggest a correction" on every record, which opens a pre-filled GitHub issue (there is no write backend and no credentials);
+  - duplicate-source-URL validation;
+  - facility search (e.g. "GaN fab in India").
+
+## Supply-chain intelligence (5 Oct 2026)
+
+From the uploaded *Global Intelligence Master Prompt*, the parts that the current evidence can support honestly were added:
+- **Supply-chain concentration** (`#/intelligence/risk`): a 0–100 index per equipment category, with the formula and inputs shown on every row: supplier scarcity 40 %, geographic concentration (HHI of HQ countries) 35 %, no India-linked supplier 15 %, evidence weakness 10 %. It also lists critical supplier nodes (companies that are the only documented supplier of a category), categories with no documented supplier (research targets), and a country × equipment-group heatmap. The index describes the documented supplier base, not the market. Factors without evidence in the database (lead time, export controls, patents, raw materials) are left out, not guessed.
+- **Events timeline** (`#/intelligence/timeline`): deal records plus dated press releases and investor announcements, by year, with sources. Undated items are excluded.
+- **Data completeness per company**: coverage of 16 key fields in five groups (profile, portfolio, commercial, evidence, geography). It appears as a column in the companies table and as a panel on each profile, with generated *Research next* search queries for the missing fields.
+
+- **Analyst** (`#/intelligence/analyst`): a rule-based question box that answers only from SEMICON-DB records and shows the rule it used. It handles *Can we build X?*, *Who supplies X?*, *Alternatives to company* and free-form requirements such as *300 mm sputtering systems in Japan*. Free-form matches that don't publish a constrained value are labelled partial. When nothing matches it says so and suggests the closest categories. It is not an LLM.
+- **"Can we build this?" engine**: for any equipment category, lists subsystems → documented global and Indian suppliers, OEMs, reference models and the concentration index. It then gives an indication by a fixed rule: BUILD if ≥ 70 % of typical subsystems have a documented Indian supplier, HYBRID at 40–69 %, otherwise PARTNER (≥ 3 global OEMs) or BUY. It is an evidence summary, not a business recommendation.
+- **India localization index (0–100)** per equipment category, with bands LOW / MEDIUM / HIGH / VERY HIGH. Weights: Indian subsystem coverage 40 %, Indian OEM already documented 20 %, number of global alternatives 20 %, OEM India presence 20 %. The formula is printed on the page.
+
+Not built (they need data or a backend the static site doesn't have): an LLM assistant, facility capacity / CapEx, patents, market sizing, pricing, lead times and alerts. CapEx, IP, certification and talent are therefore not part of the localization index.
 
 ## Evidence rules
 
-- Confidence: official source = HIGH; two independent industry sources = MEDIUM; single industry or distributor source = LOW; blog or market list only = UNVERIFIED
-- Customer links: CONFIRMED only when the supplier, the customer or a filing states it; reported or evaluation-stage links are PROBABLE
-- Pages that blocked access are marked not accessible and were not bypassed
+- Confidence: official source = HIGH; two independent industry sources = MEDIUM; single industry or distributor source = LOW; blog or market list only = UNVERIFIED.
+- Customer links: CONFIRMED only when the supplier, the customer or a filing states it; reported or evaluation-stage links are PROBABLE.
+- Market class only from a published ranking or revenue; market share is never estimated. No scores or “best” rankings.
+- Pages that blocked access are marked not accessible and were not bypassed.
+- Statement labels: source-backed fact · manufacturer claim · derived · editorial reference · analyst (not source-traced).
 
-## Public edition
+## Run locally
 
-This site is a single static `index.html` with the data embedded. TEAL internal context (programme specifications, internal bills of materials, vendor scoping, pricing, partner-evaluation status) is withheld from this public edition. The full workbook, CSVs, SQLite database, per-company JSON and update engine are kept outside this repository.
+`npm test` runs schema validation plus the headless regression suite (search benchmark, entity resolution, facility and claim integrity, score bounds).
+
+
+The site is static (no backend). Serve the folder over HTTP — browsers block `fetch` from `file://`:
+
+```bash
+python3 -m http.server 8080      # or: npx serve
+# open http://localhost:8080/
+```
+
+## Data pipeline
+
+```bash
+npm install              # dev tools only (map pre-rendering)
+npm run build            # legacy snapshot + reference taxonomy + staged batches → data/*.json + data/bundle.json (validates; fails on errors)
+npm run validate         # re-validate published data independently
+npm run build:map        # re-render data/basemap.json (only when the country reference changes)
+node scripts/import.mjs new-companies.csv --entity companies            # dry run: validation + duplicate report
+node scripts/import.mjs new-companies.csv --entity companies --write    # stage into data/batches/, then npm run build
+# also: --entity models | sources | customers | customer_links  (JSON rows may carry a sources[] array and a startup{} profile)
+node scripts/gen-dictionary.mjs  # regenerate DATA_DICTIONARY.md
+```
+
+## Documentation
+
+[ARCHITECTURE.md](ARCHITECTURE.md) · [DATA_MODEL.md](DATA_MODEL.md) · [DATA_DICTIONARY.md](DATA_DICTIONARY.md) · [DATA_SOURCES.md](DATA_SOURCES.md) · [CONTRIBUTING.md](CONTRIBUTING.md) · [QA_REPORT.md](QA_REPORT.md) · [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md)
+
+## Deployment
+
+GitHub Pages serves the `gh-pages` branch root. `.nojekyll` is kept so folders are served as-is. Old URLs keep working: legacy view hashes (`#products`, `#landscape`, `#china` …) redirect to their 2.0 routes, and Batch-1 record ids (`C0001`, `P00001`, `S0001`, `CU001`) resolve to the 2.0 records.
