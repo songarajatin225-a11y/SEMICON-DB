@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// SEMICON-DB 2.0 data build.
+// SEMINEXUS 2.0 data build.
 // RAW (data/legacy/legacy_snapshot.json + scripts/reference/*) → VALIDATE → NORMALIZE → DEDUPLICATE
 // → LINK ENTITIES → ATTACH SOURCES → QUALITY CHECK → PUBLISH (data/*.json + data/bundle.json).
 // The legacy snapshot is never modified. No value is invented: missing legacy values ("N/A") become null.
@@ -610,7 +610,7 @@ const report = validateAll({ ...entities }, { conflicts: CONFLICTS });
 quality.validation = report;
 const counts = Object.fromEntries(Object.entries(entities).map(([k, v]) => [k, v.length]));
 const LATEST = [AS_OF, ...BATCHES.map(b => b.created).filter(Boolean)].sort().pop();
-const meta = { name: "SEMICON-DB", title: "SEMICON-DB — Global Semiconductor Equipment Intelligence Graph", schema_version: SCHEMA_VERSION, evidence_as_of: LATEST, batch1_as_of: AS_OF, built: BUILD_DATE,
+const meta = { name: "SEMINEXUS", title: "SEMINEXUS — Global Semiconductor Equipment Intelligence Graph", schema_version: SCHEMA_VERSION, evidence_as_of: LATEST, batch1_as_of: AS_OF, built: BUILD_DATE,
   batches: [{ batch: "Batch 1", date: AS_OF, companies: L.co.length - sumB("co"), products: L.pr.length - sumB("pr"), sources: L.src.length - sumB("src"), customer_links: L.cr.length - sumB("cr"), startups: L.st.length - sumB("st"), note: "Legacy public edition (single-file atlas)" },
     ...BATCHES.map(b => ({ batch: b.batch, date: b.created, companies: (b.co || []).length, products: (b.pr || []).length, sources: (b.src || []).length, customer_links: (b.cr || []).length, startups: (b.st || []).length, facilities: (b.fa || []).length, note: b.method || "Imported batch (scripts/import.mjs)" })),
     { batch: "2.0 migration", date: BUILD_DATE, note: "Totals after 2.0 normalisation (schema, reference taxonomy, derived relationships) over Batch 1" + (BATCHES.length ? " plus " + BATCHES.map(b => b.batch).join(", ") : "; no new external facts added"), ...counts }],
@@ -622,7 +622,7 @@ write("claims.json", { built: BUILD_DATE, count: claims.length, policy: ["DIRECT
 write("intel.json", intel); write("quality.json", quality); write("reference.json", reference); write("meta.json", meta);
 write("bundle.json", { meta, reference, quality, intel: { ...intel, programs }, ...entities });
 const size = fs.statSync(path.join(OUT, "bundle.json")).size;
-console.log(`SEMICON-DB ${SCHEMA_VERSION} build: ${Object.entries(counts).map(([k, v]) => `${k}=${v}`).join(" ")}`);
+console.log(`SEMINEXUS ${SCHEMA_VERSION} build: ${Object.entries(counts).map(([k, v]) => `${k}=${v}`).join(" ")}`);
 console.log(`claims.json ${claims.length} claims (lazy-loaded)`);
 console.log(`bundle.json ${(size / 1024).toFixed(0)} KB · validation: ${report.errors.length} errors, ${report.warnings.length} warnings · ${dupes.length} duplicate candidates · ${CONFLICTS.length} conflicts`);
 if (report.errors.length) { console.error(report.errors.slice(0, 30).map(e => "ERROR " + e.rule + ": " + e.message).join("\n")); process.exit(1); }

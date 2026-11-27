@@ -1,4 +1,4 @@
-// Derived scores. Every score is computed from SEMICON-DB records only, publishes its formula, and describes the
+// Derived scores. Every score is computed from SEMINEXUS records only, publishes its formula, and describes the
 // documented evidence — not the market. Inputs that the database does not hold (market share, lead time, export
 // controls, CapEx, patents) are never estimated; the methods say so.
 import { DB, get, out, inn } from "./store.js";
@@ -40,7 +40,7 @@ export function criticality(id) {
   return CRIT.get(id) || { score: 0, sole: [], duo: [], oems: [], sites: [] };
 }
 
-// ---------------------------------------------------------------- SEMICON-DB Intelligence Score (company level)
+// ---------------------------------------------------------------- SEMINEXUS Intelligence Score (company level)
 export const INTEL_METHOD = [
   ["Data completeness", 30, "the company's completeness score (16 key fields)"],
   ["Source quality", 20, "60 % share of its sources that are Tier 1 + 40 % verification state (verified 1, partially verified 0.6, unverified 0.2)"],

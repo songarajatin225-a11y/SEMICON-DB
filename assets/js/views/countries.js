@@ -30,7 +30,7 @@ export function countries({ path }) {
   }
   const rows = DB.countries;
   const html = pageHead({ eyebrow: "Geography", title: "Countries", crumb: [["Home", "#/"], ["Countries", null]], lede: "Country pages with companies by supply-chain role, fabs and OSATs, and Batch-1 search coverage. Countries with zero companies are coverage gaps." })
-    + dataTable({ id: "countries", rows, title: "Countries", exportName: "semicon-db-countries", sort: { k: "companies", d: -1 }, columns: [
+    + dataTable({ id: "countries", rows, title: "Countries", exportName: "seminexus-countries", sort: { k: "companies", d: -1 }, columns: [
       { k: "name", label: "Country", pin: true, get: r => r.name, html: r => `<a class="rowlink" href="${hrefOf(r.id)}">${esc(r.name)}</a><span class="sub">${esc(r.iso2)}</span>` },
       { k: "region", label: "Region" }, { k: "companies", label: "Companies", num: true, get: r => r.company_ids.length }, { k: "verified", label: "Verified", num: true, get: r => r.verified_company_count },
       { k: "oem", label: "OEMs", num: true, get: r => r.equipment_oem_ids.length }, { k: "sub", label: "Subsystem", num: true, get: r => r.subsystem_supplier_ids.length }, { k: "cmp", label: "Component", num: true, get: r => r.component_supplier_ids.length },

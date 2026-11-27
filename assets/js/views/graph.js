@@ -37,7 +37,7 @@ function recentre(app, id) {
     fade("line.gedge", 180, 120);
   });
 }
-registerActions({ graphjson: () => { if (!CURRENT) return; const g = egoGraph(CURRENT.id, CURRENT); download(`semicon-db-graph-${CURRENT.id}.json`, JSON.stringify(g.json, null, 1), "application/json"); } });
+registerActions({ graphjson: () => { if (!CURRENT) return; const g = egoGraph(CURRENT.id, CURRENT); download(`seminexus-graph-${CURRENT.id}.json`, JSON.stringify(g.json, null, 1), "application/json"); } });
 
 export function graphView({ path, params }) {
   const id = path[1] || "CMP-000010";

@@ -56,7 +56,7 @@ export const COMPANY_COLS = [
   { k: "freshness", label: "Freshness", get: c => c.freshness, html: c => fresh(c.freshness) },
   { k: "depth", label: "Evidence depth", get: c => c.evidence_depth, html: c => esc(pretty(c.evidence_depth)) },
   { k: "sources", label: "Sources", num: true, get: c => c.source_ids.length, html: c => srcBtn(c.source_ids) },
-  { k: "iscore", label: "Intelligence score", num: true, get: c => intelScore(c).score, html: c => `${intelScore(c).score}<span class="sub">SEMICON-DB score</span>` },
+  { k: "iscore", label: "Intelligence score", num: true, get: c => intelScore(c).score, html: c => `${intelScore(c).score}<span class="sub">SEMINEXUS score</span>` },
   { k: "crit", label: "Supplier criticality", num: true, get: c => criticality(c.id).score, html: c => { const k = criticality(c.id); return k.score ? `${k.score}<span class="sub">${[k.sole.length && `sole in ${k.sole.length}`, k.oems.length && `${k.oems.length} OEMs`].filter(Boolean).join(" · ")}</span>` : `<span class="muted">0</span>`; } },
   { k: "dq", label: "Data quality", num: true, get: c => dataQuality(c).score, html: c => `${dataQuality(c).score}<span class="sub">${esc(dataQuality(c).status.replace(/_/g, " ").toLowerCase())}</span>` },
   { k: "verified", label: "Last verified", get: c => c.dates?.last_verified || "", html: c => verAge(c.dates?.last_verified) },
@@ -95,7 +95,7 @@ function list({ params }) {
     <div class="seg" role="group" aria-label="View mode">${["table", "grid", "list"].map(m => `<button data-viewmode="${m}" data-scope="companies" aria-pressed="${mode === m}">${m[0].toUpperCase() + m.slice(1)}</button>`).join("")}</div>
     <a class="btn" href="#/compare/companies">Compare (${cmpN})</a><button class="btn" data-savefilter="Companies view">☆ Save view</button>
     <span class="rescount">${plural(rows.length, "company", "companies")} of ${DB.companies.length}</span></div>`;
-  const content = mode === "table" ? dataTable({ id: "companies", rows, columns: COMPANY_COLS, presets: COMPANY_PRESETS, compareKind: "company", title: "", exportName: "semicon-db-companies", sort: { k: "verification", d: 1 } })
+  const content = mode === "table" ? dataTable({ id: "companies", rows, columns: COMPANY_COLS, presets: COMPANY_PRESETS, compareKind: "company", title: "", exportName: "seminexus-companies", sort: { k: "verification", d: 1 } })
     : !rows.length ? empty({ title: "No companies matched your filters.", tips: ["removing one filter", "choosing a broader equipment group", "clearing the text filter"] })
     : mode === "grid" ? `<div class="cards">${rows.slice(0, 300).map(card).join("")}</div>` : `<div class="rlist">${rows.slice(0, 300).map(rowItem).join("")}</div>`;
   const html = pageHead({ eyebrow: "Database", title: "Companies", crumb: [["Home", "#/"], ["Companies", null]],
@@ -155,8 +155,8 @@ function profile({ path, params }) {
     <div class="panel"><h2>Key facts</h2>${specTable([["Ownership", val(c.ownership)], ["Listing", val([c.exchange, c.ticker].filter(Boolean).join(" ") || null)], ["Founded", val(c.founded)], ["Employees", val(c.employees)],
       ["Revenue", c.revenue ? (c.revenue.usd_m != null ? `USD ${fmt(c.revenue.usd_m)} m · ${esc(c.revenue.fiscal_year)}` : `USD ${esc(c.revenue.range_usd_m)} m (derived range)`) : val(null)], ["Revenue basis", c.revenue ? esc(c.revenue.basis) + (c.revenue.reported ? ` · reported ${esc(c.revenue.reported)} m` : "") : val(null, { reason: "—" })],
       ["Semiconductor revenue", val(c.semiconductor_revenue)], ["Market class basis", val(c.market_class_basis, { reason: "No ranking or revenue evidence — unclassified" })], ["Evidence depth", esc(pretty(c.evidence_depth))],
-      ["Market share", `<span class="na">Not recorded — SEMICON-DB does not estimate market share</span>`]])}</div></div>
-    ${c.startup ? `<div class="panel sec"><h2>Startup profile</h2>${kv([["Founded", val(c.startup.year)], ["Founders", val(c.startup.founders)], ["Funding", val(c.startup.funding)], ["Investors", val(c.startup.investors)], ["Product", val(c.startup.product)], ["Maturity", val(c.startup.maturity)], ["TRL", val(c.startup.trl)], ["Latest news", val(c.startup.latest_news)], ["Verification", badge(c.startup.verification)], ["Sources", srcBtn(c.startup.source_ids)]])}${c.evidence_depth === "SEARCH_SUMMARY" ? `<p class="note">Funding, founders and dates are as reported by the cited sources (search-result summaries; pages not read). SEMICON-DB does not estimate valuations.</p>` : ""}</div>` : ""}
+      ["Market share", `<span class="na">Not recorded — SEMINEXUS does not estimate market share</span>`]])}</div></div>
+    ${c.startup ? `<div class="panel sec"><h2>Startup profile</h2>${kv([["Founded", val(c.startup.year)], ["Founders", val(c.startup.founders)], ["Funding", val(c.startup.funding)], ["Investors", val(c.startup.investors)], ["Product", val(c.startup.product)], ["Maturity", val(c.startup.maturity)], ["TRL", val(c.startup.trl)], ["Latest news", val(c.startup.latest_news)], ["Verification", badge(c.startup.verification)], ["Sources", srcBtn(c.startup.source_ids)]])}${c.evidence_depth === "SEARCH_SUMMARY" ? `<p class="note">Funding, founders and dates are as reported by the cited sources (search-result summaries; pages not read). SEMINEXUS does not estimate valuations.</p>` : ""}</div>` : ""}
     <div class="grid g2">${completenessPanel(c)}${intelPanel(c)}</div>
     <div class="panel sec"><h2>Portfolio matrix</h2>${portfolioMatrix(c)}</div>`;
   } else if (tab === "portfolio") {
@@ -212,11 +212,11 @@ export function verAge(d) {
 }
 function intelPanel(c) {
   const s = intelScore(c), k = criticality(c.id);
-  return `<div class="panel sec"><div class="row sp"><h2>SEMICON-DB Intelligence Score</h2><span class="pill">${s.score} / 100</span></div>
+  return `<div class="panel sec"><div class="row sp"><h2>SEMINEXUS Intelligence Score</h2><span class="pill">${s.score} / 100</span></div>
     <table class="spec"><tbody>${s.parts.map(p => `<tr><th>${esc(p.l)}<span class="sub">weight ${p.w} %</span></th><td><div class="row" style="gap:8px"><div style="flex:1;height:6px;background:var(--line);border-radius:3px"><div style="width:${p.v}%;height:6px;background:var(--s2);border-radius:3px"></div></div><b>${p.v}</b></div></td></tr>`).join("")}</tbody></table>
     ${k.score ? `<p class="small" style="margin-top:8px"><b>Supplier criticality ${k.score}:</b> ${[k.sole.length && `only documented supplier in ${k.sole.map(x => link(x)).join(", ")}`, k.duo.length && `one of two documented suppliers in ${k.duo.map(x => link(x)).join(", ")}`, k.oems.length && `documented as supplying ${k.oems.map(x => link(x)).join(", ")}`, k.sites.length && `supplies ${k.sites.map(x => link(x)).join(", ")}`].filter(Boolean).join("; ")}.</p>` : ""}
     <details class="small"><summary>Method</summary><ul>${INTEL_METHOD.map(([l, w, d]) => `<li><b>${esc(l)} (${w} %)</b>: ${esc(d)}</li>`).join("")}</ul><p>Supplier criticality: ${esc(CRIT_METHOD)}</p></details>
-    <p class="note">Measures how much evidence-backed intelligence SEMICON-DB holds about this company and its documented supply-chain position. It is not an industry ranking, a quality rating or a market-share measure. Last verified: ${verAge(c.dates?.last_verified)}</p></div>`;
+    <p class="note">Measures how much evidence-backed intelligence SEMINEXUS holds about this company and its documented supply-chain position. It is not an industry ranking, a quality rating or a market-share measure. Last verified: ${verAge(c.dates?.last_verified)}</p></div>`;
 }
 
 function dqPanel(c) {

@@ -1,8 +1,8 @@
 {
-  "name": "semicon-db",
+  "name": "seminexus",
   "version": "3.0.0",
   "private": true,
-  "description": "SEMICON-DB — Global Semiconductor Equipment Intelligence Graph (static GitHub Pages app + data pipeline)",
+  "description": "SEMINEXUS — Global Semiconductor Equipment Intelligence Graph (static GitHub Pages app + data pipeline)",
   "author": "Jatin Songara",
   "type": "module",
   "scripts": {

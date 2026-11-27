@@ -9,7 +9,7 @@ function listPage({ kind, title, lede, rows, groupKey, groupLabel, extraCols = [
   const groups = [...new Set(rows.map(r => r[groupKey]))];
   const html = pageHead({ eyebrow: "Database", title, crumb: [["Home", "#/"], [title, null]], lede })
     + `<div class="panel" style="margin-bottom:14px"><h2>${esc(groupLabel)}</h2>${bars(groups.map(g => ({ l: g, v: rows.filter(r => r[groupKey] === g).length, lab: `${rows.filter(r => r[groupKey] === g).length} · ${uniq(rows.filter(r => r[groupKey] === g).flatMap(r => r.model_ids)).length} models` })), { lw: 170 })}</div>`
-    + dataTable({ id: kind, rows, title, exportName: "semicon-db-" + kind, columns: [
+    + dataTable({ id: kind, rows, title, exportName: "seminexus-" + kind, columns: [
       { k: "name", label: "Name", pin: true, get: r => r.name, html: r => `<a class="rowlink" href="${hrefOf(r.id)}">${esc(r.name)}</a><span class="sub mono">${esc(r.id)}${r.legacy_code ? " · " + esc(r.legacy_code) : ""}</span>` },
       { k: groupKey, label: groupLabel, get: r => r[groupKey] },
       ...extraCols,

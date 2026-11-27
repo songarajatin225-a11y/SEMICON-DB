@@ -354,6 +354,69 @@
     "MDL-000598"
    ],
    "top": 5
+  },
+  {
+   "q": "Ensdorf",
+   "expect": [
+    "FAC-000072"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Bosch Roseville silicon carbide",
+   "expect": [
+    "FAC-000073"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Tongluo",
+   "expect": [
+    "FAC-000074"
+   ],
+   "top": 5
+  },
+  {
+   "q": "AT&S Kulim",
+   "expect": [
+    "FAC-000075"
+   ],
+   "top": 5
+  },
+  {
+   "q": "Lam Research Penang",
+   "expect": [
+    "FAC-000076"
+   ],
+   "top": 10
+  },
+  {
+   "q": "TS3000-IFE",
+   "expect": [
+    "MDL-000603"
+   ],
+   "top": 5
+  },
+  {
+   "q": "AutoSCIL",
+   "expect": [
+    "MDL-000606"
+   ],
+   "top": 5
+  },
+  {
+   "q": "NANOFABRICATOR",
+   "expect": [
+    "MDL-000607"
+   ],
+   "top": 5
+  },
+  {
+   "q": "PMR-3000",
+   "expect": [
+    "MDL-000608"
+   ],
+   "top": 5
   }
  ],
  "resolve": [

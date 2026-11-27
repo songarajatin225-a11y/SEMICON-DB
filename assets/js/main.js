@@ -1,4 +1,4 @@
-// SEMICON-DB 2.0 application shell: data bootstrap, navigation, routing, delegated events.
+// SEMINEXUS 2.0 application shell: data bootstrap, navigation, routing, delegated events.
 import { $, esc, store, copyText, debounce, norm } from "./core/util.js";
 import { DB, load, get, resolveLegacy, kindOf } from "./core/store.js";
 import { current, setParams, listParam } from "./core/router.js";
@@ -52,8 +52,8 @@ async function render() {
     out = { title: "Error", html: `<div class="callout crit"><b>This view could not be rendered.</b><br>${esc(err.message)}<br><span class="small">The data may be malformed or a relationship may point to a missing record. Report it with the URL above.</span></div>` };
   }
   if (typeof out === "string") out = { html: out };
-  app.innerHTML = out.html + `<footer class="foot">SEMICON-DB ${esc(DB.meta.schema_version)} · Created by <b>Jatin Songara</b> · Evidence as of ${esc(DB.meta.evidence_as_of)} · Every fact carries a source and verification state; missing values are shown as missing, never estimated. <a href="#/quality">Methodology &amp; data quality</a> · <a href="legacy/">Legacy edition</a></footer>`;
-  document.title = (out.title ? out.title + " · " : "") + "SEMICON-DB";
+  app.innerHTML = out.html + `<footer class="foot">SEMINEXUS ${esc(DB.meta.schema_version)} · Created by <b>Jatin Songara</b> · Evidence as of ${esc(DB.meta.evidence_as_of)} · Every fact carries a source and verification state; missing values are shown as missing, never estimated. <a href="#/quality">Methodology &amp; data quality</a> · <a href="legacy/">Legacy edition</a></footer>`;
+  document.title = (out.title ? out.title + " · " : "") + "SEMINEXUS";
   if (out.after) try { out.after(app); } catch (e) { console.error(e); }
   fillClaims(app).catch(e => console.error(e));
   if (!samePage) { window.scrollTo(0, 0); const h = app.querySelector("h1"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); } }

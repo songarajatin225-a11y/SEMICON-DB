@@ -61,7 +61,7 @@ One record per physical site. Facts are as reported by the cited sources; unknow
 - `companies[].resolution_keys[]` — `{ alias, basis }`. Derived from the record only: recorded alias, former name, the short form in the name's parentheses, the name without a legal suffix, the stock ticker. Clients resolve free text with `resolveCompany()` (`assets/js/core/search.js`); an ambiguous key resolves to nothing.
 - `quality.duplicate_candidates[].decision` — curated decision from `scripts/reference/entity-decisions.mjs` (PROBABLE_SAME_ENTITY · DISTINCT_ENTITIES). Records are never merged automatically.
 - `companies[].batch`, `dates.first_added` — the batch that first added the record (temporal view).
-- Client-side derived scores (`assets/js/core/scores.js`), each with a published method: regional dependency (`blocShares`), supplier criticality (0–100), SEMICON-DB Intelligence Score (0–100), and component- and subsystem-level localization indexes.
+- Client-side derived scores (`assets/js/core/scores.js`), each with a published method: regional dependency (`blocShares`), supplier criticality (0–100), SEMINEXUS Intelligence Score (0–100), and component- and subsystem-level localization indexes.
 
 ## Relationship record
 

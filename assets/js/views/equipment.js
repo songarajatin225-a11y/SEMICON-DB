@@ -36,7 +36,7 @@ function landscape(makers, models) {
   const nm = id => models.filter(m => m.company_id === id).length;
   return `<div class="panel sec"><h2>Players by region (${makers.length})</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px">${groups.map(g => `<div><div class="eyebrow">${esc(g.bloc)} · ${g.cos.length}</div>
     <ul class="list">${g.cos.sort((a, b) => nm(b.id) - nm(a.id) || a.name.localeCompare(b.name)).map(c => `<li>${link(c.id)}${nm(c.id) ? ` <span class="muted xs">${nm(c.id)} model${nm(c.id) > 1 ? "s" : ""}</span>` : ""}${c.is_startup ? ` <span class="pill">startup</span>` : ""}</li>`).join("")}</ul></div>`).join("")}</div>
-    <p class="note">Grouped by headquarters (Europe includes the UK, Switzerland and Norway). Ordered by models captured here, which reflects research depth, not market position — SEMICON-DB does not rank leaders or estimate share. <a href="${href("/compare/companies", { companies: makers.slice(0, 4).map(c => c.id) })}">Compare the first four →</a></p></div>`;
+    <p class="note">Grouped by headquarters (Europe includes the UK, Switzerland and Norway). Ordered by models captured here, which reflects research depth, not market position — SEMINEXUS does not rank leaders or estimate share. <a href="${href("/compare/companies", { companies: makers.slice(0, 4).map(c => c.id) })}">Compare the first four →</a></p></div>`;
 }
 
 function detail({ path, params }) {

@@ -52,7 +52,7 @@ export function ensureUnlocked() {
   const gate = document.createElement("div");
   gate.className = "gate"; gate.setAttribute("role", "dialog"); gate.setAttribute("aria-modal", "true"); gate.setAttribute("aria-labelledby", "gate-t");
   gate.innerHTML = `<form class="gate-card" novalidate>
-      <div class="gate-brand"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--primary,#00696C)"/><g fill="#fff"><rect x="8" y="8" width="7" height="7" rx="1"/><rect x="17" y="8" width="7" height="7" rx="1" opacity=".7"/><rect x="8" y="17" width="7" height="7" rx="1" opacity=".7"/><rect x="17" y="17" width="7" height="7" rx="1"/></g></svg><span>SEMICON-DB<small>Semiconductor Equipment Intelligence Graph</small></span></div>
+      <div class="gate-brand"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--primary,#00696C)"/><g fill="#fff"><rect x="8" y="8" width="7" height="7" rx="1"/><rect x="17" y="8" width="7" height="7" rx="1" opacity=".7"/><rect x="8" y="17" width="7" height="7" rx="1" opacity=".7"/><rect x="17" y="17" width="7" height="7" rx="1"/></g></svg><span>SEMINEXUS<small>Semiconductor Equipment Intelligence Graph</small></span></div>
       <h1 id="gate-t">Enter passcode</h1>
       <p>This database is shared by passcode. Enter it to continue.</p>
       <label for="gate-code">Passcode</label>
