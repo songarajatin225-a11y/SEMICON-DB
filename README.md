@@ -1,5 +1,7 @@
 # SEMICON-DB — Global Semiconductor Equipment Intelligence Graph
 
+**Created by Jatin Songara.**
+
 A source-traced intelligence database of semiconductor equipment companies, product families and models, linked to manufacturing processes, technologies, materials, applications, subsystems, components, suppliers, fabs, OSAT/ATMP houses and geography. Every fact carries its source and a verification state; missing values are shown as missing and never estimated.
 
 **Live site:** https://songarajatin225-a11y.github.io/SEMICON-DB/ · **Legacy single-file atlas (v1):** [`legacy/`](legacy/index.html)
@@ -11,16 +13,16 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 | Entity | Records | Notes |
 |---|---:|---|
 | Companies | 355 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 · 8 in Batch 8 · 19 in Batch 9 · 10 in Batch 10 (18 startups in total) |
-| Product families → models | 422 → 595 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 · 7 in Batch 9 · 37 in Batch 10 · 10 in Batch 15 (AMEC, Nova, FormFactor, Kingsemi, Eugene Technology) · 10 in Batch 16 (Lam Akara and ALTUS Halo, Applied PROVision 10, Teradyne Magnum 7H, Advantest, ASM, NAURA, TEL) · 7 in Batch 17 (Hanmi, ASMPT and Kulicke & Soffa bonders) |
+| Product families → models | 429 → 602 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 · 7 in Batch 9 · 37 in Batch 10 · 10 in Batch 15 (AMEC, Nova, FormFactor, Kingsemi, Eugene Technology) · 10 in Batch 16 (Lam Akara and ALTUS Halo, Applied PROVision 10, Teradyne Magnum 7H, Advantest, ASM, NAURA, TEL) · 7 in Batch 17 (Hanmi, ASMPT and Kulicke & Soffa bonders) · 7 in Batch 18 (Park Systems, HPSP, Beneq, Oxford Instruments, Thermo Fisher, KCTech) |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
-| Fabs · OSAT/ATMP · countries | 22 · 9 · 37 | Named sites and documented equipment suppliers |
-| Facilities (site level) | 66 | India's ISM-approved units, one Indian equipment plant and 53 major sites in the US, Japan, Germany, Italy, Ireland, the Czech Republic, South Korea, Taiwan, China, Singapore, Malaysia, Vietnam, Thailand and the Philippines (including the cancelled Intel Magdeburg and onsemi Rožnov projects), with dated status history and a controlled status class, investment as reported, capacity, technology and sources (Batches 11–17) |
-| Relationships | 6,465 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 1,210 |
-| Claims (lazy-loaded) | 3,973 | Claim-level provenance: value → evidence type (directly stated / specified / calculated / inferred / unverified) → source → date → confidence | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Fabs · OSAT/ATMP · countries | 22 · 9 · 38 | Named sites and documented equipment suppliers |
+| Facilities (site level) | 71 | India's ISM-approved units, one Indian equipment plant and 58 major sites in the US, Costa Rica, Japan, Germany, Italy, Ireland, Israel, the Czech Republic, South Korea, Taiwan, China, Singapore, Malaysia, Vietnam, Thailand and the Philippines (including the cancelled Intel Magdeburg and onsemi Rožnov projects and the paused Intel Kiryat Gat expansion), with dated status history and a controlled status class, investment as reported, capacity, technology and sources (Batches 11–18) |
+| Relationships | 6,539 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 1,243 |
+| Claims (lazy-loaded) | 4,031 | Claim-level provenance: value → evidence type (directly stated / specified / calculated / inferred / unverified) → source → date → confidence | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -147,7 +149,7 @@ Details: [QA_REPORT.md](QA_REPORT.md).
 - **Data-quality score and research status:** separate from confidence and completeness.
 - **Facilities in four countries:** India plus 7 major fabs in the US, Japan and Germany. Statuses use the controlled vocabulary; India gets a state tile map.
 - **"What can replace this?":** model pages classify alternatives as direct substitute, partial substitute, development-stage or different technology.
-- **Policy and programmes** (`#/intelligence/policy`): 24 programmes: the US CHIPS Act and §48D credit, the EU Chips Act, the UK National Semiconductor Strategy, Korea's Semiconductor Special Act, the EU IPCEI on microelectronics, the Dutch Project Beethoven, US export controls, Japan, Korea, India, Taiwan's Article 10-2 tax credit, China's Big Fund III, Singapore's RIE2030 semiconductor flagship, Malaysia's National Semiconductor Strategy, Vietnam's and Thailand's national strategies, Texas and New York state programmes, and the Gujarat, Odisha, Uttar Pradesh and Tamil Nadu state policies, with sources and linked facilities.
+- **Policy and programmes** (`#/intelligence/policy`): 26 programmes: the US CHIPS Act and §48D credit, Spain's PERTE Chip, the Philippines' CREATE MORE Act, the EU Chips Act, the UK National Semiconductor Strategy, Korea's Semiconductor Special Act, the EU IPCEI on microelectronics, the Dutch Project Beethoven, US export controls, Japan, Korea, India, Taiwan's Article 10-2 tax credit, China's Big Fund III, Singapore's RIE2030 semiconductor flagship, Malaysia's National Semiconductor Strategy, Vietnam's and Thailand's national strategies, Texas and New York state programmes, and the Gujarat, Odisha, Uttar Pradesh and Tamil Nadu state policies, with sources and linked facilities.
 - **Graph filters:** relationship-type and source-backed-only filters, plus a graph JSON export.
 - **`npm test`:** validation plus 54 headless tests, including a gold-standard search benchmark (`tests/search-benchmark.json`).
 

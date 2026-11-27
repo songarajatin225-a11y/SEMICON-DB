@@ -20,6 +20,7 @@ const errs = []; p.on("pageerror", e => errs.push(e.message));
 await p.goto(base + "#/companies"); await p.waitForSelector(".gate input");
 t("locked visitor sees the passcode screen", await p.isVisible(".gate h1"), "no gate");
 t("app shell stays hidden while locked", (await p.$eval(".hdr", e => getComputedStyle(e).visibility)) === "hidden", "header visible");
+t("passcode screen shows the creator credit", (await p.textContent(".gate")).includes("Created by Jatin Songara"), "no credit");
 t("passcode field is focused", await p.evaluate(() => document.activeElement?.id === "gate-code"), "not focused");
 await p.waitForTimeout(300);
 t("no data is downloaded while locked", !fetched.some(u => /data\/(bundle|claims)\.json/.test(u)), fetched.filter(u => /data\//.test(u)).join(","));
@@ -38,6 +39,7 @@ if (code) {
   await p.fill("#gate-code", code); await p.press("#gate-code", "Enter");
   await p.waitForSelector("main h1", { timeout: 20000 });
   t("correct passcode unlocks and loads the app", !(await p.$(".gate")) && (await p.$eval("main h1", e => e.textContent)).includes("Companies"), "still locked");
+  t("footer and sidebar show the creator credit", (await p.textContent("footer.foot")).includes("Created by Jatin Songara") && (await p.textContent("#rail")).includes("Created by Jatin Songara"), "no credit");
   t("unlock is remembered on this device", (await p.evaluate(k => localStorage.getItem(k), GATE_KEY)) === GATE_HASH, "not stored");
   await p.reload(); await p.waitForSelector("main h1");
   t("reload stays unlocked", !(await p.$(".gate")), "gate shown again");
