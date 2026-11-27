@@ -11,7 +11,7 @@ function listPage(kind, rows, title, lede, section) {
   const html = pageHead({ eyebrow: "Ecosystem", title, crumb: [["Home", "#/"], [section, null]], lede })
     + `<div class="kpis" style="margin-bottom:14px">${kpi({ v: rows.length, l: title })}${kpi({ v: rows.reduce((a, r) => a + r.sites.length, 0), l: "Named sites" })}${kpi({ v: links.length, l: "Equipment-supplier links", s: `${links.filter(l => l.status === "CONFIRMED").length} confirmed` })}${kpi({ v: uniq(links.map(l => l.from)).length, l: "Equipment suppliers linked" })}</div>`
     + `<div class="grid g2" style="margin-bottom:14px"><div class="panel"><h2>By country</h2>${bars(byC.map(([l, v]) => ({ l, v })), { lw: 120 })}</div><div class="panel"><h2>By facility type</h2>${bars(sortedEntries(countBy(rows, r => r.facility_type)).map(([l, v]) => ({ l, v })), { lw: 170 })}</div></div>`
-    + dataTable({ id: kind, rows, title, exportName: "semicon-db-" + kind, columns: [
+    + dataTable({ id: kind, rows, title, exportName: "seminexus-" + kind, columns: [
       { k: "name", label: "Organisation", pin: true, get: r => r.name, html: r => `<a class="rowlink" href="${hrefOf(r.id)}">${esc(r.name)}</a><span class="sub mono">${esc(r.id)}</span>` },
       { k: "type", label: "Type", get: r => r.facility_type }, { k: "country", label: "Country", get: r => r.country || "", html: r => val(r.country) },
       { k: "sites", label: "Sites (as named in sources)", wrap: true, get: r => r.sites.map(s => s.name).join("; "), html: r => r.sites.length ? esc(r.sites.map(s => s.name).join("; ")) : `<span class="na">Not captured</span>` },

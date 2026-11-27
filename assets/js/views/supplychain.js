@@ -39,7 +39,7 @@ export function components({ path }) {
     lede: `${DB.components.length} component classes across motion, optics, vacuum, RF, thermal, gas/chemical, automation and electrical. Supplier links come from the Batch-1 supplier register; the register is deepest for the laser-dicing tool BOM.` })
     + `<div class="grid g4" style="margin-bottom:14px">${cats.map(k => { const cs = DB.components.filter(c => c.category === k); const sup = uniq(cs.flatMap(c => c.capable_supplier_ids));
       return `<div class="panel"><h2>${esc(k)}</h2><div class="small ink2">${plural(cs.length, "class", "classes")} · ${plural(sup.length, "supplier")}</div><div class="tags" style="margin-top:6px">${cs.map(c => `<a class="tag${c.capable_supplier_ids.length ? "" : " faint"}" href="${hrefOf(c.id)}">${esc(c.name)} <span class="k">${c.capable_supplier_ids.length}</span></a>`).join("")}</div></div>`; }).join("")}</div>`
-    + dataTable({ id: "components", rows: DB.components, title: "Component classes", exportName: "semicon-db-components", sort: { k: "suppliers", d: -1 }, columns: [
+    + dataTable({ id: "components", rows: DB.components, title: "Component classes", exportName: "seminexus-components", sort: { k: "suppliers", d: -1 }, columns: [
       { k: "name", label: "Component", pin: true, get: r => r.name, html: r => `<a class="rowlink" href="${hrefOf(r.id)}">${esc(r.name)}</a><span class="sub mono">${esc(r.id)}</span>` },
       { k: "category", label: "Category" }, { k: "subsystem", label: "Subsystem", get: r => get(r.subsystem_id).name, html: r => link(r.subsystem_id) },
       { k: "suppliers", label: "Capable suppliers", num: true, get: r => r.capable_supplier_ids.length },

@@ -31,7 +31,7 @@ export function suppliers({ params }) {
   const state = readState(defs, params);
   const q = params.get("q") || "";
   const { rows: shown, counts } = applyFacets(rows, defs, state, q, r => norm([r.name, r.company_type, r.country, r.supplier_types.join(" "), r.component_class_ids.map(nameOf).join(" ")].join(" ")));
-  const table = dataTable({ id: "suppliers", rows: shown, title: "", exportName: "semicon-db-suppliers", compareKind: "company", columns: [
+  const table = dataTable({ id: "suppliers", rows: shown, title: "", exportName: "seminexus-suppliers", compareKind: "company", columns: [
     { k: "name", label: "Supplier", pin: true, get: r => r.name, html: r => `<a class="rowlink" href="${hrefOf(r.id)}">${esc(r.name)}</a><span class="sub">${esc(r.company_type)}</span>` },
     { k: "roles", label: "Roles", wrap: true, get: r => r.supplier_types.join("; ") },
     { k: "country", label: "Country", get: r => r.country || "", html: r => val(r.country) },
@@ -50,7 +50,7 @@ export function suppliers({ params }) {
     ${c.gap ? badge("GAP") : `<div class="tags" style="position:relative;z-index:1">${c.capable_supplier_ids.map(s => `<a class="tag" href="${hrefOf(s)}">${esc(nameOf(s))} <span class="k">${esc(get(s).hq.country || "")}</span></a>`).join("") || `<span class="na">None captured</span>`}</div>`}
     ${DB.relationships.filter(r => c.documented_supply_links.map(l => "REL-SP-" + l.slice(2)).includes(r.id)).map(r => `<p style="margin:0;position:relative;z-index:1" class="xs ink2">${badge(r.status)} ${esc(nameOf(r.from))} → ${esc(r.detail.oem || nameOf(r.to))}: ${esc(r.detail.component || "")}</p>`).join("")}</article>`).join("")}</div>`;
   const links = DB.relationships.filter(r => ["supplies", "integrates", "distributes", "evaluated_by"].includes(r.type));
-  const linkTable = dataTable({ id: "supply-links", rows: links, title: "Named supply links", exportName: "semicon-db-supply-links", columns: [
+  const linkTable = dataTable({ id: "supply-links", rows: links, title: "Named supply links", exportName: "seminexus-supply-links", columns: [
     { k: "equipment", label: "Equipment", wrap: true, get: r => r.detail.equipment || "" }, { k: "oem", label: "OEM", get: r => r.detail.oem || nameOf(r.to), html: r => r.to.startsWith("CMP") ? link(r.to) : esc(r.detail.oem || "") },
     { k: "subsystem", label: "Subsystem", get: r => r.detail.subsystem || "" }, { k: "supplier", label: "Supplier", get: r => nameOf(r.from), html: r => link(r.from) },
     { k: "component", label: "Component", wrap: true, get: r => r.detail.component || "" }, { k: "type", label: "Link type", get: r => r.status, html: r => badge(r.status) },

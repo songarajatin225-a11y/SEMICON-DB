@@ -1,5 +1,5 @@
 // Analyst workspace: grounded question answering, "Can we build this?" and the India localization index.
-// No language model and no hidden scoring: every answer is assembled from SEMICON-DB records with the rule
+// No language model and no hidden scoring: every answer is assembled from SEMINEXUS records with the rule
 // that produced it shown next to it. Where the database holds no evidence, the answer says so.
 import { DB, get, hrefOf } from "../core/store.js";
 import { esc, uniq, norm } from "../core/util.js";
@@ -64,7 +64,7 @@ function buildPanel(e) {
     <h3 style="margin-top:14px">Subsystems and suppliers</h3>
     <div style="overflow-x:auto"><table class="spec"><thead><tr><th>Subsystem</th><th>Global suppliers (documented capability)</th><th>Indian suppliers</th></tr></thead><tbody>${rows || `<tr><td colspan="3" class="na">No subsystem architecture recorded.</td></tr>`}</tbody></table></div>
     <div class="grid g2 sec"><div><h3>Competitors / reference OEMs by region</h3>${playersByBloc(ev.oems.map(c => c.id)).map(g => `<p class="small" style="margin:4px 0"><b>${esc(g.bloc)}</b> (${g.cos.length}): ${g.cos.map(c => link(c.id)).join(", ")}</p>`).join("") || `<p class="na">None documented</p>`}</div><div><h3>Reference models</h3>${tags(ev.models.map(m => m.id), { max: 20, empty: "No models captured" })}</div></div>
-    <p class="note">Rule: ${esc(BUILD_RULE)} Supplier links are documented capability (subsystem / component registers), not confirmed supply to a specific OEM. Not assessed because SEMICON-DB holds no evidence for them: CapEx, engineering effort, certification, IP barriers, pricing. This is an evidence summary, not a business recommendation.</p></div>`;
+    <p class="note">Rule: ${esc(BUILD_RULE)} Supplier links are documented capability (subsystem / component registers), not confirmed supply to a specific OEM. Not assessed because SEMINEXUS holds no evidence for them: CapEx, engineering effort, certification, IP barriers, pricing. This is an evidence summary, not a business recommendation.</p></div>`;
 }
 
 // ----------------------------------------------------------------- question router (grounded, rule-based)
@@ -104,13 +104,13 @@ function compareAnswer(names) {
     ["HQ", c => esc([c.hq.city, c.hq.country].filter(Boolean).join(", ") || "Not captured")], ["Type", c => esc(c.company_type)],
     ["Equipment categories", c => `${c.equipment_ids.length}<span class="sub">${c.equipment_ids.slice(0, 6).map(e => esc(get(e)?.name || e)).join(", ")}${c.equipment_ids.length > 6 ? " …" : ""}</span>`],
     ["Equipment models captured", c => String(nm(c))], ["Revenue (latest captured)", rev], ["India presence", c => (c.hq.country === "India" ? "HQ in India" : c.india.has_presence ? esc(c.india.summary || "Documented") : `<span class="muted">None documented</span>`)],
-    ["Supplier criticality", c => String(criticality(c.id).score)], ["SEMICON-DB Intelligence Score", c => String(intelScore(c).score)],
+    ["Supplier criticality", c => String(criticality(c.id).score)], ["SEMINEXUS Intelligence Score", c => String(intelScore(c).score)],
     ["Verification", c => esc(c.verification.replace(/_/g, " ").toLowerCase())], ["Sources", c => String(c.source_ids.length)]];
   return `<div class="panel"><h2>Comparison: ${ok.map(c => link(c.id)).join(" · ")}</h2>
     <div style="overflow-x:auto"><table class="spec"><thead><tr><th></th>${ok.map(c => `<th>${link(c.id)}</th>`).join("")}</tr></thead><tbody>${rows.map(([l, f]) => `<tr><th>${esc(l)}</th>${ok.map(c => `<td>${f(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
     <p class="small" style="margin-top:8px"><b>Shared categories (${shared.length}):</b> ${shared.length ? shared.map(e => link(e)).join(", ") : "none"}</p>
     ${miss.length ? `<p class="na">Not resolved: ${esc(miss.join(", "))}</p>` : ""}
-    <p class="note">Rule: names resolved through entity-resolution keys (canonical name, aliases, short forms, tickers), then compared on captured fields only. Strengths, weaknesses, pricing and market position are not stated because SEMICON-DB holds no evidence for them. <a href="${href("/compare/companies", { companies: ok.slice(0, 4).map(c => c.id) })}">Open the full company comparison →</a></p></div>`;
+    <p class="note">Rule: names resolved through entity-resolution keys (canonical name, aliases, short forms, tickers), then compared on captured fields only. Strengths, weaknesses, pricing and market position are not stated because SEMINEXUS holds no evidence for them. <a href="${href("/compare/companies", { companies: ok.slice(0, 4).map(c => c.id) })}">Open the full company comparison →</a></p></div>`;
 }
 // ---- requirement-based laser supplier matching ("I need a 200W pulsed laser for semiconductor marking")
 const LASER_TYPES = { pulsed: /pulsed|q-switch|mopa|nanosecond|\bns\b/i, cw: /\bcw\b|continuous/i, fiber: /fib(er|re)/i, uv: /\buv\b|ultraviolet|355|343/i, green: /green|532/i, ir: /\bir\b|infrared|1064/i,
@@ -142,7 +142,7 @@ function laserMatch(q) {
     <table class="spec"><thead><tr><th>#</th><th>Supplier</th><th>Stated match</th><th>Power published</th><th>HQ · India</th><th>Captured laser models</th></tr></thead><tbody>${sources.map(({ c, ms, met, pwr }, i) =>
       `<tr><td>${i + 1}</td><th>${link(c.id)}</th><td>${met.length ? esc(met.join(", ")) : `<span class="muted">—</span>`}</td><td>${pwr.length ? esc(pwr.join("; ")) : `<span class="na">Not published</span>`}</td><td>${esc(c.hq.country || "—")} · ${c.hq.country === "India" ? "HQ" : c.india.has_presence ? "presence" : "—"}</td><td>${ms.length ? ms.map(m => link(m.id)).join(", ") : `<span class="na">No model captured</span>`}</td></tr>`).join("")}</tbody></table>
     <h3 style="margin-top:12px">Machines and modules matching (${rows.length})</h3>
-    ${rows.length ? `<table class="spec"><thead><tr><th>#</th><th>Product</th><th>Meets</th><th>Not published</th></tr></thead><tbody>${rows.map((r, i) => `<tr><td>${i + 1}</td><th>${link(r.m.id)}<span class="sub">${esc(r.c?.name || "")} · ${esc(r.c?.hq.country || "")}</span></th><td>${esc(r.met.join("; "))}</td><td>${r.unknown.length ? `<span class="na">${esc(r.unknown.join("; "))}</span>` : "—"}</td></tr>`).join("")}</tbody></table>` : `<p class="na">No laser model in SEMICON-DB meets the stated requirements on published values.</p>`}
+    ${rows.length ? `<table class="spec"><thead><tr><th>#</th><th>Product</th><th>Meets</th><th>Not published</th></tr></thead><tbody>${rows.map((r, i) => `<tr><td>${i + 1}</td><th>${link(r.m.id)}<span class="sub">${esc(r.c?.name || "")} · ${esc(r.c?.hq.country || "")}</span></th><td>${esc(r.met.join("; "))}</td><td>${r.unknown.length ? `<span class="na">${esc(r.unknown.join("; "))}</span>` : "—"}</td></tr>`).join("")}</tbody></table>` : `<p class="na">No laser model in SEMINEXUS meets the stated requirements on published values.</p>`}
     <p class="note">Rule: a product is listed when at least one stated requirement is met by a published value or its stated laser type / application, and none is contradicted. Ranking: 3 points per requirement met, minus 1 per requirement whose value is not published. Specifications are sparse in the evidence (average power is published for ${DB.models.filter(m => m.laser?.average_power).length} laser models), so most suppliers appear without spec confirmation. Price, lead time and availability are not captured.</p></div>`;
 }
 // ---- business questions answered from derived tables
@@ -202,7 +202,7 @@ function companyMatches(t) {
   const r = search(t, { limit: 80 }); return uniq(r.matches.filter(x => x.kind === "company").map(x => x.id)).map(get).filter(Boolean);
 }
 const notFound = t => { const near = nearEquipment(t);
-  return `<div class="panel"><p class="na">“${esc(t)}” does not match an equipment category or company in SEMICON-DB.</p>${near.length ? `<p class="small">Closest categories: ${near.map(e => `<a href="${href("/intelligence/analyst", { eq: e.id })}">${esc(e.code)} · ${esc(e.name)}</a>`).join(" · ")}</p>` : ""}</div>`; };
+  return `<div class="panel"><p class="na">“${esc(t)}” does not match an equipment category or company in SEMINEXUS.</p>${near.length ? `<p class="small">Closest categories: ${near.map(e => `<a href="${href("/intelligence/analyst", { eq: e.id })}">${esc(e.code)} · ${esc(e.name)}</a>`).join(" · ")}</p>` : ""}</div>`; };
 
 const EXAMPLES = ["Can we build a laser marking machine in India?", "Who supplies wafer probing equipment?", "Compare ASML vs Canon vs Nikon", "Compare KLA, Onto and Hitachi High-Tech", "I need a 200W pulsed laser for semiconductor marking", "Which equipment categories have the highest supplier concentration?", "Which equipment can be localized in India?", "Which Indian semiconductor facilities are under construction?", "Alternatives to Hesse Mechatronics", "300 mm sputtering systems in Japan"];
 
@@ -211,7 +211,7 @@ function analyst({ params }) {
   const focus = eqId ? get(eqId) : null;
   const cands = CANDIDATES();
   const locRows = cands.map(e => { const ev = buildEvidence(e); return { id: e.id, e, ev, loc: localization(ev), ind: indication(ev) }; }).filter(r => r.loc);
-  const html = head("Analyst", "Ask a question in plain words and get an answer built only from SEMICON-DB records, with the rule used and links to the evidence. It also includes the “Can we build this?” engine and the India localization index.")
+  const html = head("Analyst", "Ask a question in plain words and get an answer built only from SEMINEXUS records, with the rule used and links to the evidence. It also includes the “Can we build this?” engine and the India localization index.")
     + `<div class="panel"><label class="small" for="aq"><b>Ask</b> — e.g. “Can we build a laser marking machine in India?”, “Who supplies wafer probing equipment?”, “Alternatives to Hesse Mechatronics”, or a requirement such as “300 mm sputtering systems in Japan”.</label>
       <input id="aq" class="input" type="search" style="width:100%;margin-top:6px" value="${esc(q)}" data-qparam="q" placeholder="Type a question…" aria-label="Ask a question">
       <div class="row" style="margin-top:8px;flex-wrap:wrap;gap:6px">${EXAMPLES.map(x => `<a class="btn sm" href="${href("/intelligence/analyst", { q: x })}">${esc(x)}</a>`).join("")}</div></div>
@@ -219,8 +219,8 @@ function analyst({ params }) {
     <div class="panel sec"><h2>Can we build this?</h2><label class="small">Equipment category <select class="input" data-param="eq" aria-label="Equipment category"><option value="">Choose…</option>${cands.map(e => `<option value="${e.id}"${e.id === eqId ? " selected" : ""}>${esc(e.code)} · ${esc(e.name)}</option>`).join("")}</select></label>
       <p class="note">${esc(BUILD_RULE)}</p></div>
     ${focus ? buildPanel(focus) : ""}
-    <div class="panel sec"><h2>India localization index</h2><p class="small">${esc(LOC_RULE)} Bands: VERY HIGH ≥ 75 · HIGH 55–74 · MEDIUM 35–54 · LOW &lt; 35.</p><p class="note">Technology complexity, CapEx, IP barriers, talent and demand are part of a full localization assessment but are not scored here because SEMICON-DB has no evidence for them. Use the <a href="#/intelligence/india-opportunity">India opportunity</a> page to add your own criteria.</p></div>
-    <div class="sec">${dataTable({ id: "loc-index", rows: locRows, title: "Localization index by equipment category", exportName: "semicon-db-localization-index", columns: [
+    <div class="panel sec"><h2>India localization index</h2><p class="small">${esc(LOC_RULE)} Bands: VERY HIGH ≥ 75 · HIGH 55–74 · MEDIUM 35–54 · LOW &lt; 35.</p><p class="note">Technology complexity, CapEx, IP barriers, talent and demand are part of a full localization assessment but are not scored here because SEMINEXUS has no evidence for them. Use the <a href="#/intelligence/india-opportunity">India opportunity</a> page to add your own criteria.</p></div>
+    <div class="sec">${dataTable({ id: "loc-index", rows: locRows, title: "Localization index by equipment category", exportName: "seminexus-localization-index", columns: [
       { k: "cat", label: "Equipment category", pin: true, get: r => r.e.name, html: r => `<a class="rowlink" href="${href("/intelligence/analyst", { eq: r.id })}">${esc(r.e.name)}</a><span class="sub">${esc(r.e.code)} · ${esc(r.e.group_name || "")}</span>` },
       { k: "score", label: "Index", num: true, get: r => r.loc.score, html: r => `<b>${r.loc.score}</b> <span class="pill">${r.loc.band}</span>` },
       { k: "ind", label: "Indication", get: r => r.ind.v, html: r => `<span class="pill">${esc(r.ind.v)}</span>` },
@@ -237,10 +237,10 @@ function belowEquipment() {
   const subs = subsystemLocalization(), comps = componentLocalization().filter(r => r.evidence);
   return `<div class="panel sec"><h2>Localization by subsystem and component class</h2><p class="small">Subsystem: share of its component classes with a documented Indian supplier. Component class: ${esc(COMP_LOC_METHOD)}</p>
     <p class="note">Component-level supplier evidence is thin: ${comps.length} of ${DB.components.length} component classes have any documented supplier, so most rows read LOW for lack of evidence, not for lack of capability.</p></div>
-    <div class="grid g2"><div>${dataTable({ id: "loc-sub", rows: subs, title: "Subsystems", exportName: "semicon-db-subsystem-localization", columns: [
+    <div class="grid g2"><div>${dataTable({ id: "loc-sub", rows: subs, title: "Subsystems", exportName: "seminexus-subsystem-localization", columns: [
       { k: "s", label: "Subsystem", pin: true, get: r => r.s.name, html: r => link(r.id) }, { k: "score", label: "Index", num: true, get: r => r.score, html: r => `<b>${r.score}</b> <span class="pill">${r.band}</span>` },
       { k: "in", label: "Classes with Indian supplier", get: r => r.withIn, html: r => `${r.withIn}/${r.n}` }, { k: "any", label: "Classes with any supplier", get: r => r.withAny, html: r => `${r.withAny}/${r.n}` }, { k: "oems", label: "Typical OEMs", num: true, get: r => r.oems }] })}</div>
-    <div>${dataTable({ id: "loc-comp", rows: comps, title: "Component classes with supplier evidence", exportName: "semicon-db-component-localization", columns: [
+    <div>${dataTable({ id: "loc-comp", rows: comps, title: "Component classes with supplier evidence", exportName: "seminexus-component-localization", columns: [
       { k: "k", label: "Component class", pin: true, get: r => r.k.name, html: r => `${link(r.id)}<span class="sub">${esc(r.sub?.name || "")}</span>` }, { k: "score", label: "Index", num: true, get: r => r.score, html: r => `<b>${r.score}</b> <span class="pill">${r.band}</span>` },
       { k: "in", label: "Indian suppliers", num: true, get: r => r.india.length, html: r => r.india.length ? r.india.map(x => link(x)).join(", ") : "0" }, { k: "gl", label: "Global alternatives", num: true, get: r => r.global.length }, { k: "uses", label: "Used in categories", num: true, get: r => r.uses }] })}</div></div>`;
 }

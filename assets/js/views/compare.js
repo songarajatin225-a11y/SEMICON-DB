@@ -13,7 +13,7 @@ registerActions({
     const cur = uniq([...current(kind), id]).slice(-max); ws.setCmp(kind, cur); setParams({ [key]: cur }); },
   cmpclear: el => { const kind = el.dataset.v; ws.setCmp(kind, []); setParams({ [kind === "company" ? "companies" : "models"]: null }); rerender(); },
   cmpcsv: el => { const kind = el.dataset.v; const ids = current(kind); const rows = (kind === "company" ? companyRows : modelRows)().filter(r => !r.group);
-    download(`semicon-db-compare-${kind}.csv`, toCSV(rows, [{ label: "Attribute", get: r => r.l }, ...ids.map(id => ({ label: nameOf(id), get: r => strip(r.f(get(id))) }))]), "text/csv"); },
+    download(`seminexus-compare-${kind}.csv`, toCSV(rows, [{ label: "Attribute", get: r => r.l }, ...ids.map(id => ({ label: nameOf(id), get: r => strip(r.f(get(id))) }))]), "text/csv"); },
 });
 const strip = h => String(h ?? "").replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").trim();
 function current(kind) {
@@ -78,7 +78,7 @@ export function compare({ path, params }) {
   const max = kind === "company" ? ws.MAX_COMPANIES : ws.MAX_MODELS;
   const picker = ids.length < max ? `<select class="select" data-change="cmpadd" data-v="${kind}|" aria-label="Add to comparison" style="max-width:420px"><option value="">+ Add ${kind === "company" ? "a company" : "a model"}…</option>${pool.filter(x => !ids.includes(x.id)).map(x => `<option value="${x.id}">${esc(kind === "company" ? x.name : `${x.manufacturer} · ${x.name}`)}</option>`).join("")}</select>` : `<span class="small muted">Maximum of ${max} reached — remove one to add another.</span>`;
   const html = pageHead({ eyebrow: "Comparison workspace", title: kind === "company" ? "Company comparison" : "Equipment comparison", crumb: [["Home", "#/"], ["Compare", null]],
-    lede: "Facts only, as each source states them. Hatched cells are values the source does not publish; highlighted rows differ between columns. SEMICON-DB does not score, rank or declare a best tool or company." })
+    lede: "Facts only, as each source states them. Hatched cells are values the source does not publish; highlighted rows differ between columns. SEMINEXUS does not score, rank or declare a best tool or company." })
     + `<div class="toolbar"><div class="seg" role="group" aria-label="Compare type"><a class="btn${kind === "model" ? "" : ""}" href="#/compare" aria-current="${kind === "model"}">Equipment (${ws.cmp("model").length})</a><a class="btn" href="#/compare/companies" aria-current="${kind === "company"}">Companies (${ws.cmp("company").length})</a></div>
       ${picker}<button class="btn sm" data-setparam="diff=${diff ? "0" : ""}" aria-pressed="${diff}">Highlight differences</button><button class="btn sm" data-setparam="hide=${hideEmpty ? "" : "1"}" aria-pressed="${hideEmpty}">Hide rows with no data</button>
       ${ids.length ? `<button class="btn sm" data-savecmp="${kind}|${ids.join(",")}">☆ Save comparison</button><button class="btn sm" data-copylink="1">Copy link</button><button class="btn sm" data-action="cmpcsv" data-v="${kind}">Export CSV</button><button class="btn sm" data-action="cmpclear" data-v="${kind}">Clear</button>` : ""}</div>

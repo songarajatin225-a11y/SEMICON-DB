@@ -712,3 +712,48 @@ The bundle is 411 KB gzipped.
 - Smoke test: 137 / 137 routes.
 - Motion: 24 / 24.
 - Passcode screen: 17 / 17 with the passcode supplied by environment variable.
+
+### SEMINEXUS rename and Batch 19 (27 Nov 2026): German, US, Taiwan and Malaysia sites; Japan and Saudi Arabia; more equipment models
+
+- **Rename:** the product is now called **SEMINEXUS**. This covers the header, page titles, the passcode screen, the footer, meta tags (both editions), export filenames (`seminexus-…`), the data build's `meta.name`, `package.json` and the docs. Exceptions:
+  - The repository and the site address keep the name SEMICON-DB, so the README live-site link, the "Suggest a correction" link to repository issues and `og:url` still say SEMICON-DB.
+  - The device's unlock key (`semicondb:unlock`) is unchanged, so visitors who already unlocked stay unlocked.
+  - Earlier entries in this report keep the old name as written.
+- **Layout:** the home page stat tiles now have a minimum width of 100 px (was 110 px), so more tiles fit on each row of a stat group.
+- **5 facilities (FAC-000072 to FAC-000076):**
+  - Wolfspeed SiC fab, Ensdorf (Saarland): announced Feb 2023 and **paused** in Oct 2024. Wolfspeed said the project was not scrapped, so it is not recorded as cancelled. ZF's reported withdrawal and the dispute over who caused the delay are in the notes.
+  - Bosch SiC fab, Roseville (California): site acquired in 2023; pilot (sample) production in Jul 2026; CHIPS funding of up to $225 million, finalised in Jul 2026. It links to the CHIPS Act programme.
+  - PSMC Tongluo 12-inch fab, Miaoli: foundation laid Mar 2021; opened 2 May 2024 with trial production at 55/40/28 nm. Ownership is unresolved: reports that Micron bought the fab conflict with a Dec 2025 report that it was still weighing a purchase, so the operator stays PSMC.
+  - AT&S IC substrate plant, Kulim: opened Jan 2024; high-volume production since 5 May 2025.
+  - Lam Research plant, Batu Kawan (Penang): opened Aug 2021; RM1 billion; Lam's largest manufacturing facility.
+  - **Investment conflicts:** PSMC (NT$300 billion total vs NT$80 billion spent at opening) and AT&S (RM8.5 billion project value vs about RM5 billion spent to date) each raise an investment conflict, left open.
+- **2 programmes:**
+  - Japan's amended Information Processing Promotion Act lets the government invest in Rapidus through the IPA. Cabinet approval was on 7 Feb 2025; the exact date of passage was not confirmed and is stated as such.
+  - Saudi Arabia's National Semiconductor Hub, launched 5 Jun 2024: a SAR 1 billion fund and a target of 50 design companies by 2030.
+- **8 models for makers that had none:**
+  - MPI TS3000-IFE, TS2000-IFE and TS3500 (probe systems);
+  - SCIL AutoSCIL 200 (nanoimprint);
+  - ATLANT 3D NANOFABRICATOR PRO, filed under ALD as the closest category;
+  - Semilab PMR-3000 and the WT-2000 and WT-2200/2500/3000 wafer testers.
+- **48 sources (S1242 to S1289):** all search-index evidence. Where the search index did not capture a page's title, the title says so; no title was made up.
+
+**Counts:**
+
+| Entity | Count |
+|---|---:|
+| Facilities | 76 (in 17 countries) |
+| Countries | 38 |
+| Policy programmes | 28 |
+| Product families → models | 435 → 610 |
+| Sources | 1,291 |
+| Relationships | 6,600 |
+| Claims | 4,094 |
+| Conflicts | 12 |
+
+**Tests:**
+- `npm test`: 89 / 89, with 66 / 66 benchmark queries.
+- Smoke test: 144 / 144 routes.
+- Motion: 24 / 24.
+- Passcode screen: 17 / 17 with the passcode supplied by environment variable.
+
+**Correction:** the Batch 18 summary said facilities spanned 16 countries; the correct figure was 17, as the home page shows.

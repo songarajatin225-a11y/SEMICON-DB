@@ -1,4 +1,4 @@
-/* SEMICON-DB design system (visual refresh, Nov 2026: system UI type, softer surfaces, grouped stat cards, validated chart palettes).
+/* SEMINEXUS design system (visual refresh, Nov 2026: system UI type, softer surfaces, grouped stat cards, validated chart palettes).
    One token set (light + dark), one component vocabulary: header, rail, page, panel, kpi, chip/badge,
    table, facet panel, tabs, drawer, palette, graph, map. Colour encodes meaning (evidence state), not decoration. */
 :root{
@@ -128,7 +128,7 @@ a.kpi:hover{border-color:var(--primary-2)}
 .statgroup>header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 4px 6px}
 .statgroup>header h2{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-2)}
 .statgroup>header span{font-size:12px;color:var(--ink-3)}
-.statgroup .kpis{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:2px}
+.statgroup .kpis{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:2px}
 .statgroup .kpi{border:0;box-shadow:none;border-radius:var(--r);padding:10px}
 .statgroup a.kpi:hover{background:var(--sunk)}
 .statgroup .kpi .v{font-size:24px}

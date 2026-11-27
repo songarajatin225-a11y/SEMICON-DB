@@ -313,3 +313,17 @@ The layout, routes and features are unchanged. Changes:
   - Motion: 24 / 24.
   - Gate: 17 / 17.
 
+
+## SEMINEXUS rename and Batch 19 (27 Nov 2026)
+
+- **Rename:** SEMINEXUS appears in the header, page titles, the passcode screen and the footer, checked in screenshots and in the smoke test's page titles. Links that point to the repository or the site address still say SEMICON-DB, on purpose. The unlock key is unchanged, so existing unlocks still work (checked by `gate.mjs`).
+- **Data:** 5 facilities (one paused), 2 programmes and 8 models, with 48 sources. Build: 0 errors. The 63 new warnings are all `source.search_index` (48) or `source.date` (15). There are 2 new investment conflicts (PSMC Tongluo and AT&S Kulim), both genuine differences in scope, left open.
+- **Checked by hand:**
+  - The PSMC Tongluo page shows the conflict banner and a three-step status history.
+  - Bosch Roseville links to the CHIPS Act programme.
+  - No other new facility picks up a programme by accident.
+- **Checks:**
+  - `npm test`: 89 / 89, with benchmark 66 / 66.
+  - Smoke: 144 / 144 routes.
+  - Motion: 24 / 24.
+  - Gate: 17 / 17.

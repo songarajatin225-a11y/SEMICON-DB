@@ -195,7 +195,7 @@ function deals({ path }) {
   const focus = path[2];
   return { title: "Deals & partnerships", html: head("Deals & partnerships", "Mergers, acquisitions, investments, JVs, MoUs and distribution agreements as captured. Rumours and single-source claims are labelled unverified.")
     + (focus && get(focus) ? `<div class="callout">Highlighted: <b>${esc(get(focus).event_type)}</b> — ${esc(get(focus).party_a)} · ${esc(get(focus).party_b)}</div>` : "")
-    + dataTable({ id: "deals", rows: DB.deals, title: "Deals", exportName: "semicon-db-deals", sort: { k: "date", d: -1 }, columns: [
+    + dataTable({ id: "deals", rows: DB.deals, title: "Deals", exportName: "seminexus-deals", sort: { k: "date", d: -1 }, columns: [
       { k: "date", label: "Date", get: r => r.date || "" }, { k: "event_type", label: "Event", wrap: true }, { k: "a", label: "Party A", wrap: true, get: r => r.party_a, html: r => r.party_a_id ? link(r.party_a_id, r.party_a) : esc(r.party_a) },
       { k: "b", label: "Party B", wrap: true, get: r => r.party_b, html: r => r.party_b_id ? link(r.party_b_id, r.party_b) : esc(r.party_b) }, { k: "value", label: "Value disclosed", wrap: true, get: r => r.value_disclosed || "", html: r => val(r.value_disclosed, { reason: "Not disclosed" }) },
       { k: "tech", label: "Technology", wrap: true, get: r => r.technology || "" }, { k: "status", label: "Status", wrap: true, get: r => r.status, html: r => r.claim_type === "Unverified report" ? `${badge("UNVERIFIED")}<span class="sub">${esc(r.status)}</span>` : `<span class="pill">${esc(r.status)}</span>` },

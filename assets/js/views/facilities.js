@@ -27,7 +27,7 @@ export const statusOk = f => ["PILOT", "RAMP", "PRODUCTION", "EXPANDED"].include
 const crore = v => `₹${Math.round(v).toLocaleString("en-IN")} crore`;
 
 export function facilityTable(rows, id = "facilities") {
-  return dataTable({ id, rows, title: "", exportName: "semicon-db-" + id, columns: [
+  return dataTable({ id, rows, title: "", exportName: "seminexus-" + id, columns: [
     { k: "name", label: "Facility", pin: true, get: f => f.name, html: f => `<a class="rowlink" href="${hrefOf(f.id)}">${esc(f.name)}</a><span class="sub mono">${esc(f.id)}</span>` },
     { k: "type", label: "Type", wrap: true, get: f => f.facility_type },
     { k: "operator", label: "Operator", wrap: true, get: f => f.operator, html: f => f.operator_ids.length ? f.operator_ids.slice(0, 1).map(x => link(x, f.operator)).join("") : esc(f.operator) },

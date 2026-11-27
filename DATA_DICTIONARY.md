@@ -1,4 +1,4 @@
-# SEMICON-DB data dictionary
+# SEMINEXUS data dictionary
 
 Generated from the published data (schema 2.0.0, evidence as of 2026-10-05) by `scripts/gen-dictionary.mjs`. Do not edit by hand — re-run after `npm run build`.
 

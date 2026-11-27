@@ -118,7 +118,7 @@ function describe(kind, list) {
 }
 const kinds = ["companies", "product_families", "models", "equipment", "processes", "technologies", "materials", "applications", "subsystems", "components", "suppliers", "fabs", "osats", "customers", "countries", "deals", "relationships", "sources"];
 const meta = read("meta.json");
-let md = `# SEMICON-DB data dictionary\n\nGenerated from the published data (schema ${meta.schema_version}, evidence as of ${meta.evidence_as_of}) by \`scripts/gen-dictionary.mjs\`. Do not edit by hand — re-run after \`npm run build\`.\n\n`
+let md = `# SEMINEXUS data dictionary\n\nGenerated from the published data (schema ${meta.schema_version}, evidence as of ${meta.evidence_as_of}) by \`scripts/gen-dictionary.mjs\`. Do not edit by hand — re-run after \`npm run build\`.\n\n`
   + `**Source requirement (all entities):** every factual field must be traceable to a numbered source via \`source_ids\` on the record or on the relationship. Reference entities (processes, technologies, materials, subsystems, component classes) carry editorial definitions and are labelled as such; they make no company-specific claims.\n\n`
   + `**Missing values:** \`null\` (or empty array) means *not captured in the evidence*; the UI shows “Not found in Batch-1 sources”, “Not published” or “Not publicly disclosed” (\`NOT_DISCLOSED\`). Values are never estimated.\n\n`
   + `**ID prefixes:** ${Object.entries(meta.id_prefixes).map(([k, v]) => `\`${v}\` ${k}`).join(" · ")}\n\n`;

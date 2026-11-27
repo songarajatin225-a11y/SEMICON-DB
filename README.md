@@ -1,6 +1,6 @@
-# SEMICON-DB — Global Semiconductor Equipment Intelligence Graph
+# SEMINEXUS — Global Semiconductor Equipment Intelligence Graph
 
-**Created by Jatin Songara.**
+**Created by Jatin Songara.** Formerly named SEMICON-DB; the repository and the site address keep the original name.
 
 A source-traced intelligence database of semiconductor equipment companies, product families and models, linked to manufacturing processes, technologies, materials, applications, subsystems, components, suppliers, fabs, OSAT/ATMP houses and geography. Every fact carries its source and a verification state; missing values are shown as missing and never estimated.
 
@@ -13,16 +13,16 @@ Built for TEAL's Laser & Photonics team. Evidence: Batch 1 (29 Sep 2026, pages r
 | Entity | Records | Notes |
 |---|---:|---|
 | Companies | 355 | 143 verified · OEMs separated from subsystem / component / materials / service suppliers · 6 added in Batch 2 · 68 small companies and startups in Batch 3 · 25 via keyword search in Batch 4 · 15 in Batch 5 · 11 in Batch 6 · 7 in Batch 7 · 8 in Batch 8 · 19 in Batch 9 · 10 in Batch 10 (18 startups in total) |
-| Product families → models | 429 → 602 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 · 7 in Batch 9 · 37 in Batch 10 · 10 in Batch 15 (AMEC, Nova, FormFactor, Kingsemi, Eugene Technology) · 10 in Batch 16 (Lam Akara and ALTUS Halo, Applied PROVision 10, Teradyne Magnum 7H, Advantest, ASM, NAURA, TEL) · 7 in Batch 17 (Hanmi, ASMPT and Kulicke & Soffa bonders) · 7 in Batch 18 (Park Systems, HPSP, Beneq, Oxford Instruments, Thermo Fisher, KCTech) |
+| Product families → models | 435 → 610 | Company → Product family → Model; 375+ with a model number · 144 added in Batch 2 · 123 in Batch 3 · 33 in Batch 4 · 26 in Batch 5 · 26 in Batch 6 · 18 in Batch 8 · 7 in Batch 9 · 37 in Batch 10 · 10 in Batch 15 (AMEC, Nova, FormFactor, Kingsemi, Eugene Technology) · 10 in Batch 16 (Lam Akara and ALTUS Halo, Applied PROVision 10, Teradyne Magnum 7H, Advantest, ASM, NAURA, TEL) · 7 in Batch 17 (Hanmi, ASMPT and Kulicke & Soffa bonders) · 7 in Batch 18 (Park Systems, HPSP, Beneq, Oxford Instruments, Thermo Fisher, KCTech) · 8 in Batch 19 (MPI probe systems, SCIL AutoSCIL 200, ATLANT 3D NANOFABRICATOR PRO, Semilab metrology) |
 | Equipment categories | 246 (in 12 groups) | Batch-1 taxonomy (A–J) + 2.0 extensions: K wafer manufacturing, L subfab & facilities |
 | Processes | 61 | Wafer manufacturing → front-end → test → back-end → advanced packaging → display → subfab |
 | Technologies · materials · applications | 83 · 47 · 20 | Including the 25 laser process/source types |
 | Subsystems · component classes | 16 · 61 | Supplier links from the Batch-1 supplier register |
 | Fabs · OSAT/ATMP · countries | 22 · 9 · 38 | Named sites and documented equipment suppliers |
-| Facilities (site level) | 71 | India's ISM-approved units, one Indian equipment plant and 58 major sites in the US, Costa Rica, Japan, Germany, Italy, Ireland, Israel, the Czech Republic, South Korea, Taiwan, China, Singapore, Malaysia, Vietnam, Thailand and the Philippines (including the cancelled Intel Magdeburg and onsemi Rožnov projects and the paused Intel Kiryat Gat expansion), with dated status history and a controlled status class, investment as reported, capacity, technology and sources (Batches 11–18) |
-| Relationships | 6,539 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
-| Sources | 1,243 |
-| Claims (lazy-loaded) | 4,031 | Claim-level provenance: value → evidence type (directly stated / specified / calculated / inferred / unverified) → source → date → confidence | Tiered, dated, access mode recorded (read directly vs title via web search) |
+| Facilities (site level) | 76 | India's ISM-approved units, one Indian equipment plant and 63 major sites in the US, Costa Rica, Japan, Germany, Italy, Ireland, Israel, the Czech Republic, South Korea, Taiwan, China, Singapore, Malaysia, Vietnam, Thailand and the Philippines (including the cancelled Intel Magdeburg and onsemi Rožnov projects and the paused Intel Kiryat Gat expansion and Wolfspeed Ensdorf fab), with dated status history and a controlled status class, investment as reported, capacity, technology and sources (Batches 11–19) |
+| Relationships | 6,600 | Each labelled source-backed, derived, editorial reference or analyst · 74 customer links (13 added in Batch 3) |
+| Sources | 1,291 |
+| Claims (lazy-loaded) | 4,094 | Claim-level provenance: value → evidence type (directly stated / specified / calculated / inferred / unverified) → source → date → confidence | Tiered, dated, access mode recorded (read directly vs title via web search) |
 
 ## Features
 
@@ -143,17 +143,17 @@ The site opens with a passcode screen, and the app and its data load only after 
 
 Details: [QA_REPORT.md](QA_REPORT.md).
 
-## SEMICON-DB 3.0 (5 Oct 2026)
+## SEMINEXUS 3.0 (5 Oct 2026)
 
 - **Claim-level provenance:** an Evidence tab on companies and an evidence panel on facilities show every value's evidence type, source, date and confidence (`data/claims.json`, loaded on demand).
 - **Data-quality score and research status:** separate from confidence and completeness.
 - **Facilities in four countries:** India plus 7 major fabs in the US, Japan and Germany. Statuses use the controlled vocabulary; India gets a state tile map.
 - **"What can replace this?":** model pages classify alternatives as direct substitute, partial substitute, development-stage or different technology.
-- **Policy and programmes** (`#/intelligence/policy`): 26 programmes: the US CHIPS Act and §48D credit, Spain's PERTE Chip, the Philippines' CREATE MORE Act, the EU Chips Act, the UK National Semiconductor Strategy, Korea's Semiconductor Special Act, the EU IPCEI on microelectronics, the Dutch Project Beethoven, US export controls, Japan, Korea, India, Taiwan's Article 10-2 tax credit, China's Big Fund III, Singapore's RIE2030 semiconductor flagship, Malaysia's National Semiconductor Strategy, Vietnam's and Thailand's national strategies, Texas and New York state programmes, and the Gujarat, Odisha, Uttar Pradesh and Tamil Nadu state policies, with sources and linked facilities.
+- **Policy and programmes** (`#/intelligence/policy`): 28 programmes: the US CHIPS Act and §48D credit, Japan's law for state investment in Rapidus, Saudi Arabia's National Semiconductor Hub, Spain's PERTE Chip, the Philippines' CREATE MORE Act, the EU Chips Act, the UK National Semiconductor Strategy, Korea's Semiconductor Special Act, the EU IPCEI on microelectronics, the Dutch Project Beethoven, US export controls, Japan, Korea, India, Taiwan's Article 10-2 tax credit, China's Big Fund III, Singapore's RIE2030 semiconductor flagship, Malaysia's National Semiconductor Strategy, Vietnam's and Thailand's national strategies, Texas and New York state programmes, and the Gujarat, Odisha, Uttar Pradesh and Tamil Nadu state policies, with sources and linked facilities.
 - **Graph filters:** relationship-type and source-backed-only filters, plus a graph JSON export.
 - **`npm test`:** validation plus 54 headless tests, including a gold-standard search benchmark (`tests/search-benchmark.json`).
 
-Details and remaining gaps: [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md#semicon-db-30-addendum-5-oct-2026).
+Details and remaining gaps: [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md#seminexus-30-addendum-5-oct-2026).
 
 ## Global intelligence upgrade (5 Oct 2026)
 
@@ -176,7 +176,7 @@ This upgrade follows the *Global Semiconductor Intelligence Graph* brief. The ap
   - a "players by region" competitor panel on every equipment page;
   - a 0–100 supplier criticality score per company, so a small subsystem supplier that several OEMs depend on can rank as critical;
   - facility milestones in the events timeline.
-- **SEMICON-DB Intelligence Score** for each company, with a published method. It weights completeness 30 %, source quality 20 %, portfolio breadth 15 %, supply-chain importance 20 % and connectivity 15 %. It measures the evidence held, not the company.
+- **SEMINEXUS Intelligence Score** for each company, with a published method. It weights completeness 30 %, source quality 20 %, portfolio breadth 15 %, supply-chain importance 20 % and connectivity 15 %. It measures the evidence held, not the company.
 - **Analyst** answers more questions, all from records:
   - "Compare ASML vs Canon vs Nikon" (resolved by alias);
   - requirement-based laser supplier matching ("I need a 200W pulsed laser for semiconductor marking"), which ranks by stated matches and lists unpublished specs separately;
@@ -198,7 +198,7 @@ From the uploaded *Global Intelligence Master Prompt*, the parts that the curren
 - **Events timeline** (`#/intelligence/timeline`): deal records plus dated press releases and investor announcements, by year, with sources. Undated items are excluded.
 - **Data completeness per company**: coverage of 16 key fields in five groups (profile, portfolio, commercial, evidence, geography). It appears as a column in the companies table and as a panel on each profile, with generated *Research next* search queries for the missing fields.
 
-- **Analyst** (`#/intelligence/analyst`): a rule-based question box that answers only from SEMICON-DB records and shows the rule it used. It handles *Can we build X?*, *Who supplies X?*, *Alternatives to company* and free-form requirements such as *300 mm sputtering systems in Japan*. Free-form matches that don't publish a constrained value are labelled partial. When nothing matches it says so and suggests the closest categories. It is not an LLM.
+- **Analyst** (`#/intelligence/analyst`): a rule-based question box that answers only from SEMINEXUS records and shows the rule it used. It handles *Can we build X?*, *Who supplies X?*, *Alternatives to company* and free-form requirements such as *300 mm sputtering systems in Japan*. Free-form matches that don't publish a constrained value are labelled partial. When nothing matches it says so and suggests the closest categories. It is not an LLM.
 - **"Can we build this?" engine**: for any equipment category, lists subsystems → documented global and Indian suppliers, OEMs, reference models and the concentration index. It then gives an indication by a fixed rule: BUILD if ≥ 70 % of typical subsystems have a documented Indian supplier, HYBRID at 40–69 %, otherwise PARTNER (≥ 3 global OEMs) or BUY. It is an evidence summary, not a business recommendation.
 - **India localization index (0–100)** per equipment category, with bands LOW / MEDIUM / HIGH / VERY HIGH. Weights: Indian subsystem coverage 40 %, Indian OEM already documented 20 %, number of global alternatives 20 %, OEM India presence 20 %. The formula is printed on the page.
 

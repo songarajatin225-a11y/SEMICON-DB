@@ -1,5 +1,5 @@
 // Supply-chain concentration, critical suppliers, country × equipment heatmap and the events timeline.
-// Everything here is DERIVED from the records in SEMICON-DB: it describes the documented supplier base,
+// Everything here is DERIVED from the records in SEMINEXUS: it describes the documented supplier base,
 // not the market. Every score shows its inputs and formula; nothing is hidden or estimated.
 import { DB, get, hrefOf } from "../core/store.js";
 import { esc, uniq, countBy, sortedEntries } from "../core/util.js";
@@ -53,7 +53,7 @@ function riskView() {
   const nModels = Object.fromEntries(countBy(DB.models, m => m.company_id));
   const central = DB.companies.map(c => ({ id: c.id, c, cats: catsOf[c.id] || 0, cust: custLinks[c.id] || 0, models: nModels[c.id] || 0, k: criticality(c.id) })).filter(x => x.k.score > 0)
     .sort((a, b) => b.k.score - a.k.score || b.k.sole.length - a.k.sole.length || b.cats - a.cats).slice(0, 40);
-  const table = dataTable({ id: "risk", rows, title: "Concentration index by equipment category", exportName: "semicon-db-concentration", columns: [
+  const table = dataTable({ id: "risk", rows, title: "Concentration index by equipment category", exportName: "seminexus-concentration", columns: [
     { k: "cat", label: "Equipment category", pin: true, get: r => r.e.name, html: r => `<a class="rowlink" href="${hrefOf(r.id)}">${esc(r.e.name)}</a><span class="sub">${esc(r.e.code)} · ${esc(r.e.group_name)}</span>` },
     { k: "score", label: "Index (0–100)", num: true, get: r => r.score, html: r => `<b>${r.score}</b> <span class="pill">${r.band}</span>` },
     { k: "n", label: "Suppliers", num: true, get: r => r.n },
@@ -64,9 +64,9 @@ function riskView() {
     { k: "ver", label: "Verified", get: r => `${r.ver}/${r.n}` },
     { k: "why", label: "Explanation", wrap: true, get: r => r.why },
     { k: "sup", label: "Suppliers", wrap: true, get: r => r.cos.map(c => c.name).join("; "), html: r => r.cos.slice(0, 6).map(c => link(c.id)).join(", ") + (r.n > 6 ? ` <span class="muted">+${r.n - 6}</span>` : "") }] });
-  const html = head("Supply-chain concentration", "Where the documented supplier base is thin or geographically concentrated. Derived from SEMICON-DB records only — a category with few records may simply be under-researched, so read the index as “where to look”, not as market risk.")
+  const html = head("Supply-chain concentration", "Where the documented supplier base is thin or geographically concentrated. Derived from SEMINEXUS records only — a category with few records may simply be under-researched, so read the index as “where to look”, not as market risk.")
     + `<div class="kpis">${kpi({ v: rows.length, l: "Categories with suppliers" })}${kpi({ v: bands.HIGH || 0, l: "High concentration (≥70)" })}${kpi({ v: bands.ELEVATED || 0, l: "Elevated (45–69)" })}${kpi({ v: single.length, l: "Single documented supplier" })}${kpi({ v: none.length, l: "No documented supplier" })}</div>
-    <div class="panel sec"><h2>Method</h2><p class="small">${esc(RISK_METHOD)}</p><p class="note">Bands: HIGH ≥ 70 · ELEVATED 45–69 · MODERATE 25–44 · LOW &lt; 25. Not included because SEMICON-DB holds no evidence for them yet: lead times, export controls, patent dependency, raw-material exposure. They are not guessed.</p></div>
+    <div class="panel sec"><h2>Method</h2><p class="small">${esc(RISK_METHOD)}</p><p class="note">Bands: HIGH ≥ 70 · ELEVATED 45–69 · MODERATE 25–44 · LOW &lt; 25. Not included because SEMINEXUS holds no evidence for them yet: lead times, export controls, patent dependency, raw-material exposure. They are not guessed.</p></div>
     <div class="sec">${table}</div>
     <div class="grid g2 sec"><div class="panel"><h2>Critical supplier nodes</h2><p class="small ink2">Supplier criticality (0–100): ${esc(CRIT_METHOD)} A small subsystem supplier that several OEMs depend on ranks alongside a large OEM.</p>
       <table class="spec"><tbody>${central.slice(0, 20).map(x => `<tr><th>${link(x.id)}<span class="sub">${esc(x.c.hq.country || "Country not captured")} · ${esc(x.c.company_type)}</span></th><td><b>${x.k.score}</b><span class="sub">${[x.k.sole.length && `sole documented supplier in ${x.k.sole.length}`, x.k.duo.length && `one of two in ${x.k.duo.length}`, x.k.oems.length && `supplies ${x.k.oems.length} OEM${x.k.oems.length > 1 ? "s" : ""}`, x.k.sites.length && `${x.k.sites.length} fab/OSAT customer${x.k.sites.length > 1 ? "s" : ""}`].filter(Boolean).join(" · ")}</span></td></tr>`).join("")}</tbody></table></div>
@@ -86,7 +86,7 @@ function blocMatrix(rows) {
     return `<tr><th>${label}<span class="sub">${b.known} suppliers</span></th>${BLOCS.map(x => `<td style="background:color-mix(in srgb, var(--s2) ${m[x] ? Math.round(8 + 0.5 * m[x]) : 0}%, transparent)">${m[x] != null ? m[x] + "%" : ""}</td>`).join("")}</tr>`; };
   const body = groups.map(g => { const cos = rows.filter(r => r.e.group_code === g.code).flatMap(r => r.cos); return cos.length ? line(`<a href="${hrefOf(g.id)}">${esc(g.code)} · ${esc(g.name)}</a>`, cos) : ""; }).join("");
   return `<div style="overflow-x:auto"><table class="heat"><thead><tr><th>Equipment group</th>${BLOCS.map(b => `<th>${esc(b)}</th>`).join("")}</tr></thead><tbody>${line("<b>All categories</b>", rows.flatMap(r => r.cos))}${body}</tbody></table></div>
-    <p class="note">Share of the documented suppliers in each group by headquarters bloc (Europe includes the UK, Switzerland and Norway; China includes Hong Kong). This is dependency on the documented supplier base — not market share, which SEMICON-DB does not estimate. Companies without a captured HQ country are left out of the shares.</p>`;
+    <p class="note">Share of the documented suppliers in each group by headquarters bloc (Europe includes the UK, Switzerland and Norway; China includes Hong Kong). This is dependency on the documented supplier base — not market share, which SEMINEXUS does not estimate. Companies without a captured HQ country are left out of the shares.</p>`;
 }
 
 function heatmap() {
@@ -113,7 +113,7 @@ function events() {
 function timelineView() {
   const rows = events();
   const byYear = sortedEntries(countBy(rows, r => r.date.slice(0, 4))).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 12).map(([l, v]) => ({ l, v }));
-  const table = dataTable({ id: "timeline", rows, title: "Events", exportName: "semicon-db-events", columns: [
+  const table = dataTable({ id: "timeline", rows, title: "Events", exportName: "seminexus-events", columns: [
     { k: "date", label: "Date", pin: true, get: r => r.date },
     { k: "type", label: "Type", get: r => r.type, html: r => `<span class="pill">${esc(r.type)}</span><span class="sub">${esc(r.kind)}</span>` },
     { k: "title", label: "Event", wrap: true, get: r => r.title },

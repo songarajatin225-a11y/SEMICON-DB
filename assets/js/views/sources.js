@@ -36,7 +36,7 @@ export function sources({ path, params }) {
   const state = readState(defs, params);
   const q = params.get("q") || "";
   const { rows, counts } = applyFacets(DB.sources, defs, state, q, s => norm([s.id, s.legacy_id, s.title, s.publisher, s.excerpt, s.notes].join(" ")));
-  const table = dataTable({ id: "sources", rows, title: "", exportName: "semicon-db-sources", columns: [
+  const table = dataTable({ id: "sources", rows, title: "", exportName: "seminexus-sources", columns: [
     { k: "id", label: "Id", pin: true, get: r => r.id, html: r => `<a class="rowlink mono" href="${hrefOf(r.id)}">${esc(r.id)}</a><span class="sub mono">${esc(r.legacy_id)}</span>` },
     { k: "tier", label: "Tier", get: r => (typeof r.tier === "number" ? r.tier : 9), html: r => `<span class="pill">${esc(r.tier)}</span>` },
     { k: "title", label: "Title", wrap: true, get: r => r.title, html: r => `${r.source_url ? `<a href="${esc(r.source_url)}" target="_blank" rel="noopener noreferrer">${esc(r.title)} ↗</a>` : esc(r.title)}<span class="sub">${esc(r.publisher || "")}</span>` },
