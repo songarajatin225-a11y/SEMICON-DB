@@ -302,3 +302,14 @@ The layout, routes and features are unchanged. Changes:
   - Motion: 24 / 24.
   - Gate: 11 / 11.
 
+## Batch 18 and creator credit (27 Nov 2026)
+
+- **Credit:** "Created by Jatin Songara" appears in the footer, the sidebar, the passcode screen, meta tags, the README and `package.json`. It was checked in `tests/browser/gate.mjs` and in screenshots.
+- **Data:** 5 facilities (one paused), 2 programmes and 7 models, with 33 sources. Costa Rica was added to the country reference. Build: 0 errors. The 42 new warnings are all `source.search_index` or `source.date`. No new conflicts.
+- **Fixed:** the IPCEI ME/CT programme match was too broad and would have linked any facility that mentions "IPCEI".
+- **Checks:**
+  - `npm test`: 80 / 80, with benchmark 57 / 57.
+  - Smoke: 137 / 137 routes.
+  - Motion: 24 / 24.
+  - Gate: 17 / 17.
+

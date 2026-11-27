@@ -1,7 +1,7 @@
 // Country reference: ISO codes, region and an APPROXIMATE centroid used only to place
 // country-level clusters on the ecosystem map. Centroids are not facility locations.
 export const COUNTRIES = [
-  ["United States", "US", "North America", 39.8, -98.6], ["Canada", "CA", "North America", 56.1, -106.3], ["Mexico", "MX", "North America", 23.6, -102.6],
+  ["United States", "US", "North America", 39.8, -98.6], ["Canada", "CA", "North America", 56.1, -106.3], ["Mexico", "MX", "North America", 23.6, -102.6], ["Costa Rica", "CR", "North America", 9.75, -83.75],
   ["Germany", "DE", "Europe", 51.2, 10.4], ["Netherlands", "NL", "Europe", 52.1, 5.3], ["Switzerland", "CH", "Europe", 46.8, 8.2], ["United Kingdom", "GB", "Europe", 54.0, -2.5],
   ["France", "FR", "Europe", 46.6, 2.2], ["Italy", "IT", "Europe", 42.8, 12.6], ["Belgium", "BE", "Europe", 50.6, 4.6], ["Austria", "AT", "Europe", 47.6, 14.1],
   ["Finland", "FI", "Europe", 64.0, 26.0], ["Sweden", "SE", "Europe", 62.0, 15.0], ["Denmark", "DK", "Europe", 56.0, 9.5], ["Norway", "NO", "Europe", 61.0, 8.5], ["Spain", "ES", "Europe", 40.3, -3.7], ["Portugal", "PT", "Europe", 39.6, -8.0],

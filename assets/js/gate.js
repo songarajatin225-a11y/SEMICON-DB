@@ -40,7 +40,8 @@ html.locked body>*:not(.gate){visibility:hidden}
 .gate button{margin-top:12px;width:100%;font:inherit;font-weight:650;font-size:14px;padding:10px 12px;border-radius:10px;border:1px solid var(--primary,#00696C);background:var(--primary,#00696C);color:var(--surface,#fff);cursor:pointer}
 .gate button:disabled{opacity:.7;cursor:progress}
 .gate .gate-err{min-height:1.4em;margin:10px 0 0;font-size:12.5px;color:var(--crit,#A12D2D)}
-.gate .gate-note{margin:14px 0 0;font-size:11.5px;color:var(--ink-3,#5A6A70)}`;
+.gate .gate-note{margin:14px 0 0;font-size:11.5px;color:var(--ink-3,#5A6A70)}
+.gate .gate-credit{margin-top:6px;padding-top:12px;border-top:1px solid var(--line-2,#EAEEF1)}`;
 
 // Resolves once the visitor is unlocked; shows the passcode screen if needed.
 export function ensureUnlocked() {
@@ -59,6 +60,7 @@ export function ensureUnlocked() {
       <button type="submit">Unlock</button>
       <div class="gate-err" id="gate-err" role="alert"></div>
       <p class="gate-note">You stay unlocked on this device until you choose Lock.</p>
+      <p class="gate-note gate-credit">Created by <b>Jatin Songara</b></p>
     </form>`;
   document.body.appendChild(gate);
   const form = gate.querySelector("form"), input = gate.querySelector("input"), btn = gate.querySelector("button"), err = gate.querySelector(".gate-err");

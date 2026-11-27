@@ -319,6 +319,41 @@
     "MDL-000589"
    ],
    "top": 10
+  },
+  {
+   "q": "Kiryat Gat",
+   "expect": [
+    "FAC-000067"
+   ],
+   "top": 5
+  },
+  {
+   "q": "fab in Costa Rica",
+   "expect": [
+    "FAC-000070"
+   ],
+   "top": 10
+  },
+  {
+   "q": "NX-Wafer",
+   "expect": [
+    "MDL-000596"
+   ],
+   "top": 5
+  },
+  {
+   "q": "high pressure anneal",
+   "expect": [
+    "MDL-000597"
+   ],
+   "top": 25
+  },
+  {
+   "q": "Transform 300",
+   "expect": [
+    "MDL-000598"
+   ],
+   "top": 5
   }
  ],
  "resolve": [

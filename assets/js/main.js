@@ -24,7 +24,7 @@ function renderNav(section) {
   const n = k => (k && DB[k] ? DB[k].length : null);
   $("#rail").innerHTML = NAV.map(([g, items]) => `<h4>${esc(g)}</h4>${items.map(([p, l, k]) => `<a href="#/${p}"${(section || "") === p ? ' aria-current="page"' : ""}><span>${esc(l)}</span>${n(k) != null ? `<span class="n">${n(k).toLocaleString()}</span>` : ""}</a>`).join("")}`).join("")
     + `<h4>Editions</h4><a href="legacy/"><span>Legacy atlas (v1)</span><span class="n">↗</span></a>
-    <p class="asof">Evidence as of <b>${esc(DB.meta?.evidence_as_of || "")}</b><br>Schema ${esc(DB.meta?.schema_version || "")} · ${DB.sources ? DB.sources.length : ""} numbered sources</p>`;
+    <p class="asof">Created by <b>Jatin Songara</b><br>Evidence as of <b>${esc(DB.meta?.evidence_as_of || "")}</b><br>Schema ${esc(DB.meta?.schema_version || "")} · ${DB.sources ? DB.sources.length : ""} numbered sources</p>`;
 }
 
 // ---------- rendering
@@ -52,7 +52,7 @@ async function render() {
     out = { title: "Error", html: `<div class="callout crit"><b>This view could not be rendered.</b><br>${esc(err.message)}<br><span class="small">The data may be malformed or a relationship may point to a missing record. Report it with the URL above.</span></div>` };
   }
   if (typeof out === "string") out = { html: out };
-  app.innerHTML = out.html + `<footer class="foot">SEMICON-DB ${esc(DB.meta.schema_version)} · Evidence as of ${esc(DB.meta.evidence_as_of)} · Every fact carries a source and verification state; missing values are shown as missing, never estimated. <a href="#/quality">Methodology &amp; data quality</a> · <a href="legacy/">Legacy edition</a></footer>`;
+  app.innerHTML = out.html + `<footer class="foot">SEMICON-DB ${esc(DB.meta.schema_version)} · Created by <b>Jatin Songara</b> · Evidence as of ${esc(DB.meta.evidence_as_of)} · Every fact carries a source and verification state; missing values are shown as missing, never estimated. <a href="#/quality">Methodology &amp; data quality</a> · <a href="legacy/">Legacy edition</a></footer>`;
   document.title = (out.title ? out.title + " · " : "") + "SEMICON-DB";
   if (out.after) try { out.after(app); } catch (e) { console.error(e); }
   fillClaims(app).catch(e => console.error(e));

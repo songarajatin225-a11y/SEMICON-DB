@@ -673,3 +673,42 @@ The bundle is 411 KB gzipped.
 - Smoke test: 130 / 130 routes.
 - Motion: 24 / 24.
 - Passcode screen: 11 / 11 without the passcode in the environment.
+
+### Batch 18 (27 Nov 2026): Israel, Costa Rica, Singapore, Germany and Vietnam sites; Spain and Philippines; more equipment models
+
+- **Credit:** "Created by Jatin Songara" now appears in the site footer, the sidebar, the passcode screen, the `author` meta tag (both editions), the README and `package.json`. `tests/browser/gate.mjs` checks it.
+- **5 facilities (FAC-000067 to FAC-000071):**
+  - Intel Fab 38, Kiryat Gat: **paused** since Jun 2024; the Israeli grant was cancelled in Jul 2026.
+  - GlobalFoundries Singapore 300 mm expansion: opened Sept 2023.
+  - Bosch 300 mm fab, Dresden: opened Jun 2021.
+  - Intel assembly and test, Belén, Costa Rica: operating since 2021.
+  - Hana Micron Vina second plant, Bac Giang: Sept 2023.
+- **New country:** Costa Rica was added to the country reference (38 countries).
+- **Link fix:** the EU IPCEI ME/CT programme now matches only its own name, so Bosch's 2018 support under the first microelectronics IPCEI is not linked to it.
+- **2 programmes:** Spain's PERTE Chip (€12.25 billion by 2027) and the Philippines' CREATE MORE Act (RA 12066). The Philippines record states that the Act has no semiconductor-specific provision.
+- **7 models for makers that had none:**
+  - Park Systems NX-Wafer (AFM);
+  - HPSP GENI-SYS (high-pressure anneal);
+  - Beneq Transform 300 and Prodigy (ALD);
+  - Oxford Instruments PlasmaPro 100 Cobra (ICP etch);
+  - Thermo Fisher Helios 5 EXL Wafer DualBeam, filed under e-beam inspection because the taxonomy has no failure-analysis category;
+  - KCTech Ventus (CMP), low confidence because specifications are not published.
+- **33 sources (S1209 to S1241):** all search-index evidence.
+
+**Counts:**
+
+| Entity | Count |
+|---|---:|
+| Facilities | 71 |
+| Countries | 38 |
+| Policy programmes | 26 |
+| Product families → models | 429 → 602 |
+| Sources | 1,243 |
+| Relationships | 6,539 |
+| Claims | 4,031 |
+
+**Tests:**
+- `npm test`: 80 / 80, with 57 / 57 benchmark queries.
+- Smoke test: 137 / 137 routes.
+- Motion: 24 / 24.
+- Passcode screen: 17 / 17 with the passcode supplied by environment variable.
